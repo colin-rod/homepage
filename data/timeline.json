@@ -1,0 +1,12 @@
+[
+  {
+    "id": "example-event",
+    "title": "Example Timeline Event",
+    "organization": "Example Organization",
+    "type": "job",
+    "startDate": "2024-01-01",
+    "endDate": null,
+    "summary": "This is an example timeline event to demonstrate the data structure",
+    "tags": ["product", "strategy"]
+  }
+]

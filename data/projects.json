@@ -1,0 +1,14 @@
+[
+  {
+    "id": "example-project",
+    "title": "Example Project",
+    "slug": "example-project",
+    "description": "A placeholder project to demonstrate the data structure",
+    "summary": "This is an example project that shows how project data is structured",
+    "status": "concept",
+    "techStack": ["Next.js", "TypeScript", "Tailwind CSS"],
+    "tags": ["web", "product"],
+    "featured": false,
+    "year": 2024
+  }
+]
