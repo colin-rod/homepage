@@ -5,7 +5,14 @@
       "Bash(https://api.linear.app/graphql)",
       "Bash(git init)",
       "Bash(git remote add origin https://github.com/colin-rod/homepage.git)",
-      "Bash(git add .)"
+      "Bash(git add .)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nchore(docs): initial project documentation and setup\n\nAdd comprehensive project documentation:\n- CLAUDE.md: Project overview, TDD workflow, git strategy\n- DESIGN_SYSTEM.md: Terracotta Midnight v2 color palette\n- LINEAR_ISSUES.md: All Linear epics and issues\n- READY_TO_BUILD.md: Implementation guide\n- PROJECT_SUMMARY.md: Quick reference\n- README.md: Repository overview\n- .gitignore: Standard ignores for Next.js\n- .env.local.example: Environment variable template\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git branch -M main)",
+      "Bash(git push -u origin main)",
+      "Bash(git add READY_TO_BUILD.md)",
+      "Bash(git commit --amend --no-edit)",
+      "Bash(git checkout -b development)",
+      "Bash(git push -u origin development)"
     ],
     "deny": [],
     "ask": []
