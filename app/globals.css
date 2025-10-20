@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Terracotta Midnight v2 Color Palette */
+  --color-primary: #20465B;
+  --color-primary-dark: #132C3D;
+  --color-primary-light: #2E6079;
+
+  --color-accent-warm: #D3643E;
+  --color-accent-warm-dark: #A84E2D;
+  --color-accent-gold: #C38A27;
+
+  --color-bridge-sage: #7F9388;
+  --color-bridge-steel: #426377;
+
+  --color-bg: #FAF8F5;
+  --color-surface: #FFFFFF;
+
+  --color-text: #222426;
+  --color-text-secondary: #5A5F61;
+  --color-text-light: #F7F9FA;
+
+  --color-divider: #E3E1DD;
+}
+
+@layer base {
+  body {
+    @apply font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold;
+  }
+}

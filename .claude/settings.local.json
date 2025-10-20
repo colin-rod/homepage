@@ -12,7 +12,15 @@
       "Bash(git add READY_TO_BUILD.md)",
       "Bash(git commit --amend --no-edit)",
       "Bash(git checkout -b development)",
-      "Bash(git push -u origin development)"
+      "Bash(git push -u origin development)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --app --no-src-dir --import-alias \"@/*\" --eslint --use-npm)",
+      "Bash(npm init -y)",
+      "Bash(npm install next@latest react@latest react-dom@latest)",
+      "Bash(npm install -D typescript @types/react @types/react-dom @types/node tailwindcss postcss autoprefixer eslint eslint-config-next)",
+      "Bash(npx tailwindcss init -p)",
+      "Bash(npm run build)",
+      "Bash(npm install -D @tailwindcss/postcss)",
+      "Bash(npm install -D tailwindcss@^3 @tailwindcss/postcss@latest --legacy-peer-deps)"
     ],
     "deny": [],
     "ask": []
