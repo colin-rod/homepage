@@ -27,7 +27,7 @@ export interface TimelineEvent {
 // Project Types
 // ============================================================================
 
-export type ProjectStatus = 'concept' | 'in-progress' | 'live' | 'sunset'
+export type ProjectStatus = 'concept' | 'in-progress' | 'active' | 'completed' | 'live' | 'sunset'
 
 export interface Project {
   id: string
