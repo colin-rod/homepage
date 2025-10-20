@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(git commit -m \"$(cat <<''EOF''\nfeat(design): implement global theme and design system\n\nComplete implementation of Terracotta Midnight v2 design system:\n\n**Tailwind Configuration:**\n- Extended color palette with all variants\n- Custom font sizes with line heights\n- Additional spacing utilities (18, 88, 128)\n- Custom border radius (4xl)\n- Custom box shadows (soft, glow)\n- Animations (fade-in, slide-up, slide-down)\n- Keyframes for smooth transitions\n\n**Global Styles (globals.css):**\n- Responsive typography (h1-h6, p, a)\n- Base link styles with hover states\n- Component classes (btn, card, badge)\n- Button variants (primary, secondary, outline)\n- Badge variants (primary, accent, success)\n- Custom gradient utilities (hero, cta, timeline)\n- Text gradient utility\n\n**Design Tokens:**\n- CSS custom properties for all colors\n- Border color defaults\n- Consistent spacing and sizing\n- Responsive breakpoints built-in\n\n**Component Patterns:**\n- .btn-primary - Primary CTA buttons\n- .btn-secondary - Secondary actions\n- .btn-outline - Outlined buttons\n- .card - Standard card component\n- .badge - Tag/label component\n- .gradient-hero - Hero section gradient\n- .gradient-cta - CTA button gradient\n- .text-gradient - Gradient text effect\n\nBuild succeeds ✓\nAll tests passing (10/10) ✓\nReady for navigation component\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
-    ],
-    "deny": [],
-    "ask": []
-  }
-}
