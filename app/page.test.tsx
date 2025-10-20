@@ -7,7 +7,8 @@ describe('Home Page', () => {
 
     // Check for name in both nav and hero
     expect(screen.getAllByText('Colin Rodrigues').length).toBeGreaterThan(0)
-    expect(screen.getByText(/Product & Strategy/i)).toBeInTheDocument()
+    // Product & Strategy appears in multiple places (hero and footer)
+    expect(screen.getAllByText(/Product & Strategy/i).length).toBeGreaterThan(0)
   })
 
   it('displays the correct heading', () => {
