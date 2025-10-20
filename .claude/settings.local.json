@@ -20,7 +20,14 @@
       "Bash(npx tailwindcss init -p)",
       "Bash(npm run build)",
       "Bash(npm install -D @tailwindcss/postcss)",
-      "Bash(npm install -D tailwindcss@^3 @tailwindcss/postcss@latest --legacy-peer-deps)"
+      "Bash(npm install -D tailwindcss@^3 @tailwindcss/postcss@latest --legacy-peer-deps)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfeat(foundation): initialize Next.js with Tailwind CSS and TypeScript\n\nSet up complete Next.js 15 project with App Router:\n- Install Next.js, React, TypeScript\n- Configure Tailwind CSS v3 with Terracotta Midnight v2 palette\n- Set up PostCSS and autoprefixer\n- Configure TypeScript with strict mode\n- Set up ESLint with Next.js config\n- Create app directory structure\n- Add root layout with custom fonts\n- Add global styles with design system colors\n- Create temporary homepage with coming soon message\n- Configure package scripts (dev, build, start, lint, type-check)\n\nBuild succeeds with no errors ✓\nReady for Vercel deployment\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push origin development)",
+      "Bash(npm install -D jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event @types/jest)",
+      "Bash(npm test)",
+      "Bash(npm install -D ts-node)",
+      "Bash(npm install -D @playwright/test)",
+      "Bash(npx playwright install)"
     ],
     "deny": [],
     "ask": []
