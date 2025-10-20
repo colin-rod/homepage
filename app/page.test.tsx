@@ -2,12 +2,12 @@ import { render, screen } from '@testing-library/react'
 import Home from './page'
 
 describe('Home Page', () => {
-  it('renders the homepage with coming soon message', () => {
+  it('renders the homepage with navigation and hero', () => {
     render(<Home />)
 
-    expect(screen.getByText('Colin Rodrigues')).toBeInTheDocument()
+    // Check for name in both nav and hero
+    expect(screen.getAllByText('Colin Rodrigues').length).toBeGreaterThan(0)
     expect(screen.getByText(/Product & Strategy/i)).toBeInTheDocument()
-    expect(screen.getByText('Coming Soon')).toBeInTheDocument()
   })
 
   it('displays the correct heading', () => {
@@ -15,5 +15,23 @@ describe('Home Page', () => {
 
     const heading = screen.getByRole('heading', { level: 1 })
     expect(heading).toHaveTextContent('Colin Rodrigues')
+  })
+
+  it('renders navigation component', () => {
+    render(<Home />)
+
+    // Navigation should have links
+    const links = screen.getAllByRole('link')
+    expect(links.length).toBeGreaterThan(0)
+  })
+
+  it('renders hero section with CTAs', () => {
+    render(<Home />)
+
+    const viewProjectsCta = screen.getByRole('link', { name: /view projects/i })
+    const contactCta = screen.getByRole('link', { name: /contact me/i })
+
+    expect(viewProjectsCta).toBeInTheDocument()
+    expect(contactCta).toBeInTheDocument()
   })
 })
