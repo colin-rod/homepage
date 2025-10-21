@@ -7,16 +7,17 @@ import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
 
 interface ProjectPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 /**
  * Generate metadata for project detail pages
  */
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
-  const project = getProjectBySlug(params.slug)
+  const { slug } = await params
+  const project = getProjectBySlug(slug)
 
   if (!project) {
     return generatePageMetadata('Project Not Found', 'The requested project could not be found.', '/projects')
@@ -45,8 +46,9 @@ export async function generateStaticParams() {
  *
  * Displays complete information about a specific project
  */
-export default function ProjectDetailPage({ params }: ProjectPageProps) {
-  const project = getProjectBySlug(params.slug)
+export default async function ProjectDetailPage({ params }: ProjectPageProps) {
+  const { slug } = await params
+  const project = getProjectBySlug(slug)
 
   if (!project) {
     notFound()

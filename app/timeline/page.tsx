@@ -63,7 +63,7 @@ export default function TimelinePage() {
 
           {/* Timeline */}
           <div className="space-y-8">
-            {sortedEvents.map((event, index) => (
+            {sortedEvents.map((event) => (
               <div key={event.id} className="relative pl-8 border-l-2 border-divider">
                 {/* Timeline Dot */}
                 <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-accent-warm border-2 border-background" />

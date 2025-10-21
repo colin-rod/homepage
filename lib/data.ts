@@ -3,7 +3,7 @@
  * Functions to load and process data from JSON files
  */
 
-import { Project, TimelineEvent, CVData, BlogPost } from './types'
+import { Project, TimelineEvent, CVData } from './types'
 import projectsData from '@/data/projects.json'
 import timelineData from '@/data/timeline.json'
 import cvData from '@/data/cv.json'

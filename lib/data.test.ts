@@ -15,7 +15,6 @@ import {
   getAllProjectTags,
   getAllTimelineTags,
 } from './data'
-import { Project, TimelineEvent, CVData } from './types'
 
 describe('Project Data Utilities', () => {
   describe('getProjects', () => {

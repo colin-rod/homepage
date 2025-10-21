@@ -160,7 +160,6 @@ describe('CV Page', () => {
 
       const buttons = screen.getAllByRole('button')
       if (buttons.length > 1) {
-        const firstButton = buttons[0]
         const secondButton = buttons[1]
 
         // Click second button
