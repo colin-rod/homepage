@@ -46,7 +46,8 @@ export default function CVContent({ cvData }: CVContentProps) {
       </div>
 
       {/* Filter Buttons */}
-      <div className="mb-12">
+      <div className="mb-8">
+        <h3 className="text-sm font-semibold text-text mb-3">Filter by focus:</h3>
         <div className="flex flex-wrap gap-3">
           {filters.map((filter) => (
             <button
@@ -69,6 +70,49 @@ export default function CVContent({ cvData }: CVContentProps) {
                 filteredExperience.length === 1 ? 'position' : 'positions'
               })`}
         </p>
+      </div>
+
+      {/* Download CV Buttons */}
+      <div className="mb-12 card bg-accent-warm/5 border-accent-warm/20">
+        <h3 className="text-sm font-semibold text-text mb-3">Download as PDF:</h3>
+        <p className="text-sm text-text-secondary mb-4">
+          Click below to open a print-optimized version. Use your browser&apos;s print function
+          (Cmd/Ctrl+P) to save as PDF.
+        </p>
+        <div className="flex flex-wrap gap-3">
+          <a
+            href="/cv/download?filter=all"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-outline"
+          >
+            Download Full CV
+          </a>
+          <a
+            href="/cv/download?filter=product"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-outline"
+          >
+            Product Focus
+          </a>
+          <a
+            href="/cv/download?filter=strategy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-outline"
+          >
+            Strategy Focus
+          </a>
+          <a
+            href="/cv/download?filter=tech"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-outline"
+          >
+            Technical Focus
+          </a>
+        </div>
       </div>
 
       {/* Skills Section */}
