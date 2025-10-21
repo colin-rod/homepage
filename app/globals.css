@@ -128,3 +128,64 @@
     background-image: linear-gradient(90deg, #D3643E 0%, #C38A27 100%);
   }
 }
+
+/* Print-optimized CV styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Hide everything except main content */
+  header,
+  nav,
+  footer,
+  button {
+    display: none !important;
+  }
+
+  .cv-download {
+    max-width: 100%;
+    margin: 0;
+    padding: 0.5in;
+  }
+
+  /* Typography optimizations */
+  body {
+    font-size: 11pt;
+    line-height: 1.4;
+  }
+
+  h1 {
+    font-size: 24pt;
+  }
+
+  h2 {
+    font-size: 16pt;
+  }
+
+  h3 {
+    font-size: 13pt;
+  }
+
+  /* Page breaks */
+  section {
+    page-break-inside: avoid;
+  }
+
+  /* Link visibility */
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  a[href]:after {
+    content: ' (' attr(href) ')';
+  }
+
+  /* Remove shadows and decorative elements */
+  * {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+}
