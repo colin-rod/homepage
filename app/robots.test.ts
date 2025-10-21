@@ -1,5 +1,6 @@
 import robots from './robots'
 import { siteConfig } from '@/lib/seo'
+import { MetadataRoute } from 'next'
 
 describe('robots.txt', () => {
   it('should return robots configuration object', () => {
@@ -13,22 +14,34 @@ describe('robots.txt', () => {
 
   it('should allow all user agents', () => {
     const robotsConfig = robots()
+    const rules = robotsConfig.rules as MetadataRoute.Robots['rules']
 
-    expect(robotsConfig.rules).toHaveLength(1)
-    expect(robotsConfig.rules[0].userAgent).toBe('*')
+    expect(rules).toHaveLength(1)
+    if (Array.isArray(rules) && rules.length > 0) {
+      const firstRule = rules[0] as { userAgent: string }
+      expect(firstRule.userAgent).toBe('*')
+    }
   })
 
   it('should allow root path', () => {
     const robotsConfig = robots()
+    const rules = robotsConfig.rules as MetadataRoute.Robots['rules']
 
-    expect(robotsConfig.rules[0].allow).toBe('/')
+    if (Array.isArray(rules) && rules.length > 0) {
+      const firstRule = rules[0] as { allow: string }
+      expect(firstRule.allow).toBe('/')
+    }
   })
 
   it('should disallow API routes and CV download pages', () => {
     const robotsConfig = robots()
+    const rules = robotsConfig.rules as MetadataRoute.Robots['rules']
 
-    expect(robotsConfig.rules[0].disallow).toContain('/api/')
-    expect(robotsConfig.rules[0].disallow).toContain('/cv/download')
+    if (Array.isArray(rules) && rules.length > 0) {
+      const firstRule = rules[0] as { disallow: string[] }
+      expect(firstRule.disallow).toContain('/api/')
+      expect(firstRule.disallow).toContain('/cv/download')
+    }
   })
 
   it('should include sitemap URL', () => {

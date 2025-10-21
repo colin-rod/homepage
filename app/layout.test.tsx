@@ -37,14 +37,16 @@ describe('RootLayout', () => {
 
     it('should have Open Graph configuration', () => {
       expect(metadata.openGraph).toBeDefined()
-      expect(metadata.openGraph?.type).toBe('website')
-      expect(metadata.openGraph?.locale).toBe('en_US')
-      expect(metadata.openGraph?.url).toBe('https://colinrodrigues.com')
+      const og = metadata.openGraph as Record<string, unknown>
+      expect(og?.type).toBe('website')
+      expect(og?.locale).toBe('en_US')
+      expect(og?.url).toBe('https://colinrodrigues.com')
     })
 
     it('should have Twitter Card configuration', () => {
       expect(metadata.twitter).toBeDefined()
-      expect(metadata.twitter?.card).toBe('summary_large_image')
+      const twitter = metadata.twitter as Record<string, unknown>
+      expect(twitter?.card).toBe('summary_large_image')
     })
 
     it('should have robots configuration', () => {

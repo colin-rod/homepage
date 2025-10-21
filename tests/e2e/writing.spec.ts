@@ -19,7 +19,8 @@ test.describe('Writing/Blog Pages', () => {
 
       // Should have at least the welcome post
       const posts = page.locator('article')
-      await expect(posts).toHaveCountGreaterThan(0)
+      const count = await posts.count()
+      expect(count).toBeGreaterThan(0)
 
       // Check for welcome post
       await expect(page.getByText('Welcome to My Writing')).toBeVisible()
