@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react'
 import RootLayout, { metadata, viewport } from './layout'
 import { baseMetadata, viewport as baseViewport } from '@/lib/seo'
 
@@ -50,8 +49,9 @@ describe('RootLayout', () => {
 
     it('should have robots configuration', () => {
       expect(metadata.robots).toBeDefined()
-      expect((metadata.robots as any).index).toBe(true)
-      expect((metadata.robots as any).follow).toBe(true)
+      const robots = metadata.robots as { index: boolean; follow: boolean }
+      expect(robots.index).toBe(true)
+      expect(robots.follow).toBe(true)
     })
 
     it('should have icons configuration', () => {

@@ -3,7 +3,7 @@ import ProjectNotFound from './not-found'
 
 // Mock Next.js Link component
 jest.mock('next/link', () => {
-  return ({
+  const MockLink = ({
     children,
     href,
     className,
@@ -18,6 +18,8 @@ jest.mock('next/link', () => {
       </a>
     )
   }
+  MockLink.displayName = 'MockLink'
+  return MockLink
 })
 
 // Mock Navigation and Footer components

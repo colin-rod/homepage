@@ -88,7 +88,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
         {/* Post Content */}
         <article className="prose prose-lg dark:prose-invert max-w-none">
-          <MDXRemote source={post.content} />
+          <MDXRemote source={post.content || ''} />
         </article>
 
         {/* Footer with back link */}
