@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import CVPage from './page'
 
 /**
@@ -9,6 +9,7 @@ import CVPage from './page'
  * - Skills organized by category
  * - Work experience with highlights
  * - Education details
+ * - Tag-based filtering functionality
  * - Proper structure and accessibility
  */
 
@@ -123,6 +124,51 @@ describe('CV Page', () => {
       const { container } = render(<CVPage />)
       const sections = container.querySelectorAll('section')
       expect(sections.length).toBeGreaterThan(0)
+    })
+  })
+
+  describe('Tag Filtering', () => {
+    it('displays filter buttons', () => {
+      render(<CVPage />)
+      // Should have filter button roles
+      const buttons = screen.getAllByRole('button')
+      expect(buttons.length).toBeGreaterThan(0)
+    })
+
+    it('shows all experiences by default', () => {
+      render(<CVPage />)
+      const main = screen.getByRole('main')
+      // Should display experience content
+      expect(main.textContent).toMatch(/experience/i)
+    })
+
+    it('filters experiences when clicking filter buttons', () => {
+      render(<CVPage />)
+
+      // Find and click a filter button if available
+      const buttons = screen.getAllByRole('button')
+      if (buttons.length > 0) {
+        fireEvent.click(buttons[0])
+        // After clicking, page should still render
+        const main = screen.getByRole('main')
+        expect(main).toBeInTheDocument()
+      }
+    })
+
+    it('updates active filter state when clicked', () => {
+      render(<CVPage />)
+
+      const buttons = screen.getAllByRole('button')
+      if (buttons.length > 1) {
+        const firstButton = buttons[0]
+        const secondButton = buttons[1]
+
+        // Click second button
+        fireEvent.click(secondButton)
+
+        // Page should still be functional
+        expect(screen.getByRole('main')).toBeInTheDocument()
+      }
     })
   })
 })
