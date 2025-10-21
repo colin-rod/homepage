@@ -24,12 +24,12 @@ export default function ContactPage() {
           {/* Page Header */}
           <div className="mb-16 text-center">
             <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl mb-6">
-              Let's Connect
+              Let&apos;s Connect
             </h1>
             <p className="text-xl text-text-secondary leading-relaxed max-w-2xl mx-auto">
-              I'm always open to interesting conversations about product strategy, technology,
+              I&apos;m always open to interesting conversations about product strategy, technology,
               or potential collaborations. Whether you have a question, an opportunity, or just
-              want to say hello — I'd love to hear from you.
+              want to say hello — I&apos;d love to hear from you.
             </p>
           </div>
 
