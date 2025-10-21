@@ -1,17 +1,14 @@
 import { test, expect } from '@playwright/test'
 
 test.describe('Homepage', () => {
-  test('should display the coming soon page', async ({ page }) => {
+  test('should display the homepage', async ({ page }) => {
     await page.goto('/')
 
-    // Check for heading
-    await expect(page.getByRole('heading', { name: 'Colin Rodrigues' })).toBeVisible()
+    // Check for main heading (h1)
+    await expect(page.getByRole('heading', { name: 'Colin Rodrigues', level: 1 })).toBeVisible()
 
-    // Check for tagline
-    await expect(page.getByText(/Product & Strategy/i)).toBeVisible()
-
-    // Check for coming soon message
-    await expect(page.getByText('Coming Soon')).toBeVisible()
+    // Check for tagline (exact match to avoid footer/title)
+    await expect(page.getByText('Product & Strategy', { exact: true })).toBeVisible()
   })
 
   test('should have correct page title', async ({ page }) => {
@@ -25,14 +22,14 @@ test.describe('Homepage', () => {
 
     // Test mobile viewport
     await page.setViewportSize({ width: 375, height: 667 })
-    await expect(page.getByRole('heading', { name: 'Colin Rodrigues' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Colin Rodrigues', level: 1 })).toBeVisible()
 
     // Test tablet viewport
     await page.setViewportSize({ width: 768, height: 1024 })
-    await expect(page.getByRole('heading', { name: 'Colin Rodrigues' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Colin Rodrigues', level: 1 })).toBeVisible()
 
     // Test desktop viewport
     await page.setViewportSize({ width: 1920, height: 1080 })
-    await expect(page.getByRole('heading', { name: 'Colin Rodrigues' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Colin Rodrigues', level: 1 })).toBeVisible()
   })
 })
