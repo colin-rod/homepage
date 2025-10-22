@@ -46,6 +46,23 @@ test.describe('About Page', () => {
     await expect(page.getByRole('main')).toBeVisible()
   })
 
+  test('should display GitHub contribution chart', async ({ page }) => {
+    // Check for "Building in Public" section
+    await expect(page.getByRole('heading', { name: /building in public/i })).toBeVisible()
+
+    // Check for chart image from ghchart.rshah.org
+    const chartImage = page.locator('img[src*="ghchart.rshah.org"]')
+    await expect(chartImage).toBeVisible()
+
+    // Verify it has proper alt text for accessibility
+    await expect(chartImage).toHaveAttribute('alt', /github contribution chart/i)
+  })
+
+  test('GitHub chart should have proper username in URL', async ({ page }) => {
+    const chartImage = page.locator('img[src*="ghchart.rshah.org"]')
+    await expect(chartImage).toHaveAttribute('src', /colin-rod/)
+  })
+
   test('should be responsive on mobile', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 })
     await expect(page.getByRole('heading', { name: /about/i, level: 1 })).toBeVisible()

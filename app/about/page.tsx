@@ -3,6 +3,7 @@ import { generatePageMetadata } from '@/lib/seo'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
 import PageTransition from '@/components/animations/PageTransition'
+import GitHubChart from '@/components/features/GitHubChart'
 
 export const metadata: Metadata = generatePageMetadata(
   'About',
@@ -93,14 +94,24 @@ export default function AboutPage() {
               </div>
             </section>
 
+            {/* Recent Activity Section */}
+            <section className="mb-16">
+              <h2 className="text-2xl font-bold text-text mb-4">Building in Public</h2>
+              <p className="text-text-secondary mb-6">
+                Here&apos;s a snapshot of my recent coding activity. I believe in learning and
+                building in public, sharing the process as much as the outcomes.
+              </p>
+              <GitHubChart username="colin-rod" color="D3643E" />
+            </section>
+
             {/* CTA Section */}
             <section className="border-t border-divider pt-12">
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-text mb-4">Let&apos;s Connect</h2>
                 <p className="text-lg text-text-secondary mb-8">
                   If something here resonates
-                  <br /> whether you&apos;re a builder, a parent, or just figuring things out along
-                  the way
+                  <br /> Whether you&apos;re a builder, a parent
+                  <br /> or just figuring things out along the way
                   <br /> I&apos;d love to connect.
                 </p>
                 <a href="/contact" className="btn btn-primary">

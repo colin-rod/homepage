@@ -165,13 +165,15 @@ npm test -- --watch
 
 # Run tests with coverage
 npm test -- --coverage
-
-# Run E2E tests
-npm run test:e2e
-
-# Run E2E tests in UI mode
-npm run test:e2e:ui
 ```
+
+**IMPORTANT: E2E Testing Guidelines**
+
+- **DO NOT run E2E tests locally** - They are flaky in local development environments
+- E2E tests are run automatically in CI/CD pipeline (GitHub Actions)
+- E2E tests run on every push and pull request
+- Focus on unit and component tests for local development
+- If you need to verify E2E behavior, push to a branch and let CI run the tests
 
 ---
 

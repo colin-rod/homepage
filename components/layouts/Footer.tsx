@@ -34,9 +34,9 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <nav aria-label="Footer navigation" className="md:col-span-2">
+          <nav aria-label="Footer navigation" className="md:col-span-2 md:text-right">
             <h4 className="text-sm font-semibold text-text mb-4">Quick Links</h4>
-            <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+            <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:justify-items-end">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <Link
