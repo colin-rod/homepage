@@ -34,8 +34,8 @@ export default function AboutPage() {
             <section className="mb-16">
               <div className="prose prose-lg max-w-none text-text-secondary space-y-6">
                 <p>
-                  I&apos;m Colin — a builder, a dad, and someone who&apos;s constantly curious about
-                  how ideas turn into things that matter.
+                  I&apos;m Colin — a builder, a father, and someone who&apos;s constantly curious
+                  about how ideas turn into things that matter.
                 </p>
                 <p>
                   Fatherhood shifted a lot for me — not just how I spend my time, but what I want
