@@ -27,7 +27,15 @@ export interface TimelineEvent {
 // Project Types
 // ============================================================================
 
-export type ProjectStatus = 'concept' | 'in-progress' | 'active' | 'completed' | 'live' | 'sunset'
+export type ProjectStatus =
+  | 'concept'
+  | 'in-progress'
+  | 'active'
+  | 'completed'
+  | 'live'
+  | 'sunset'
+  | 'planned'
+  | 'retired'
 export type ProjectType = 'project' | 'tool'
 
 export interface Project {
@@ -45,6 +53,7 @@ export interface Project {
   tags: string[] // e.g., ['web', 'api', 'automation', 'product']
   whyBuilt?: string
   learnings?: string[]
+  insight?: string // Brief insight or reflection about the project (e.g., "Built to learn Supabase")
   links?: {
     live?: string
     github?: string
@@ -112,13 +121,7 @@ export interface BlogPost {
 /**
  * Common tag categories used across the application
  */
-export type TagCategory =
-  | 'product'
-  | 'strategy'
-  | 'tech'
-  | 'design'
-  | 'business'
-  | 'learning'
+export type TagCategory = 'product' | 'strategy' | 'tech' | 'design' | 'business' | 'learning'
 
 /**
  * Filter options for CV display

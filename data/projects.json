@@ -6,9 +6,10 @@
     "description": "A modern, interactive portfolio with dynamic CV system and project showcase",
     "summary": "Built with Next.js 15, featuring a dynamic CV filtering system, timeline of highlights, and interactive project showcase with Terracotta Midnight design system.",
     "type": "project",
-    "status": "active",
+    "status": "in-progress",
     "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "PostHog"],
     "tags": ["web", "product", "strategy"],
+    "insight": "Rebuilding my digital presence with modern web technologies",
     "featured": true,
     "year": 2024
   },
@@ -19,9 +20,10 @@
     "description": "Comprehensive framework for product strategy and roadmap planning",
     "summary": "Developed a systematic approach to product strategy, combining market analysis, user research, and competitive positioning to drive product decisions.",
     "type": "project",
-    "status": "completed",
+    "status": "live",
     "techStack": ["Product Management", "Strategy", "Analytics"],
     "tags": ["product", "strategy"],
+    "insight": "Framework used across multiple product teams to align strategy",
     "featured": true,
     "year": 2023
   },
@@ -32,9 +34,10 @@
     "description": "Platform for conducting and analyzing user research at scale",
     "summary": "Built internal tools for managing user interviews, surveys, and feedback analysis. Improved research velocity by 3x.",
     "type": "project",
-    "status": "completed",
+    "status": "live",
     "techStack": ["React", "Node.js", "PostgreSQL"],
     "tags": ["web", "product", "research"],
+    "insight": "Scaled research operations from 5 to 50+ interviews per month",
     "featured": true,
     "year": 2023
   },
@@ -45,9 +48,10 @@
     "description": "A placeholder project to demonstrate the data structure",
     "summary": "This is an example project that shows how project data is structured",
     "type": "project",
-    "status": "concept",
+    "status": "planned",
     "techStack": ["Next.js", "TypeScript", "Tailwind CSS"],
     "tags": ["web", "product"],
+    "insight": "Exploring new project ideas and validating concepts",
     "featured": false,
     "year": 2024
   },
@@ -61,6 +65,7 @@
     "status": "live",
     "techStack": ["Next.js", "Spotify API", "Chart.js"],
     "tags": ["web", "api", "tech"],
+    "insight": "Built to scratch my own itch—wanted Wrapped stats all year long",
     "featured": false,
     "year": 2024
   },
@@ -71,9 +76,10 @@
     "description": "CLI tool to extract action items from meeting transcripts",
     "summary": "Parses meeting notes and automatically extracts tasks, decisions, and action items using NLP.",
     "type": "tool",
-    "status": "active",
+    "status": "live",
     "techStack": ["Python", "OpenAI API", "Click"],
     "tags": ["automation", "tech"],
+    "insight": "Automating the tedious parts of meeting follow-up",
     "featured": false,
     "year": 2024
   }

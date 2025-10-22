@@ -2,18 +2,19 @@ import { render, screen } from '@testing-library/react'
 import ProjectsPage from './page'
 
 /**
- * Projects Index Page Tests
+ * Projects Index Page Tests (Swimlane Layout)
  *
  * Tests ensure the projects page displays:
  * - Page heading and description
- * - All projects from data
- * - Featured projects highlighted
- * - Project filtering by tags
- * - Proper grid layout
- * - Links to project detail pages
+ * - All 4 swimlanes (In Progress, Shipped, Planned, Retired)
+ * - Tools & Utilities swimlane
+ * - Swimlane titles and descriptions
+ * - Project tiles within swimlanes
+ * - Horizontal scroll containers
+ * - Proper accessibility
  */
 
-describe('Projects Page', () => {
+describe('Projects Page (Swimlane Layout)', () => {
   describe('Content', () => {
     it('renders the main page heading', () => {
       render(<ProjectsPage />)
@@ -22,31 +23,91 @@ describe('Projects Page', () => {
       expect(heading.textContent).toMatch(/projects/i)
     })
 
-    it('displays page description or introduction', () => {
+    it('displays page description', () => {
       render(<ProjectsPage />)
       const main = screen.getByRole('main')
-      expect(main.textContent).toMatch(/built|work|portfolio/i)
+      expect(main.textContent).toMatch(/collection of things/i)
+    })
+  })
+
+  describe('Swimlanes', () => {
+    it('renders "In Progress" swimlane heading', () => {
+      render(<ProjectsPage />)
+      expect(screen.getByRole('heading', { name: /in progress/i })).toBeInTheDocument()
     })
 
-    it('displays project cards', () => {
+    it('renders "Shipped" swimlane heading', () => {
       render(<ProjectsPage />)
-      // Should have multiple project cards displayed
+      expect(screen.getByRole('heading', { name: /shipped/i })).toBeInTheDocument()
+    })
+
+    it('renders "Planned" swimlane heading', () => {
+      render(<ProjectsPage />)
+      expect(screen.getByRole('heading', { name: /planned/i })).toBeInTheDocument()
+    })
+
+    it('renders "Tools & Utilities" swimlane heading', () => {
+      render(<ProjectsPage />)
+      expect(screen.getByRole('heading', { name: /tools & utilities/i })).toBeInTheDocument()
+    })
+
+    it('displays swimlane descriptions', () => {
+      render(<ProjectsPage />)
       const main = screen.getByRole('main')
-      expect(main.textContent).toMatch(/portfolio|project|strategy/i)
+      expect(main.textContent).toMatch(/currently under active development/i)
+      expect(main.textContent).toMatch(/live and completed projects/i)
+      expect(main.textContent).toMatch(/concepts and ideas/i)
+    })
+
+    it('renders swimlanes as section elements with region role', () => {
+      render(<ProjectsPage />)
+      const regions = screen.getAllByRole('region')
+      // Should have at least 4 swimlanes (In Progress, Shipped, Planned, Tools)
+      expect(regions.length).toBeGreaterThanOrEqual(4)
+    })
+  })
+
+  describe('Project Display', () => {
+    it('displays project cards within swimlanes', () => {
+      render(<ProjectsPage />)
+      const articles = screen.getAllByRole('article')
+      // Should have multiple project cards
+      expect(articles.length).toBeGreaterThan(0)
     })
 
     it('shows project titles', () => {
       render(<ProjectsPage />)
-      // At least one project title should be visible
-      const titles = screen.getAllByRole('heading', { level: 3 })
-      expect(titles.length).toBeGreaterThan(0)
+      // Should have project titles as h3 headings
+      const headings = screen.getAllByRole('heading', { level: 3 })
+      expect(headings.length).toBeGreaterThan(0)
     })
 
-    it('displays project summaries or descriptions', () => {
+    it('displays project summaries', () => {
       render(<ProjectsPage />)
       const main = screen.getByRole('main')
-      // Should contain descriptive text about projects
-      expect(main.textContent.length).toBeGreaterThan(200)
+      // Should contain project summary text
+      expect(main.textContent).toMatch(/portfolio|product|strategy/i)
+    })
+
+    it('shows tech stack tags', () => {
+      render(<ProjectsPage />)
+      const main = screen.getByRole('main')
+      expect(main.textContent).toMatch(/next\.js|typescript|react/i)
+    })
+
+    it('displays "Learn more" links', () => {
+      render(<ProjectsPage />)
+      const learnMoreLinks = screen.getAllByRole('link', { name: /learn more/i })
+      expect(learnMoreLinks.length).toBeGreaterThan(0)
+    })
+  })
+
+  describe('Icons', () => {
+    it('renders icons for each swimlane', () => {
+      const { container } = render(<ProjectsPage />)
+      // Each swimlane should have an icon (SVG element from Lucide)
+      const icons = container.querySelectorAll('svg')
+      expect(icons.length).toBeGreaterThan(4) // Swimlane icons + project tile icons
     })
   })
 
@@ -61,44 +122,50 @@ describe('Projects Page', () => {
       render(<ProjectsPage />)
       const h1 = screen.getByRole('heading', { level: 1 })
       expect(h1).toBeInTheDocument()
+      // Should have h2 headings for swimlanes
+      const h2Headings = screen.getAllByRole('heading', { level: 2 })
+      expect(h2Headings.length).toBeGreaterThanOrEqual(4)
     })
 
-    it('uses a grid or list layout for projects', () => {
+    it('uses horizontal scroll containers', () => {
       const { container } = render(<ProjectsPage />)
       const main = container.querySelector('main')
-      // Should have grid or flex container for projects
-      expect(main?.textContent).toBeTruthy()
+      // Should have overflow-x-auto classes for horizontal scrolling
+      const scrollContainers = main?.querySelectorAll('[class*="overflow-x-auto"]')
+      expect(scrollContainers).toBeTruthy()
+      expect(scrollContainers!.length).toBeGreaterThan(0)
     })
   })
 
-  describe('Project Display', () => {
-    it('shows project status badges', () => {
+  describe('Featured Projects', () => {
+    it('displays featured badge on featured projects', () => {
       render(<ProjectsPage />)
       const main = screen.getByRole('main')
-      // Should show status like "active", "completed", "live", etc.
-      expect(main.textContent).toMatch(/active|completed|live|concept/i)
+      // Featured projects should have "Featured" text
+      expect(main.textContent).toMatch(/featured/i)
+    })
+  })
+
+  describe('Tools Display', () => {
+    it('displays tools in their own swimlane', () => {
+      render(<ProjectsPage />)
+      const toolsHeading = screen.getByRole('heading', { name: /tools & utilities/i })
+      expect(toolsHeading).toBeInTheDocument()
     })
 
-    it('displays tech stack or tags', () => {
+    it('shows tool-specific content', () => {
       render(<ProjectsPage />)
       const main = screen.getByRole('main')
-      // Should show technologies or tags
-      expect(main.textContent).toMatch(/next\.js|typescript|react|product|strategy/i)
-    })
-
-    it('includes links to project pages or external URLs', () => {
-      render(<ProjectsPage />)
-      const links = screen.getAllByRole('link')
-      // Should have navigation links plus project links
-      expect(links.length).toBeGreaterThan(5)
+      // Should show tool names
+      expect(main.textContent).toMatch(/spotify|meeting/i)
     })
   })
 
   describe('Styling', () => {
-    it('applies proper spacing and padding', () => {
+    it('applies proper spacing and padding to main', () => {
       const { container } = render(<ProjectsPage />)
       const main = container.querySelector('main')
-      expect(main?.className).toMatch(/py-|px-/)
+      expect(main?.className).toMatch(/py-/)
     })
 
     it('uses responsive container', () => {
@@ -108,53 +175,18 @@ describe('Projects Page', () => {
       expect(responsiveContainer).toBeInTheDocument()
     })
 
-    it('applies grid layout for project cards', () => {
+    it('applies fixed-width card classes', () => {
       const { container } = render(<ProjectsPage />)
-      const main = container.querySelector('main')
-      // Should have grid classes
-      const grid = main?.querySelector('[class*="grid"]')
-      expect(grid).toBeInTheDocument()
-    })
-  })
-
-  describe('Tools & Utilities Section', () => {
-    it('displays tools section heading', () => {
-      render(<ProjectsPage />)
-      const toolsHeading = screen.getByRole('heading', { name: /tools & utilities/i })
-      expect(toolsHeading).toBeInTheDocument()
+      const cards = container.querySelectorAll('[class*="w-72"]')
+      // Should have fixed-width project tiles
+      expect(cards.length).toBeGreaterThan(0)
     })
 
-    it('shows tools section description', () => {
-      render(<ProjectsPage />)
-      const main = screen.getByRole('main')
-      expect(main.textContent).toMatch(/smaller utilities|tools built/i)
-    })
-
-    it('displays tool cards separately from project cards', () => {
-      render(<ProjectsPage />)
-      // Tools section should exist
-      const toolsHeading = screen.getByRole('heading', { name: /tools & utilities/i })
-      expect(toolsHeading).toBeInTheDocument()
-
-      // Should have Featured Projects or Other Projects heading
-      const projectsHeadings = screen.getAllByRole('heading').filter(h =>
-        h.textContent?.match(/featured projects|other projects|all projects/i)
-      )
-      expect(projectsHeadings.length).toBeGreaterThan(0)
-    })
-
-    it('shows tool titles and summaries', () => {
-      render(<ProjectsPage />)
-      const main = screen.getByRole('main')
-      // Should show tool-specific content (from our test data)
-      expect(main.textContent).toMatch(/spotify|meeting/i)
-    })
-
-    it('displays tool status badges', () => {
-      render(<ProjectsPage />)
-      const main = screen.getByRole('main')
-      // Tools should have status badges too
-      expect(main.textContent).toMatch(/active|live|completed/i)
+    it('applies fixed-height card classes', () => {
+      const { container } = render(<ProjectsPage />)
+      const cards = container.querySelectorAll('[class*="h-48"]')
+      // Should have fixed-height project tiles
+      expect(cards.length).toBeGreaterThan(0)
     })
   })
 
@@ -165,7 +197,13 @@ describe('Projects Page', () => {
       expect(main).toBeInTheDocument()
     })
 
-    it('headings are accessible', () => {
+    it('swimlanes have region role', () => {
+      render(<ProjectsPage />)
+      const regions = screen.getAllByRole('region')
+      expect(regions.length).toBeGreaterThanOrEqual(4)
+    })
+
+    it('all headings are accessible', () => {
       render(<ProjectsPage />)
       const headings = screen.getAllByRole('heading')
       headings.forEach((heading) => {
@@ -173,12 +211,27 @@ describe('Projects Page', () => {
       })
     })
 
-    it('links are accessible', () => {
+    it('all links are accessible', () => {
       render(<ProjectsPage />)
       const links = screen.getAllByRole('link')
       links.forEach((link) => {
         expect(link).toHaveAccessibleName()
       })
+    })
+
+    it('project cards are article elements', () => {
+      render(<ProjectsPage />)
+      const articles = screen.getAllByRole('article')
+      expect(articles.length).toBeGreaterThan(0)
+    })
+  })
+
+  describe('Empty States', () => {
+    it('handles empty swimlanes gracefully', () => {
+      render(<ProjectsPage />)
+      // Even if a swimlane has no projects, the page should render without errors
+      const main = screen.getByRole('main')
+      expect(main).toBeInTheDocument()
     })
   })
 })

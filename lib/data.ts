@@ -98,9 +98,7 @@ export function getFilteredCVData(filterTag?: string): CVData {
   }
 
   // Filter experience by tag
-  const filteredExperience = cv.experience.filter((exp) =>
-    exp.tags.includes(filterTag)
-  )
+  const filteredExperience = cv.experience.filter((exp) => exp.tags.includes(filterTag))
 
   return {
     ...cv,
@@ -134,4 +132,39 @@ export function getAllTimelineTags(): string[] {
   })
 
   return Array.from(tags).sort()
+}
+
+/**
+ * Swimlane type definition
+ */
+export type Swimlane = 'in-progress' | 'shipped' | 'planned' | 'retired'
+
+/**
+ * Get projects by swimlane category
+ * Maps project statuses to swimlanes
+ */
+export function getProjectsBySwimLane(swimlane: Swimlane): Project[] {
+  const projects = getProjectsOnly()
+
+  const statusMap: Record<Swimlane, string[]> = {
+    'in-progress': ['in-progress', 'active'],
+    shipped: ['live', 'completed'],
+    planned: ['planned', 'concept'],
+    retired: ['retired', 'sunset'],
+  }
+
+  const validStatuses = statusMap[swimlane]
+  return projects.filter((project) => validStatuses.includes(project.status))
+}
+
+/**
+ * Get all projects organized by swimlane
+ */
+export function getProjectsBySwimlanes(): Record<Swimlane, Project[]> {
+  return {
+    'in-progress': getProjectsBySwimLane('in-progress'),
+    shipped: getProjectsBySwimLane('shipped'),
+    planned: getProjectsBySwimLane('planned'),
+    retired: getProjectsBySwimLane('retired'),
+  }
 }

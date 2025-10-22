@@ -1,27 +1,34 @@
 import { Metadata } from 'next'
-import Link from 'next/link'
 import { generatePageMetadata } from '@/lib/seo'
-import { getProjectsOnly, getTools } from '@/lib/data'
+import { getProjectsBySwimLane, getTools } from '@/lib/data'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
+import Swimlane from '@/components/features/Swimlane'
+import { Code2, Rocket, Lightbulb, Archive, Wrench } from 'lucide-react'
 
 export const metadata: Metadata = generatePageMetadata(
   'Projects',
-  'Explore my portfolio of product, strategy, and technical projects. From concept to live implementations, see what I\'ve built and learned.',
+  "Explore my portfolio of product, strategy, and technical projects. From concept to live implementations, see what I've built and learned.",
   '/projects'
 )
 
 /**
  * Projects Index Page
  *
- * Displays all projects with filtering, status badges, and links to detail pages
+ * Displays all projects in horizontal scrollable swimlanes organized by status:
+ * - In Progress: Active projects under development
+ * - Shipped: Live and completed projects
+ * - Planned: Concept and planned projects
+ * - Retired: Sunset or archived projects
+ * - Tools: Small utilities and tools (all statuses)
  */
 
 export default function ProjectsPage() {
-  const projects = getProjectsOnly()
+  const inProgressProjects = getProjectsBySwimLane('in-progress')
+  const shippedProjects = getProjectsBySwimLane('shipped')
+  const plannedProjects = getProjectsBySwimLane('planned')
+  const retiredProjects = getProjectsBySwimLane('retired')
   const tools = getTools()
-  const featuredProjects = projects.filter((p) => p.featured)
-  const otherProjects = projects.filter((p) => !p.featured)
 
   return (
     <>
@@ -34,288 +41,54 @@ export default function ProjectsPage() {
               Projects
             </h1>
             <p className="text-xl text-text-secondary leading-relaxed">
-              A collection of work I&apos;ve built, from product strategy frameworks to
-              technical implementations. Each project represents learning, experimentation, and
-              solving real problems.
+              A collection of things I&apos;m working on, built, launched, or investigated. Each one
+              started with a question or problem I wanted to understand better. I use this space to
+              document the process, what I learned, and what I&apos;d do differently next time.
             </p>
           </div>
 
-          {/* Featured Projects Section */}
-          {featuredProjects.length > 0 && (
-            <section className="mb-20">
-              <h2 className="text-2xl font-bold text-text mb-8">Featured Projects</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {featuredProjects.map((project) => (
-                  <article
-                    key={project.id}
-                    className="card hover:shadow-lg transition-shadow duration-200"
-                  >
-                    <div className="mb-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-xl font-bold text-primary">{project.title}</h3>
-                        <span
-                          className={`text-xs px-2 py-1 rounded-full ${
-                            project.status === 'active' || project.status === 'live'
-                              ? 'bg-green-100 text-green-800'
-                              : project.status === 'completed'
-                              ? 'bg-blue-100 text-blue-800'
-                              : project.status === 'in-progress'
-                              ? 'bg-yellow-100 text-yellow-800'
-                              : 'bg-gray-100 text-gray-800'
-                          }`}
-                        >
-                          {project.status}
-                        </span>
-                      </div>
-                      <p className="text-text-secondary text-sm">{project.summary}</p>
-                    </div>
+          {/* In Progress Swimlane */}
+          <Swimlane
+            title="In Progress"
+            icon={<Code2 className="h-6 w-6 text-accent-warm" />}
+            projects={inProgressProjects}
+            description="Projects currently under active development"
+          />
 
-                    {/* Tech Stack Tags */}
-                    <div className="mb-4 flex flex-wrap gap-2">
-                      {project.techStack.slice(0, 3).map((tech) => (
-                        <span
-                          key={tech}
-                          className="text-xs px-2 py-1 rounded bg-neutral-surface border border-divider text-text-secondary"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {project.techStack.length > 3 && (
-                        <span className="text-xs px-2 py-1 text-text-secondary">
-                          +{project.techStack.length - 3} more
-                        </span>
-                      )}
-                    </div>
+          {/* Shipped Swimlane */}
+          <Swimlane
+            title="Shipped"
+            icon={<Rocket className="h-6 w-6 text-semantic-success" />}
+            projects={shippedProjects}
+            description="Live and completed projects ready for the world"
+          />
 
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-xs px-2 py-1 rounded bg-accent-warm/10 text-accent-warm"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+          {/* Planned Swimlane */}
+          <Swimlane
+            title="Planned"
+            icon={<Lightbulb className="h-6 w-6 text-accent-gold" />}
+            projects={plannedProjects}
+            description="Concepts and ideas being explored and validated"
+          />
 
-                    {/* Links */}
-                    <div className="flex gap-4 pt-4 border-t border-divider">
-                      {project.links?.live && (
-                        <a
-                          href={project.links.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm text-accent-warm hover:underline"
-                        >
-                          View Live →
-                        </a>
-                      )}
-                      {project.links?.github && (
-                        <a
-                          href={project.links.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm text-accent-warm hover:underline"
-                        >
-                          GitHub →
-                        </a>
-                      )}
-                      <Link
-                        href={`/projects/${project.slug}`}
-                        className="text-sm text-accent-warm hover:underline ml-auto"
-                      >
-                        Learn more →
-                      </Link>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </section>
+          {/* Retired Swimlane */}
+          {retiredProjects.length > 0 && (
+            <Swimlane
+              title="Retired"
+              icon={<Archive className="h-6 w-6 text-text-secondary" />}
+              projects={retiredProjects}
+              description="Projects that have been sunset or archived, with lessons learned"
+            />
           )}
 
-          {/* Other Projects Section */}
-          {otherProjects.length > 0 && (
-            <section className="mb-20">
-              <h2 className="text-2xl font-bold text-text mb-8">
-                {featuredProjects.length > 0 ? 'Other Projects' : 'All Projects'}
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {otherProjects.map((project) => (
-                  <article
-                    key={project.id}
-                    className="card hover:shadow-lg transition-shadow duration-200"
-                  >
-                    <div className="mb-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-xl font-bold text-primary">{project.title}</h3>
-                        <span
-                          className={`text-xs px-2 py-1 rounded-full ${
-                            project.status === 'active' || project.status === 'live'
-                              ? 'bg-green-100 text-green-800'
-                              : project.status === 'completed'
-                              ? 'bg-blue-100 text-blue-800'
-                              : project.status === 'in-progress'
-                              ? 'bg-yellow-100 text-yellow-800'
-                              : 'bg-gray-100 text-gray-800'
-                          }`}
-                        >
-                          {project.status}
-                        </span>
-                      </div>
-                      <p className="text-text-secondary text-sm">{project.summary}</p>
-                    </div>
-
-                    {/* Tech Stack Tags */}
-                    <div className="mb-4 flex flex-wrap gap-2">
-                      {project.techStack.slice(0, 3).map((tech) => (
-                        <span
-                          key={tech}
-                          className="text-xs px-2 py-1 rounded bg-neutral-surface border border-divider text-text-secondary"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {project.techStack.length > 3 && (
-                        <span className="text-xs px-2 py-1 text-text-secondary">
-                          +{project.techStack.length - 3} more
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-xs px-2 py-1 rounded bg-accent-warm/10 text-accent-warm"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Links */}
-                    <div className="flex gap-4 pt-4 border-t border-divider">
-                      {project.links?.live && (
-                        <a
-                          href={project.links.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm text-accent-warm hover:underline"
-                        >
-                          View Live →
-                        </a>
-                      )}
-                      {project.links?.github && (
-                        <a
-                          href={project.links.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm text-accent-warm hover:underline"
-                        >
-                          GitHub →
-                        </a>
-                      )}
-                      <Link
-                        href={`/projects/${project.slug}`}
-                        className="text-sm text-accent-warm hover:underline ml-auto"
-                      >
-                        Learn more →
-                      </Link>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* Tools & Utilities Section */}
+          {/* Tools & Utilities Swimlane */}
           {tools.length > 0 && (
-            <section>
-              <div className="mb-8">
-                <h2 className="text-2xl font-bold text-text mb-2">Tools & Utilities</h2>
-                <p className="text-text-secondary">
-                  Smaller utilities and tools built to solve specific problems or experiment with
-                  new technologies.
-                </p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {tools.map((tool) => (
-                  <article
-                    key={tool.id}
-                    className="card hover:shadow-lg transition-shadow duration-200"
-                  >
-                    <div className="mb-3">
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-lg font-bold text-primary">{tool.title}</h3>
-                        <span
-                          className={`text-xs px-2 py-1 rounded-full ${
-                            tool.status === 'active' || tool.status === 'live'
-                              ? 'bg-green-100 text-green-800'
-                              : tool.status === 'completed'
-                              ? 'bg-blue-100 text-blue-800'
-                              : tool.status === 'in-progress'
-                              ? 'bg-yellow-100 text-yellow-800'
-                              : 'bg-gray-100 text-gray-800'
-                          }`}
-                        >
-                          {tool.status}
-                        </span>
-                      </div>
-                      <p className="text-text-secondary text-sm">{tool.summary}</p>
-                    </div>
-
-                    {/* Tech Stack Tags */}
-                    <div className="mb-3 flex flex-wrap gap-2">
-                      {tool.techStack.slice(0, 2).map((tech) => (
-                        <span
-                          key={tech}
-                          className="text-xs px-2 py-1 rounded bg-neutral-surface border border-divider text-text-secondary"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {tool.techStack.length > 2 && (
-                        <span className="text-xs px-2 py-1 text-text-secondary">
-                          +{tool.techStack.length - 2}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Links */}
-                    <div className="flex gap-4 pt-3 border-t border-divider">
-                      {tool.links?.live && (
-                        <a
-                          href={tool.links.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm text-accent-warm hover:underline"
-                        >
-                          View Live →
-                        </a>
-                      )}
-                      {tool.links?.github && (
-                        <a
-                          href={tool.links.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm text-accent-warm hover:underline"
-                        >
-                          GitHub →
-                        </a>
-                      )}
-                      <Link
-                        href={`/projects/${tool.slug}`}
-                        className="text-sm text-accent-warm hover:underline ml-auto"
-                      >
-                        Details →
-                      </Link>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </section>
+            <Swimlane
+              title="Tools & Utilities"
+              icon={<Wrench className="h-6 w-6 text-accent-gold" />}
+              projects={tools}
+              description="Smaller utilities and scripts built to solve specific problems"
+            />
           )}
         </div>
       </main>

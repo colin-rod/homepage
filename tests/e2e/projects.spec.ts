@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-test.describe('Projects Index Page', () => {
+test.describe('Projects Index Page (Swimlane Layout)', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/projects')
   })
@@ -13,83 +13,125 @@ test.describe('Projects Index Page', () => {
     await expect(page).toHaveTitle(/projects/i)
   })
 
-  test('should display featured projects section', async ({ page }) => {
-    await expect(page.getByRole('heading', { name: /featured projects/i })).toBeVisible()
+  test('should display all swimlane headings', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: /in progress/i })).toBeVisible()
+    await expect(page.getByRole('heading', { name: /shipped/i })).toBeVisible()
+    await expect(page.getByRole('heading', { name: /planned/i })).toBeVisible()
+    await expect(page.getByRole('heading', { name: /tools & utilities/i })).toBeVisible()
   })
 
-  test('should display project cards', async ({ page }) => {
-    // Should have at least one project card
-    const projectCards = page.locator('.card').filter({ hasText: /portfolio|product|example/i })
-    await expect(projectCards.first()).toBeVisible()
+  test('should display swimlane descriptions', async ({ page }) => {
+    const main = page.getByRole('main')
+    await expect(main.getByText(/currently under active development/i)).toBeVisible()
+    await expect(main.getByText(/live and completed projects/i)).toBeVisible()
+    await expect(main.getByText(/concepts and ideas/i)).toBeVisible()
   })
 
-  test('should display project status badges', async ({ page }) => {
-    // Check for status badges
-    const statusBadges = page.locator('text=/live|active|completed|in-progress|concept/i')
-    await expect(statusBadges.first()).toBeVisible()
-  })
-
-  test('should have clickable project cards', async ({ page }) => {
-    // Check that project cards are present and clickable
-    const projectCards = page.locator('.card')
+  test('should display project cards within swimlanes', async ({ page }) => {
+    const projectCards = page.locator('article')
     const cardCount = await projectCards.count()
     expect(cardCount).toBeGreaterThan(0)
   })
 
-  test('should be responsive', async ({ page }) => {
-    // Test mobile viewport
+  test('should display icons for each swimlane', async ({ page }) => {
+    // Each swimlane should have an SVG icon from Lucide React
+    const icons = page.locator('svg')
+    const iconCount = await icons.count()
+    expect(iconCount).toBeGreaterThan(4) // At least 4 swimlane icons plus project icons
+  })
+
+  test('should have horizontal scroll containers', async ({ page }) => {
+    // Check that horizontal scroll containers exist
+    const scrollContainers = page.locator('[class*="overflow-x-auto"]')
+    const containerCount = await scrollContainers.count()
+    expect(containerCount).toBeGreaterThan(0)
+  })
+
+  test('should show featured badge on featured projects', async ({ page }) => {
+    const main = page.getByRole('main')
+    // Featured projects should display a featured indicator
+    await expect(main.getByText(/featured/i).first()).toBeVisible()
+  })
+
+  test('should display project insights', async ({ page }) => {
+    const main = page.getByRole('main')
+    // Should show insight text from projects data
+    await expect(main.getByText(/rebuilding my digital presence/i)).toBeVisible()
+  })
+
+  test('should have clickable "Learn more" links', async ({ page }) => {
+    const learnMoreLinks = page.getByRole('link', { name: /learn more/i })
+    const linkCount = await learnMoreLinks.count()
+    expect(linkCount).toBeGreaterThan(0)
+    await expect(learnMoreLinks.first()).toBeVisible()
+  })
+
+  test('should be responsive on mobile', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 })
     await expect(page.getByRole('heading', { name: /projects/i, level: 1 })).toBeVisible()
+    await expect(page.getByRole('heading', { name: /in progress/i })).toBeVisible()
+    // Horizontal scroll should still work on mobile
+    const scrollContainers = page.locator('[class*="overflow-x-auto"]')
+    expect(await scrollContainers.count()).toBeGreaterThan(0)
+  })
 
-    // Test tablet viewport
+  test('should be responsive on tablet', async ({ page }) => {
     await page.setViewportSize({ width: 768, height: 1024 })
     await expect(page.getByRole('heading', { name: /projects/i, level: 1 })).toBeVisible()
+    await expect(page.getByRole('heading', { name: /shipped/i })).toBeVisible()
+  })
 
-    // Test desktop viewport
+  test('should be responsive on desktop', async ({ page }) => {
     await page.setViewportSize({ width: 1920, height: 1080 })
     await expect(page.getByRole('heading', { name: /projects/i, level: 1 })).toBeVisible()
+    const projectCards = page.locator('article')
+    expect(await projectCards.count()).toBeGreaterThan(0)
   })
 
-  test('should display tools & utilities section', async ({ page }) => {
+  test('should display tools in their own swimlane', async ({ page }) => {
     await expect(page.getByRole('heading', { name: /tools & utilities/i })).toBeVisible()
+    const toolsSection = page
+      .locator('section')
+      .filter({ has: page.getByRole('heading', { name: /tools & utilities/i }) })
+    await expect(toolsSection).toBeVisible()
   })
 
-  test('should show tools section description', async ({ page }) => {
-    const toolsSection = page.locator('section').filter({ has: page.getByRole('heading', { name: /tools & utilities/i }) })
-    await expect(toolsSection.getByText(/smaller utilities|tools built/i)).toBeVisible()
+  test('should show tools with distinct styling', async ({ page }) => {
+    const main = page.getByRole('main')
+    // Tools should display "Tool" badge or indicator
+    await expect(main.getByText(/tool/i).first()).toBeVisible()
   })
 
-  test('should display tool cards with compact layout', async ({ page }) => {
-    // Tools section should exist
-    const toolsHeading = page.getByRole('heading', { name: /tools & utilities/i })
-    await expect(toolsHeading).toBeVisible()
-
-    // Should have tool cards after the tools heading
-    const toolsSection = page.locator('section').filter({ has: toolsHeading })
-    const toolCards = toolsSection.locator('.card')
-    const toolCount = await toolCards.count()
-    expect(toolCount).toBeGreaterThan(0)
+  test('should support keyboard navigation', async ({ page }) => {
+    // Tab through the page
+    await page.keyboard.press('Tab')
+    await page.keyboard.press('Tab')
+    await page.keyboard.press('Tab')
+    // Should be able to navigate to links
+    const focusedElement = await page.evaluate(() => document.activeElement?.tagName)
+    expect(focusedElement).toBeTruthy()
   })
 
-  test('should differentiate between projects and tools sections', async ({ page }) => {
-    // Should have both Featured Projects/Other Projects AND Tools sections
-    const featuredOrOther = page.getByRole('heading', { name: /featured projects|other projects|all projects/i })
-    const tools = page.getByRole('heading', { name: /tools & utilities/i })
-
-    await expect(featuredOrOther.first()).toBeVisible()
-    await expect(tools).toBeVisible()
+  test('should have accessible swimlane regions', async ({ page }) => {
+    // All swimlanes should be regions with proper ARIA labels
+    const regions = page.getByRole('region')
+    const regionCount = await regions.count()
+    expect(regionCount).toBeGreaterThanOrEqual(4)
   })
 
-  test('should show tool status badges', async ({ page }) => {
-    const toolsSection = page.locator('section').filter({ has: page.getByRole('heading', { name: /tools & utilities/i }) })
-    const statusBadges = toolsSection.locator('text=/live|active|completed/i')
-    await expect(statusBadges.first()).toBeVisible()
+  test('should display tech stack tags', async ({ page }) => {
+    const main = page.getByRole('main')
+    await expect(main.getByText(/next\.js|typescript|react/i).first()).toBeVisible()
   })
 
-  test('should have links to tool detail pages', async ({ page }) => {
-    const toolsSection = page.locator('section').filter({ has: page.getByRole('heading', { name: /tools & utilities/i }) })
-    const detailsLinks = toolsSection.getByRole('link', { name: /details|learn more/i })
-    await expect(detailsLinks.first()).toBeVisible()
+  test('swimlanes should be in correct order', async ({ page }) => {
+    const headings = await page.getByRole('heading', { level: 2 }).allTextContents()
+    // Check order: In Progress, Shipped, Planned, (possibly Retired), Tools
+    expect(headings[0]).toMatch(/in progress/i)
+    expect(headings[1]).toMatch(/shipped/i)
+    expect(headings[2]).toMatch(/planned/i)
+    // Tools should be last
+    expect(headings[headings.length - 1]).toMatch(/tools & utilities/i)
   })
 })
 
@@ -119,7 +161,9 @@ test.describe('Project Detail Page', () => {
   test('should display project status badge', async ({ page }) => {
     // Should show status badge with one of the valid statuses
     const main = page.getByRole('main')
-    await expect(main.locator('text=/active|completed|live|in-progress|concept|sunset/i').first()).toBeVisible()
+    await expect(
+      main.locator('text=/active|completed|live|in-progress|concept|sunset/i').first()
+    ).toBeVisible()
   })
 
   test('should display project year', async ({ page }) => {
