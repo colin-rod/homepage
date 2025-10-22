@@ -3,6 +3,7 @@ import { generatePageMetadata } from '@/lib/seo'
 import { getCVData } from '@/lib/data'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
+import PageTransition from '@/components/animations/PageTransition'
 import CVContent from './CVContent'
 
 export const metadata: Metadata = generatePageMetadata(
@@ -24,9 +25,11 @@ export default function CVPage() {
   return (
     <>
       <Navigation />
-      <main className="py-24 sm:py-32">
-        <CVContent cvData={cv} />
-      </main>
+      <PageTransition>
+        <main className="py-24 sm:py-32">
+          <CVContent cvData={cv} />
+        </main>
+      </PageTransition>
       <Footer />
     </>
   )

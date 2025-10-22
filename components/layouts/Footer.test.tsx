@@ -18,7 +18,7 @@ describe('Footer', () => {
       render(<Footer />)
       const currentYear = new Date().getFullYear()
       expect(screen.getByText(new RegExp(`© ${currentYear}`))).toBeInTheDocument()
-      expect(screen.getByText(/all rights reserved/i)).toBeInTheDocument()
+      expect(screen.getByText(/all thoughts and projects are my own/i)).toBeInTheDocument()
     })
 
     it('renders quick navigation links', () => {

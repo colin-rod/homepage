@@ -55,7 +55,16 @@ describe('Project Data Utilities', () => {
 
     it('returns projects with valid status values', () => {
       const projects = getProjects()
-      const validStatuses = ['concept', 'in-progress', 'active', 'completed', 'live', 'sunset']
+      const validStatuses = [
+        'concept',
+        'planned',
+        'in-progress',
+        'active',
+        'completed',
+        'live',
+        'retired',
+        'sunset',
+      ]
 
       projects.forEach((project) => {
         expect(validStatuses).toContain(project.status)

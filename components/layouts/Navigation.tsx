@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const navLinks = [
   { name: 'About', href: '/about' },
@@ -91,23 +92,37 @@ export default function Navigation() {
       </nav>
 
       {/* Mobile navigation */}
-      <nav
-        className={`lg:hidden ${mobileMenuOpen ? '' : 'hidden'}`}
-        aria-label="Mobile navigation"
-      >
-        <div className="space-y-1 border-t border-divider px-4 pb-3 pt-2">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className="block rounded-lg px-3 py-2 text-base font-medium text-text-secondary hover:bg-primary/5 hover:text-accent-warm transition-colors"
-              onClick={closeMobileMenu}
-            >
-              {link.name}
-            </Link>
-          ))}
-        </div>
-      </nav>
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.nav
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="lg:hidden overflow-hidden"
+            aria-label="Mobile navigation"
+          >
+            <div className="space-y-1 border-t border-divider px-4 pb-3 pt-2">
+              {navLinks.map((link, index) => (
+                <motion.div
+                  key={link.name}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.05, duration: 0.2 }}
+                >
+                  <Link
+                    href={link.href}
+                    className="block rounded-lg px-3 py-2 text-base font-medium text-text-secondary hover:bg-primary/5 hover:text-accent-warm transition-colors"
+                    onClick={closeMobileMenu}
+                  >
+                    {link.name}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </header>
   )
 }

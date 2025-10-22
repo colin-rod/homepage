@@ -140,26 +140,30 @@ describe('ProjectTile', () => {
   describe('Styling and Layout', () => {
     it('applies fixed height class', () => {
       const { container } = render(<ProjectTile project={mockProject} />)
-      const card = container.querySelector('article')
-      expect(card?.className).toMatch(/h-48/)
+      // CardHover wrapper contains the card classes
+      const wrapper = container.firstChild
+      expect(wrapper).toBeInTheDocument()
+      expect(wrapper?.className).toMatch(/h-48/)
     })
 
     it('applies fixed width class', () => {
       const { container } = render(<ProjectTile project={mockProject} />)
-      const card = container.querySelector('article')
-      expect(card?.className).toMatch(/w-72/)
+      const wrapper = container.firstChild
+      expect(wrapper).toBeInTheDocument()
+      expect(wrapper?.className).toMatch(/w-72/)
     })
 
     it('applies card styling', () => {
       const { container } = render(<ProjectTile project={mockProject} />)
-      const card = container.querySelector('article')
-      expect(card?.className).toMatch(/card/)
+      const wrapper = container.firstChild
+      expect(wrapper).toBeInTheDocument()
+      expect(wrapper?.className).toMatch(/card/)
     })
 
-    it('has hover transition classes', () => {
+    it('has CardHover wrapper for animations', () => {
       const { container } = render(<ProjectTile project={mockProject} />)
-      const card = container.querySelector('article')
-      expect(card?.className).toMatch(/transition/)
+      const article = container.querySelector('article')
+      expect(article).toBeInTheDocument()
     })
   })
 

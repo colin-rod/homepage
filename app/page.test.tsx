@@ -7,8 +7,8 @@ describe('Home Page', () => {
 
     // Check for name in both nav and hero
     expect(screen.getAllByText('Colin Rodrigues').length).toBeGreaterThan(0)
-    // Product & Strategy appears in multiple places (hero and footer)
-    expect(screen.getAllByText(/Product & Strategy/i).length).toBeGreaterThan(0)
+    // Check for tagline or intro content
+    expect(screen.getByText(/Work in Progress/i)).toBeInTheDocument()
   })
 
   it('displays the correct heading', () => {
@@ -29,10 +29,10 @@ describe('Home Page', () => {
   it('renders hero section with CTAs', () => {
     render(<Home />)
 
-    const viewProjectsCta = screen.getByRole('link', { name: /view projects/i })
-    const contactCta = screen.getByRole('link', { name: /contact me/i })
+    const viewProjectsCta = screen.getByRole('link', { name: /explore my work/i })
+    const connectCta = screen.getByRole('link', { name: /connect/i })
 
     expect(viewProjectsCta).toBeInTheDocument()
-    expect(contactCta).toBeInTheDocument()
+    expect(connectCta).toBeInTheDocument()
   })
 })

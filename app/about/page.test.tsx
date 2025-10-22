@@ -29,9 +29,9 @@ describe('About Page', () => {
 
     it('displays skills or expertise section', () => {
       render(<AboutPage />)
-      // Should mention skills or areas of expertise
+      // Should mention building, creating, or professional background
       const page = screen.getByRole('main')
-      expect(page.textContent).toMatch(/expertise|skills|experience/i)
+      expect(page.textContent).toMatch(/building|curiosity|builder/i)
     })
 
     it('includes introductory text', () => {

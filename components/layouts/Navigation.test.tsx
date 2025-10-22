@@ -15,7 +15,7 @@ describe('Navigation', () => {
       // Query within main navigation to avoid mobile nav duplicates
       const mainNav = screen.getByRole('navigation', { name: /main/i })
       const links = mainNav.querySelectorAll('a')
-      const linkTexts = Array.from(links).map(link => link.textContent)
+      const linkTexts = Array.from(links).map((link) => link.textContent)
 
       expect(linkTexts).toContain('About')
       expect(linkTexts).toContain('Projects')
@@ -62,9 +62,9 @@ describe('Navigation', () => {
 
     it('mobile menu is initially closed', () => {
       render(<Navigation />)
-      // Mobile nav should not be visible initially
+      // Mobile nav should not be visible initially (AnimatePresence removes it from DOM)
       const mobileNav = screen.queryByRole('navigation', { name: /mobile/i })
-      expect(mobileNav).toHaveClass('hidden')
+      expect(mobileNav).not.toBeInTheDocument()
     })
 
     it('opens mobile menu when button is clicked', async () => {
@@ -75,7 +75,7 @@ describe('Navigation', () => {
       await user.click(menuButton)
 
       const mobileNav = screen.getByRole('navigation', { name: /mobile/i })
-      expect(mobileNav).not.toHaveClass('hidden')
+      expect(mobileNav).toBeInTheDocument()
     })
 
     it('closes mobile menu when clicking a link', async () => {
@@ -91,8 +91,10 @@ describe('Navigation', () => {
       const aboutLink = mobileNav.querySelector('a[href="/about"]')
       if (aboutLink) await user.click(aboutLink)
 
-      // Menu should close
-      expect(mobileNav).toHaveClass('hidden')
+      // Menu should close (AnimatePresence removes it from DOM)
+      await screen.findByRole('navigation', { name: /main/i }) // Wait for animation
+      const closedMobileNav = screen.queryByRole('navigation', { name: /mobile/i })
+      expect(closedMobileNav).not.toBeInTheDocument()
     })
   })
 
