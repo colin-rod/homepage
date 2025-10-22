@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { Project } from '@/lib/types'
 import { Star, Wrench, Code2, Rocket, Lightbulb, Archive } from 'lucide-react'
 import CardHover from '@/components/animations/CardHover'
@@ -38,8 +39,8 @@ function getProjectIcon(project: Project) {
 /**
  * ProjectTile Component
  *
- * Compact, fixed-height card for displaying projects in horizontal swimlanes.
- * Shows project icon, title, summary, tags, insight line, and link.
+ * Taller card for displaying projects in horizontal swimlanes.
+ * Shows project favicon/icon, title, description, insight, tags, and link.
  * Enhanced with hover states and improved visual hierarchy.
  */
 export default function ProjectTile({ project }: ProjectTileProps) {
@@ -51,8 +52,8 @@ export default function ProjectTile({ project }: ProjectTileProps) {
         group
         card
         flex-shrink-0
-        w-72
-        h-48
+        w-80
+        h-72
         flex
         flex-col
         overflow-hidden
@@ -63,9 +64,23 @@ export default function ProjectTile({ project }: ProjectTileProps) {
       `}
     >
       <article className="h-full flex flex-col">
-        {/* Header: Icon and Featured Badge */}
-        <div className="flex items-start justify-between mb-2">
-          <div className="flex-shrink-0">{getProjectIcon(project)}</div>
+        {/* Header: Icon/Favicon and Featured Badge */}
+        <div className="flex items-start justify-between mb-3">
+          <div className="flex-shrink-0">
+            {project.favicon ? (
+              <div className="relative w-8 h-8 rounded overflow-hidden">
+                <Image
+                  src={project.favicon}
+                  alt={`${project.title} logo`}
+                  width={32}
+                  height={32}
+                  className="object-contain"
+                />
+              </div>
+            ) : (
+              getProjectIcon(project)
+            )}
+          </div>
           {project.featured && (
             <div className="flex items-center gap-1 text-xs text-accent-gold">
               <Star className="h-3 w-3 fill-current" />
@@ -81,35 +96,27 @@ export default function ProjectTile({ project }: ProjectTileProps) {
         </div>
 
         {/* Title */}
-        <h3 className="text-lg font-bold text-primary mb-2 line-clamp-1">{project.title}</h3>
+        <h3 className="text-xl font-bold text-primary mb-2 line-clamp-2">{project.title}</h3>
 
         {/* Summary */}
         <p className="text-sm text-text-secondary mb-3 line-clamp-2">{project.summary}</p>
 
+        {/* Description */}
+        <p className="text-sm text-text mb-3 line-clamp-3 leading-relaxed">{project.description}</p>
+
+        {/* Insight Line */}
+        {project.insight && (
+          <p className="text-xs italic text-text-secondary mb-3 line-clamp-2 leading-relaxed">
+            💡 {project.insight}
+          </p>
+        )}
+
         {/* Tech Stack Tags and Category Tags */}
-        <div className="mb-2">
-          {/* Tech Stack */}
-          {project.techStack.length > 0 && (
-            <div className="flex flex-wrap gap-1 mb-1">
-              {project.techStack.slice(0, 3).map((tech) => (
-                <span
-                  key={tech}
-                  className="text-xs px-2 py-0.5 rounded bg-neutral-surface border border-divider text-text-secondary"
-                >
-                  {tech}
-                </span>
-              ))}
-              {project.techStack.length > 3 && (
-                <span className="text-xs px-2 py-0.5 text-text-secondary">
-                  +{project.techStack.length - 3}
-                </span>
-              )}
-            </div>
-          )}
+        <div className="mb-3">
           {/* Category Tags */}
           {project.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1">
-              {project.tags.map((tag) => (
+            <div className="flex flex-wrap gap-1 mb-1">
+              {project.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag}
                   className="text-xs px-2 py-0.5 rounded bg-accent-warm/10 text-accent-warm"
@@ -117,23 +124,41 @@ export default function ProjectTile({ project }: ProjectTileProps) {
                   {tag}
                 </span>
               ))}
+              {project.tags.length > 3 && (
+                <span className="text-xs px-2 py-0.5 text-text-secondary">
+                  +{project.tags.length - 3}
+                </span>
+              )}
+            </div>
+          )}
+          {/* Tech Stack */}
+          {project.techStack.length > 0 && (
+            <div className="flex flex-wrap gap-1">
+              {project.techStack.slice(0, 2).map((tech) => (
+                <span
+                  key={tech}
+                  className="text-xs px-2 py-0.5 rounded bg-neutral-surface border border-divider text-text-secondary"
+                >
+                  {tech}
+                </span>
+              ))}
+              {project.techStack.length > 2 && (
+                <span className="text-xs px-2 py-0.5 text-text-secondary">
+                  +{project.techStack.length - 2}
+                </span>
+              )}
             </div>
           )}
         </div>
 
-        {/* Insight Line */}
-        {project.insight && (
-          <p className="text-xs italic text-text-secondary mb-3 line-clamp-1">{project.insight}</p>
-        )}
-
         {/* Spacer to push link to bottom */}
         <div className="flex-grow"></div>
 
-        {/* Learn More Link - Shows on hover */}
-        <div className="mt-auto pt-2 border-t border-divider opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+        {/* Learn More Link - Shows on hover, no divider */}
+        <div className="mt-auto pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           <Link
             href={`/projects/${project.slug}`}
-            className="text-sm text-accent-warm hover:underline"
+            className="text-sm font-medium text-accent-warm hover:underline inline-flex items-center gap-1"
           >
             Learn more →
           </Link>

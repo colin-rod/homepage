@@ -54,10 +54,13 @@ export interface Project {
   whyBuilt?: string
   learnings?: string[]
   insight?: string // Brief insight or reflection about the project (e.g., "Built to learn Supabase")
+  favicon?: string // Path to project favicon/logo (e.g., "/images/projects/babypool-favicon.png")
   links?: {
     live?: string
     github?: string
     blog?: string
+    prd?: string // Link to Product Requirements Document
+    screenshots?: string[] // Array of screenshot URLs
   }
   images?: string[]
   featured: boolean
