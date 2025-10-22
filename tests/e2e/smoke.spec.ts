@@ -113,7 +113,7 @@ test.describe('Smoke Tests - Critical Paths', () => {
 
     // Verify page loads
     await expect(page).toHaveTitle(/contact/i)
-    await expect(page.getByRole('heading', { name: /contact/i, level: 1 })).toBeVisible()
+    await expect(page.getByRole('heading', { name: /let's connect|connect/i, level: 1 })).toBeVisible()
 
     // Verify main content exists
     const main = page.getByRole('main')
