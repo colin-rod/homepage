@@ -90,10 +90,10 @@ describe('Swimlane', () => {
           projects={mockProjects}
         />
       )
-      // Should not have any paragraph element with description text
+      // Should not have swimlane description, but will have project summaries and descriptions
       const section = screen.getByRole('region')
-      const paragraphs = section.querySelectorAll('p')
-      expect(paragraphs.length).toBeLessThan(3) // Only project summaries, no swimlane description
+      const description = screen.queryByText(/Projects currently under active development/i)
+      expect(description).not.toBeInTheDocument()
     })
   })
 

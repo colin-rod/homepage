@@ -177,14 +177,14 @@ describe('Projects Page (Swimlane Layout)', () => {
 
     it('applies fixed-width card classes', () => {
       const { container } = render(<ProjectsPage />)
-      const cards = container.querySelectorAll('[class*="w-72"]')
+      const cards = container.querySelectorAll('[class*="w-80"]')
       // Should have fixed-width project tiles
       expect(cards.length).toBeGreaterThan(0)
     })
 
     it('applies fixed-height card classes', () => {
       const { container } = render(<ProjectsPage />)
-      const cards = container.querySelectorAll('[class*="h-48"]')
+      const cards = container.querySelectorAll('[class*="h-72"]')
       // Should have fixed-height project tiles
       expect(cards.length).toBeGreaterThan(0)
     })

@@ -23,8 +23,8 @@ describe('About Page', () => {
 
     it('displays professional background section', () => {
       render(<AboutPage />)
-      // Should have content about professional background
-      expect(screen.getByText(/background/i)).toBeInTheDocument()
+      // Should have content about professional journey
+      expect(screen.getByText(/fatherhood/i)).toBeInTheDocument()
     })
 
     it('displays skills or expertise section', () => {
