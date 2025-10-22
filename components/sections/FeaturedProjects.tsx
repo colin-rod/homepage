@@ -19,7 +19,7 @@ export default function FeaturedProjects() {
         {/* Section Header */}
         <div className="mx-auto max-w-2xl text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight text-primary sm:text-4xl">
-            Featured Projects
+            Recent Projects
           </h2>
           <p className="mt-4 text-lg text-text-secondary">
             Explore some of my recent work in product management, strategy, and development

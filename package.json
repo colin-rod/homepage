@@ -33,7 +33,6 @@
   "homepage": "https://github.com/colin-rod/homepage#readme",
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
       "prettier --write"
     ],
     "*.{json,md,css}": [
