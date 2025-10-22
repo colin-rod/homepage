@@ -34,30 +34,28 @@ export default function AboutPage() {
             <section className="mb-16">
               <div className="prose prose-lg max-w-none text-text-secondary space-y-6">
                 <p>
-                  I&apos;m Colin — a builder, a father, and someone who&apos;s constantly curious
+                  Hi, I&apos;m Colin; a builder, a father, and someone who&apos;s constantly curious
                   about how ideas turn into things that matter.
                 </p>
                 <p>
-                  Fatherhood shifted a lot for me — not just how I spend my time, but what I want
+                  Fatherhood shifted a lot for me; not just how I spend my time, but what I want
                   that time to mean. It&apos;s changed how I think about work and what I create.
-                  These days, I&apos;m less focused on scale for its own sake and more on harmony —
+                  These days, I&apos;m less focused on scale for its own sake and more on harmony;
                   finding ways to bring creativity, technology, and everyday life together in a way
                   that feels meaningful.
                 </p>
                 <p>
-                  This site is my way of weaving those threads together — a home for what I&apos;m
-                  learning, experimenting with, and still figuring out.
+                  This site is my way of weaving those threads together
+                  <br /> A home for what I&apos;m learning, experimenting with, and still figuring
+                  out.
                 </p>
+                <h2 className="text-2xl font-bold text-text mb-4">Building Through Curiosity</h2>
                 <p>
                   I started my career in engineering, and lately, I&apos;ve found myself drawn back
                   to it — rediscovering the creative and problem-solving itch that first got me into
                   building. Tools like{' '}
                   <a href="https://claude.ai" target="_blank" rel="noopener noreferrer">
-                    Claude
-                  </a>
-                  ,{' '}
-                  <a href="https://code.visualstudio.com" target="_blank" rel="noopener noreferrer">
-                    Code
+                    Claude Code
                   </a>
                   , and{' '}
                   <a
@@ -75,19 +73,21 @@ export default function AboutPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    “vibe engineering.”
+                    “vibe engineering” and perfectly captures the spirit behind what I&apos;m trying
+                    to do here.
                   </a>
                 </p>
+                <h2 className="text-2xl font-bold text-text mb-4">Why I&apos;m Sharing</h2>
                 <p>
-                  Most of what I build starts as a personal problem — something small and specific I
+                  Most of what I build starts as a personal problem; something small and specific I
                   want to solve. Some stay that way; others evolve into larger projects. I use this
-                  space to document that process — to chart the path from idea to experiment to
+                  space to document that process; to chart the path from idea to experiment to
                   something more tangible, and to share it openly so others can learn from it too.
                 </p>
                 <p>
                   I&apos;ve learned so much from the generosity of others who shared their code,
-                  notes, and reflections online. This site is my way of paying that forward — a
-                  small corner of the internet where I can contribute back to the same community
+                  notes, and reflections online. This site is my way of paying that forward; a small
+                  corner of the internet where I can contribute back to the same community
                   that&apos;s taught me so much.
                 </p>
               </div>
@@ -98,8 +98,10 @@ export default function AboutPage() {
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-text mb-4">Let&apos;s Connect</h2>
                 <p className="text-lg text-text-secondary mb-8">
-                  If something here resonates — whether you&apos;re a builder, a parent, or just
-                  figuring things out along the way — I&apos;d love to connect.
+                  If something here resonates
+                  <br /> whether you&apos;re a builder, a parent, or just figuring things out along
+                  the way
+                  <br /> I&apos;d love to connect.
                 </p>
                 <a href="/contact" className="btn btn-primary">
                   Get in Touch
