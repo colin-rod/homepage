@@ -32,9 +32,7 @@ export default function NowPage() {
                 What I&apos;m Doing Now
               </h1>
               <p className="text-xl text-text-secondary leading-relaxed">
-                A snapshot of what I&apos;m building, learning, and exploring right now; both in
-                work and life. I update this page regularly to reflect what&apos;s keeping me
-                curious, what I&apos;m experimenting with, and where my focus is shifting.
+                A snapshot of what I&apos;m building, learning, and exploring right now.
               </p>
             </div>
 
@@ -43,8 +41,8 @@ export default function NowPage() {
               <h2 className="text-2xl font-bold text-text mb-6">Current Focus</h2>
               <ul className="list-disc list-inside prose prose-lg max-w-none text-text-secondary space-y-4">
                 <li>
-                  Designing and shipping this portfolio using Next.js 15, TypeScript, and Tailwind
-                  CSS.
+                  Designing and shipping this site using Next.js 15, TypeScript, and Tailwind CSS. I
+                  want to work on my frontend skills and experiment a bit more on the ux.
                 </li>
                 <li>
                   Working in Linear to scope and manage projects, applying project management
@@ -55,49 +53,12 @@ export default function NowPage() {
                   Implementing Test-Driven Development (TDD) methodologies to build things correctly
                   from the start.
                 </li>
+                <li>Audiograph - Designing a way to visualise and explore Spotify data.</li>
                 <li>
-                  Exploring how AI can enhance product strategy and user experience without removing
-                  the human element.
-                </li>
-                <li>
-                  Balancing structure and creativity to maintain discipline while following
-                  curiosity.
+                  TribeUpdate - Building a slow social media tool to help people share and consume
+                  content more thoughtfully.
                 </li>
               </ul>
-            </section>
-
-            {/* Reading/Interests Section */}
-            <section className="mb-16">
-              <h2 className="text-2xl font-bold text-text mb-6">Reading & Exploring</h2>
-              <div className="prose prose-lg max-w-none text-text-secondary">
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <span className="text-accent-warm mr-2">•</span>
-                    <span>
-                      Reading about product discovery frameworks and how to validate ideas before
-                      building
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent-warm mr-2">•</span>
-                    <span>
-                      Exploring modern web performance optimization techniques and Core Web Vitals
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent-warm mr-2">•</span>
-                    <span>
-                      Learning about accessibility best practices and inclusive design principles
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent-warm mr-2">•</span>
-                    <span>
-                      Studying effective data visualization and storytelling with analytics
-                    </span>
-                  </li>
-                </ul>
-              </div>
             </section>
 
             {/* Workflow Section */}
@@ -105,91 +66,39 @@ export default function NowPage() {
               <h2 className="text-2xl font-bold text-text mb-6">How I Work</h2>
               <div className="prose prose-lg max-w-none text-text-secondary">
                 <p className="mb-4">
-                  I&apos;ve developed a workflow that combines modern tooling with disciplined
-                  development practices. Here&apos;s my current stack:
+                  My current workflow is as follows: I manage a backlog of ideas in Linear. I've
+                  accumulated these over time when inspiration strikes me or when I think "Hey
+                  wouldn't it be cool if X did Y" or "I wonder if this exists" Typically these files
+                  have been living in various spreadsheets, docs and notes files across multiple
+                  platforms and I am consolidatingn them in Linear. I then categorize them into 1 of
+                  Project, Project Expansion, Tool or Experiment. From there I prioritize them based
+                  on a mix of impact, effort, and personal interest. Each week, I select a few items
+                  from the backlog to focus on and dive deeper into scoping them out. I conduct some
+                  high level research to validate the idea, understand the problem space, and
+                  identify current solutions. Typically I will turn to ChatGPT as a resource here to
+                  act as asparring aprtner. As part of this scoping I will generate a PRD (Product
+                  Requirements Document) to outline the problem, target audience, goals, and success
+                  metrics. If the idea is monetizable I will also do a quick market analysis to
+                  understand the business model and tradeoffs Once I have a solid understanding, I
+                  then move into creating a project plan in Linear. I start by breaking down the
+                  project into Epics and Issues. At this stage I try to group the epics into
+                  milestones and identify critical dependencies. I like Linear's ability to
+                  visualise blocking and blocked issues as it helps me manage the flow of work. I
+                  also use Fibonnacie story points to estimate effort and complexity at the issue
+                  level. This helps me prioritize and plan sprints and cycles more effectively. I
+                  start. with Codex for architectural decisions since I find it better at high level
+                  design and thinking through tradeoffs. Once I have a solid architecture planned
+                  out, I then move into development, following Test-Driven Development (TDD)
+                  principles. I write tests first to define the expected behavior and outcomes. This
+                  approach helps me clarify requirements, catch edge cases early, and ensure code
+                  quality. Typically I like to use Codex at this stage to scope out the test
+                  reuirements and ensure completeness. At this stage I switch to Claude Code as my
+                  AI pair programmer to help with code generation and refactoring. Throughout
+                  development, I continuously integrate and deploy changes using GitHub Actions.
+                  This allows me to review and give feedback quickly and iterate on the product. I
+                  also make use of automated testing tools such as Jest and Playwright to automate
+                  the testing process.
                 </p>
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <span className="text-accent-warm mr-2">•</span>
-                    <span>
-                      <strong>Linear</strong> for project management — breaking down work into epics
-                      and issues, tracking dependencies, and maintaining focus
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent-warm mr-2">•</span>
-                    <span>
-                      <strong>Claude (Anthropic)</strong> as my AI pair programmer — for code
-                      generation, refactoring, and architectural decisions
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent-warm mr-2">•</span>
-                    <span>
-                      <strong>OpenAI</strong> for content generation, brainstorming, and ideation
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent-warm mr-2">•</span>
-                    <span>
-                      <strong>GitHub</strong> for version control, CI/CD pipelines, and automated
-                      testing
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent-warm mr-2">•</span>
-                    <span>
-                      <strong>Test-Driven Development</strong> — writing tests first, then
-                      implementing features to pass those tests
-                    </span>
-                  </li>
-                </ul>
-                <p className="mt-4">
-                  This workflow helps me ship faster while maintaining code quality. I&apos;m
-                  constantly iterating on this process and documenting what works.{' '}
-                  <a href="/uses" className="text-accent-warm hover:underline">
-                    See my full setup →
-                  </a>
-                </p>
-              </div>
-            </section>
-
-            {/* Side Projects Section */}
-            <section className="mb-16">
-              <h2 className="text-2xl font-bold text-text mb-6">Building</h2>
-              <div className="prose prose-lg max-w-none text-text-secondary">
-                <p className="mb-4">
-                  Beyond this portfolio, I&apos;m working on a few side projects that combine my
-                  interests in product, technology, and solving everyday problems:
-                </p>
-                <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <span className="text-accent-warm mr-2">•</span>
-                    <span>
-                      A tool for product managers to track and visualize feature adoption metrics
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent-warm mr-2">•</span>
-                    <span>
-                      Experimenting with interactive timeline visualizations for career stories
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent-warm mr-2">•</span>
-                    <span>
-                      Audiograph — a visual way to explore Spotify listening history and patterns
-                      over time.
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent-warm mr-2">•</span>
-                    <span>
-                      Career Timeline — rethinking how CVs can show both personal and professional
-                      growth as evolving narratives.
-                    </span>
-                  </li>
-                </ul>
               </div>
             </section>
 
