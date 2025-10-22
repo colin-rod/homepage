@@ -32,61 +32,38 @@ export default function NowPage() {
                 What I&apos;m Doing Now
               </h1>
               <p className="text-xl text-text-secondary leading-relaxed">
-                A snapshot of my current focus, projects, and interests. This page is updated
-                regularly to reflect what I&apos;m working on and learning right now.
+                A snapshot of what I&apos;m building, learning, and exploring right now; both in
+                work and life. I update this page regularly to reflect what&apos;s keeping me
+                curious, what I&apos;m experimenting with, and where my focus is shifting.
               </p>
             </div>
 
             {/* Current Work/Projects Section */}
             <section className="mb-16">
               <h2 className="text-2xl font-bold text-text mb-6">Current Focus</h2>
-              <div className="prose prose-lg max-w-none text-text-secondary">
-                <p className="mb-4">
-                  Right now, I&apos;m focused on building this personal portfolio to showcase my
-                  professional journey and projects. I&apos;m applying modern web development best
-                  practices using Next.js 14, TypeScript, and Tailwind CSS - while documenting the
-                  entire process.
-                </p>
-                <p>
-                  I&apos;m also working on several product strategy initiatives, exploring how AI
-                  can enhance user experiences without replacing the human element that makes
-                  products meaningful.
-                </p>
-              </div>
-            </section>
-
-            {/* Learning Section */}
-            <section className="mb-16">
-              <h2 className="text-2xl font-bold text-text mb-6">Currently Learning</h2>
-              <div className="space-y-6">
-                <div className="card">
-                  <h3 className="text-lg font-semibold text-primary mb-3">
-                    Advanced TypeScript Patterns
-                  </h3>
-                  <p className="text-text-secondary">
-                    Deepening my understanding of TypeScript&apos;s type system, generics, and
-                    advanced patterns to write more maintainable and type-safe code.
-                  </p>
-                </div>
-
-                <div className="card">
-                  <h3 className="text-lg font-semibold text-primary mb-3">
-                    Test-Driven Development
-                  </h3>
-                  <p className="text-text-secondary">
-                    Embracing TDD methodology with Jest and Playwright to build more reliable
-                    applications and catch bugs before they reach production.
-                  </p>
-                </div>
-
-                <div className="card">
-                  <h3 className="text-lg font-semibold text-primary mb-3">AI Product Strategy</h3>
-                  <p className="text-text-secondary">
-                    Exploring how to integrate AI capabilities thoughtfully into product
-                    experiences, focusing on practical applications that solve real user problems.
-                  </p>
-                </div>
-              </div>
+              <ul className="list-disc list-inside prose prose-lg max-w-none text-text-secondary space-y-4">
+                <li>
+                  Designing and shipping this portfolio using Next.js 15, TypeScript, and Tailwind
+                  CSS.
+                </li>
+                <li>
+                  Working in Linear to scope and manage projects, applying project management
+                  principles to timebox work, manage estimates, and reduce scope creep during “vibe
+                  engineering.”
+                </li>
+                <li>
+                  Implementing Test-Driven Development (TDD) methodologies to build things correctly
+                  from the start.
+                </li>
+                <li>
+                  Exploring how AI can enhance product strategy and user experience without removing
+                  the human element.
+                </li>
+                <li>
+                  Balancing structure and creativity to maintain discipline while following
+                  curiosity.
+                </li>
+              </ul>
             </section>
 
             {/* Reading/Interests Section */}
@@ -142,6 +119,20 @@ export default function NowPage() {
                     <span className="text-accent-warm mr-2">•</span>
                     <span>
                       Experimenting with interactive timeline visualizations for career stories
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-accent-warm mr-2">•</span>
+                    <span>
+                      Audiograph — a visual way to explore Spotify listening history and patterns
+                      over time.
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-accent-warm mr-2">•</span>
+                    <span>
+                      Career Timeline — rethinking how CVs can show both personal and professional
+                      growth as evolving narratives.
                     </span>
                   </li>
                 </ul>

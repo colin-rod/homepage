@@ -43,8 +43,7 @@ export default function ProjectsPage() {
                 Projects
               </h1>
               <p className="text-base text-text-secondary leading-relaxed">
-                A collection of things I&apos;m working on, built, launched, or investigated. Each
-                one started with a question or problem I wanted to understand better.
+                A collection of things I&apos;m working on, built, launched, or investigated.
               </p>
             </div>
 
