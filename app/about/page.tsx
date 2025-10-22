@@ -32,110 +32,64 @@ export default function AboutPage() {
 
             {/* Background Section */}
             <section className="mb-16">
-              <div className="prose prose-lg max-w-none text-text-secondary">
-                <p className="mb-4">
-                  Hi, I’m Colin; a builder, a dad, and someone who’s constantly curious about how
-                  ideas turn into things that matter.
-                  <br />
-                  As a new father a lot shifted for me; not just how I spend my time but also what I
-                  want that time to mean.
-                  <br />
-                  It’s changed the way I look at work and the products I build.
-                  <br />
-                  These days, I’m less focused on scale for its own sake and more on harmony;
-                  finding ways to connect creativity, technology, and everyday life in a way that
-                  feels balanced and meaningful.
-                  <br />
-                  This site is my way of bringing those threads together — a home to share what I’m
-                  learning, experimenting with, and still figuring out.
-                </p>
-                <p className="mb-4">
-                  Throughout my career, I&apos;ve focused on understanding user needs deeply,
-                  translating them into product requirements, and working collaboratively with
-                  cross-functional teams to deliver solutions that create meaningful impact.
+              <div className="prose prose-lg max-w-none text-text-secondary space-y-6">
+                <p>
+                  I'm Colin — a builder, a dad, and someone who’s constantly curious about how ideas
+                  turn into things that matter.
                 </p>
                 <p>
-                  I believe the best products are built at the intersection of user research,
-                  strategic thinking, and technical execution. This philosophy guides my work in
-                  product management, strategy, and digital innovation.
+                  Fatherhood shifted a lot for me — not just how I spend my time, but what I want
+                  that time to mean. It’s changed how I think about work and what I create. These
+                  days, I’m less focused on scale for its own sake and more on harmony — finding
+                  ways to bring creativity, technology, and everyday life together in a way that
+                  feels meaningful.
                 </p>
-              </div>
-            </section>
-
-            {/* Expertise Section */}
-            <section className="mb-16">
-              <h2 className="text-2xl font-bold text-text mb-6">Areas of Expertise</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="card">
-                  <h3 className="text-lg font-semibold text-primary mb-3">Product Strategy</h3>
-                  <p className="text-text-secondary">
-                    Developing product roadmaps, defining vision, and aligning stakeholders around
-                    clear objectives that drive business value.
-                  </p>
-                </div>
-
-                <div className="card">
-                  <h3 className="text-lg font-semibold text-primary mb-3">User Research</h3>
-                  <p className="text-text-secondary">
-                    Conducting user interviews, surveys, and usability testing to uncover insights
-                    that inform product decisions.
-                  </p>
-                </div>
-
-                <div className="card">
-                  <h3 className="text-lg font-semibold text-primary mb-3">Product Development</h3>
-                  <p className="text-text-secondary">
-                    Leading cross-functional teams through the full product lifecycle, from concept
-                    to launch and iteration.
-                  </p>
-                </div>
-
-                <div className="card">
-                  <h3 className="text-lg font-semibold text-primary mb-3">
-                    Technical Implementation
-                  </h3>
-                  <p className="text-text-secondary">
-                    Building with modern web technologies (React, Next.js, TypeScript) to create
-                    responsive, user-friendly interfaces.
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* Values Section */}
-            <section className="mb-16">
-              <h2 className="text-2xl font-bold text-text mb-6">What Drives Me</h2>
-              <div className="prose prose-lg max-w-none text-text-secondary">
-                <ul className="space-y-4">
-                  <li className="flex items-start">
-                    <span className="text-accent-warm mr-2">•</span>
-                    <span>
-                      <strong>User-Centered Thinking:</strong> Every decision should start with
-                      understanding the people we&apos;re building for and the problems they face.
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent-warm mr-2">•</span>
-                    <span>
-                      <strong>Strategic Execution:</strong> Great strategy means nothing without
-                      excellent execution. I focus on both.
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent-warm mr-2">•</span>
-                    <span>
-                      <strong>Continuous Learning:</strong> Technology and user expectations evolve
-                      constantly. Staying curious and adaptable is essential.
-                    </span>
-                  </li>
-                  <li className="flex items-start">
-                    <span className="text-accent-warm mr-2">•</span>
-                    <span>
-                      <strong>Collaborative Impact:</strong> The best products are built by diverse
-                      teams working together toward a shared vision.
-                    </span>
-                  </li>
-                </ul>
+                <p>
+                  This site is my way of weaving those threads together — a home for what I’m
+                  learning, experimenting with, and still figuring out.
+                </p>
+                <p>
+                  I started my career in engineering, and lately, I’ve found myself drawn back to it
+                  — rediscovering the creative and problem-solving itch that first got me into
+                  building. Tools like{' '}
+                  <a href="https://claude.ai" target="_blank" rel="noopener noreferrer">
+                    Claude
+                  </a>
+                  ,{' '}
+                  <a href="https://code.visualstudio.com" target="_blank" rel="noopener noreferrer">
+                    Code
+                  </a>
+                  , and{' '}
+                  <a
+                    href="https://openai.com/blog/openai-codex"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Codex
+                  </a>{' '}
+                  have changed the velocity of creation, letting me translate half-formed thoughts
+                  into experiments and projects at a pace that feels exciting. It’s what Simon
+                  Willison calls{' '}
+                  <a
+                    href="https://simonwillison.net/2023/Oct/12/vibe-engineering/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    “vibe engineering.”
+                  </a>
+                </p>
+                <p>
+                  Most of what I build starts as a personal problem — something small and specific I
+                  want to solve. Some stay that way; others evolve into larger projects. I use this
+                  space to document that process — to chart the path from idea to experiment to
+                  something more tangible, and to share it openly so others can learn from it too.
+                </p>
+                <p>
+                  I’ve learned so much from the generosity of others who shared their code, notes,
+                  and reflections online. This site is my way of paying that forward — a small
+                  corner of the internet where I can contribute back to the same community that’s
+                  taught me so much.
+                </p>
               </div>
             </section>
 
@@ -144,7 +98,8 @@ export default function AboutPage() {
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-text mb-4">Let&apos;s Connect</h2>
                 <p className="text-lg text-text-secondary mb-8">
-                  Interested in working together or just want to chat about product strategy?
+                  If something here resonates — whether you’re a builder, a parent, or just figuring
+                  things out along the way — I’d love to connect.
                 </p>
                 <a href="/contact" className="btn btn-primary">
                   Get in Touch
