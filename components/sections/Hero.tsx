@@ -22,13 +22,16 @@ export default function Hero() {
 
           {/* Tagline */}
           <p className="text-xl sm:text-2xl font-medium text-neutral-surface mb-8">
-            Product & Strategy
+            Building, Reflecting & Sharing - a Work in Progress
           </p>
 
           {/* Introduction */}
           <p className="text-lg sm:text-xl text-neutral-surface/90 mb-10 leading-relaxed">
-            Building products that solve real problems. Passionate about strategy, user experience,
-            and creating meaningful impact through technology.
+            This site is part portfolio, part journal. 
+            A place for me to think out loud about 
+            what I’m building, 
+            what I’m learning, 
+            and what I’m still figuring out.
           </p>
 
           {/* CTA Buttons */}
@@ -37,13 +40,13 @@ export default function Hero() {
               href="/projects"
               className="btn btn-primary"
             >
-              View Projects
+              Explore My Work
             </Link>
             <Link
               href="/contact"
               className="btn btn-outline border-white text-white hover:bg-white hover:text-primary"
             >
-              Contact Me
+              Connect
             </Link>
           </div>
         </div>
