@@ -100,6 +100,60 @@ export default function NowPage() {
               </div>
             </section>
 
+            {/* Workflow Section */}
+            <section className="mb-16">
+              <h2 className="text-2xl font-bold text-text mb-6">How I Work</h2>
+              <div className="prose prose-lg max-w-none text-text-secondary">
+                <p className="mb-4">
+                  I&apos;ve developed a workflow that combines modern tooling with disciplined
+                  development practices. Here&apos;s my current stack:
+                </p>
+                <ul className="space-y-3">
+                  <li className="flex items-start">
+                    <span className="text-accent-warm mr-2">•</span>
+                    <span>
+                      <strong>Linear</strong> for project management — breaking down work into epics
+                      and issues, tracking dependencies, and maintaining focus
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-accent-warm mr-2">•</span>
+                    <span>
+                      <strong>Claude (Anthropic)</strong> as my AI pair programmer — for code
+                      generation, refactoring, and architectural decisions
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-accent-warm mr-2">•</span>
+                    <span>
+                      <strong>OpenAI</strong> for content generation, brainstorming, and ideation
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-accent-warm mr-2">•</span>
+                    <span>
+                      <strong>GitHub</strong> for version control, CI/CD pipelines, and automated
+                      testing
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-accent-warm mr-2">•</span>
+                    <span>
+                      <strong>Test-Driven Development</strong> — writing tests first, then
+                      implementing features to pass those tests
+                    </span>
+                  </li>
+                </ul>
+                <p className="mt-4">
+                  This workflow helps me ship faster while maintaining code quality. I&apos;m
+                  constantly iterating on this process and documenting what works.{' '}
+                  <a href="/uses" className="text-accent-warm hover:underline">
+                    See my full setup →
+                  </a>
+                </p>
+              </div>
+            </section>
+
             {/* Side Projects Section */}
             <section className="mb-16">
               <h2 className="text-2xl font-bold text-text mb-6">Building</h2>
