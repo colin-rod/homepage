@@ -28,6 +28,7 @@ export interface TimelineEvent {
 // ============================================================================
 
 export type ProjectStatus = 'concept' | 'in-progress' | 'active' | 'completed' | 'live' | 'sunset'
+export type ProjectType = 'project' | 'tool'
 
 export interface Project {
   id: string
@@ -35,6 +36,7 @@ export interface Project {
   slug: string
   description: string
   summary: string
+  type: ProjectType // Distinguishes between larger projects and smaller tools
   scope?: string
   prd?: string // Product Requirements Document
   businessModel?: string

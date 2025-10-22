@@ -117,6 +117,47 @@ describe('Projects Page', () => {
     })
   })
 
+  describe('Tools & Utilities Section', () => {
+    it('displays tools section heading', () => {
+      render(<ProjectsPage />)
+      const toolsHeading = screen.getByRole('heading', { name: /tools & utilities/i })
+      expect(toolsHeading).toBeInTheDocument()
+    })
+
+    it('shows tools section description', () => {
+      render(<ProjectsPage />)
+      const main = screen.getByRole('main')
+      expect(main.textContent).toMatch(/smaller utilities|tools built/i)
+    })
+
+    it('displays tool cards separately from project cards', () => {
+      render(<ProjectsPage />)
+      // Tools section should exist
+      const toolsHeading = screen.getByRole('heading', { name: /tools & utilities/i })
+      expect(toolsHeading).toBeInTheDocument()
+
+      // Should have Featured Projects or Other Projects heading
+      const projectsHeadings = screen.getAllByRole('heading').filter(h =>
+        h.textContent?.match(/featured projects|other projects|all projects/i)
+      )
+      expect(projectsHeadings.length).toBeGreaterThan(0)
+    })
+
+    it('shows tool titles and summaries', () => {
+      render(<ProjectsPage />)
+      const main = screen.getByRole('main')
+      // Should show tool-specific content (from our test data)
+      expect(main.textContent).toMatch(/spotify|meeting/i)
+    })
+
+    it('displays tool status badges', () => {
+      render(<ProjectsPage />)
+      const main = screen.getByRole('main')
+      // Tools should have status badges too
+      expect(main.textContent).toMatch(/active|live|completed/i)
+    })
+  })
+
   describe('Accessibility', () => {
     it('has a main landmark', () => {
       render(<ProjectsPage />)

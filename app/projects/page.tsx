@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { generatePageMetadata } from '@/lib/seo'
-import { getProjects } from '@/lib/data'
+import { getProjectsOnly, getTools } from '@/lib/data'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
 
@@ -18,7 +18,8 @@ export const metadata: Metadata = generatePageMetadata(
  */
 
 export default function ProjectsPage() {
-  const projects = getProjects()
+  const projects = getProjectsOnly()
+  const tools = getTools()
   const featuredProjects = projects.filter((p) => p.featured)
   const otherProjects = projects.filter((p) => !p.featured)
 
@@ -135,7 +136,7 @@ export default function ProjectsPage() {
 
           {/* Other Projects Section */}
           {otherProjects.length > 0 && (
-            <section>
+            <section className="mb-20">
               <h2 className="text-2xl font-bold text-text mb-8">
                 {featuredProjects.length > 0 ? 'Other Projects' : 'All Projects'}
               </h2>
@@ -221,6 +222,94 @@ export default function ProjectsPage() {
                         className="text-sm text-accent-warm hover:underline ml-auto"
                       >
                         Learn more →
+                      </Link>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Tools & Utilities Section */}
+          {tools.length > 0 && (
+            <section>
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold text-text mb-2">Tools & Utilities</h2>
+                <p className="text-text-secondary">
+                  Smaller utilities and tools built to solve specific problems or experiment with
+                  new technologies.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {tools.map((tool) => (
+                  <article
+                    key={tool.id}
+                    className="card hover:shadow-lg transition-shadow duration-200"
+                  >
+                    <div className="mb-3">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-lg font-bold text-primary">{tool.title}</h3>
+                        <span
+                          className={`text-xs px-2 py-1 rounded-full ${
+                            tool.status === 'active' || tool.status === 'live'
+                              ? 'bg-green-100 text-green-800'
+                              : tool.status === 'completed'
+                              ? 'bg-blue-100 text-blue-800'
+                              : tool.status === 'in-progress'
+                              ? 'bg-yellow-100 text-yellow-800'
+                              : 'bg-gray-100 text-gray-800'
+                          }`}
+                        >
+                          {tool.status}
+                        </span>
+                      </div>
+                      <p className="text-text-secondary text-sm">{tool.summary}</p>
+                    </div>
+
+                    {/* Tech Stack Tags */}
+                    <div className="mb-3 flex flex-wrap gap-2">
+                      {tool.techStack.slice(0, 2).map((tech) => (
+                        <span
+                          key={tech}
+                          className="text-xs px-2 py-1 rounded bg-neutral-surface border border-divider text-text-secondary"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {tool.techStack.length > 2 && (
+                        <span className="text-xs px-2 py-1 text-text-secondary">
+                          +{tool.techStack.length - 2}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Links */}
+                    <div className="flex gap-4 pt-3 border-t border-divider">
+                      {tool.links?.live && (
+                        <a
+                          href={tool.links.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-accent-warm hover:underline"
+                        >
+                          View Live →
+                        </a>
+                      )}
+                      {tool.links?.github && (
+                        <a
+                          href={tool.links.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-accent-warm hover:underline"
+                        >
+                          GitHub →
+                        </a>
+                      )}
+                      <Link
+                        href={`/projects/${tool.slug}`}
+                        className="text-sm text-accent-warm hover:underline ml-auto"
+                      >
+                        Details →
                       </Link>
                     </div>
                   </article>

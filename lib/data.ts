@@ -38,6 +38,27 @@ export function getProjectsByTag(tag: string): Project[] {
 }
 
 /**
+ * Get projects by type (project or tool)
+ */
+export function getProjectsByType(type: 'project' | 'tool'): Project[] {
+  return getProjects().filter((project) => project.type === type)
+}
+
+/**
+ * Get all projects (type: 'project' only, excludes tools)
+ */
+export function getProjectsOnly(): Project[] {
+  return getProjectsByType('project')
+}
+
+/**
+ * Get all tools (type: 'tool' only, excludes projects)
+ */
+export function getTools(): Project[] {
+  return getProjectsByType('tool')
+}
+
+/**
  * Get all timeline events
  */
 export function getTimelineEvents(): TimelineEvent[] {

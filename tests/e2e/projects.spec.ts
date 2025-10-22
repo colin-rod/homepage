@@ -49,6 +49,48 @@ test.describe('Projects Index Page', () => {
     await page.setViewportSize({ width: 1920, height: 1080 })
     await expect(page.getByRole('heading', { name: /projects/i, level: 1 })).toBeVisible()
   })
+
+  test('should display tools & utilities section', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: /tools & utilities/i })).toBeVisible()
+  })
+
+  test('should show tools section description', async ({ page }) => {
+    const toolsSection = page.locator('section').filter({ has: page.getByRole('heading', { name: /tools & utilities/i }) })
+    await expect(toolsSection.getByText(/smaller utilities|tools built/i)).toBeVisible()
+  })
+
+  test('should display tool cards with compact layout', async ({ page }) => {
+    // Tools section should exist
+    const toolsHeading = page.getByRole('heading', { name: /tools & utilities/i })
+    await expect(toolsHeading).toBeVisible()
+
+    // Should have tool cards after the tools heading
+    const toolsSection = page.locator('section').filter({ has: toolsHeading })
+    const toolCards = toolsSection.locator('.card')
+    const toolCount = await toolCards.count()
+    expect(toolCount).toBeGreaterThan(0)
+  })
+
+  test('should differentiate between projects and tools sections', async ({ page }) => {
+    // Should have both Featured Projects/Other Projects AND Tools sections
+    const featuredOrOther = page.getByRole('heading', { name: /featured projects|other projects|all projects/i })
+    const tools = page.getByRole('heading', { name: /tools & utilities/i })
+
+    await expect(featuredOrOther.first()).toBeVisible()
+    await expect(tools).toBeVisible()
+  })
+
+  test('should show tool status badges', async ({ page }) => {
+    const toolsSection = page.locator('section').filter({ has: page.getByRole('heading', { name: /tools & utilities/i }) })
+    const statusBadges = toolsSection.locator('text=/live|active|completed/i')
+    await expect(statusBadges.first()).toBeVisible()
+  })
+
+  test('should have links to tool detail pages', async ({ page }) => {
+    const toolsSection = page.locator('section').filter({ has: page.getByRole('heading', { name: /tools & utilities/i }) })
+    const detailsLinks = toolsSection.getByRole('link', { name: /details|learn more/i })
+    await expect(detailsLinks.first()).toBeVisible()
+  })
 })
 
 test.describe('Project Detail Page', () => {

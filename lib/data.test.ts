@@ -7,6 +7,9 @@ import {
   getProjectBySlug,
   getFeaturedProjects,
   getProjectsByTag,
+  getProjectsByType,
+  getProjectsOnly,
+  getTools,
   getTimelineEvents,
   getTimelineEventsByType,
   getTimelineEventsByTag,
@@ -33,11 +36,21 @@ describe('Project Data Utilities', () => {
       expect(project).toHaveProperty('slug')
       expect(project).toHaveProperty('description')
       expect(project).toHaveProperty('summary')
+      expect(project).toHaveProperty('type')
       expect(project).toHaveProperty('status')
       expect(project).toHaveProperty('techStack')
       expect(project).toHaveProperty('tags')
       expect(project).toHaveProperty('featured')
       expect(project).toHaveProperty('year')
+    })
+
+    it('returns projects with valid type values', () => {
+      const projects = getProjects()
+      const validTypes = ['project', 'tool']
+
+      projects.forEach((project) => {
+        expect(validTypes).toContain(project.type)
+      })
     })
 
     it('returns projects with valid status values', () => {
@@ -118,6 +131,70 @@ describe('Project Data Utilities', () => {
       const tags = getAllProjectTags()
       const sorted = [...tags].sort()
       expect(tags).toEqual(sorted)
+    })
+  })
+
+  describe('getProjectsByType', () => {
+    it('returns only projects when type is "project"', () => {
+      const projects = getProjectsByType('project')
+      expect(Array.isArray(projects)).toBe(true)
+
+      projects.forEach((project) => {
+        expect(project.type).toBe('project')
+      })
+    })
+
+    it('returns only tools when type is "tool"', () => {
+      const tools = getProjectsByType('tool')
+      expect(Array.isArray(tools)).toBe(true)
+
+      tools.forEach((tool) => {
+        expect(tool.type).toBe('tool')
+      })
+    })
+
+    it('combines to equal total projects', () => {
+      const all = getProjects()
+      const projects = getProjectsByType('project')
+      const tools = getProjectsByType('tool')
+
+      expect(projects.length + tools.length).toBe(all.length)
+    })
+  })
+
+  describe('getProjectsOnly', () => {
+    it('returns only items with type "project"', () => {
+      const projects = getProjectsOnly()
+      expect(Array.isArray(projects)).toBe(true)
+
+      projects.forEach((project) => {
+        expect(project.type).toBe('project')
+      })
+    })
+
+    it('returns same result as getProjectsByType("project")', () => {
+      const fromHelper = getProjectsOnly()
+      const fromType = getProjectsByType('project')
+
+      expect(fromHelper).toEqual(fromType)
+    })
+  })
+
+  describe('getTools', () => {
+    it('returns only items with type "tool"', () => {
+      const tools = getTools()
+      expect(Array.isArray(tools)).toBe(true)
+
+      tools.forEach((tool) => {
+        expect(tool.type).toBe('tool')
+      })
+    })
+
+    it('returns same result as getProjectsByType("tool")', () => {
+      const fromHelper = getTools()
+      const fromType = getProjectsByType('tool')
+
+      expect(fromHelper).toEqual(fromType)
     })
   })
 })
