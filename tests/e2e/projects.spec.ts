@@ -53,12 +53,6 @@ test.describe('Projects Index Page (Swimlane Layout)', () => {
     await expect(main.getByText(/featured/i).first()).toBeVisible()
   })
 
-  test('should display project insights', async ({ page }) => {
-    const main = page.getByRole('main')
-    // Should show insight text from projects data
-    await expect(main.getByText(/rebuilding my digital presence/i)).toBeVisible()
-  })
-
   test('should have clickable "Learn more" links', async ({ page }) => {
     const learnMoreLinks = page.getByRole('link', { name: /learn more/i })
     const linkCount = await learnMoreLinks.count()

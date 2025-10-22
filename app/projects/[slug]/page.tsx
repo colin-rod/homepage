@@ -20,12 +20,16 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const project = getProjectBySlug(slug)
 
   if (!project) {
-    return generatePageMetadata('Project Not Found', 'The requested project could not be found.', '/projects')
+    return generatePageMetadata(
+      'Project Not Found',
+      'The requested project could not be found.',
+      '/projects'
+    )
   }
 
   return generatePageMetadata(
     project.title,
-    project.summary,
+    project.detailedDescription,
     `/projects/${project.slug}`
   )
 }
@@ -78,16 +82,18 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                   project.status === 'active' || project.status === 'live'
                     ? 'bg-green-100 text-green-800'
                     : project.status === 'completed'
-                    ? 'bg-blue-100 text-blue-800'
-                    : project.status === 'in-progress'
-                    ? 'bg-yellow-100 text-yellow-800'
-                    : 'bg-gray-100 text-gray-800'
+                      ? 'bg-blue-100 text-blue-800'
+                      : project.status === 'in-progress'
+                        ? 'bg-yellow-100 text-yellow-800'
+                        : 'bg-gray-100 text-gray-800'
                 }`}
               >
                 {project.status}
               </span>
             </div>
-            <p className="text-xl text-text-secondary leading-relaxed">{project.summary}</p>
+            <p className="text-xl text-text-secondary leading-relaxed">
+              {project.detailedDescription}
+            </p>
           </div>
 
           {/* Project Details Grid */}
@@ -106,7 +112,9 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
 
             {/* Category Tags */}
             <div className="card">
-              <h3 className="text-sm font-semibold text-text-secondary uppercase mb-2">Categories</h3>
+              <h3 className="text-sm font-semibold text-text-secondary uppercase mb-2">
+                Categories
+              </h3>
               <div className="flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
                   <span

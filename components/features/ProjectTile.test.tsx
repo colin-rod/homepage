@@ -14,7 +14,7 @@ const mockProject: Project = {
   title: 'Test Project',
   slug: 'test-project',
   description: 'A comprehensive test project description',
-  summary: 'A test project for unit testing',
+  detailedDescription: 'A test project for unit testing',
   type: 'project',
   status: 'in-progress',
   techStack: ['React', 'TypeScript', 'Tailwind'],
@@ -35,19 +35,9 @@ describe('ProjectTile', () => {
       expect(screen.getByText('Test Project')).toBeInTheDocument()
     })
 
-    it('displays project summary', () => {
-      render(<ProjectTile project={mockProject} />)
-      expect(screen.getByText(/A test project for unit testing/i)).toBeInTheDocument()
-    })
-
     it('displays project description', () => {
       render(<ProjectTile project={mockProject} />)
       expect(screen.getByText(/A comprehensive test project description/i)).toBeInTheDocument()
-    })
-
-    it('displays project insight when provided', () => {
-      render(<ProjectTile project={mockProject} />)
-      expect(screen.getByText(/This is a test insight/i)).toBeInTheDocument()
     })
 
     it('displays tech stack tags', () => {

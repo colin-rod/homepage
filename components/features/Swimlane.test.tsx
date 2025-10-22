@@ -22,7 +22,7 @@ describe('Swimlane', () => {
       title: 'Project One',
       slug: 'project-one',
       description: 'First test project',
-      summary: 'Summary of project one',
+      detailedDescription: 'Summary of project one',
       type: 'project',
       status: 'in-progress',
       techStack: ['React'],
@@ -35,7 +35,7 @@ describe('Swimlane', () => {
       title: 'Project Two',
       slug: 'project-two',
       description: 'Second test project',
-      summary: 'Summary of project two',
+      detailedDescription: 'Summary of project two',
       type: 'project',
       status: 'in-progress',
       techStack: ['Vue'],
@@ -91,7 +91,7 @@ describe('Swimlane', () => {
         />
       )
       // Should not have swimlane description, but will have project summaries and descriptions
-      const section = screen.getByRole('region')
+      screen.getByRole('region')
       const description = screen.queryByText(/Projects currently under active development/i)
       expect(description).not.toBeInTheDocument()
     })
@@ -186,6 +186,56 @@ describe('Swimlane', () => {
       )
       const scrollContainer = container.querySelector('[class*="gap-"]')
       expect(scrollContainer).toBeInTheDocument()
+    })
+
+    it('applies border styling for visual distinction', () => {
+      const { container } = render(
+        <Swimlane
+          title="In Progress"
+          icon={<Code2 className="h-6 w-6" />}
+          projects={mockProjects}
+          index={0}
+        />
+      )
+      const section = container.querySelector('section')
+      expect(section?.className).toMatch(/border-/)
+    })
+
+    it('applies shadow styling for depth', () => {
+      const { container } = render(
+        <Swimlane
+          title="In Progress"
+          icon={<Code2 className="h-6 w-6" />}
+          projects={mockProjects}
+          index={0}
+        />
+      )
+      const section = container.querySelector('section')
+      expect(section?.className).toMatch(/shadow-/)
+    })
+
+    it('alternates styling based on index', () => {
+      const { container: container1 } = render(
+        <Swimlane
+          title="Swimlane 1"
+          icon={<Code2 className="h-6 w-6" />}
+          projects={mockProjects}
+          index={0}
+        />
+      )
+      const { container: container2 } = render(
+        <Swimlane
+          title="Swimlane 2"
+          icon={<Code2 className="h-6 w-6" />}
+          projects={mockProjects}
+          index={1}
+        />
+      )
+      const section1 = container1.querySelector('section')
+      const section2 = container2.querySelector('section')
+
+      // Sections should have different background classes
+      expect(section1?.className).not.toEqual(section2?.className)
     })
   })
 

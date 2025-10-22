@@ -169,9 +169,9 @@ export default function UsesPage() {
               <h2 className="text-2xl font-bold text-text mb-6">Philosophy</h2>
               <div className="prose prose-lg max-w-none text-text-secondary">
                 <p className="mb-4">
-                  [Add your philosophy about tools - e.g., "I believe in using the right tool for
-                  the job, not the newest or most popular one. My setup focuses on..." or "I
-                  optimize for deep work and minimal context switching..."]
+                  [Add your philosophy about tools - e.g., &quot;I believe in using the right tool
+                  for the job, not the newest or most popular one. My setup focuses on...&quot; or
+                  &quot;I optimize for deep work and minimal context switching...&quot;]
                 </p>
                 <p>
                   [Maybe mention how you evaluate new tools, what matters to you in a tool, or any

@@ -67,7 +67,7 @@ export default function FeaturedProjects() {
                         </Link>
                       </h3>
                       <p className="text-sm text-text-secondary line-clamp-3 mb-4">
-                        {project.summary}
+                        {project.detailedDescription}
                       </p>
                     </div>
 

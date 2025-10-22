@@ -22,9 +22,11 @@ interface SwimlaneProps {
  * - Alternating background colors for visual rhythm
  */
 export default function Swimlane({ title, icon, projects, description, index = 0 }: SwimlaneProps) {
-  // Alternate background colors for visual rhythm
+  // Alternate background colors for visual rhythm with enhanced distinction
   const isEven = index % 2 === 0
-  const bgClass = isEven ? 'bg-neutral-bg' : 'bg-neutral-surface'
+  const bgClass = isEven
+    ? 'bg-neutral-bg border-y border-divider shadow-inner'
+    : 'bg-gradient-to-br from-neutral-surface to-neutral-bg/50 border-y border-primary/5 shadow-inner'
 
   return (
     <section

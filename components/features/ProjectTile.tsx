@@ -39,9 +39,9 @@ function getProjectIcon(project: Project) {
 /**
  * ProjectTile Component
  *
- * Taller card for displaying projects in horizontal swimlanes.
- * Shows project favicon/icon, title, description, insight, tags, and link.
- * Enhanced with hover states and improved visual hierarchy.
+ * Streamlined card for displaying projects in horizontal swimlanes.
+ * Shows project favicon/icon, title, description, tags, and link.
+ * Removed summary and insight for better space efficiency.
  */
 export default function ProjectTile({ project }: ProjectTileProps) {
   const isToolProject = project.type === 'tool'
@@ -96,20 +96,10 @@ export default function ProjectTile({ project }: ProjectTileProps) {
         </div>
 
         {/* Title */}
-        <h3 className="text-xl font-bold text-primary mb-2 line-clamp-2">{project.title}</h3>
+        <h3 className="text-xl font-bold text-primary mb-3 line-clamp-2">{project.title}</h3>
 
-        {/* Summary */}
-        <p className="text-sm text-text-secondary mb-3 line-clamp-3">{project.summary}</p>
-
-        {/* Description */}
-        <p className="text-sm text-text mb-3 line-clamp-6 leading-relaxed">{project.description}</p>
-
-        {/* Insight Line */}
-        {project.insight && (
-          <p className="text-xs italic text-text-secondary mb-3 line-clamp-3 leading-relaxed">
-            💡 {project.insight}
-          </p>
-        )}
+        {/* Description - Now the main content, more lines visible */}
+        <p className="text-sm text-text mb-4 line-clamp-8 leading-relaxed">{project.description}</p>
 
         {/* Tech Stack Tags and Category Tags */}
         <div className="mb-3">
@@ -154,8 +144,8 @@ export default function ProjectTile({ project }: ProjectTileProps) {
         {/* Spacer to push link to bottom */}
         <div className="flex-grow"></div>
 
-        {/* Learn More Link - Shows on hover, no divider */}
-        <div className="mt-auto pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+        {/* Learn More Link - Always visible now for better space usage */}
+        <div className="mt-auto pt-2">
           <Link
             href={`/projects/${project.slug}`}
             className="text-sm font-medium text-accent-warm hover:underline inline-flex items-center gap-1"

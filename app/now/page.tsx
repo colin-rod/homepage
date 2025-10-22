@@ -66,38 +66,38 @@ export default function NowPage() {
               <h2 className="text-2xl font-bold text-text mb-6">How I Work</h2>
               <div className="prose prose-lg max-w-none text-text-secondary">
                 <p className="mb-4">
-                  My current workflow is as follows: I manage a backlog of ideas in Linear. I've
-                  accumulated these over time when inspiration strikes me or when I think "Hey
-                  wouldn't it be cool if X did Y" or "I wonder if this exists" Typically these files
-                  have been living in various spreadsheets, docs and notes files across multiple
-                  platforms and I am consolidatingn them in Linear. I then categorize them into 1 of
-                  Project, Project Expansion, Tool or Experiment. From there I prioritize them based
-                  on a mix of impact, effort, and personal interest. Each week, I select a few items
-                  from the backlog to focus on and dive deeper into scoping them out. I conduct some
-                  high level research to validate the idea, understand the problem space, and
-                  identify current solutions. Typically I will turn to ChatGPT as a resource here to
-                  act as asparring aprtner. As part of this scoping I will generate a PRD (Product
-                  Requirements Document) to outline the problem, target audience, goals, and success
-                  metrics. If the idea is monetizable I will also do a quick market analysis to
-                  understand the business model and tradeoffs Once I have a solid understanding, I
-                  then move into creating a project plan in Linear. I start by breaking down the
-                  project into Epics and Issues. At this stage I try to group the epics into
-                  milestones and identify critical dependencies. I like Linear's ability to
-                  visualise blocking and blocked issues as it helps me manage the flow of work. I
-                  also use Fibonnacie story points to estimate effort and complexity at the issue
-                  level. This helps me prioritize and plan sprints and cycles more effectively. I
-                  start. with Codex for architectural decisions since I find it better at high level
-                  design and thinking through tradeoffs. Once I have a solid architecture planned
-                  out, I then move into development, following Test-Driven Development (TDD)
-                  principles. I write tests first to define the expected behavior and outcomes. This
-                  approach helps me clarify requirements, catch edge cases early, and ensure code
-                  quality. Typically I like to use Codex at this stage to scope out the test
-                  reuirements and ensure completeness. At this stage I switch to Claude Code as my
-                  AI pair programmer to help with code generation and refactoring. Throughout
-                  development, I continuously integrate and deploy changes using GitHub Actions.
-                  This allows me to review and give feedback quickly and iterate on the product. I
-                  also make use of automated testing tools such as Jest and Playwright to automate
-                  the testing process.
+                  My current workflow is as follows: I manage a backlog of ideas in Linear.
+                  I&apos;ve accumulated these over time when inspiration strikes me or when I think
+                  &quot;Hey wouldn&apos;t it be cool if X did Y&quot; or &quot;I wonder if this
+                  exists&quot; Typically these files have been living in various spreadsheets, docs
+                  and notes files across multiple platforms and I am consolidatingn them in Linear.
+                  I then categorize them into 1 of Project, Project Expansion, Tool or Experiment.
+                  From there I prioritize them based on a mix of impact, effort, and personal
+                  interest. Each week, I select a few items from the backlog to focus on and dive
+                  deeper into scoping them out. I conduct some high level research to validate the
+                  idea, understand the problem space, and identify current solutions. Typically I
+                  will turn to ChatGPT as a resource here to act as asparring aprtner. As part of
+                  this scoping I will generate a PRD (Product Requirements Document) to outline the
+                  problem, target audience, goals, and success metrics. If the idea is monetizable I
+                  will also do a quick market analysis to understand the business model and
+                  tradeoffs Once I have a solid understanding, I then move into creating a project
+                  plan in Linear. I start by breaking down the project into Epics and Issues. At
+                  this stage I try to group the epics into milestones and identify critical
+                  dependencies. I like Linear&apos;s ability to visualise blocking and blocked
+                  issues as it helps me manage the flow of work. I also use Fibonnacie story points
+                  to estimate effort and complexity at the issue level. This helps me prioritize and
+                  plan sprints and cycles more effectively. I start. with Codex for architectural
+                  decisions since I find it better at high level design and thinking through
+                  tradeoffs. Once I have a solid architecture planned out, I then move into
+                  development, following Test-Driven Development (TDD) principles. I write tests
+                  first to define the expected behavior and outcomes. This approach helps me clarify
+                  requirements, catch edge cases early, and ensure code quality. Typically I like to
+                  use Codex at this stage to scope out the test reuirements and ensure completeness.
+                  At this stage I switch to Claude Code as my AI pair programmer to help with code
+                  generation and refactoring. Throughout development, I continuously integrate and
+                  deploy changes using GitHub Actions. This allows me to review and give feedback
+                  quickly and iterate on the product. I also make use of automated testing tools
+                  such as Jest and Playwright to automate the testing process.
                 </p>
               </div>
             </section>

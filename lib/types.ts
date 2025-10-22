@@ -42,8 +42,8 @@ export interface Project {
   id: string
   title: string
   slug: string
-  description: string
-  summary: string
+  description: string // Short description for cards
+  detailedDescription: string // Previously "summary" - detailed explanation (formerly shown in cards, now for detail pages)
   type: ProjectType // Distinguishes between larger projects and smaller tools
   scope?: string
   prd?: string // Product Requirements Document
@@ -53,7 +53,7 @@ export interface Project {
   tags: string[] // e.g., ['web', 'api', 'automation', 'product']
   whyBuilt?: string
   learnings?: string[]
-  insight?: string // Brief insight or reflection about the project (e.g., "Built to learn Supabase")
+  insight?: string // Brief insight or reflection about the project (kept in data model but not shown in cards)
   favicon?: string // Path to project favicon/logo (e.g., "/images/projects/babypool-favicon.png")
   links?: {
     live?: string
@@ -81,11 +81,11 @@ export interface CVExperience {
   title: string
   company: string
   location: string
-  startDate: string // ISO 8601 format
-  endDate?: string | null // null for current
+  startDate: string // ISO 8601
+  endDate?: string | null
   description: string
   highlights: string[]
-  tags: string[] // For filtering by role type (product, strategy, tech)
+  tags: string[] // For filtering (e.g., ['product', 'strategy'])
 }
 
 export interface CVEducation {
@@ -95,12 +95,12 @@ export interface CVEducation {
   description?: string
 }
 
-export interface CVData {
+export interface CV {
   summary: string
   skills: CVSkillCategory[]
   experience: CVExperience[]
   education: CVEducation[]
-  projects: string[] // Array of project IDs
+  projects: string[] // References to project IDs
 }
 
 // ============================================================================
@@ -108,35 +108,13 @@ export interface CVData {
 // ============================================================================
 
 export interface BlogPost {
+  id: string
+  title: string
   slug: string
-  title: string
-  date: string // ISO 8601 format
-  summary: string
+  excerpt: string
+  content: string
+  publishedAt: string // ISO 8601
+  updatedAt?: string
   tags: string[]
-  content?: string // MDX content (loaded separately)
-  readingTime?: number // in minutes
-}
-
-// ============================================================================
-// Shared/Utility Types
-// ============================================================================
-
-/**
- * Common tag categories used across the application
- */
-export type TagCategory = 'product' | 'strategy' | 'tech' | 'design' | 'business' | 'learning'
-
-/**
- * Filter options for CV display
- */
-export type CVFilterType = 'all' | 'product' | 'strategy' | 'tech'
-
-/**
- * Common metadata for pages
- */
-export interface PageMetadata {
-  title: string
-  description: string
-  image?: string
-  url?: string
+  featured: boolean
 }
