@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { generatePageMetadata } from '@/lib/seo'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
+import PageTransition from '@/components/animations/PageTransition'
 
 export const metadata: Metadata = generatePageMetadata(
   'About',
@@ -19,7 +20,8 @@ export default function AboutPage() {
   return (
     <>
       <Navigation />
-      <main className="py-24 sm:py-32">
+      <PageTransition>
+        <main className="py-24 sm:py-32">
         <div className="mx-auto max-w-4xl px-6 lg:px-8">
           {/* Page Header */}
           <div className="mb-16">
@@ -143,7 +145,8 @@ export default function AboutPage() {
             </div>
           </section>
         </div>
-      </main>
+        </main>
+      </PageTransition>
       <Footer />
     </>
   )
