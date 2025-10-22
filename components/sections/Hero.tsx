@@ -22,16 +22,21 @@ export default function Hero() {
 
           {/* Tagline */}
           <p className="text-xl sm:text-2xl font-medium text-neutral-surface mb-8">
-            Building, Reflecting & Sharing - a Work in Progress
+            Building, Reflecting & Sharing - a Work in{' '}
+            <span className="text-accent-gold font-bold">Progress</span>
           </p>
 
           {/* Introduction */}
           <p className="text-lg sm:text-xl text-neutral-surface/90 mb-10 leading-relaxed">
-            This site is part portfolio, part journal. 
-            A place for me to think out loud about 
-            what I’m building, 
-            what I’m learning, 
-            and what I’m still figuring out.
+            This site is part portfolio, part journal.
+            <br />
+            A place for me to think out loud about
+            <br />
+            what I&apos;m building,
+            <br />
+            what I&apos;m learning,
+            <br />
+            and what I&apos;m still figuring out.
           </p>
 
           {/* CTA Buttons */}
