@@ -141,21 +141,21 @@ describe('ProjectTile', () => {
     it('applies fixed height class', () => {
       const { container } = render(<ProjectTile project={mockProject} />)
       // CardHover wrapper contains the card classes
-      const wrapper = container.firstChild
+      const wrapper = container.firstChild as HTMLElement
       expect(wrapper).toBeInTheDocument()
       expect(wrapper?.className).toMatch(/h-48/)
     })
 
     it('applies fixed width class', () => {
       const { container } = render(<ProjectTile project={mockProject} />)
-      const wrapper = container.firstChild
+      const wrapper = container.firstChild as HTMLElement
       expect(wrapper).toBeInTheDocument()
       expect(wrapper?.className).toMatch(/w-72/)
     })
 
     it('applies card styling', () => {
       const { container } = render(<ProjectTile project={mockProject} />)
-      const wrapper = container.firstChild
+      const wrapper = container.firstChild as HTMLElement
       expect(wrapper).toBeInTheDocument()
       expect(wrapper?.className).toMatch(/card/)
     })

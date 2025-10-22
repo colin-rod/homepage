@@ -35,63 +35,80 @@ export default function ProjectsPage() {
     <>
       <Navigation />
       <PageTransition>
-        <main className="py-24 sm:py-32">
+        <main className="py-16 sm:py-20">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            {/* Page Header */}
-            <div className="mx-auto max-w-2xl text-center mb-16">
-              <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl mb-6">
+            {/* Page Header - Compressed */}
+            <div className="mx-auto max-w-2xl text-center mb-10">
+              <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl mb-3">
                 Projects
               </h1>
-              <p className="text-xl text-text-secondary leading-relaxed">
+              <p className="text-base text-text-secondary leading-relaxed">
                 A collection of things I&apos;m working on, built, launched, or investigated. Each
-                one started with a question or problem I wanted to understand better. I use this
-                space to document the process, what I learned, and what I&apos;d do differently next
-                time.
+                one started with a question or problem I wanted to understand better.
               </p>
             </div>
 
             {/* In Progress Swimlane */}
             <Swimlane
               title="In Progress"
-              icon={<Code2 className="h-6 w-6 text-accent-warm" />}
+              icon={<Code2 className="h-5 w-5 text-accent-warm" />}
               projects={inProgressProjects}
               description="Projects currently under active development"
+              index={0}
             />
+
+            {/* Visual Divider */}
+            <div className="h-px bg-gradient-to-r from-transparent via-divider to-transparent my-8" />
 
             {/* Shipped Swimlane */}
             <Swimlane
               title="Shipped"
-              icon={<Rocket className="h-6 w-6 text-semantic-success" />}
+              icon={<Rocket className="h-5 w-5 text-semantic-success" />}
               projects={shippedProjects}
               description="Live and completed projects ready for the world"
+              index={1}
             />
+
+            {/* Visual Divider */}
+            <div className="h-px bg-gradient-to-r from-transparent via-divider to-transparent my-8" />
 
             {/* Planned Swimlane */}
             <Swimlane
               title="Planned"
-              icon={<Lightbulb className="h-6 w-6 text-accent-gold" />}
+              icon={<Lightbulb className="h-5 w-5 text-accent-gold" />}
               projects={plannedProjects}
               description="Concepts and ideas being explored and validated"
+              index={2}
             />
 
             {/* Retired Swimlane */}
             {retiredProjects.length > 0 && (
-              <Swimlane
-                title="Retired"
-                icon={<Archive className="h-6 w-6 text-text-secondary" />}
-                projects={retiredProjects}
-                description="Projects that have been sunset or archived, with lessons learned"
-              />
+              <>
+                {/* Visual Divider */}
+                <div className="h-px bg-gradient-to-r from-transparent via-divider to-transparent my-8" />
+                <Swimlane
+                  title="Retired"
+                  icon={<Archive className="h-5 w-5 text-text-secondary" />}
+                  projects={retiredProjects}
+                  description="Projects that have been sunset or archived, with lessons learned"
+                  index={3}
+                />
+              </>
             )}
 
             {/* Tools & Utilities Swimlane */}
             {tools.length > 0 && (
-              <Swimlane
-                title="Tools & Utilities"
-                icon={<Wrench className="h-6 w-6 text-accent-gold" />}
-                projects={tools}
-                description="Smaller utilities and scripts built to solve specific problems"
-              />
+              <>
+                {/* Visual Divider */}
+                <div className="h-px bg-gradient-to-r from-transparent via-divider to-transparent my-8" />
+                <Swimlane
+                  title="Tools & Utilities"
+                  icon={<Wrench className="h-5 w-5 text-accent-gold" />}
+                  projects={tools}
+                  description="Smaller utilities and scripts built to solve specific problems"
+                  index={4}
+                />
+              </>
             )}
           </div>
         </main>

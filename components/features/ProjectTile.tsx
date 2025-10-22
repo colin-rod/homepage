@@ -40,6 +40,7 @@ function getProjectIcon(project: Project) {
  *
  * Compact, fixed-height card for displaying projects in horizontal swimlanes.
  * Shows project icon, title, summary, tags, insight line, and link.
+ * Enhanced with hover states and improved visual hierarchy.
  */
 export default function ProjectTile({ project }: ProjectTileProps) {
   const isToolProject = project.type === 'tool'
@@ -47,6 +48,7 @@ export default function ProjectTile({ project }: ProjectTileProps) {
   return (
     <CardHover
       className={`
+        group
         card
         flex-shrink-0
         w-72
@@ -54,6 +56,9 @@ export default function ProjectTile({ project }: ProjectTileProps) {
         flex
         flex-col
         overflow-hidden
+        hover:shadow-lg
+        transition-shadow
+        duration-200
         ${isToolProject ? 'border-2 border-accent-gold/30' : ''}
       `}
     >
@@ -67,7 +72,7 @@ export default function ProjectTile({ project }: ProjectTileProps) {
               <span>Featured</span>
             </div>
           )}
-          {isToolProject && (
+          {isToolProject && !project.featured && (
             <div className="flex items-center gap-1 text-xs text-accent-gold">
               <Wrench className="h-3 w-3" />
               <span>Tool</span>
@@ -124,8 +129,8 @@ export default function ProjectTile({ project }: ProjectTileProps) {
         {/* Spacer to push link to bottom */}
         <div className="flex-grow"></div>
 
-        {/* Learn More Link */}
-        <div className="mt-auto pt-2 border-t border-divider">
+        {/* Learn More Link - Shows on hover */}
+        <div className="mt-auto pt-2 border-t border-divider opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           <Link
             href={`/projects/${project.slug}`}
             className="text-sm text-accent-warm hover:underline"
