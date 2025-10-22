@@ -29,7 +29,7 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold text-primary mb-4">Colin Rodrigues</h3>
             <p className="text-sm text-text-secondary">
-              Product & Strategy professional building meaningful solutions through technology.
+              This site is my corner of the internet — a mix of projects, ideas, and reflections.
             </p>
           </div>
 
@@ -54,10 +54,10 @@ export default function Footer() {
         {/* Bottom Section */}
         <div className="mt-12 border-t border-divider pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-sm text-text-secondary">
-            © {currentYear} Colin Rodrigues. All rights reserved.
+            © {currentYear} Colin Rodrigues. All thoughts and projects are my own.
           </p>
           <p className="text-sm text-text-secondary">
-            Built with{' '}
+            Built with ❤️ using{' '}
             <a
               href="https://nextjs.org"
               target="_blank"
@@ -65,8 +65,8 @@ export default function Footer() {
               className="text-accent-warm hover:underline"
             >
               Next.js
-            </a>
-            {' '}and{' '}
+            </a>{' '}
+            and{' '}
             <a
               href="https://tailwindcss.com"
               target="_blank"

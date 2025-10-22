@@ -22,7 +22,7 @@ export default function FeaturedProjects() {
             Recent Projects
           </h2>
           <p className="mt-4 text-lg text-text-secondary">
-            Explore some of my recent work in product management, strategy, and development
+            Explore some of my recent work in building projects, tools or experiments.
           </p>
         </div>
 
@@ -40,8 +40,8 @@ export default function FeaturedProjects() {
                       project.status === 'active'
                         ? 'badge-success'
                         : project.status === 'completed'
-                        ? 'badge-primary'
-                        : 'badge-accent'
+                          ? 'badge-primary'
+                          : 'badge-accent'
                     }`}
                   >
                     {project.status}
@@ -50,14 +50,15 @@ export default function FeaturedProjects() {
 
                 <div className="group relative">
                   <h3 className="text-xl font-semibold text-text mb-3">
-                    <Link href={`/projects/${project.slug}`} className="hover:text-accent-warm transition-colors">
+                    <Link
+                      href={`/projects/${project.slug}`}
+                      className="hover:text-accent-warm transition-colors"
+                    >
                       <span className="absolute inset-0" />
                       {project.title}
                     </Link>
                   </h3>
-                  <p className="text-sm text-text-secondary line-clamp-3 mb-4">
-                    {project.summary}
-                  </p>
+                  <p className="text-sm text-text-secondary line-clamp-3 mb-4">{project.summary}</p>
                 </div>
 
                 {/* Tags */}
