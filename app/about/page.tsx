@@ -34,23 +34,23 @@ export default function AboutPage() {
             <section className="mb-16">
               <div className="prose prose-lg max-w-none text-text-secondary space-y-6">
                 <p>
-                  I'm Colin — a builder, a dad, and someone who’s constantly curious about how ideas
-                  turn into things that matter.
+                  I&apos;m Colin — a builder, a dad, and someone who&apos;s constantly curious about
+                  how ideas turn into things that matter.
                 </p>
                 <p>
                   Fatherhood shifted a lot for me — not just how I spend my time, but what I want
-                  that time to mean. It’s changed how I think about work and what I create. These
-                  days, I’m less focused on scale for its own sake and more on harmony — finding
-                  ways to bring creativity, technology, and everyday life together in a way that
-                  feels meaningful.
+                  that time to mean. It&apos;s changed how I think about work and what I create.
+                  These days, I&apos;m less focused on scale for its own sake and more on harmony —
+                  finding ways to bring creativity, technology, and everyday life together in a way
+                  that feels meaningful.
                 </p>
                 <p>
-                  This site is my way of weaving those threads together — a home for what I’m
+                  This site is my way of weaving those threads together — a home for what I&apos;m
                   learning, experimenting with, and still figuring out.
                 </p>
                 <p>
-                  I started my career in engineering, and lately, I’ve found myself drawn back to it
-                  — rediscovering the creative and problem-solving itch that first got me into
+                  I started my career in engineering, and lately, I&apos;ve found myself drawn back
+                  to it — rediscovering the creative and problem-solving itch that first got me into
                   building. Tools like{' '}
                   <a href="https://claude.ai" target="_blank" rel="noopener noreferrer">
                     Claude
@@ -68,7 +68,7 @@ export default function AboutPage() {
                     Codex
                   </a>{' '}
                   have changed the velocity of creation, letting me translate half-formed thoughts
-                  into experiments and projects at a pace that feels exciting. It’s what Simon
+                  into experiments and projects at a pace that feels exciting. It&apos;s what Simon
                   Willison calls{' '}
                   <a
                     href="https://simonwillison.net/2023/Oct/12/vibe-engineering/"
@@ -85,10 +85,10 @@ export default function AboutPage() {
                   something more tangible, and to share it openly so others can learn from it too.
                 </p>
                 <p>
-                  I’ve learned so much from the generosity of others who shared their code, notes,
-                  and reflections online. This site is my way of paying that forward — a small
-                  corner of the internet where I can contribute back to the same community that’s
-                  taught me so much.
+                  I&apos;ve learned so much from the generosity of others who shared their code,
+                  notes, and reflections online. This site is my way of paying that forward — a
+                  small corner of the internet where I can contribute back to the same community
+                  that&apos;s taught me so much.
                 </p>
               </div>
             </section>
@@ -98,8 +98,8 @@ export default function AboutPage() {
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-text mb-4">Let&apos;s Connect</h2>
                 <p className="text-lg text-text-secondary mb-8">
-                  If something here resonates — whether you’re a builder, a parent, or just figuring
-                  things out along the way — I’d love to connect.
+                  If something here resonates — whether you&apos;re a builder, a parent, or just
+                  figuring things out along the way — I&apos;d love to connect.
                 </p>
                 <a href="/contact" className="btn btn-primary">
                   Get in Touch
