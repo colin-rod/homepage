@@ -53,7 +53,7 @@ export default function ProjectTile({ project }: ProjectTileProps) {
         card
         flex-shrink-0
         w-80
-        h-72
+        h-80
         flex
         flex-col
         overflow-hidden
@@ -99,14 +99,14 @@ export default function ProjectTile({ project }: ProjectTileProps) {
         <h3 className="text-xl font-bold text-primary mb-2 line-clamp-2">{project.title}</h3>
 
         {/* Summary */}
-        <p className="text-sm text-text-secondary mb-3 line-clamp-2">{project.summary}</p>
+        <p className="text-sm text-text-secondary mb-3 line-clamp-3">{project.summary}</p>
 
         {/* Description */}
-        <p className="text-sm text-text mb-3 line-clamp-3 leading-relaxed">{project.description}</p>
+        <p className="text-sm text-text mb-3 line-clamp-6 leading-relaxed">{project.description}</p>
 
         {/* Insight Line */}
         {project.insight && (
-          <p className="text-xs italic text-text-secondary mb-3 line-clamp-2 leading-relaxed">
+          <p className="text-xs italic text-text-secondary mb-3 line-clamp-3 leading-relaxed">
             💡 {project.insight}
           </p>
         )}

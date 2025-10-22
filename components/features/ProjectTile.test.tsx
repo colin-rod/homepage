@@ -156,12 +156,12 @@ describe('ProjectTile', () => {
   })
 
   describe('Styling and Layout', () => {
-    it('applies fixed height class (h-72)', () => {
+    it('applies fixed height class (h-80)', () => {
       const { container } = render(<ProjectTile project={mockProject} />)
       // CardHover wrapper contains the card classes
       const wrapper = container.firstChild as HTMLElement
       expect(wrapper).toBeInTheDocument()
-      expect(wrapper?.className).toMatch(/h-72/)
+      expect(wrapper?.className).toMatch(/h-80/)
     })
 
     it('applies fixed width class (w-80)', () => {
