@@ -48,10 +48,6 @@ export default function UsesPage() {
                         <p className="mt-2 text-base text-text-secondary">{category.description}</p>
                       )}
                     </div>
-                    <p className="text-sm text-text-secondary md:max-w-xs">
-                      Swap in your own notes in the context column to explain how and why you use
-                      each item.
-                    </p>
                   </div>
 
                   <div className="space-y-4">
