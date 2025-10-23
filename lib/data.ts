@@ -169,3 +169,11 @@ export function getProjectsBySwimlanes(): Record<Swimlane, Project[]> {
     retired: getProjectsBySwimLane('retired'),
   }
 }
+
+/**
+ * Get uses categories and items
+ */
+export function getUsesCategories(): UsesCategory[] {
+  const data = usesData as { categories: UsesCategory[] }
+  return data.categories
+}
