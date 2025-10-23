@@ -16,7 +16,7 @@
           "name": "HP EliteDisplay E223",
           "details": "21.5\" external monitor",
           "link": "https://www.hp.com/us-en/shop/pdp/hp-elitedisplay-e223-215-inch-monitor",
-          "favicon": "public/images/favicons/hp.png",
+          "favicon": "/images/favicons/hp.png",
           "context": "External display for additional workspace during deep focus sessions.",
           "tags": ["display", "setup"]
         }
