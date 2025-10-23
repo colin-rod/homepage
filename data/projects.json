@@ -240,5 +240,219 @@
     "featured": true,
     "year": 2025,
     "quarter": "Q4"
+  },
+  {
+    "id": "raindrop-randomizer",
+    "title": "Raindrop Randomizer",
+    "slug": "raindrop-randomizer",
+    "description": "Web tool to randomly select bookmarks from Raindrop.io collections",
+    "detailedDescription": "A simple web application that integrates with Raindrop.io to help users discover random bookmarks from their collections. Perfect for rediscovering forgotten saved content or getting random reading suggestions.",
+    "type": "tool",
+    "status": "live",
+    "techStack": ["HTML", "JavaScript", "Raindrop.io API"],
+    "tags": ["web", "api", "automation", "tech"],
+    "whyBuilt": [
+      "Wanted a way to rediscover bookmarks saved in Raindrop.io collections",
+      "Built a quick utility to randomly surface content from large bookmark collections",
+      "Explore Raindrop.io API integration"
+    ],
+    "learnings": [
+      {
+        "content": "Simple HTML/JavaScript tools can be deployed quickly on Vercel without complex build processes",
+        "sentiment": "positive"
+      },
+      {
+        "content": "Raindrop.io API provides straightforward access to bookmark collections",
+        "sentiment": "positive"
+      }
+    ],
+    "links": {
+      "live": "https://raindrop-randomizer.vercel.app",
+      "github": "https://github.com/colin-rod/raindrop-randomizer"
+    },
+    "featured": false,
+    "year": 2025,
+    "quarter": "Q3"
+  },
+  {
+    "id": "recipe-enrichment",
+    "title": "Recipe Enrichment",
+    "slug": "recipe-enrichment",
+    "description": "Tool to enrich and enhance recipe data with additional metadata and formatting",
+    "detailedDescription": "A web application that takes recipe URLs or text and enriches them with structured data, cooking times, ingredient measurements, and improved formatting. Makes recipes easier to follow and more accessible.",
+    "type": "tool",
+    "status": "live",
+    "techStack": ["JavaScript", "HTML", "Web APIs"],
+    "tags": ["web", "automation", "tech"],
+    "whyBuilt": [
+      "Needed a way to standardize recipe formats from various sources",
+      "Wanted to extract structured data from recipe websites",
+      "Make recipes more accessible and easier to follow"
+    ],
+    "learnings": [
+      {
+        "content": "Parsing recipe data from different websites requires flexible pattern matching",
+        "sentiment": "neutral"
+      },
+      {
+        "content": "Structured recipe data improves usability significantly",
+        "sentiment": "positive"
+      }
+    ],
+    "links": {
+      "live": "https://recipe-enrichment.vercel.app",
+      "github": "https://github.com/colin-rod/recipe-enrichment"
+    },
+    "featured": false,
+    "year": 2025,
+    "quarter": "Q3"
+  },
+  {
+    "id": "raindrop-classifier",
+    "title": "Raindrop Classifier",
+    "slug": "raindrop-classifier",
+    "description": "Automated tool to classify and organize Raindrop.io bookmarks using AI",
+    "detailedDescription": "Automatically categorizes and tags bookmarks in Raindrop.io collections using AI-powered classification. Helps maintain organized bookmark collections without manual sorting.",
+    "type": "tool",
+    "status": "live",
+    "techStack": ["JavaScript", "Raindrop.io API", "AI/ML"],
+    "tags": ["automation", "api", "tech"],
+    "whyBuilt": [
+      "Manual bookmark organization is time-consuming and inconsistent",
+      "Wanted to explore AI-powered content classification",
+      "Automate the process of tagging and categorizing saved content"
+    ],
+    "learnings": [
+      {
+        "content": "AI classification can significantly reduce manual organization effort",
+        "sentiment": "positive"
+      },
+      {
+        "content": "Raindrop.io API allows bulk operations for efficient processing",
+        "sentiment": "positive"
+      }
+    ],
+    "links": {
+      "github": "https://github.com/colin-rod/raindrop_classifier"
+    },
+    "featured": false,
+    "year": 2025,
+    "quarter": "Q3"
+  },
+  {
+    "id": "photo-sorter",
+    "title": "Photo Sorter",
+    "slug": "photo-sorter",
+    "description": "Python script to automatically organize photos by date, location, or metadata",
+    "detailedDescription": "A command-line tool that analyzes photo EXIF data and automatically sorts images into organized folder structures. Supports sorting by date, location, camera model, and custom criteria.",
+    "type": "tool",
+    "status": "live",
+    "techStack": ["Python", "EXIF", "File System"],
+    "tags": ["automation", "tech"],
+    "whyBuilt": [
+      "Needed to organize thousands of photos from multiple sources",
+      "Manual photo organization is tedious and error-prone",
+      "Learn Python file system operations and EXIF data parsing"
+    ],
+    "learnings": [
+      {
+        "content": "EXIF metadata provides rich information for automated photo organization",
+        "sentiment": "positive"
+      },
+      {
+        "content": "Python's file handling libraries make batch processing straightforward",
+        "sentiment": "positive"
+      },
+      {
+        "content": "Need to handle edge cases like missing metadata or corrupted files carefully",
+        "sentiment": "neutral"
+      }
+    ],
+    "links": {
+      "github": "https://github.com/colin-rod/photo-sorter"
+    },
+    "featured": false,
+    "year": 2025,
+    "quarter": "Q3"
+  },
+  {
+    "id": "baby-name-app",
+    "title": "Baby Name App",
+    "slug": "baby-name-app",
+    "description": "Interactive web app for couples to collaboratively choose baby names",
+    "detailedDescription": "A collaborative tool that helps couples find the perfect baby name by allowing both partners to swipe through names Tinder-style. When both partners like the same name, it's added to a shared shortlist. Features filtering by origin, meaning, and popularity.",
+    "type": "project",
+    "status": "live",
+    "techStack": ["JavaScript", "TypeScript", "HTML", "CSS"],
+    "tags": ["web", "product", "tech"],
+    "whyBuilt": [
+      "Personal need during pregnancy to find names both partners liked",
+      "Existing baby name apps lacked collaborative features",
+      "Wanted to make the name selection process fun and engaging",
+      "Explore swipe-based UI patterns"
+    ],
+    "learnings": [
+      {
+        "content": "Swipe-based interfaces create engaging user experiences for selection tasks",
+        "sentiment": "positive"
+      },
+      {
+        "content": "Real-time collaboration features require careful state management",
+        "sentiment": "neutral"
+      },
+      {
+        "content": "Baby name data sources vary widely in quality and completeness",
+        "sentiment": "neutral"
+      }
+    ],
+    "links": {
+      "live": "https://baby-name-app-alpha.vercel.app",
+      "github": "https://github.com/colin-rod/baby-name-app"
+    },
+    "featured": false,
+    "year": 2025,
+    "quarter": "Q3"
+  },
+  {
+    "id": "babypool",
+    "title": "BabyPool",
+    "slug": "babypool",
+    "description": "Fun prediction pool app for guessing baby birth details",
+    "detailedDescription": "A social web application where friends and family can place predictions on baby birth details like date, time, weight, and other characteristics. Features real-time leaderboards, automated scoring, and shareable results for celebrating the new arrival.",
+    "type": "project",
+    "status": "live",
+    "techStack": ["TypeScript", "PostgreSQL", "JavaScript", "CSS"],
+    "tags": ["web", "product", "tech"],
+    "whyBuilt": [
+      "Wanted to create a fun, engaging way for friends and family to participate in the pregnancy journey",
+      "Existing baby pool tools were outdated or lacked modern features",
+      "Build a real-time application with live updates and scoring",
+      "Create shareable, memorable experience for the birth announcement"
+    ],
+    "learnings": [
+      {
+        "content": "PostgreSQL database design for handling predictions and scoring logic",
+        "sentiment": "positive"
+      },
+      {
+        "content": "Real-time updates enhance user engagement for social prediction games",
+        "sentiment": "positive"
+      },
+      {
+        "content": "TypeScript provides excellent type safety for complex scoring calculations",
+        "sentiment": "positive"
+      },
+      {
+        "content": "User-friendly onboarding is critical for social apps where non-technical users participate",
+        "sentiment": "neutral"
+      }
+    ],
+    "links": {
+      "live": "https://babypool.vercel.app",
+      "github": "https://github.com/colin-rod/babypool"
+    },
+    "featured": true,
+    "year": 2025,
+    "quarter": "Q3"
   }
 ]
