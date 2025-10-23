@@ -40,8 +40,7 @@ function getProjectIcon(project: Project) {
  * ProjectTile Component
  *
  * Streamlined card for displaying projects in horizontal swimlanes.
- * Shows project favicon/icon, title, description, tags, and link.
- * Removed summary and insight for better space efficiency.
+ * Shows project favicon/icon, title, description, tech stack, and link.
  */
 export default function ProjectTile({ project }: ProjectTileProps) {
   const isToolProject = project.type === 'tool'
@@ -101,45 +100,24 @@ export default function ProjectTile({ project }: ProjectTileProps) {
         {/* Description - Now the main content, more lines visible */}
         <p className="text-sm text-text mb-4 line-clamp-8 leading-relaxed">{project.description}</p>
 
-        {/* Tech Stack Tags and Category Tags */}
-        <div className="mb-3">
-          {/* Category Tags */}
-          {project.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1 mb-1">
-              {project.tags.slice(0, 3).map((tag) => (
-                <span
-                  key={tag}
-                  className="text-xs px-2 py-0.5 rounded bg-accent-warm/10 text-accent-warm"
-                >
-                  {tag}
-                </span>
-              ))}
-              {project.tags.length > 3 && (
-                <span className="text-xs px-2 py-0.5 text-text-secondary">
-                  +{project.tags.length - 3}
-                </span>
-              )}
-            </div>
-          )}
-          {/* Tech Stack */}
-          {project.techStack.length > 0 && (
-            <div className="flex flex-wrap gap-1">
-              {project.techStack.slice(0, 2).map((tech) => (
-                <span
-                  key={tech}
-                  className="text-xs px-2 py-0.5 rounded bg-neutral-surface border border-divider text-text-secondary"
-                >
-                  {tech}
-                </span>
-              ))}
-              {project.techStack.length > 2 && (
-                <span className="text-xs px-2 py-0.5 text-text-secondary">
-                  +{project.techStack.length - 2}
-                </span>
-              )}
-            </div>
-          )}
-        </div>
+        {/* Tech Stack */}
+        {project.techStack.length > 0 && (
+          <div className="mb-3 flex flex-wrap gap-1">
+            {project.techStack.slice(0, 2).map((tech) => (
+              <span
+                key={tech}
+                className="text-xs px-2 py-0.5 rounded bg-neutral-surface border border-divider text-text-secondary"
+              >
+                {tech}
+              </span>
+            ))}
+            {project.techStack.length > 2 && (
+              <span className="text-xs px-2 py-0.5 text-text-secondary">
+                +{project.techStack.length - 2}
+              </span>
+            )}
+          </div>
+        )}
 
         {/* Spacer to push link to bottom */}
         <div className="flex-grow"></div>

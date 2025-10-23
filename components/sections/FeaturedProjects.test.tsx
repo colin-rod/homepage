@@ -7,7 +7,7 @@ import FeaturedProjects from './FeaturedProjects'
  * Tests ensure the featured projects section displays:
  * - Section heading
  * - Featured project cards
- * - Project titles, descriptions, and tags
+ * - Project titles and descriptions
  * - Links to project details
  * - "View All Projects" CTA
  */
@@ -42,14 +42,6 @@ describe('FeaturedProjects', () => {
       articles.forEach((article) => {
         expect(article.textContent).toBeTruthy()
       })
-    })
-
-    it('displays project tags', () => {
-      render(<FeaturedProjects />)
-      // Tags should be visible (using badge class)
-      const { container } = render(<FeaturedProjects />)
-      const badges = container.querySelectorAll('.badge')
-      expect(badges.length).toBeGreaterThan(0)
     })
 
     it('renders "View All Projects" CTA', () => {

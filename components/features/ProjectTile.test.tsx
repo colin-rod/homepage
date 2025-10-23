@@ -6,7 +6,7 @@ import { Project } from '@/lib/types'
  * ProjectTile Component Tests
  *
  * Tests the ProjectTile component which displays project cards
- * in horizontal swimlanes with metadata, tags, and links.
+ * in horizontal swimlanes with metadata, tech stack, and links.
  */
 
 const mockProject: Project = {
@@ -43,12 +43,6 @@ describe('ProjectTile', () => {
       render(<ProjectTile project={mockProject} />)
       expect(screen.getByText('React')).toBeInTheDocument()
       expect(screen.getByText('TypeScript')).toBeInTheDocument()
-    })
-
-    it('displays category tags', () => {
-      render(<ProjectTile project={mockProject} />)
-      expect(screen.getByText('web')).toBeInTheDocument()
-      expect(screen.getByText('product')).toBeInTheDocument()
     })
 
     it('renders Learn More link with correct href', () => {
@@ -94,19 +88,6 @@ describe('ProjectTile', () => {
       expect(screen.getByText('React')).toBeInTheDocument()
       expect(screen.getByText('TypeScript')).toBeInTheDocument()
       expect(screen.getByText('+3')).toBeInTheDocument()
-    })
-  })
-
-  describe('Tags Display', () => {
-    it('shows limited number of category tags with overflow indicator', () => {
-      const projectWithManyTags = {
-        ...mockProject,
-        tags: ['web', 'product', 'strategy', 'tech', 'api'],
-      }
-      render(<ProjectTile project={projectWithManyTags} />)
-      expect(screen.getByText('web')).toBeInTheDocument()
-      expect(screen.getByText('product')).toBeInTheDocument()
-      expect(screen.getByText('+2')).toBeInTheDocument()
     })
   })
 

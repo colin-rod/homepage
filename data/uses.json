@@ -3,35 +3,19 @@
     {
       "id": "hardware",
       "title": "Hardware",
-      "description": "The physical gear that keeps my workflow fast and comfortable.",
       "items": [
         {
-          "name": "MacBook Pro 16\" (M3 Max)",
-          "details": "64GB RAM / 2TB SSD",
-          "link": "https://www.apple.com/macbook-pro/",
-          "context": "Primary workstation for development, design experiments, and long-form writing. I keep everything local for speed, relying on containerized dev environments when collaborating.",
+          "name": "MacBook Air M1 2020",
+          "link": "https://www.apple.com/macbook-air/",
+          "context": "Primary workstation for everything. Mostly work local.",
           "tags": ["laptop", "apple"]
         },
         {
-          "name": "Apple Studio Display",
-          "details": "27\" 5K Retina",
+          "name": "HP Elite Display E223",
+          "details": "21.5\" external monitor",
           "link": "https://www.apple.com/studio-display/",
-          "context": "External monitor tuned for color consistency. It gives me the pixels I need for Figma and gives breathing room when comparing product specs or code diffs side-by-side.",
+          "context": "External monitor for extra screen real estate during deep work sessions.",
           "tags": ["display"]
-        },
-        {
-          "name": "Keychron Q1 Pro",
-          "details": "Gateron Brown switches",
-          "link": "https://www.keychron.com/products/keychron-q1-pro",
-          "context": "Favorite mechanical keyboard—hot-swappable and wireless. I rotate keycaps but keep a tactile feel to improve typing accuracy during long planning sessions.",
-          "tags": ["keyboard"]
-        },
-        {
-          "name": "Logitech MX Master 3S",
-          "details": "Graphite",
-          "link": "https://www.logitech.com/products/mice/mx-master-3s.html",
-          "context": "Ergonomic mouse with app-specific profiles. I map the side scroll to scrub timelines in Descript and the thumb button for mission control to juggle research tabs.",
-          "tags": ["mouse"]
         }
       ]
     },
@@ -40,6 +24,13 @@
       "title": "Development Toolkit",
       "description": "Core software for building, testing, and shipping projects.",
       "items": [
+        {
+          "name": "Visual Studio Code",
+          "details": "Primary code editor",
+          "link": "https://code.visualstudio.com/",
+          "context": "My main IDE for all development work.",
+          "tags": ["editor", "ide"]
+        },
         {
           "name": "Cursor",
           "details": "AI-assisted code editor",

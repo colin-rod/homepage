@@ -12,9 +12,6 @@ import Link from 'next/link'
 const quickLinks = [
   { name: 'About', href: '/about' },
   { name: 'Projects', href: '/projects' },
-  { name: 'Timeline', href: '/timeline' },
-  { name: 'Writing', href: '/writing' },
-  { name: 'CV', href: '/cv' },
   { name: 'Contact', href: '/contact' },
 ]
 
@@ -34,9 +31,12 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <nav aria-label="Footer navigation" className="md:col-span-2 md:text-right">
+          <nav
+            aria-label="Footer navigation"
+            className="md:col-span-2 md:flex md:flex-col md:items-end"
+          >
             <h4 className="text-sm font-semibold text-text mb-4">Quick Links</h4>
-            <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:justify-items-end">
+            <ul className="flex flex-wrap gap-x-6 gap-y-3 md:justify-end">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <Link

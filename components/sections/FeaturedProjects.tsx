@@ -71,17 +71,8 @@ export default function FeaturedProjects() {
                       </p>
                     </div>
 
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tags.map((tag) => (
-                        <span key={tag} className="badge badge-primary">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-
                     {/* Tech Stack */}
-                    <div className="text-xs text-text-secondary">
+                    <div className="text-xs text-text-secondary mt-4">
                       <span className="font-medium">Tech:</span> {project.techStack.join(', ')}
                     </div>
                   </div>
