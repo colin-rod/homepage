@@ -11,7 +11,7 @@
     "businessModel": "Freemium SaaS with usage-based billing for premium insights",
     "status": "completed",
     "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Stripe"],
-    "tags": ["web", "product", "analytics", "design"],
+    "tags": ["saas", "freemium", "analytics", "payments", "testing", "documentation"],
     "whyBuilt": "Needed a comprehensive example to test new portfolio components",
     "learnings": [
       {
@@ -55,7 +55,16 @@
     "businessModel": "Freemium.",
     "status": "completed",
     "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL"],
-    "tags": ["web", "product", "analytics", "design"],
+    "tags": [
+      "social",
+      "messaging",
+      "ai",
+      "email",
+      "sms",
+      "notifications",
+      "media-sharing",
+      "privacy"
+    ],
     "whyBuilt": [
       "As I was sharing updates of our newborn child with multiple groups scattered across different platforms I realised that there should be a way to consolidate this manual uploading process.",
       "The problems we are solving are for users - to simplify uploads by consolidaitng multiple user groups into a single upload channel. ",
@@ -63,6 +72,18 @@
       "The platform prompts users to share mindfully by giving them ideas on what to share. The media that is shared is compiled into a digital collectible that can be treasured forever."
     ],
     "learnings": [
+      {
+        "content": "Implemented best practicies for engineering which resulted in significantly more overhead and complexity compared to a typical vibe coded project.",
+        "sentiment": "neutral"
+      },
+      {
+        "content": "Ran multiple audits using Chatgpt and Claude and consolidated results to improve security and frontend",
+        "sentiment": "positive"
+      },
+      {
+        "content": "Used SendGrid for email delivery and Twilio for SMS/Whatsapp delivery - both have great documentation which made integration easy",
+        "sentiment": "positive"
+      },
       {
         "content": "Initial version of this project used too much front end work and was hard to maintain. Re-architected to use server side rendering and static generation where possible to improve performance and reduce complexity",
         "sentiment": "negative"
@@ -74,18 +95,6 @@
       {
         "content": "Implemented automated testing (lint and type checks) as github actions. Absolutely amazing how much time this saves in the long run",
         "sentiment": "positive"
-      },
-      {
-        "content": "Ran multiple audits using Chatgpt and Claude and consolidated results to improve security and frontend",
-        "sentiment": "positive"
-      },
-      {
-        "content": "Used SendGrid for email delivery and Twilio for SMS/Whatsapp delivery - both have great documentation which made integration easy",
-        "sentiment": "positive"
-      },
-      {
-        "content": "Implemented best practicies for engineering which resulted in significantly more overhead and complexity compared to a typical vibe coded project.",
-        "sentiment": "neutral"
       }
     ],
     "links": {
@@ -105,93 +114,23 @@
     "type": "project",
     "status": "in-progress",
     "techStack": ["Next.js", "TypeScript", "Tailwind CSS"],
-    "tags": ["web", "product", "strategy"],
+    "tags": ["portfolio", "personal-brand", "resume", "cv", "filtering", "timeline", "seo"],
     "featured": true,
     "year": 2025,
-    "quarter": "Q2"
-  },
-  {
-    "id": "product-strategy",
-    "title": "Product Strategy Framework",
-    "slug": "product-strategy",
-    "description": "Comprehensive framework for product strategy and roadmap planning",
-    "detailedDescription": "Developed a systematic approach to product strategy, combining market analysis, user research, and competitive positioning to drive product decisions.",
-    "type": "project",
-    "status": "live",
-    "techStack": ["Product Management", "Strategy", "Analytics"],
-    "tags": ["product", "strategy"],
-    "featured": true,
-    "year": 2023,
-    "quarter": "Q3"
-  },
-  {
-    "id": "user-research",
-    "title": "User Research Platform",
-    "slug": "user-research",
-    "description": "Platform for conducting and analyzing user research at scale",
-    "detailedDescription": "Built internal tools for managing user interviews, surveys, and feedback analysis. Improved research velocity by 3x.",
-    "type": "project",
-    "status": "live",
-    "techStack": ["React", "Node.js", "PostgreSQL"],
-    "tags": ["web", "product", "research"],
-    "featured": true,
-    "year": 2023,
-    "quarter": "Q2"
-  },
-  {
-    "id": "example-project",
-    "title": "Example Project",
-    "slug": "example-project",
-    "description": "A placeholder project to demonstrate the data structure",
-    "detailedDescription": "This is an example project that shows how project data is structured",
-    "type": "project",
-    "status": "planned",
-    "techStack": ["Next.js", "TypeScript", "Tailwind CSS"],
-    "tags": ["web", "product"],
-    "featured": false,
-    "year": 2024,
     "quarter": "Q4"
-  },
-  {
-    "id": "spotify-wrapped-analyzer",
-    "title": "Spotify Wrapped Analyzer",
-    "slug": "spotify-wrapped-analyzer",
-    "description": "Tool to analyze and visualize Spotify listening history year-round",
-    "detailedDescription": "Quick utility to connect to Spotify API and generate personalized listening stats and insights anytime, not just at year-end.",
-    "type": "tool",
-    "status": "live",
-    "techStack": ["Next.js", "Spotify API", "Chart.js"],
-    "tags": ["web", "api", "tech"],
-    "featured": false,
-    "year": 2024,
-    "quarter": "Q2"
-  },
-  {
-    "id": "meeting-notes-parser",
-    "title": "Meeting Notes Parser",
-    "slug": "meeting-notes-parser",
-    "description": "CLI tool to extract action items from meeting transcripts",
-    "detailedDescription": "Parses meeting notes and automatically extracts tasks, decisions, and action items using NLP.",
-    "type": "tool",
-    "status": "live",
-    "techStack": ["Python", "OpenAI API", "Click"],
-    "tags": ["automation", "tech"],
-    "featured": false,
-    "year": 2024,
-    "quarter": "Q1"
   },
   {
     "id": "audiograph",
     "title": "Audiograph",
     "slug": "audiograph",
-    "description": "Privacy-first analytics application for visualizing personal listening and viewing habits",
+    "description": "Privacy-first analytics application for visualizing Spotify listening habits",
     "detailedDescription": [
-      "A unified analytics platform that allows users to upload their Spotify personal data export to generate insights about listening patterns.",
-      "Features include time-based listening insights with weekly cadence charts, listening streak computations, and materialized views for optimized analytics.",
+      "An analytics platform that allows users to upload their Spotify data export to generate insights about listening history and patterns.",
+      "Features include time-based listening insights with weekly cadence charts, listening streaks and visualizations displaying top artists/tracks/genres over various time ranges.",
       "Built with privacy as a core principle using Row Level Security policies to ensure user data remains protected.",
       "Comprehensive database architecture documented in /docs directory with Supabase setup guides."
     ],
-    "type": "project",
+    "type": "tool",
     "businessModel": "Free, privacy-first personal analytics tool",
     "status": "live",
     "techStack": [
@@ -204,24 +143,31 @@
       "Sentry",
       "PostHog"
     ],
-    "tags": ["web", "analytics", "tech", "product"],
+    "tags": [
+      "spotify",
+      "music",
+      "analytics",
+      "data-visualization",
+      "privacy",
+      "charts",
+      "time-series",
+      "data-export"
+    ],
     "whyBuilt": [
-      "Wanted to create a privacy-first alternative to third-party analytics tools for personal listening data",
-      "Spotify's year-end Wrapped is great, but users should be able to access their listening insights anytime",
-      "Opportunity to explore advanced PostgreSQL features like materialized views and Row Level Security policies",
-      "Build a production-grade app with proper monitoring, testing, and CI/CD practices"
+      "When our son was born we had a playlist runnign in the backgorund. A few months after he was born we were curious if we could see what song he was born to",
+      "Spotify provides limited listening history but they offer users the ability to export their full listening data",
+      "This data is delivered as a json file which is not very user friendly to explore",
+      "I wanted to create a privacy-first alternative to visualise this data",
+      "I then expanded the data series using Spotify API to fetch additional metadata about tracks, albums and artists to enrich the data set",
+      "This project allowed be to experiment with visualizations, charts and time-series data"
     ],
     "learnings": [
       {
-        "content": "Implemented Row Level Security policies in Supabase for robust data privacy - essential for any app handling personal data",
+        "content": "Was able to deliver this in 48 hours which I was incredibly proud of",
         "sentiment": "positive"
       },
       {
         "content": "Materialized views significantly improved query performance for analytics aggregations",
-        "sentiment": "positive"
-      },
-      {
-        "content": "Using Vitest and Testing Library provided faster test execution compared to Jest",
         "sentiment": "positive"
       },
       {
@@ -231,13 +177,17 @@
       {
         "content": "GitHub Actions CI/CD workflow automated testing and deployment, catching issues before production",
         "sentiment": "positive"
+      },
+      {
+        "content": "If you are curious this was the song he was born to: https://youtu.be/Qtb11P1FWnc?si=IZXNKIMKTBGUTkec ",
+        "sentiment": "neutral"
       }
     ],
     "links": {
       "live": "https://audiograph-phi.vercel.app",
       "github": "https://github.com/colin-rod/audiograph"
     },
-    "featured": true,
+    "featured": false,
     "year": 2025,
     "quarter": "Q4"
   },
@@ -246,15 +196,15 @@
     "title": "Raindrop Randomizer",
     "slug": "raindrop-randomizer",
     "description": "Web tool to randomly select bookmarks from Raindrop.io collections",
-    "detailedDescription": "A simple web application that integrates with Raindrop.io to help users discover random bookmarks from their collections. Perfect for rediscovering forgotten saved content or getting random reading suggestions.",
+    "detailedDescription": "A simple web application that integrates with Raindrop.io to help users discover random bookmarks from their collections",
     "type": "tool",
     "status": "live",
     "techStack": ["HTML", "JavaScript", "Raindrop.io API"],
-    "tags": ["web", "api", "automation", "tech"],
+    "tags": ["bookmarks", "randomizer", "discovery", "raindrop", "api-integration", "productivity"],
     "whyBuilt": [
-      "Wanted a way to rediscover bookmarks saved in Raindrop.io collections",
+      "I Wanted a way to rediscover bookmarks saved in Raindrop.io collections",
       "Built a quick utility to randomly surface content from large bookmark collections",
-      "Explore Raindrop.io API integration"
+      "Thsi allowed me to explore Raindrop.io API integration and solve a personal need"
     ],
     "learnings": [
       {
@@ -262,8 +212,8 @@
         "sentiment": "positive"
       },
       {
-        "content": "Raindrop.io API provides straightforward access to bookmark collections",
-        "sentiment": "positive"
+        "content": "Sometimes simple front end can be sufficient",
+        "sentiment": "neutral"
       }
     ],
     "links": {
@@ -282,12 +232,14 @@
     "detailedDescription": "A web application that takes recipe URLs or text and enriches them with structured data, cooking times, ingredient measurements, and improved formatting. Makes recipes easier to follow and more accessible.",
     "type": "tool",
     "status": "live",
-    "techStack": ["JavaScript", "HTML", "Web APIs"],
-    "tags": ["web", "automation", "tech"],
+    "techStack": ["JavaScript", "HTML", "Web APIs", "OpenAI"],
+    "tags": ["recipes", "food", "ai", "notion", "data-enrichment", "parsing", "automation"],
     "whyBuilt": [
-      "Needed a way to standardize recipe formats from various sources",
-      "Wanted to extract structured data from recipe websites",
-      "Make recipes more accessible and easier to follow"
+      "I had been collecting recipes from various websites into a Notion database using Notion Web Clipper but found the formats inconsistent and hard to follow",
+      "I had setup templates but they were cumbersome to work with and go back to populate ",
+      "Needed a way to standardize recipe formats from various sources and enrich them with additional metadata",
+      "I built a simple webapp that pulls recipes that have incomplete data from the Notion database, uses OpenAI to parse and enrich the recipe data.",
+      "The enriched daata is displayed to suers for review and editing and if the suer confirms the data the Notion database is updated via Notion API"
     ],
     "learnings": [
       {
@@ -295,8 +247,12 @@
         "sentiment": "neutral"
       },
       {
-        "content": "Structured recipe data improves usability significantly",
+        "content": "I was able to plug my solution into an existing tool to dramatically expand its functionality.",
         "sentiment": "positive"
+      },
+      {
+        "content": "Scraping images from websites is challenging and I wasn't happy with the current implementation so I had to remove this functionality and I currently manually upload the images.",
+        "sentiment": "negative"
       }
     ],
     "links": {
@@ -305,7 +261,7 @@
     },
     "featured": false,
     "year": 2025,
-    "quarter": "Q3"
+    "quarter": "Q2"
   },
   {
     "id": "raindrop-classifier",
@@ -316,7 +272,16 @@
     "type": "tool",
     "status": "live",
     "techStack": ["JavaScript", "Raindrop.io API", "AI/ML"],
-    "tags": ["automation", "api", "tech"],
+    "tags": [
+      "bookmarks",
+      "ai",
+      "classification",
+      "automation",
+      "raindrop",
+      "tagging",
+      "cron-job",
+      "organization"
+    ],
     "whyBuilt": [
       "Manual bookmark organization is time-consuming and inconsistent",
       "Wanted to explore AI-powered content classification",
@@ -329,6 +294,10 @@
       },
       {
         "content": "Raindrop.io API allows bulk operations for efficient processing",
+        "sentiment": "positive"
+      },
+      {
+        "content": "I setup a Cron job to run this every week which has been working flawlessly",
         "sentiment": "positive"
       }
     ],
@@ -347,25 +316,24 @@
     "detailedDescription": "A command-line tool that analyzes photo EXIF data and automatically sorts images into organized folder structures. Supports sorting by date, location, camera model, and custom criteria.",
     "type": "tool",
     "status": "live",
-    "techStack": ["Python", "EXIF", "File System"],
-    "tags": ["automation", "tech"],
+    "techStack": ["Python", "File System"],
+    "tags": ["photos", "python", "cli", "automation", "scraping", "batch-processing", "archival"],
     "whyBuilt": [
-      "Needed to organize thousands of photos from multiple sources",
-      "Manual photo organization is tedious and error-prone",
-      "Learn Python file system operations and EXIF data parsing"
+      "I had a dataset of unsorted photos that had been uplaoded onto various newsletters that were beign deprecated",
+      "I built a scraper to open each newsletter in the archive, store the images into a database and then download them to my local machine"
     ],
     "learnings": [
-      {
-        "content": "EXIF metadata provides rich information for automated photo organization",
-        "sentiment": "positive"
-      },
       {
         "content": "Python's file handling libraries make batch processing straightforward",
         "sentiment": "positive"
       },
       {
-        "content": "Need to handle edge cases like missing metadata or corrupted files carefully",
-        "sentiment": "neutral"
+        "content": "Need to build this quickly since the system was being deprecated in 24 hours",
+        "sentiment": "positive"
+      },
+      {
+        "content": "Tried to implement a face recognition feature but it was not reliable enough so I removed it from the final version",
+        "sentiment": "negative"
       }
     ],
     "links": {
@@ -379,17 +347,28 @@
     "id": "baby-name-app",
     "title": "Baby Name App",
     "slug": "baby-name-app",
-    "description": "Interactive web app for couples to collaboratively choose baby names",
-    "detailedDescription": "A collaborative tool that helps couples find the perfect baby name by allowing both partners to swipe through names Tinder-style. When both partners like the same name, it's added to a shared shortlist. Features filtering by origin, meaning, and popularity.",
+    "description": "Interactive web app to collaboratively choose baby names",
+    "detailedDescription": "A collaborative tool that helps to find the perfect baby name. I wanted to implement ELO style rankings so that the names can be voted on in a fun, engaging way",
     "type": "project",
     "status": "live",
     "techStack": ["JavaScript", "TypeScript", "HTML", "CSS"],
-    "tags": ["web", "product", "tech"],
+    "tags": [
+      "baby",
+      "names",
+      "elo-ranking",
+      "collaborative",
+      "swipe-ui",
+      "voting",
+      "decision-making"
+    ],
     "whyBuilt": [
-      "Personal need during pregnancy to find names both partners liked",
-      "Existing baby name apps lacked collaborative features",
-      "Wanted to make the name selection process fun and engaging",
-      "Explore swipe-based UI patterns"
+      "Choosing baby names is challenging and I didn't find an exisitng tool taht met my reuqirements.",
+      "With this tool users can upload their own list of names and invite people to submit names and/or vote on names",
+      "As part of voting process, users are provided with two names at a time and asked to select their preferred name. They can select both or neighter as well. This process continues until all names have been ranked using an ELO style calculation.",
+      "This allows multiple people to collaborate on the name selection process and helps to surface names that have the highest consensus among the group.",
+      "The ELO style scoring also allow names to be ranked even if they have not been directly compared against each other.",
+      "It aso means that names that are polarizing (loved by some, hated by others) will rank lower than names that have broad appeal.",
+      "Users also get notifications to checkin and rank names, because their preferences might change over time as they think about it more."
     ],
     "learnings": [
       {
@@ -397,11 +376,11 @@
         "sentiment": "positive"
       },
       {
-        "content": "Real-time collaboration features require careful state management",
-        "sentiment": "neutral"
+        "content": "I got really stuck on building an invite system which I had to scrap",
+        "sentiment": "negative"
       },
       {
-        "content": "Baby name data sources vary widely in quality and completeness",
+        "content": "Baby name data sources vary widely in quality and completeness and I wasn't able to integrate an API to source names. I had to rely on static datasets which limited the functionality",
         "sentiment": "neutral"
       }
     ],
@@ -411,18 +390,27 @@
     },
     "featured": false,
     "year": 2025,
-    "quarter": "Q3"
+    "quarter": "Q2"
   },
   {
     "id": "babypool",
     "title": "BabyPool",
     "slug": "babypool",
-    "description": "Fun prediction pool app for guessing baby birth details",
+    "description": "Fun prediction app for guessing baby birth details",
     "detailedDescription": "A social web application where friends and family can place predictions on baby birth details like date, time, weight, and other characteristics. Features real-time leaderboards, automated scoring, and shareable results for celebrating the new arrival.",
     "type": "project",
     "status": "live",
     "techStack": ["TypeScript", "PostgreSQL", "JavaScript", "CSS"],
-    "tags": ["web", "product", "tech"],
+    "tags": [
+      "baby",
+      "predictions",
+      "social",
+      "gamification",
+      "leaderboard",
+      "real-time",
+      "scoring",
+      "family"
+    ],
     "whyBuilt": [
       "Wanted to create a fun, engaging way for friends and family to participate in the pregnancy journey",
       "Existing baby pool tools were outdated or lacked modern features",
@@ -439,12 +427,12 @@
         "sentiment": "positive"
       },
       {
-        "content": "TypeScript provides excellent type safety for complex scoring calculations",
-        "sentiment": "positive"
+        "content": "Dealt with singificant scope creep as new feature ideas kept emerging during development",
+        "sentiment": "negative"
       },
       {
-        "content": "User-friendly onboarding is critical for social apps where non-technical users participate",
-        "sentiment": "neutral"
+        "content": "Wanted to add financial betting component but legal complexities made this unfeasible",
+        "sentiment": "negative"
       }
     ],
     "links": {
@@ -453,6 +441,6 @@
     },
     "featured": true,
     "year": 2025,
-    "quarter": "Q3"
+    "quarter": "Q2"
   }
 ]

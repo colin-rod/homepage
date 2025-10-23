@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import { ExternalLink, Github, FileText } from 'lucide-react'
 import { getProjects, getProjectBySlug } from '@/lib/data'
 import { generatePageMetadata } from '@/lib/seo'
 import Navigation from '@/components/layouts/Navigation'
@@ -248,9 +249,12 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                     href={project.links.live}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-primary"
+                    className="btn btn-primary inline-flex items-center gap-2"
                   >
-                    View Live Site →
+                    <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                    <span>
+                      View Live Site <span aria-hidden="true">→</span>
+                    </span>
                   </a>
                 )}
                 {project.links.github && (
@@ -258,9 +262,12 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                     href={project.links.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-secondary"
+                    className="btn btn-secondary inline-flex items-center gap-2"
                   >
-                    View on GitHub →
+                    <Github className="h-4 w-4" aria-hidden="true" />
+                    <span>
+                      View on GitHub <span aria-hidden="true">→</span>
+                    </span>
                   </a>
                 )}
                 {project.links.blog && (
@@ -268,9 +275,12 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                     href={project.links.blog}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-secondary"
+                    className="btn btn-secondary inline-flex items-center gap-2"
                   >
-                    Read Blog Post →
+                    <FileText className="h-4 w-4" aria-hidden="true" />
+                    <span>
+                      Read Blog Post <span aria-hidden="true">→</span>
+                    </span>
                   </a>
                 )}
               </div>
