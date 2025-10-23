@@ -26,7 +26,6 @@ describe('Footer', () => {
 
       expect(screen.getByRole('link', { name: /about/i })).toBeInTheDocument()
       expect(screen.getByRole('link', { name: /projects/i })).toBeInTheDocument()
-      expect(screen.getByRole('link', { name: /cv/i })).toBeInTheDocument()
       expect(screen.getByRole('link', { name: /contact/i })).toBeInTheDocument()
     })
 
@@ -35,7 +34,6 @@ describe('Footer', () => {
 
       expect(screen.getByRole('link', { name: /about/i })).toHaveAttribute('href', '/about')
       expect(screen.getByRole('link', { name: /projects/i })).toHaveAttribute('href', '/projects')
-      expect(screen.getByRole('link', { name: /cv/i })).toHaveAttribute('href', '/cv')
       expect(screen.getByRole('link', { name: /contact/i })).toHaveAttribute('href', '/contact')
     })
 

@@ -52,7 +52,7 @@
     ],
     "type": "project",
     "businessModel": "Freemium.",
-    "status": "MVP completed",
+    "status": "completed",
     "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Stripe"],
     "tags": ["web", "product", "analytics", "design"],
     "whyBuilt": [
