@@ -18,7 +18,7 @@ test.describe('Smoke Tests - Critical Paths', () => {
 
     // Verify hero section
     await expect(page.getByRole('heading', { name: 'Colin Rodrigues', level: 1 })).toBeVisible()
-    await expect(page.getByText('Product & Strategy', { exact: true })).toBeVisible()
+    await expect(page.getByText(/Building, Reflecting & Sharing/i)).toBeVisible()
   })
 
   test('projects page should display project cards', async ({ page }) => {
@@ -113,7 +113,9 @@ test.describe('Smoke Tests - Critical Paths', () => {
 
     // Verify page loads
     await expect(page).toHaveTitle(/contact/i)
-    await expect(page.getByRole('heading', { name: /let's connect|connect/i, level: 1 })).toBeVisible()
+    await expect(
+      page.getByRole('heading', { name: /let's connect|connect/i, level: 1 })
+    ).toBeVisible()
 
     // Verify main content exists
     const main = page.getByRole('main')
