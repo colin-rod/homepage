@@ -44,7 +44,7 @@ export function createMockTimelineEvent(overrides = {}) {
 
 /**
  * Creates mock CV data
- * TODO: Update with actual CVData type from lib/types.ts after CRO-634
+ * TODO: Update with actual CV type from lib/types.ts after CRO-634
  */
 export function createMockCVData(overrides = {}) {
   return {

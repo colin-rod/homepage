@@ -27,11 +27,11 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
     )
   }
 
-  return generatePageMetadata(
-    project.title,
-    project.detailedDescription,
-    `/projects/${project.slug}`
-  )
+  const description = Array.isArray(project.detailedDescription)
+    ? project.detailedDescription.join(' ')
+    : project.detailedDescription
+
+  return generatePageMetadata(project.title, description, `/projects/${project.slug}`)
 }
 
 /**
@@ -165,14 +165,28 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           {project.learnings && project.learnings.length > 0 && (
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-text mb-6">Key Learnings</h2>
-              <ul className="space-y-3">
+              <div className="space-y-4">
                 {project.learnings.map((learning, index) => (
-                  <li key={index} className="flex items-start">
-                    <span className="text-accent-warm mr-3">•</span>
-                    <span className="text-text-secondary">{learning}</span>
-                  </li>
+                  <div key={index} className="flex items-start">
+                    <span
+                      className={`mr-3 ${
+                        learning.sentiment === 'positive'
+                          ? 'text-green-600'
+                          : learning.sentiment === 'negative'
+                            ? 'text-orange-600'
+                            : 'text-gray-600'
+                      }`}
+                    >
+                      {learning.sentiment === 'positive'
+                        ? '✓'
+                        : learning.sentiment === 'negative'
+                          ? '✗'
+                          : '•'}
+                    </span>
+                    <span className="text-text-secondary">{learning.content}</span>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </section>
           )}
 

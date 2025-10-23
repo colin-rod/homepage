@@ -1,5 +1,97 @@
 [
   {
+    "id": "sample-full-project",
+    "title": "Sample Project With Full Metadata",
+    "slug": "sample-full-project",
+    "description": "Reference implementation that exercises every project data field",
+    "detailedDescription": "Used across the site to validate rendering paths for detailed project entries, covering links, images, learnings, and metadata fields.",
+    "type": "project",
+    "scope": "Led the end-to-end discovery, design, and delivery of the v1 release",
+    "prd": "docs/sample-full-project-prd.pdf",
+    "businessModel": "Freemium SaaS with usage-based billing for premium insights",
+    "status": "completed",
+    "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Stripe"],
+    "tags": ["web", "product", "analytics", "design"],
+    "whyBuilt": "Needed a comprehensive example to test new portfolio components",
+    "learnings": [
+      {
+        "content": "Documenting every field helps catch UI regressions early",
+        "sentiment": "positive"
+      },
+      {
+        "content": "Automated visual tests benefit from consistent sample data",
+        "sentiment": "positive"
+      }
+    ],
+    "favicon": "/images/projects/sample-full-project/favicon.svg",
+    "links": {
+      "live": "https://example.com/sample-full-project",
+      "github": "https://github.com/example/sample-full-project",
+      "blog": "https://example.com/blog/sample-full-project",
+      "prd": "https://example.com/docs/sample-full-project-prd"
+    },
+    "images": [
+      "/images/projects/sample-full-project/dashboard.png",
+      "/images/projects/sample-full-project/mobile.png",
+      "https://example.com/sample-full-project/screenshot-dashboard.png",
+      "https://example.com/sample-full-project/screenshot-mobile.png"
+    ],
+    "featured": false,
+    "year": 2025
+  },
+  {
+    "id": "tribe-update",
+    "title": "Tribe Update",
+    "slug": "tribe-update",
+    "description": "Private sharing platform that enables mindful social content sharing.",
+    "detailedDescription": [
+      "Users can create a 'tribe' of close friends and family to share updates, photos, and videos in a private, ad-free environment.",
+      "Features for tribe creaators include multiple upload channels (email, SMS, Whatsapp) and the ability to compile their updates into digital (and eventually physical) collectibles.",
+      "Recipients can choose how they want to receive updates - via email digests, SMS or Whatsapp, what frequency and signifcance of updates they would like.",
+      "An AI assistant compiles the updates into a beautiful gallery format tailored to the recipients preferences."
+    ],
+    "type": "project",
+    "businessModel": "Freemium.",
+    "status": "MVP completed",
+    "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Stripe"],
+    "tags": ["web", "product", "analytics", "design"],
+    "whyBuilt": [
+      "As I was sharing updates of our newborn child with multiple groups scattered across different platforms I realised that there should be a way to consolidate this manual uploading process.",
+      "The problems we are solving are for users - to simplify uploads by consolidaitng multiple user groups into a single upload channel. ",
+      "For recipients - to give them control over how they want to receive updates and what frequency/significance of updates they would like to receive.",
+      "The platform prompts users to share mindfully by giving them ideas on what to share. The media that is shared is compiled into a digital collectible that can be treasured forever."
+    ],
+    "learnings": [
+      {
+        "content": "Initial version of this project used too much front end work and was hard to maintain. Re-architected to use server side rendering and static generation where possible to improve performance and reduce complexity",
+        "sentiment": "negative"
+      },
+      {
+        "content": "Pivoted project through design process. sometimes its easier to burn it down and restart rather than wade through archeology",
+        "sentiment": "negative"
+      },
+      {
+        "content": "Implemented automated testing (lint and type checks) as github actions. Absolutely amazing how much time this saves in the long run",
+        "sentiment": "positive"
+      },
+      {
+        "content": "Ran multiple audits using Chatgpt and Claude and consolidated results to improve security and frontend",
+        "sentiment": "positive"
+      },
+      {
+        "content": "Used SendGrid for email delivery and Twilio for SMS/Whatsapp delivery - both have great documentation which made integration easy",
+        "sentiment": "positive"
+      }
+    ],
+    "favicon": "/images/projects/tribe-update/favicon.svg",
+    "links": {
+      "live": "https://tribeupdate.com/",
+      "github": "https://github.com/colin-rod/tribe_mvp/"
+    },
+    "featured": true,
+    "year": 2025
+  },
+  {
     "id": "portfolio-revamp",
     "title": "Interactive Portfolio",
     "slug": "portfolio-revamp",
@@ -9,7 +101,6 @@
     "status": "in-progress",
     "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "PostHog"],
     "tags": ["web", "product", "strategy"],
-    "insight": "Rebuilding my digital presence with modern web technologies",
     "featured": true,
     "year": 2024
   },
@@ -23,7 +114,6 @@
     "status": "live",
     "techStack": ["Product Management", "Strategy", "Analytics"],
     "tags": ["product", "strategy"],
-    "insight": "Framework used across multiple product teams to align strategy",
     "featured": true,
     "year": 2023
   },
@@ -37,7 +127,6 @@
     "status": "live",
     "techStack": ["React", "Node.js", "PostgreSQL"],
     "tags": ["web", "product", "research"],
-    "insight": "Scaled research operations from 5 to 50+ interviews per month",
     "featured": true,
     "year": 2023
   },
@@ -51,7 +140,6 @@
     "status": "planned",
     "techStack": ["Next.js", "TypeScript", "Tailwind CSS"],
     "tags": ["web", "product"],
-    "insight": "Exploring new project ideas and validating concepts",
     "featured": false,
     "year": 2024
   },
@@ -65,7 +153,6 @@
     "status": "live",
     "techStack": ["Next.js", "Spotify API", "Chart.js"],
     "tags": ["web", "api", "tech"],
-    "insight": "Built to scratch my own itch—wanted Wrapped stats all year long",
     "featured": false,
     "year": 2024
   },
@@ -79,7 +166,6 @@
     "status": "live",
     "techStack": ["Python", "OpenAI API", "Click"],
     "tags": ["automation", "tech"],
-    "insight": "Automating the tedious parts of meeting follow-up",
     "featured": false,
     "year": 2024
   }

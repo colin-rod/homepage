@@ -3,7 +3,7 @@
  * Functions to load and process data from JSON files
  */
 
-import { Project, TimelineEvent, CVData } from './types'
+import { Project, TimelineEvent, CV } from './types'
 import projectsData from '@/data/projects.json'
 import timelineData from '@/data/timeline.json'
 import cvData from '@/data/cv.json'
@@ -82,15 +82,15 @@ export function getTimelineEventsByTag(tag: string): TimelineEvent[] {
 /**
  * Get CV data
  */
-export function getCVData(): CVData {
-  return cvData as CVData
+export function getCVData(): CV {
+  return cvData as CV
 }
 
 /**
  * Get filtered CV data by tag
  * This is used for generating role-specific CVs (product, strategy, tech)
  */
-export function getFilteredCVData(filterTag?: string): CVData {
+export function getFilteredCVData(filterTag?: string): CV {
   const cv = getCVData()
 
   if (!filterTag || filterTag === 'all') {

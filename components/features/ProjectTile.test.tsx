@@ -21,7 +21,6 @@ const mockProject: Project = {
   tags: ['web', 'product'],
   featured: false,
   year: 2024,
-  insight: 'This is a test insight',
 }
 
 describe('ProjectTile', () => {

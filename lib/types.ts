@@ -38,12 +38,19 @@ export type ProjectStatus =
   | 'retired'
 export type ProjectType = 'project' | 'tool'
 
+export type LearningSentiment = 'positive' | 'negative' | 'neutral'
+
+export interface ProjectLearning {
+  content: string
+  sentiment: LearningSentiment
+}
+
 export interface Project {
   id: string
   title: string
   slug: string
   description: string // Short description for cards
-  detailedDescription: string // Previously "summary" - detailed explanation (formerly shown in cards, now for detail pages)
+  detailedDescription: string | string[] // Previously "summary" - detailed explanation (formerly shown in cards, now for detail pages)
   type: ProjectType // Distinguishes between larger projects and smaller tools
   scope?: string
   prd?: string // Product Requirements Document
@@ -51,18 +58,16 @@ export interface Project {
   status: ProjectStatus
   techStack: string[]
   tags: string[] // e.g., ['web', 'api', 'automation', 'product']
-  whyBuilt?: string
-  learnings?: string[]
-  insight?: string // Brief insight or reflection about the project (kept in data model but not shown in cards)
+  whyBuilt?: string | string[]
+  learnings?: ProjectLearning[] // Array of learning objects with content and sentiment
   favicon?: string // Path to project favicon/logo (e.g., "/images/projects/babypool-favicon.png")
   links?: {
     live?: string
     github?: string
     blog?: string
     prd?: string // Link to Product Requirements Document
-    screenshots?: string[] // Array of screenshot URLs
   }
-  images?: string[]
+  images?: string[] // Consolidated field for all project images/screenshots
   featured: boolean
   year: number
 }
@@ -70,6 +75,8 @@ export interface Project {
 // ============================================================================
 // CV/Resume Types
 // ============================================================================
+
+export type CVFilterType = 'all' | 'product' | 'strategy' | 'tech'
 
 export interface CVSkillCategory {
   category: string
