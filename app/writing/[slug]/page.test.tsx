@@ -97,9 +97,9 @@ describe('Blog Post Page', () => {
     const page = await BlogPostPage({ params })
     render(page)
 
-    const backLinks = screen.getAllByRole('link', { name: /back to writing/i })
+    const backLinks = screen.getAllByRole('link', { name: /back to reflections/i })
     expect(backLinks.length).toBeGreaterThanOrEqual(1)
-    backLinks.forEach(link => {
+    backLinks.forEach((link) => {
       expect(link).toHaveAttribute('href', '/writing')
     })
   })

@@ -50,29 +50,47 @@ export default function Swimlane({ title, icon, projects, description, index = 0
 
         {/* Horizontal Scroll Container */}
         {projects.length > 0 ? (
-          <div
-            className="
-              flex
-              gap-6
-              overflow-x-auto
-              overflow-y-hidden
-              scroll-smooth
-              snap-x
-              snap-mandatory
-              pb-4
-              [&::-webkit-scrollbar]:hidden
-              touch-pan-x
-            "
-            style={{
-              scrollbarWidth: 'none' /* Firefox */,
-              WebkitOverflowScrolling: 'touch' /* iOS smooth scrolling */,
-            }}
-          >
-            {projects.map((project) => (
-              <div key={project.id} className="snap-start">
-                <ProjectTile project={project} />
-              </div>
-            ))}
+          <div className="relative">
+            {/* Gradient fade indicators on edges */}
+            {projects.length > 3 && (
+              <>
+                <div className="absolute left-0 top-0 bottom-4 w-8 bg-gradient-to-r from-neutral-bg to-transparent pointer-events-none z-10" />
+                <div className="absolute right-0 top-0 bottom-4 w-8 bg-gradient-to-l from-neutral-bg to-transparent pointer-events-none z-10" />
+              </>
+            )}
+
+            <div
+              className="
+                flex
+                gap-6
+                overflow-x-auto
+                overflow-y-hidden
+                scroll-smooth
+                snap-x
+                snap-mandatory
+                pb-4
+                touch-pan-x
+                [&::-webkit-scrollbar]:h-2
+                [&::-webkit-scrollbar-track]:bg-neutral-surface/50
+                [&::-webkit-scrollbar-track]:rounded-full
+                [&::-webkit-scrollbar-thumb]:bg-accent-warm/40
+                [&::-webkit-scrollbar-thumb]:rounded-full
+                [&::-webkit-scrollbar-thumb]:hover:bg-accent-warm/60
+                [&::-webkit-scrollbar-thumb]:transition-colors
+              "
+              style={{
+                scrollbarWidth: 'thin' /* Firefox - show thin scrollbar */,
+                scrollbarColor:
+                  'rgba(211, 100, 62, 0.4) rgba(250, 248, 245, 0.5)' /* thumb track for Firefox */,
+                WebkitOverflowScrolling: 'touch' /* iOS smooth scrolling */,
+              }}
+            >
+              {projects.map((project) => (
+                <div key={project.id} className="snap-start">
+                  <ProjectTile project={project} />
+                </div>
+              ))}
+            </div>
           </div>
         ) : (
           <div className="text-center py-12 text-text-secondary">

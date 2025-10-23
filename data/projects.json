@@ -179,6 +179,10 @@
         "sentiment": "positive"
       },
       {
+        "content": "Went down a rabbit hole of trying to enable users to upload a zip file directly rather than extracting locally first. This added significant complexity and potential security risks and I had to scrap it in the end",
+        "sentiment": "negative"
+      },
+      {
         "content": "If you are curious this was the song he was born to: https://youtu.be/Qtb11P1FWnc?si=IZXNKIMKTBGUTkec ",
         "sentiment": "neutral"
       }
@@ -442,5 +446,114 @@
     "featured": true,
     "year": 2025,
     "quarter": "Q2"
+  },
+  {
+    "id": "wardrobe-audit-mvp",
+    "title": "Wardrobe Audit",
+    "slug": "wardrobe-audit-mvp",
+    "description": "AI-powered wardrobe audit app for achieving personal style goals",
+    "detailedDescription": "Mobile app using React Native, Supabase, and OpenAI to help users achieve their personal style goals through intelligent wardrobe analysis and recommendations. Upload photos of your wardrobe and get personalized insights on what works, what doesn't, and how to build a cohesive style.",
+    "type": "project",
+    "status": "planned",
+    "techStack": ["React Native", "Supabase", "OpenAI", "Computer Vision"],
+    "tags": [
+      "fashion",
+      "ai",
+      "mobile",
+      "style",
+      "recommendations",
+      "image-analysis",
+      "personal-brand"
+    ],
+    "whyBuilt": [
+      "Wanted to help people make better wardrobe decisions and reduce decision fatigue",
+      "Explore computer vision and AI applications for fashion and style",
+      "Build a mobile-first experience for on-the-go wardrobe management",
+      "Create a tool that combines practical utility with personal development"
+    ],
+    "learnings": [],
+    "links": {
+      "prd": "https://linear.app/crod/project/wardrobe-audit-mvp-4a07d006367b"
+    },
+    "featured": false,
+    "year": 2025,
+    "quarter": "Q4"
+  },
+  {
+    "id": "personal-finance-app",
+    "title": "Smart Spending Companion",
+    "slug": "personal-finance-app",
+    "description": "Consumer-first finance app with granular spending insights and invoice parsing",
+    "detailedDescription": [
+      "A personal finance companion that provides deep insights into spending habits beyond simple totals.",
+      "Features CSV upload support for bank exports, invoice parsing for line-item granularity, and AI-powered categorization.",
+      "Includes WhatsApp/SMS nudges, weekly digests, and category-based spending goals.",
+      "Built with Supabase backend for auth, storage, and PostgreSQL database with row-level security."
+    ],
+    "type": "project",
+    "status": "planned",
+    "techStack": ["Next.js", "Supabase", "PostgreSQL", "Plaid", "Twilio", "OpenAI"],
+    "tags": [
+      "finance",
+      "budgeting",
+      "ai",
+      "analytics",
+      "notifications",
+      "data-visualization",
+      "banking-api",
+      "invoice-parsing"
+    ],
+    "whyBuilt": [
+      "Existing finance apps only show totals, not what you actually spend money on",
+      "Wanted deeper insights into grocery spending and subcategories (fruit, dairy, snacks)",
+      "Build a chat-first spending coach with granular, actionable insights",
+      "Create a privacy-first alternative that works with either CSV uploads or if users choose then we can include bank APIs"
+    ],
+    "learnings": [],
+    "links": {
+      "prd": "https://linear.app/crod/project/personal-finance-app-e8713fb22e2e"
+    },
+    "featured": false,
+    "year": 2026,
+    "quarter": "Q1"
+  },
+  {
+    "id": "hue",
+    "title": "Hue",
+    "slug": "hue",
+    "description": "Privacy-first color extraction and palette intelligence for designers and developers",
+    "detailedDescription": [
+      "A tool that enables creators to extract, understand, and use color palettes from images with unprecedented control, accuracy, and privacy.",
+      "Combines local-first color analysis, context awareness, and AI-powered naming/emotion tagging.",
+      "Features include vibrant/muted mode extraction, color harmony generation, batch comparison, and context-aware segmentation.",
+      "100% client-side processing via WebAssembly with optional cloud API for advanced features."
+    ],
+    "type": "project",
+    "status": "planned",
+    "techStack": ["Next.js", "WebAssembly", "TensorFlow.js", "Color Theory", "Computer Vision"],
+    "tags": [
+      "design",
+      "colors",
+      "palette",
+      "ai",
+      "privacy",
+      "tools",
+      "wasm",
+      "image-processing",
+      "harmony"
+    ],
+    "whyBuilt": [
+      "Existing color extraction tools lack privacy and advanced features",
+      "Wanted to build a tool that processes images entirely in the browser",
+      "Explore context-aware color extraction using ML segmentation",
+      "Create developer-friendly API and npm package for programmatic palette generation"
+    ],
+    "learnings": [],
+    "links": {
+      "prd": "https://linear.app/crod/project/hue-6a04b2642a68"
+    },
+    "featured": false,
+    "year": 2026,
+    "quarter": "Q1"
   }
 ]
