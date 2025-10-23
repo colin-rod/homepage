@@ -71,7 +71,7 @@
           "name": "Postman",
           "details": "API testing & documentation",
           "link": "https://www.postman.com/",
-          "favicon": "https://www.postman.com/favicon-32x32.png",
+          "favicon": "/images/favicons/Postman.png",
           "context": "Used for testing endpoints, mocking APIs, and debugging backend integrations.",
           "tags": ["api", "testing"]
         },
@@ -79,7 +79,7 @@
           "name": "Docker",
           "details": "Local container environment",
           "link": "https://www.docker.com/",
-          "favicon": "https://www.docker.com/wp-content/uploads/2022/03/cropped-docker-logo-favicon-32x32.png",
+          "favicon": "/images/favicons/docker-mark-blue.svg",
           "context": "Ensures consistent local development environments and smooth deployments.",
           "tags": ["containers", "devops"]
         }
@@ -126,7 +126,7 @@
           "name": "Raindrop.io",
           "details": "Bookmarking & curation",
           "link": "https://raindrop.io/",
-          "favicon": "https://raindrop.io/favicon-32x32.png",
+          "favicon": "/images/favicons/raindrop.png",
           "context": "Organizes inspiration, references, and articles for future reading.",
           "tags": ["organization", "bookmarks", "knowledge"]
         },
@@ -134,7 +134,7 @@
           "name": "Google Calendar",
           "details": "Scheduling & time management",
           "link": "https://calendar.google.com/",
-          "favicon": "https://calendar.google.com/googlecalendar/images/favicons_2020q4/calendar_32.ico",
+          "favicon": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg",
           "context": "Manages focus blocks, meetings, and project timelines.",
           "tags": ["time", "schedule", "organization"]
         }
