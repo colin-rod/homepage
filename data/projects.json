@@ -37,7 +37,8 @@
       "https://example.com/sample-full-project/screenshot-mobile.png"
     ],
     "featured": false,
-    "year": 2025
+    "year": 2025,
+    "quarter": "Q1"
   },
   {
     "id": "tribe-update",
@@ -46,14 +47,14 @@
     "description": "Private sharing platform that enables mindful social content sharing.",
     "detailedDescription": [
       "Users can create a 'tribe' of close friends and family to share updates, photos, and videos in a private, ad-free environment.",
-      "Features for tribe creaators include multiple upload channels (email, SMS, Whatsapp) and the ability to compile their updates into digital (and eventually physical) collectibles.",
+      "Features for tribe creators include multiple upload channels (email, SMS, Whatsapp) and the ability to compile their updates into digital (and eventually physical) collectibles.",
       "Recipients can choose how they want to receive updates - via email digests, SMS or Whatsapp, what frequency and signifcance of updates they would like.",
       "An AI assistant compiles the updates into a beautiful gallery format tailored to the recipients preferences."
     ],
     "type": "project",
     "businessModel": "Freemium.",
     "status": "completed",
-    "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Stripe"],
+    "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL"],
     "tags": ["web", "product", "analytics", "design"],
     "whyBuilt": [
       "As I was sharing updates of our newborn child with multiple groups scattered across different platforms I realised that there should be a way to consolidate this manual uploading process.",
@@ -81,6 +82,10 @@
       {
         "content": "Used SendGrid for email delivery and Twilio for SMS/Whatsapp delivery - both have great documentation which made integration easy",
         "sentiment": "positive"
+      },
+      {
+        "content": "Implemented best practicies for engineering which resulted in significantly more overhead and complexity compared to a typical vibe coded project.",
+        "sentiment": "neutral"
       }
     ],
     "links": {
@@ -88,20 +93,22 @@
       "github": "https://github.com/colin-rod/tribe_mvp/"
     },
     "featured": true,
-    "year": 2025
+    "year": 2025,
+    "quarter": "Q2"
   },
   {
     "id": "portfolio-revamp",
     "title": "Interactive Portfolio",
     "slug": "portfolio-revamp",
     "description": "A modern, interactive portfolio with dynamic CV system and project showcase",
-    "detailedDescription": "Built with Next.js 15, featuring a dynamic CV filtering system, timeline of highlights, and interactive project showcase with Terracotta Midnight design system.",
+    "detailedDescription": "Built with Next.js 15, featuring a dynamic CV filtering system, timeline of highlights, and interactive project showcase.",
     "type": "project",
     "status": "in-progress",
-    "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "PostHog"],
+    "techStack": ["Next.js", "TypeScript", "Tailwind CSS"],
     "tags": ["web", "product", "strategy"],
     "featured": true,
-    "year": 2024
+    "year": 2025,
+    "quarter": "Q2"
   },
   {
     "id": "product-strategy",
@@ -114,7 +121,8 @@
     "techStack": ["Product Management", "Strategy", "Analytics"],
     "tags": ["product", "strategy"],
     "featured": true,
-    "year": 2023
+    "year": 2023,
+    "quarter": "Q3"
   },
   {
     "id": "user-research",
@@ -127,7 +135,8 @@
     "techStack": ["React", "Node.js", "PostgreSQL"],
     "tags": ["web", "product", "research"],
     "featured": true,
-    "year": 2023
+    "year": 2023,
+    "quarter": "Q2"
   },
   {
     "id": "example-project",
@@ -140,7 +149,8 @@
     "techStack": ["Next.js", "TypeScript", "Tailwind CSS"],
     "tags": ["web", "product"],
     "featured": false,
-    "year": 2024
+    "year": 2024,
+    "quarter": "Q4"
   },
   {
     "id": "spotify-wrapped-analyzer",
@@ -153,7 +163,8 @@
     "techStack": ["Next.js", "Spotify API", "Chart.js"],
     "tags": ["web", "api", "tech"],
     "featured": false,
-    "year": 2024
+    "year": 2024,
+    "quarter": "Q2"
   },
   {
     "id": "meeting-notes-parser",
@@ -166,6 +177,68 @@
     "techStack": ["Python", "OpenAI API", "Click"],
     "tags": ["automation", "tech"],
     "featured": false,
-    "year": 2024
+    "year": 2024,
+    "quarter": "Q1"
+  },
+  {
+    "id": "audiograph",
+    "title": "Audiograph",
+    "slug": "audiograph",
+    "description": "Privacy-first analytics application for visualizing personal listening and viewing habits",
+    "detailedDescription": [
+      "A unified analytics platform that allows users to upload their Spotify personal data export to generate insights about listening patterns.",
+      "Features include time-based listening insights with weekly cadence charts, listening streak computations, and materialized views for optimized analytics.",
+      "Built with privacy as a core principle using Row Level Security policies to ensure user data remains protected.",
+      "Comprehensive database architecture documented in /docs directory with Supabase setup guides."
+    ],
+    "type": "project",
+    "businessModel": "Free, privacy-first personal analytics tool",
+    "status": "live",
+    "techStack": [
+      "Next.js",
+      "TypeScript",
+      "Supabase",
+      "PostgreSQL",
+      "Vitest",
+      "Primer React",
+      "Sentry",
+      "PostHog"
+    ],
+    "tags": ["web", "analytics", "tech", "product"],
+    "whyBuilt": [
+      "Wanted to create a privacy-first alternative to third-party analytics tools for personal listening data",
+      "Spotify's year-end Wrapped is great, but users should be able to access their listening insights anytime",
+      "Opportunity to explore advanced PostgreSQL features like materialized views and Row Level Security policies",
+      "Build a production-grade app with proper monitoring, testing, and CI/CD practices"
+    ],
+    "learnings": [
+      {
+        "content": "Implemented Row Level Security policies in Supabase for robust data privacy - essential for any app handling personal data",
+        "sentiment": "positive"
+      },
+      {
+        "content": "Materialized views significantly improved query performance for analytics aggregations",
+        "sentiment": "positive"
+      },
+      {
+        "content": "Using Vitest and Testing Library provided faster test execution compared to Jest",
+        "sentiment": "positive"
+      },
+      {
+        "content": "Integrated Sentry for error monitoring and PostHog for product analytics from day one - invaluable for debugging production issues",
+        "sentiment": "positive"
+      },
+      {
+        "content": "GitHub Actions CI/CD workflow automated testing and deployment, catching issues before production",
+        "sentiment": "positive"
+      }
+    ],
+    "links": {
+      "live": "https://audiograph-phi.vercel.app",
+      "github": "https://github.com/colin-rod/audiograph"
+    },
+    "featured": true,
+    "year": 2025,
+    "quarter": "Q4"
   }
 ]

@@ -20,6 +20,7 @@ export function createMockProject(overrides = {}) {
     tags: ['web', 'product'],
     featured: false,
     year: 2024,
+    quarter: 'Q1',
     ...overrides,
   }
 }

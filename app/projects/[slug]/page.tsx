@@ -6,6 +6,16 @@ import { generatePageMetadata } from '@/lib/seo'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
 
+function normalizeParagraphs(value?: string | string[]) {
+  if (!value) {
+    return []
+  }
+
+  const segments = Array.isArray(value) ? value : value.split(/\r?\n+/)
+
+  return segments.map((segment) => segment.trim()).filter(Boolean)
+}
+
 interface ProjectPageProps {
   params: Promise<{
     slug: string
@@ -58,6 +68,12 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
     notFound()
   }
 
+  const timeframeLabel = project.quarter
+    ? `${project.quarter} ${project.year}`
+    : project.year.toString()
+  const detailedParagraphs = normalizeParagraphs(project.detailedDescription)
+  const whyBuiltParagraphs = normalizeParagraphs(project.whyBuilt)
+
   return (
     <>
       <Navigation />
@@ -92,16 +108,18 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               </span>
             </div>
             <p className="text-xl text-text-secondary leading-relaxed">
-              {project.detailedDescription}
+              {detailedParagraphs[0] ?? project.description}
             </p>
           </div>
 
           {/* Project Details Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            {/* Year */}
+            {/* Timeframe */}
             <div className="card">
-              <h3 className="text-sm font-semibold text-text-secondary uppercase mb-2">Year</h3>
-              <p className="text-lg text-text">{project.year}</p>
+              <h3 className="text-sm font-semibold text-text-secondary uppercase mb-2">
+                Timeframe
+              </h3>
+              <p className="text-lg text-text">{timeframeLabel}</p>
             </div>
 
             {/* Status */}
@@ -131,9 +149,17 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           {/* Description */}
           <section className="mb-12">
             <h2 className="text-2xl font-bold text-text mb-6">About This Project</h2>
-            <div className="prose prose-lg max-w-none text-text-secondary">
-              <p>{project.description}</p>
-            </div>
+            {detailedParagraphs.length > 0 ? (
+              <div className="prose prose-lg max-w-none text-text-secondary space-y-4">
+                {detailedParagraphs.map((paragraph, index) => (
+                  <p key={`detail-${index}`}>{paragraph}</p>
+                ))}
+              </div>
+            ) : (
+              <div className="prose prose-lg max-w-none text-text-secondary">
+                <p>{project.description}</p>
+              </div>
+            )}
           </section>
 
           {/* Tech Stack */}
@@ -152,11 +178,13 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
           </section>
 
           {/* Why Built Section */}
-          {project.whyBuilt && (
+          {whyBuiltParagraphs.length > 0 && (
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-text mb-6">Why I Built This</h2>
-              <div className="prose prose-lg max-w-none text-text-secondary">
-                <p>{project.whyBuilt}</p>
+              <div className="prose prose-lg max-w-none text-text-secondary space-y-4">
+                {whyBuiltParagraphs.map((paragraph, index) => (
+                  <p key={`why-${index}`}>{paragraph}</p>
+                ))}
               </div>
             </section>
           )}

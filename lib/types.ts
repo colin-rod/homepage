@@ -40,6 +40,8 @@ export type ProjectType = 'project' | 'tool'
 
 export type LearningSentiment = 'positive' | 'negative' | 'neutral'
 
+export type ProjectQuarter = 'Q1' | 'Q2' | 'Q3' | 'Q4'
+
 export interface ProjectLearning {
   content: string
   sentiment: LearningSentiment
@@ -70,6 +72,7 @@ export interface Project {
   images?: string[] // Consolidated field for all project images/screenshots
   featured: boolean
   year: number
+  quarter?: ProjectQuarter
 }
 
 // ============================================================================

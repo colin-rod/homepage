@@ -160,10 +160,10 @@ test.describe('Project Detail Page', () => {
     ).toBeVisible()
   })
 
-  test('should display project year', async ({ page }) => {
-    // Should display year (format: 2020, 2021, etc.)
+  test('should display project timeframe', async ({ page }) => {
+    // Should display timeframe (e.g., Q1 2024 or 2024 when quarter missing)
     const main = page.getByRole('main')
-    await expect(main.locator('text=/20\\d{2}/').first()).toBeVisible()
+    await expect(main.locator('text=/Q[1-4]\\s20\\d{2}|20\\d{2}/').first()).toBeVisible()
   })
 
   test('should display project tags', async ({ page }) => {

@@ -29,6 +29,7 @@ describe('Swimlane', () => {
       tags: ['web'],
       featured: false,
       year: 2024,
+      quarter: 'Q1',
     },
     {
       id: 'project-2',
@@ -42,6 +43,7 @@ describe('Swimlane', () => {
       tags: ['web'],
       featured: false,
       year: 2024,
+      quarter: 'Q2',
     },
   ]
 

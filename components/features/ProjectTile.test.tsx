@@ -21,6 +21,7 @@ const mockProject: Project = {
   tags: ['web', 'product'],
   featured: false,
   year: 2024,
+  quarter: 'Q2',
 }
 
 describe('ProjectTile', () => {
