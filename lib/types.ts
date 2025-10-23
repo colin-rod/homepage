@@ -142,6 +142,7 @@ export interface UsesItem {
   link?: string
   context: string
   tags?: string[]
+  favicon?: string
 }
 
 export interface UsesCategory {

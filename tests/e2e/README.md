@@ -5,12 +5,14 @@ This directory contains end-to-end tests for the Colin Rodrigues homepage applic
 ## Test Structure
 
 ### Smoke Tests ([smoke.spec.ts](./smoke.spec.ts))
+
 **Purpose:** Quick validation of critical user flows
 **Runtime:** ~2-3 minutes
 **Browser Coverage:** Chromium only (for speed)
 **When to Run:** On every PR to `development`
 
 **Critical Paths Tested:**
+
 - Homepage loads correctly
 - Projects page displays project cards
 - CV page loads with all filters
@@ -22,18 +24,20 @@ This directory contains end-to-end tests for the Colin Rodrigues homepage applic
 - Responsive design on mobile
 
 ### Full Test Suite
+
 **Purpose:** Comprehensive testing across all browsers and devices
 **Runtime:** ~10-15 minutes
 **Browser Coverage:** Chromium, WebKit, Mobile Chrome
 **When to Run:** On every PR to `main` (production)
 
 **Test Files:**
+
 - [home.spec.ts](./home.spec.ts) - Homepage tests
 - [projects.spec.ts](./projects.spec.ts) - Projects page tests (69 tests)
 - [cv.spec.ts](./cv.spec.ts) - CV page and filtering tests (123 tests)
 - [timeline.spec.ts](./timeline.spec.ts) - Timeline page tests (48 tests)
 - [static-pages.spec.ts](./static-pages.spec.ts) - About/Now/Contact tests (135 tests)
-- [writing.spec.ts](./writing.spec.ts) - Blog/writing section tests
+- [writing.spec.ts](./writing.spec.ts) - Reflections section tests
 
 **Total:** 375+ comprehensive E2E tests
 
@@ -66,6 +70,7 @@ npm run test:e2e:report
 The GitHub Actions workflow automatically runs tests based on the target branch:
 
 #### PRs to `development`:
+
 ```yaml
 - Lint & Type Check ✓
 - Unit & Component Tests ✓
@@ -74,6 +79,7 @@ The GitHub Actions workflow automatically runs tests based on the target branch:
 ```
 
 #### PRs to `main`:
+
 ```yaml
 - Lint & Type Check ✓
 - Unit & Component Tests ✓
@@ -88,12 +94,14 @@ The GitHub Actions workflow automatically runs tests based on the target branch:
 The configuration dynamically adjusts based on environment:
 
 **Local Development:**
+
 - Reuses existing dev server on port 3000
 - Runs tests on all configured browsers
 - No retries (faster feedback)
 - HTML reporter
 
 **CI Environment:**
+
 - Starts production server (`npm run start`)
 - Runs tests on configured browsers per job
 - 2 retries on failure (handles flakiness)
@@ -102,6 +110,7 @@ The configuration dynamically adjusts based on environment:
 - Videos on failure (retained)
 
 **Smoke Tests Mode (`SMOKE_TESTS=1`):**
+
 - Chromium only (faster)
 - 10-minute global timeout
 - Same retry and reporting logic as full suite
@@ -143,6 +152,7 @@ npm run test:e2e:report
 ```
 
 This opens an HTML report with:
+
 - Test results by browser
 - Screenshots of failures
 - Videos of test runs (if enabled)
@@ -213,15 +223,15 @@ test-e2e-full:
 
 Current E2E test coverage:
 
-| Page/Feature | Tests | Status |
-|--------------|-------|--------|
-| Homepage | 3 | ✓ |
-| Projects | 69 | ✓ |
-| CV & Filtering | 123 | ✓ |
-| Timeline | 48 | ✓ |
-| Static Pages | 135 | ✓ |
-| Writing/Blog | TBD | ⏳ |
-| **Total** | **375+** | **✓** |
+| Page/Feature   | Tests    | Status |
+| -------------- | -------- | ------ |
+| Homepage       | 3        | ✓      |
+| Projects       | 69       | ✓      |
+| CV & Filtering | 123      | ✓      |
+| Timeline       | 48       | ✓      |
+| Static Pages   | 135      | ✓      |
+| Writing/Blog   | TBD      | ⏳     |
+| **Total**      | **375+** | **✓**  |
 
 ## Maintenance
 
@@ -233,6 +243,7 @@ Current E2E test coverage:
    - Is it a new feature? → Create new spec file
 
 2. **Write test following TDD:**
+
    ```bash
    # 1. Write failing test
    # 2. Implement feature
@@ -241,6 +252,7 @@ Current E2E test coverage:
    ```
 
 3. **Verify locally:**
+
    ```bash
    npm run test:e2e:smoke  # If critical path
    npm run test:e2e        # If full feature test

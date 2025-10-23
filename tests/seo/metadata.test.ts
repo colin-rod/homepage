@@ -191,7 +191,11 @@ describe('SEO Metadata Configuration', () => {
 
   describe('Page Metadata Generator', () => {
     it('generates metadata with custom title', () => {
-      const pageMetadata = generatePageMetadata('About', 'Learn more about Colin Rodrigues', '/about')
+      const pageMetadata = generatePageMetadata(
+        'About',
+        'Learn more about Colin Rodrigues',
+        '/about'
+      )
 
       expect(pageMetadata.title).toContain('About')
       expect(pageMetadata.title).toContain(siteConfig.name)
@@ -219,15 +223,20 @@ describe('SEO Metadata Configuration', () => {
     })
 
     it('generates Twitter Card metadata for pages', () => {
-      const pageMetadata = generatePageMetadata('Writing', 'Read my blog posts', '/writing')
+      const pageMetadata = generatePageMetadata('Reflections', 'Read my reflections', '/writing')
 
-      expect(pageMetadata.twitter?.title).toContain('Writing')
-      expect(pageMetadata.twitter?.description).toBe('Read my blog posts')
+      expect(pageMetadata.twitter?.title).toContain('Reflections')
+      expect(pageMetadata.twitter?.description).toBe('Read my reflections')
     })
 
     it('uses custom image when provided', () => {
       const customImage = '/custom-og-image.png'
-      const pageMetadata = generatePageMetadata('Special Page', 'Special description', '/special', customImage)
+      const pageMetadata = generatePageMetadata(
+        'Special Page',
+        'Special description',
+        '/special',
+        customImage
+      )
 
       expect(pageMetadata.twitter?.images).toContain(customImage)
     })

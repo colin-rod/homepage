@@ -1,5 +1,5 @@
 /**
- * Writing/Blog Index Page
+ * Reflections Index Page
  * Lists all blog posts with metadata
  */
 
@@ -11,7 +11,7 @@ import Footer from '@/components/layouts/Footer'
 import PageTransition from '@/components/animations/PageTransition'
 
 export const metadata = {
-  title: 'Writing | Colin Rodrigues',
+  title: 'Reflections | Colin Rodrigues',
   description: 'Thoughts on product, strategy, and technology.',
 }
 
@@ -26,7 +26,7 @@ export default function WritingPage() {
           <div className="mx-auto max-w-4xl px-6 lg:px-8">
             {/* Header */}
             <header className="mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">Writing</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">Reflections</h1>
               <p className="text-lg text-secondary">
                 Thoughts on product development, strategy, and technology.
               </p>

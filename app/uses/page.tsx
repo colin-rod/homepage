@@ -59,6 +59,16 @@ export default function UsesPage() {
                         <div className="grid gap-4 md:grid-cols-[minmax(0,18rem)_1fr] md:gap-6">
                           <div className="space-y-3">
                             <div className="flex items-center gap-3">
+                              {item.favicon && (
+                                <img
+                                  src={item.favicon}
+                                  alt={`${item.name} icon`}
+                                  className="h-6 w-6 rounded-md border border-divider/60 bg-white object-contain p-0.5 shadow-sm"
+                                  loading="lazy"
+                                  width={24}
+                                  height={24}
+                                />
+                              )}
                               <h3 className="text-lg font-semibold text-text">{item.name}</h3>
                               {item.link && (
                                 <a

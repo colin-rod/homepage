@@ -1,5 +1,5 @@
 /**
- * Tests for Writing/Blog Index Page
+ * Tests for Reflections Index Page
  */
 
 import { render, screen } from '@testing-library/react'
@@ -10,7 +10,7 @@ import * as blogUtils from '@/lib/blog'
 jest.mock('@/lib/blog')
 const mockedBlogUtils = blogUtils as jest.Mocked<typeof blogUtils>
 
-describe('Writing Page', () => {
+describe('Reflections Page', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
@@ -20,7 +20,7 @@ describe('Writing Page', () => {
 
     render(<WritingPage />)
 
-    expect(screen.getByRole('heading', { name: /writing/i, level: 1 })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /reflections/i, level: 1 })).toBeInTheDocument()
   })
 
   it('displays introduction text', () => {

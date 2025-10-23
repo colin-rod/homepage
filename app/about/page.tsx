@@ -70,13 +70,13 @@ export default function AboutPage() {
                   into experiments and projects at a pace that feels exciting. It&apos;s what Simon
                   Willison calls{' '}
                   <a
-                    href="https://simonwillison.net/2023/Oct/12/vibe-engineering/"
+                    href="https://simonwillison.net/2025/Oct/7/vibe-engineering/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    “vibe engineering” and perfectly captures the spirit behind what I&apos;m trying
-                    to do here.
-                  </a>
+                    “vibe engineering”
+                  </a>{' '}
+                  and perfectly captures the spirit behind what I&apos;m trying to do here.
                 </p>
                 <h2 className="text-2xl font-bold text-text mb-4">Why I&apos;m Sharing</h2>
                 <p>

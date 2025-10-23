@@ -1,6 +1,6 @@
 /**
  * Individual Blog Post Page
- * Renders MDX content for a specific blog post
+ * Renders MDX content for a specific reflection
  */
 
 import Link from 'next/link'
@@ -61,7 +61,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               href="/writing"
               className="inline-flex items-center text-sm text-secondary hover:text transition-colors mb-8"
             >
-              ← Back to Writing
+              ← Back to Reflections
             </Link>
 
             {/* Post Header */}
@@ -100,7 +100,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 href="/writing"
                 className="inline-flex items-center text-sm text-secondary hover:text transition-colors"
               >
-                ← Back to Writing
+                ← Back to Reflections
               </Link>
             </footer>
           </div>

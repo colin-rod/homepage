@@ -1,16 +1,16 @@
 /**
- * E2E Tests for Writing/Blog Pages
- * Tests the blog index and individual post pages
+ * E2E Tests for Reflections Pages
+ * Tests the reflections index and individual post pages
  */
 
 import { test, expect } from '@playwright/test'
 
-test.describe('Writing/Blog Pages', () => {
+test.describe('Reflections Pages', () => {
   test.describe('Blog Index Page', () => {
     test('renders page heading and introduction', async ({ page }) => {
       await page.goto('/writing')
 
-      await expect(page.locator('h1')).toContainText('Writing')
+      await expect(page.locator('h1')).toContainText('Reflections')
       await expect(page.getByText(/thoughts/i)).toBeVisible()
     })
 
@@ -23,7 +23,7 @@ test.describe('Writing/Blog Pages', () => {
       expect(count).toBeGreaterThan(0)
 
       // Check for welcome post
-      await expect(page.getByText('Welcome to My Writing')).toBeVisible()
+      await expect(page.getByText('Welcome to My Reflections')).toBeVisible()
     })
 
     test('blog post cards show metadata', async ({ page }) => {
@@ -47,11 +47,11 @@ test.describe('Writing/Blog Pages', () => {
     test('clicking post title navigates to post page', async ({ page }) => {
       await page.goto('/writing')
 
-      const postLink = page.getByRole('link', { name: /welcome to my writing/i })
+      const postLink = page.getByRole('link', { name: /welcome to my reflections/i })
       await postLink.click()
 
       await page.waitForURL('/writing/welcome')
-      await expect(page.locator('h1')).toContainText('Welcome to My Writing')
+      await expect(page.locator('h1')).toContainText('Welcome to My Reflections')
     })
 
     test('page is accessible', async ({ page }) => {
@@ -82,7 +82,7 @@ test.describe('Writing/Blog Pages', () => {
     test('renders post title and content', async ({ page }) => {
       await page.goto('/writing/welcome')
 
-      await expect(page.locator('h1')).toContainText('Welcome to My Writing')
+      await expect(page.locator('h1')).toContainText('Welcome to My Reflections')
       await expect(page.getByText(/Thanks for stopping by/i)).toBeVisible()
     })
 
@@ -108,7 +108,7 @@ test.describe('Writing/Blog Pages', () => {
       // Should render headings
       await expect(page.getByRole('heading', { name: 'Welcome', level: 1 })).toBeVisible()
       await expect(page.getByRole('heading', { name: /what you'll find here/i })).toBeVisible()
-      await expect(page.getByRole('heading', { name: /why i write/i })).toBeVisible()
+      await expect(page.getByRole('heading', { name: /why i reflect/i })).toBeVisible()
 
       // Should render lists
       const lists = page.locator('ul, ol')
@@ -119,14 +119,14 @@ test.describe('Writing/Blog Pages', () => {
       await expect(links.first()).toBeVisible()
     })
 
-    test('back to writing link works', async ({ page }) => {
+    test('back to reflections link works', async ({ page }) => {
       await page.goto('/writing/welcome')
 
-      const backLink = page.getByRole('link', { name: /back to writing/i }).first()
+      const backLink = page.getByRole('link', { name: /back to reflections/i }).first()
       await backLink.click()
 
       await page.waitForURL('/writing')
-      await expect(page.locator('h1')).toContainText('Writing')
+      await expect(page.locator('h1')).toContainText('Reflections')
     })
 
     test('page is accessible', async ({ page }) => {
@@ -162,13 +162,16 @@ test.describe('Writing/Blog Pages', () => {
 
   test.describe('Cross-browser compatibility', () => {
     test('works in different browsers', async ({ page, browserName }) => {
-      test.skip(browserName !== 'chromium' && browserName !== 'webkit', 'Run on Chromium and WebKit only')
+      test.skip(
+        browserName !== 'chromium' && browserName !== 'webkit',
+        'Run on Chromium and WebKit only'
+      )
 
       await page.goto('/writing')
-      await expect(page.locator('h1')).toContainText('Writing')
+      await expect(page.locator('h1')).toContainText('Reflections')
 
       await page.goto('/writing/welcome')
-      await expect(page.locator('h1')).toContainText('Welcome to My Writing')
+      await expect(page.locator('h1')).toContainText('Welcome to My Reflections')
     })
   })
 })
