@@ -115,13 +115,16 @@ export interface CV {
 // ============================================================================
 
 export interface BlogPost {
-  id: string
+  id?: string
   title: string
   slug: string
-  excerpt: string
-  content: string
-  publishedAt: string // ISO 8601
+  date: string // ISO 8601 - Publication date
+  summary: string // Short description/excerpt
+  excerpt?: string // Alias for summary (for compatibility)
+  content?: string // Full MDX content (optional, not included in list views)
+  readingTime?: number // Estimated reading time in minutes
+  publishedAt?: string // ISO 8601 (alias for date)
   updatedAt?: string
   tags: string[]
-  featured: boolean
+  featured?: boolean
 }
