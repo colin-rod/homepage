@@ -85,7 +85,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                       ? 'bg-blue-100 text-blue-800'
                       : project.status === 'in-progress'
                         ? 'bg-yellow-100 text-yellow-800'
-                        : 'bg-gray-100 text-gray-800'
+                        : 'badge badge-primary'
                 }`}
               >
                 {project.status}
@@ -174,7 +174,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                           ? 'text-green-600'
                           : learning.sentiment === 'negative'
                             ? 'text-orange-600'
-                            : 'text-gray-600'
+                            : 'text-secondary'
                       }`}
                     >
                       {learning.sentiment === 'positive'

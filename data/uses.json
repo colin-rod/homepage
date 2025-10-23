@@ -1,0 +1,130 @@
+{
+  "categories": [
+    {
+      "id": "hardware",
+      "title": "Hardware",
+      "description": "The physical gear that keeps my workflow fast and comfortable.",
+      "items": [
+        {
+          "name": "MacBook Pro 16\" (M3 Max)",
+          "details": "64GB RAM / 2TB SSD",
+          "link": "https://www.apple.com/macbook-pro/",
+          "context": "Primary workstation for development, design experiments, and long-form writing. I keep everything local for speed, relying on containerized dev environments when collaborating.",
+          "tags": ["laptop", "apple"]
+        },
+        {
+          "name": "Apple Studio Display",
+          "details": "27\" 5K Retina",
+          "link": "https://www.apple.com/studio-display/",
+          "context": "External monitor tuned for color consistency. It gives me the pixels I need for Figma and gives breathing room when comparing product specs or code diffs side-by-side.",
+          "tags": ["display"]
+        },
+        {
+          "name": "Keychron Q1 Pro",
+          "details": "Gateron Brown switches",
+          "link": "https://www.keychron.com/products/keychron-q1-pro",
+          "context": "Favorite mechanical keyboard—hot-swappable and wireless. I rotate keycaps but keep a tactile feel to improve typing accuracy during long planning sessions.",
+          "tags": ["keyboard"]
+        },
+        {
+          "name": "Logitech MX Master 3S",
+          "details": "Graphite",
+          "link": "https://www.logitech.com/products/mice/mx-master-3s.html",
+          "context": "Ergonomic mouse with app-specific profiles. I map the side scroll to scrub timelines in Descript and the thumb button for mission control to juggle research tabs.",
+          "tags": ["mouse"]
+        }
+      ]
+    },
+    {
+      "id": "development",
+      "title": "Development Toolkit",
+      "description": "Core software for building, testing, and shipping projects.",
+      "items": [
+        {
+          "name": "Cursor",
+          "details": "AI-assisted code editor",
+          "link": "https://www.cursor.com/",
+          "context": "Acts as my pair programmer. I lean on it for rapid prototyping, translating product ideas into working code, and refactoring legacy projects with confidence.",
+          "tags": ["editor", "ai"]
+        },
+        {
+          "name": "Warp Terminal",
+          "details": "Team-friendly terminal",
+          "link": "https://www.warp.dev/",
+          "context": "Command palette and AI command search speed up repetitive tasks. I save shared notebooks for infra automation that the rest of the team can reuse.",
+          "tags": ["terminal"]
+        },
+        {
+          "name": "Raycast",
+          "details": "Launcher & automation",
+          "link": "https://www.raycast.com/",
+          "context": "Swiss army knife for quick actions—spins up project workspaces, triggers Linear issues, and fetches documentation snippets without leaving the keyboard.",
+          "tags": ["launcher", "automation"]
+        },
+        {
+          "name": "Linear",
+          "details": "Product planning",
+          "link": "https://linear.app/",
+          "context": "Keeps product discovery aligned with delivery. I document hypotheses, capture experiments, and link outcomes directly to shipped features.",
+          "tags": ["product", "planning"]
+        }
+      ]
+    },
+    {
+      "id": "creative",
+      "title": "Creative & Content",
+      "description": "Tools for writing, storytelling, and communicating ideas.",
+      "items": [
+        {
+          "name": "Notion",
+          "details": "Second brain & knowledge base",
+          "link": "https://www.notion.so/",
+          "context": "Holds project briefs, personal research, and parenting notes. Every new experiment starts here as a narrative before it becomes a roadmap or prototype.",
+          "tags": ["notes", "docs"]
+        },
+        {
+          "name": "Descript",
+          "details": "Video & audio editing",
+          "link": "https://www.descript.com/",
+          "context": "My shortcut for walkthrough videos and feature announcements. Editing transcripts like a doc lets me iterate fast without touching a traditional timeline.",
+          "tags": ["audio", "video"]
+        },
+        {
+          "name": "FigJam",
+          "details": "Collaborative whiteboarding",
+          "link": "https://www.figma.com/figjam/",
+          "context": "Where messy ideas live first. I map out systems, customer journeys, and experiment flows here before turning them into specs or tickets.",
+          "tags": ["design"]
+        }
+      ]
+    },
+    {
+      "id": "wellbeing",
+      "title": "Wellbeing & Rituals",
+      "description": "Support systems that keep me grounded while building.",
+      "items": [
+        {
+          "name": "Eight Sleep Pod Cover",
+          "details": "Sleep tracking & thermal control",
+          "link": "https://www.eightsleep.com/",
+          "context": "Sleep data meets comfort. Helps me dial in recovery so I can show up rested for deep work blocks and family time.",
+          "tags": ["sleep"]
+        },
+        {
+          "name": "Day One Journal",
+          "details": "Daily reflection app",
+          "link": "https://dayoneapp.com/",
+          "context": "End-of-day ritual to offload decisions, capture lessons, and stay present. I revisit entries weekly to spot patterns in energy and focus.",
+          "tags": ["journal"]
+        },
+        {
+          "name": "Calm",
+          "details": "Guided meditation",
+          "link": "https://www.calm.com/",
+          "context": "Short check-ins before shipping something stressful. Keeps pulse steady when juggling a launch and school drop-off logistics.",
+          "tags": ["mindfulness"]
+        }
+      ]
+    }
+  ]
+}

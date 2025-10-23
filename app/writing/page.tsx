@@ -27,7 +27,7 @@ export default function WritingPage() {
             {/* Header */}
             <header className="mb-12">
               <h1 className="text-4xl md:text-5xl font-bold mb-4">Writing</h1>
-              <p className="text-lg text-muted-foreground">
+              <p className="text-lg text-secondary">
                 Thoughts on product development, strategy, and technology.
               </p>
             </header>
@@ -35,12 +35,12 @@ export default function WritingPage() {
             {/* Blog Posts List */}
             {posts.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-muted-foreground text-lg">No posts yet. Check back soon!</p>
+                <p className="text-secondary text-lg">No posts yet. Check back soon!</p>
               </div>
             ) : (
               <div className="space-y-8">
                 {posts.map((post) => (
-                  <article key={post.slug} className="border-b border-border pb-8 last:border-0">
+                  <article key={post.slug} className="border-b border-divider pb-8 last:border-0">
                     <Link
                       href={`/writing/${post.slug}`}
                       className="group block hover:opacity-80 transition-opacity"
@@ -49,7 +49,7 @@ export default function WritingPage() {
                         {post.title}
                       </h2>
 
-                      <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
+                      <div className="flex items-center gap-4 text-sm text-secondary mb-3">
                         <time dateTime={post.date}>{formatDate(post.date)}</time>
                         {post.readingTime && (
                           <>
@@ -59,7 +59,7 @@ export default function WritingPage() {
                         )}
                       </div>
 
-                      <p className="text-foreground/80 mb-3 leading-relaxed">{post.summary}</p>
+                      <p className="text-secondary mb-3 leading-relaxed">{post.summary}</p>
 
                       {post.tags && post.tags.length > 0 && (
                         <div className="flex flex-wrap gap-2">

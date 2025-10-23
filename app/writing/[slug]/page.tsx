@@ -59,7 +59,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             {/* Back Link */}
             <Link
               href="/writing"
-              className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors mb-8"
+              className="inline-flex items-center text-sm text-secondary hover:text transition-colors mb-8"
             >
               ← Back to Writing
             </Link>
@@ -68,7 +68,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <header className="mb-8">
               <h1 className="text-4xl md:text-5xl font-bold mb-4">{post.title}</h1>
 
-              <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+              <div className="flex items-center gap-4 text-sm text-secondary mb-4">
                 <time dateTime={post.date}>{formatDate(post.date)}</time>
                 {post.readingTime && (
                   <>
@@ -81,10 +81,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               {post.tags && post.tags.length > 0 && (
                 <div className="flex flex-wrap gap-2">
                   {post.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="inline-block px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-sm"
-                    >
+                    <span key={tag} className="badge badge-primary">
                       {tag}
                     </span>
                   ))}
@@ -98,10 +95,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             </article>
 
             {/* Footer with back link */}
-            <footer className="mt-12 pt-8 border-t border-border">
+            <footer className="mt-12 pt-8 border-t border-divider">
               <Link
                 href="/writing"
-                className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="inline-flex items-center text-sm text-secondary hover:text transition-colors"
               >
                 ← Back to Writing
               </Link>

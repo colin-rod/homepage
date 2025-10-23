@@ -43,7 +43,7 @@ export default function TimelinePage() {
       milestone: 'bg-yellow-100 text-yellow-800',
       learning: 'bg-pink-100 text-pink-800',
     }
-    return badges[type] || 'bg-gray-100 text-gray-800'
+    return badges[type] || 'badge badge-primary'
   }
 
   return (

@@ -3,201 +3,108 @@ import { generatePageMetadata } from '@/lib/seo'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
 import PageTransition from '@/components/animations/PageTransition'
+import { getUsesCategories } from '@/lib/data'
+import { ExternalLink } from 'lucide-react'
 
 export const metadata: Metadata = generatePageMetadata(
   'Uses',
-  'Tools, software, and hardware that Colin Rodrigues uses for product management, development, and daily work. A detailed look at my tech stack and workflow.',
+  'Explore the hardware, software, and rituals powering my daily work and experimentation.',
   '/uses'
 )
 
-/**
- * Uses Page
- *
- * Inspired by Wes Bos' /uses page (https://uses.tech/)
- * A detailed breakdown of tools, software, and hardware used daily
- */
-
 export default function UsesPage() {
-  const lastUpdated = 'October 2025'
+  const categories = getUsesCategories()
 
   return (
     <>
       <Navigation />
       <PageTransition>
-        <main className="py-24 sm:py-32">
-          <div className="mx-auto max-w-4xl px-6 lg:px-8">
-            {/* Page Header */}
-            <div className="mb-16">
-              <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl mb-6">
-                What I Use
+        <main id="main-content" className="py-16 sm:py-24">
+          <div className="mx-auto max-w-5xl px-6 lg:px-8">
+            <header className="mb-12 sm:mb-16">
+              <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl mb-4">
+                Uses
               </h1>
-              <p className="text-xl text-text-secondary leading-relaxed">
-                Tools, software, and hardware that power my workflow. This is a living document of
-                my current setup for product management, development, and daily work.
+              <p className="text-lg text-text-secondary leading-relaxed">
+                Inspired by the community at uses.tech, this page captures the tools and habits that
+                support my work. Each entry includes a context panel so future me can remember why a
+                tool stuck around—or why it didn&apos;t.
               </p>
-            </div>
+            </header>
 
-            {/* Development Tools */}
-            <section className="mb-16">
-              <h2 className="text-2xl font-bold text-text mb-6">Development</h2>
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg font-semibold text-text mb-2">Editor & Terminal</h3>
-                  <ul className="list-disc list-inside prose prose-lg max-w-none text-text-secondary space-y-2">
-                    <li>[Your editor - e.g., VS Code, Cursor, etc.]</li>
-                    <li>[Your terminal - e.g., iTerm2, Warp, etc.]</li>
-                    <li>[Shell - e.g., zsh, fish, etc.]</li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-text mb-2">Languages & Frameworks</h3>
-                  <ul className="list-disc list-inside prose prose-lg max-w-none text-text-secondary space-y-2">
-                    <li>TypeScript / JavaScript</li>
-                    <li>Next.js, React</li>
-                    <li>Tailwind CSS</li>
-                    <li>[Other languages/frameworks you use]</li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            {/* Productivity & Project Management */}
-            <section className="mb-16">
-              <h2 className="text-2xl font-bold text-text mb-6">
-                Productivity & Project Management
-              </h2>
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg font-semibold text-text mb-2">Core Tools</h3>
-                  <ul className="list-disc list-inside prose prose-lg max-w-none text-text-secondary space-y-2">
-                    <li>
-                      <strong>Linear</strong> — Project management, issue tracking, and sprint
-                      planning
-                    </li>
-                    <li>[Note-taking app - e.g., Notion, Obsidian, etc.]</li>
-                    <li>[Calendar/scheduling tool]</li>
-                    <li>[Communication tools - e.g., Slack, Discord, etc.]</li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            {/* AI & Automation */}
-            <section className="mb-16">
-              <h2 className="text-2xl font-bold text-text mb-6">AI & Automation</h2>
-              <ul className="list-disc list-inside prose prose-lg max-w-none text-text-secondary space-y-2">
-                <li>
-                  <strong>Claude (Anthropic)</strong> — AI pair programming, code review, and
-                  architectural guidance
-                </li>
-                <li>
-                  <strong>OpenAI (ChatGPT)</strong> — Content generation, brainstorming, and
-                  ideation
-                </li>
-                <li>[Other AI tools you use]</li>
-              </ul>
-            </section>
-
-            {/* Design Tools */}
-            <section className="mb-16">
-              <h2 className="text-2xl font-bold text-text mb-6">Design</h2>
-              <ul className="list-disc list-inside prose prose-lg max-w-none text-text-secondary space-y-2">
-                <li>[Design tool - e.g., Figma, Sketch, etc.]</li>
-                <li>[Prototyping tools]</li>
-                <li>[Color/design utilities]</li>
-              </ul>
-            </section>
-
-            {/* DevOps & Infrastructure */}
-            <section className="mb-16">
-              <h2 className="text-2xl font-bold text-text mb-6">DevOps & Infrastructure</h2>
-              <ul className="list-disc list-inside prose prose-lg max-w-none text-text-secondary space-y-2">
-                <li>
-                  <strong>GitHub</strong> — Version control, CI/CD, and code hosting
-                </li>
-                <li>
-                  <strong>Vercel</strong> — Deployment and hosting
-                </li>
-                <li>
-                  <strong>PostHog</strong> — Analytics and session replay
-                </li>
-                <li>
-                  <strong>Sentry</strong> — Error monitoring and performance tracking
-                </li>
-                <li>[Other services you use]</li>
-              </ul>
-            </section>
-
-            {/* Hardware */}
-            <section className="mb-16">
-              <h2 className="text-2xl font-bold text-text mb-6">Hardware</h2>
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg font-semibold text-text mb-2">Computer & Peripherals</h3>
-                  <ul className="list-disc list-inside prose prose-lg max-w-none text-text-secondary space-y-2">
-                    <li>[Your computer - e.g., MacBook Pro M3, etc.]</li>
-                    <li>[Monitor setup]</li>
-                    <li>[Keyboard]</li>
-                    <li>[Mouse/trackpad]</li>
-                    <li>[Desk setup]</li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-text mb-2">Audio & Video</h3>
-                  <ul className="list-disc list-inside prose prose-lg max-w-none text-text-secondary space-y-2">
-                    <li>[Headphones]</li>
-                    <li>[Microphone]</li>
-                    <li>[Webcam]</li>
-                  </ul>
-                </div>
-              </div>
-            </section>
-
-            {/* Other Tools */}
-            <section className="mb-16">
-              <h2 className="text-2xl font-bold text-text mb-6">Other Tools</h2>
-              <ul className="list-disc list-inside prose prose-lg max-w-none text-text-secondary space-y-2">
-                <li>[Browser(s)]</li>
-                <li>[Password manager]</li>
-                <li>[Backup solution]</li>
-                <li>[Any other tools worth mentioning]</li>
-              </ul>
-            </section>
-
-            {/* Philosophy */}
-            <section className="mb-16">
-              <h2 className="text-2xl font-bold text-text mb-6">Philosophy</h2>
-              <div className="prose prose-lg max-w-none text-text-secondary">
-                <p className="mb-4">
-                  [Add your philosophy about tools - e.g., &quot;I believe in using the right tool
-                  for the job, not the newest or most popular one. My setup focuses on...&quot; or
-                  &quot;I optimize for deep work and minimal context switching...&quot;]
-                </p>
-                <p>
-                  [Maybe mention how you evaluate new tools, what matters to you in a tool, or any
-                  principles that guide your choices]
-                </p>
-              </div>
-            </section>
-
-            {/* Last Updated */}
-            <section className="border-t border-divider pt-8">
-              <p className="text-sm text-text-secondary italic">
-                Last updated: <time dateTime="2025-10">{lastUpdated}</time>
-              </p>
-              <p className="text-sm text-text-secondary mt-2">
-                Inspired by{' '}
-                <a
-                  href="https://uses.tech"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-accent-warm hover:underline"
+            <div className="space-y-16">
+              {categories.map((category) => (
+                <section
+                  key={category.id}
+                  aria-labelledby={`${category.id}-title`}
+                  className="space-y-6"
                 >
-                  uses.tech
-                </a>{' '}
-                — a list of /uses pages by developers sharing their setups.
-              </p>
-            </section>
+                  <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                    <div>
+                      <h2 id={`${category.id}-title`} className="text-2xl font-semibold text-text">
+                        {category.title}
+                      </h2>
+                      {category.description && (
+                        <p className="mt-2 text-base text-text-secondary">{category.description}</p>
+                      )}
+                    </div>
+                    <p className="text-sm text-text-secondary md:max-w-xs">
+                      Swap in your own notes in the context column to explain how and why you use
+                      each item.
+                    </p>
+                  </div>
+
+                  <div className="space-y-4">
+                    {category.items.map((item) => (
+                      <article
+                        key={item.name}
+                        className="rounded-2xl border border-divider/80 bg-neutral-surface/80 p-5 shadow-sm backdrop-blur-sm"
+                      >
+                        <div className="grid gap-4 md:grid-cols-[minmax(0,18rem)_1fr] md:gap-6">
+                          <div className="space-y-3">
+                            <div className="flex items-center gap-3">
+                              <h3 className="text-lg font-semibold text-text">{item.name}</h3>
+                              {item.link && (
+                                <a
+                                  href={item.link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 text-sm font-medium text-accent-warm transition-colors hover:text-accent-gold"
+                                >
+                                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                                  <span className="sr-only">Open {item.name}</span>
+                                </a>
+                              )}
+                            </div>
+                            {item.details && (
+                              <p className="text-sm text-text-secondary">{item.details}</p>
+                            )}
+                            {item.tags && item.tags.length > 0 && (
+                              <div
+                                className="flex flex-wrap gap-2"
+                                aria-label={`${item.name} tags`}
+                              >
+                                {item.tags.map((tag) => (
+                                  <span
+                                    key={tag}
+                                    className="inline-flex items-center rounded-full border border-divider/70 bg-neutral-surface px-2.5 py-1 text-xs font-medium uppercase tracking-wide text-text-secondary"
+                                  >
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                          <div className="rounded-xl border border-divider/70 bg-neutral-surface px-4 py-3 text-sm leading-relaxed text-text-secondary">
+                            {item.context}
+                          </div>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </div>
           </div>
         </main>
       </PageTransition>
