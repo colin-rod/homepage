@@ -7,8 +7,10 @@ describe('Home Page', () => {
 
     // Check for name in both nav and hero
     expect(screen.getAllByText('Colin Rodrigues').length).toBeGreaterThan(0)
-    // Check for tagline or intro content
-    expect(screen.getByText(/Work in Progress/i)).toBeInTheDocument()
+    // Check for tagline content
+    expect(screen.getByText(/Building, Reflecting & Sharing/i)).toBeInTheDocument()
+    // Check for hero intro text
+    expect(screen.getByText(/part portfolio, part journal/i)).toBeInTheDocument()
   })
 
   it('displays the correct heading', () => {

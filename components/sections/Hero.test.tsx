@@ -24,27 +24,27 @@ describe('Hero', () => {
     it('renders a tagline or subtitle', () => {
       render(<Hero />)
       // Should have a subtitle/tagline
-      const subtitle = screen.getByText(/Product & Strategy/i)
+      const subtitle = screen.getByText(/Building, Reflecting & Sharing/i)
       expect(subtitle).toBeInTheDocument()
     })
 
     it('renders an introduction paragraph', () => {
       render(<Hero />)
       // Should have some introductory text
-      const intro = screen.getByText(/building products/i)
+      const intro = screen.getByText(/part portfolio, part journal/i)
       expect(intro).toBeInTheDocument()
     })
 
     it('renders primary CTA button', () => {
       render(<Hero />)
-      const ctaButton = screen.getByRole('link', { name: /view projects/i })
+      const ctaButton = screen.getByRole('link', { name: /explore my work/i })
       expect(ctaButton).toBeInTheDocument()
       expect(ctaButton).toHaveAttribute('href', '/projects')
     })
 
     it('renders secondary CTA button', () => {
       render(<Hero />)
-      const secondaryCta = screen.getByRole('link', { name: /contact me/i })
+      const secondaryCta = screen.getByRole('link', { name: /connect/i })
       expect(secondaryCta).toBeInTheDocument()
       expect(secondaryCta).toHaveAttribute('href', '/contact')
     })
@@ -79,13 +79,13 @@ describe('Hero', () => {
 
     it('primary CTA has accent color styling', () => {
       render(<Hero />)
-      const primaryCta = screen.getByRole('link', { name: /view projects/i })
+      const primaryCta = screen.getByRole('link', { name: /explore my work/i })
       expect(primaryCta.className).toMatch(/btn-primary|bg-accent/)
     })
 
     it('secondary CTA has outline styling', () => {
       render(<Hero />)
-      const secondaryCta = screen.getByRole('link', { name: /contact me/i })
+      const secondaryCta = screen.getByRole('link', { name: /connect/i })
       expect(secondaryCta.className).toMatch(/btn-outline|border/)
     })
   })

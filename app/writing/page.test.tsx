@@ -28,7 +28,9 @@ describe('Writing Page', () => {
 
     render(<WritingPage />)
 
-    expect(screen.getByText(/thoughts/i)).toBeInTheDocument()
+    expect(
+      screen.getByText(/thoughts on product development, strategy, and technology/i)
+    ).toBeInTheDocument()
   })
 
   it('renders list of blog posts', () => {

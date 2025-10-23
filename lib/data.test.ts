@@ -35,7 +35,7 @@ describe('Project Data Utilities', () => {
       expect(project).toHaveProperty('title')
       expect(project).toHaveProperty('slug')
       expect(project).toHaveProperty('description')
-      expect(project).toHaveProperty('summary')
+      expect(project).toHaveProperty('detailedDescription') // Renamed from 'summary'
       expect(project).toHaveProperty('type')
       expect(project).toHaveProperty('status')
       expect(project).toHaveProperty('techStack')
