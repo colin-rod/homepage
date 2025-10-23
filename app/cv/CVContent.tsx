@@ -1,10 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { CVData, CVFilterType } from '@/lib/types'
+import { CV, CVFilterType } from '@/lib/types'
 
 interface CVContentProps {
-  cvData: CVData
+  cvData: CV
 }
 
 /**
@@ -46,13 +46,14 @@ export default function CVContent({ cvData }: CVContentProps) {
       </div>
 
       {/* Filter Buttons */}
-      <div className="mb-8">
+      <div className="mb-8" role="group" aria-label="Filter CV by focus area">
         <h3 className="text-sm font-semibold text-text mb-3">Filter by focus:</h3>
         <div className="flex flex-wrap gap-3">
           {filters.map((filter) => (
             <button
               key={filter.value}
               onClick={() => setActiveFilter(filter.value)}
+              aria-pressed={activeFilter === filter.value}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                 activeFilter === filter.value
                   ? 'bg-accent-warm text-white'
@@ -63,7 +64,7 @@ export default function CVContent({ cvData }: CVContentProps) {
             </button>
           ))}
         </div>
-        <p className="text-sm text-text-secondary mt-3">
+        <p className="text-sm text-text-secondary mt-3" aria-live="polite" aria-atomic="true">
           {activeFilter === 'all'
             ? 'Showing all experience'
             : `Showing ${activeFilter} experience (${filteredExperience.length} ${
@@ -79,12 +80,12 @@ export default function CVContent({ cvData }: CVContentProps) {
           Click below to open a print-optimized version. Use your browser&apos;s print function
           (Cmd/Ctrl+P) to save as PDF.
         </p>
-        <div className="flex flex-wrap gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           <a
             href="/cv/download?filter=all"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-outline"
+            className="btn btn-outline text-center"
           >
             Download Full CV
           </a>
@@ -92,7 +93,7 @@ export default function CVContent({ cvData }: CVContentProps) {
             href="/cv/download?filter=product"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-outline"
+            className="btn btn-outline text-center"
           >
             Product Focus
           </a>
@@ -100,7 +101,7 @@ export default function CVContent({ cvData }: CVContentProps) {
             href="/cv/download?filter=strategy"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-outline"
+            className="btn btn-outline text-center"
           >
             Strategy Focus
           </a>
@@ -108,7 +109,7 @@ export default function CVContent({ cvData }: CVContentProps) {
             href="/cv/download?filter=tech"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-outline"
+            className="btn btn-outline text-center"
           >
             Technical Focus
           </a>
@@ -121,9 +122,7 @@ export default function CVContent({ cvData }: CVContentProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {cvData.skills.map((skillCategory) => (
             <div key={skillCategory.category} className="card">
-              <h3 className="text-lg font-semibold text-primary mb-4">
-                {skillCategory.category}
-              </h3>
+              <h3 className="text-lg font-semibold text-primary mb-4">{skillCategory.category}</h3>
               <div className="flex flex-wrap gap-2">
                 {skillCategory.items.map((skill) => (
                   <span
@@ -211,9 +210,7 @@ export default function CVContent({ cvData }: CVContentProps) {
               <h3 className="text-xl font-bold text-primary mb-1">{edu.degree}</h3>
               <p className="text-lg text-text-secondary mb-2">{edu.institution}</p>
               <p className="text-sm text-text-secondary">{edu.year}</p>
-              {edu.description && (
-                <p className="text-text-secondary mt-3">{edu.description}</p>
-              )}
+              {edu.description && <p className="text-text-secondary mt-3">{edu.description}</p>}
             </div>
           ))}
         </div>
@@ -226,17 +223,17 @@ export default function CVContent({ cvData }: CVContentProps) {
           <p className="text-lg text-text-secondary mb-8">
             Get a customized version of my CV tailored to specific role types
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a href="/cv/download?filter=product" className="btn btn-primary">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            <a href="/cv/download?filter=product" className="btn btn-primary text-center">
               Download Product CV
             </a>
-            <a href="/cv/download?filter=strategy" className="btn btn-primary">
+            <a href="/cv/download?filter=strategy" className="btn btn-primary text-center">
               Download Strategy CV
             </a>
-            <a href="/cv/download?filter=tech" className="btn btn-primary">
+            <a href="/cv/download?filter=tech" className="btn btn-primary text-center">
               Download Technical CV
             </a>
-            <a href="/cv/download?filter=all" className="btn btn-secondary">
+            <a href="/cv/download?filter=all" className="btn btn-secondary text-center">
               Download Full CV
             </a>
           </div>

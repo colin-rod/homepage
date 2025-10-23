@@ -44,9 +44,11 @@ export default function Navigation() {
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-text"
             onClick={toggleMobileMenu}
-            aria-label="Toggle menu"
+            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
           >
-            <span className="sr-only">Toggle menu</span>
+            <span className="sr-only">{mobileMenuOpen ? 'Close menu' : 'Open menu'}</span>
             {mobileMenuOpen ? (
               <svg
                 className="h-6 w-6"
@@ -95,6 +97,7 @@ export default function Navigation() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.nav
+            id="mobile-menu"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}

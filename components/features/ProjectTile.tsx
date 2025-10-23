@@ -52,7 +52,7 @@ export default function ProjectTile({ project }: ProjectTileProps) {
         group
         card
         flex-shrink-0
-        w-80
+        w-72 sm:w-80
         h-80
         flex
         flex-col

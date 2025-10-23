@@ -61,9 +61,11 @@ export default function Swimlane({ title, icon, projects, description, index = 0
               snap-mandatory
               pb-4
               [&::-webkit-scrollbar]:hidden
+              touch-pan-x
             "
             style={{
               scrollbarWidth: 'none' /* Firefox */,
+              WebkitOverflowScrolling: 'touch' /* iOS smooth scrolling */,
             }}
           >
             {projects.map((project) => (

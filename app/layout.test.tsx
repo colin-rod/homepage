@@ -120,10 +120,26 @@ describe('RootLayout', () => {
       expect(body.props.className).toContain('text-text')
     })
 
+    it('should include skip-to-content link', () => {
+      const result = RootLayout({ children: <div>Test</div> })
+      const body = result.props.children
+      const bodyChildren = body.props.children
+
+      // Body should have multiple children (skip link + provider)
+      expect(Array.isArray(bodyChildren)).toBe(true)
+
+      // First child should be the skip link
+      const skipLink = bodyChildren[0]
+      expect(skipLink.type).toBe('a')
+      expect(skipLink.props.href).toBe('#main-content')
+      expect(skipLink.props.children).toBe('Skip to main content')
+    })
+
     it('should wrap content with PostHogProvider', () => {
       const result = RootLayout({ children: <div>Test</div> })
       const body = result.props.children
-      const provider = body.props.children
+      const bodyChildren = body.props.children
+      const provider = bodyChildren[1] // Provider is second child after skip link
 
       // Provider component type should be PostHogProvider (mocked)
       expect(provider.type).toBeDefined()
@@ -132,7 +148,8 @@ describe('RootLayout', () => {
     it('should include children within PostHogProvider', () => {
       const result = RootLayout({ children: <div>Test</div> })
       const body = result.props.children
-      const provider = body.props.children
+      const bodyChildren = body.props.children
+      const provider = bodyChildren[1] // Provider is second child after skip link
       const providerChildren = provider.props.children
 
       // Provider should have children
@@ -143,7 +160,8 @@ describe('RootLayout', () => {
       const testChild = <div>Test Content</div>
       const result = RootLayout({ children: testChild })
       const body = result.props.children
-      const provider = body.props.children
+      const bodyChildren = body.props.children
+      const provider = bodyChildren[1] // Provider is second child after skip link
       const providerChildren = provider.props.children
 
       // Second child should be the original children
@@ -159,7 +177,8 @@ describe('RootLayout', () => {
       )
       const result = RootLayout({ children: multipleChildren })
       const body = result.props.children
-      const provider = body.props.children
+      const bodyChildren = body.props.children
+      const provider = bodyChildren[1] // Provider is second child after skip link
       const providerChildren = provider.props.children
 
       // Children should be preserved

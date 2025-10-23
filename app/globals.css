@@ -4,25 +4,25 @@
 
 :root {
   /* Terracotta Midnight v2 Color Palette */
-  --color-primary: #20465B;
-  --color-primary-dark: #132C3D;
-  --color-primary-light: #2E6079;
+  --color-primary: #20465b;
+  --color-primary-dark: #132c3d;
+  --color-primary-light: #2e6079;
 
-  --color-accent-warm: #D3643E;
-  --color-accent-warm-dark: #A84E2D;
-  --color-accent-gold: #C38A27;
+  --color-accent-warm: #d3643e;
+  --color-accent-warm-dark: #a84e2d;
+  --color-accent-gold: #c38a27;
 
-  --color-bridge-sage: #7F9388;
+  --color-bridge-sage: #7f9388;
   --color-bridge-steel: #426377;
 
-  --color-bg: #FAF8F5;
-  --color-surface: #FFFFFF;
+  --color-bg: #faf8f5;
+  --color-surface: #ffffff;
 
   --color-text: #222426;
-  --color-text-secondary: #5A5F61;
-  --color-text-light: #F7F9FA;
+  --color-text-secondary: #5a5f61;
+  --color-text-light: #f7f9fa;
 
-  --color-divider: #E3E1DD;
+  --color-divider: #e3e1dd;
 }
 
 @layer base {
@@ -32,6 +32,19 @@
 
   body {
     @apply font-sans antialiased;
+  }
+
+  /* Enhanced focus styles for keyboard navigation */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent-warm;
+  }
+
+  a:focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent-warm rounded-sm;
+  }
+
+  button:focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent-warm;
   }
 
   h1 {
@@ -111,21 +124,21 @@
 @layer utilities {
   /* Custom gradient utilities */
   .gradient-hero {
-    background: linear-gradient(120deg, #132C3D 0%, #20465B 50%, #D3643E 100%);
+    background: linear-gradient(120deg, #132c3d 0%, #20465b 50%, #d3643e 100%);
   }
 
   .gradient-cta {
-    background: linear-gradient(90deg, #D3643E 0%, #C38A27 100%);
+    background: linear-gradient(90deg, #d3643e 0%, #c38a27 100%);
   }
 
   .gradient-timeline {
-    background: linear-gradient(90deg, #C38A27 0%, #D3643E 50%, #426377 100%);
+    background: linear-gradient(90deg, #c38a27 0%, #d3643e 50%, #426377 100%);
   }
 
   /* Text gradient */
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(90deg, #D3643E 0%, #C38A27 100%);
+    background-image: linear-gradient(90deg, #d3643e 0%, #c38a27 100%);
   }
 }
 

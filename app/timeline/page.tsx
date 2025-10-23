@@ -50,7 +50,7 @@ export default function TimelinePage() {
     <>
       <Navigation />
       <PageTransition>
-        <main className="py-24 sm:py-32">
+        <main id="main-content" className="py-24 sm:py-32">
           <div className="mx-auto max-w-4xl px-6 lg:px-8">
             {/* Page Header */}
             <div className="mb-16">
@@ -67,9 +67,12 @@ export default function TimelinePage() {
             {/* Timeline */}
             <div className="space-y-8">
               {sortedEvents.map((event) => (
-                <div key={event.id} className="relative pl-8 border-l-2 border-divider">
+                <div key={event.id} className="relative pl-6 sm:pl-8 border-l-2 border-divider">
                   {/* Timeline Dot */}
-                  <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-accent-warm border-2 border-background" />
+                  <div
+                    className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-accent-warm border-2 border-background"
+                    aria-hidden="true"
+                  />
 
                   {/* Event Card */}
                   <div className="card mb-4">

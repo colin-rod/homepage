@@ -22,7 +22,7 @@ export default function AboutPage() {
     <>
       <Navigation />
       <PageTransition>
-        <main className="py-24 sm:py-32">
+        <main id="main-content" className="py-24 sm:py-32">
           <div className="mx-auto max-w-4xl px-6 lg:px-8">
             {/* Page Header */}
             <div className="mb-16">
