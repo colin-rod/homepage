@@ -128,3 +128,22 @@ export interface BlogPost {
   tags: string[]
   featured?: boolean
 }
+
+// ============================================================================
+// Uses Page Types
+// ============================================================================
+
+export interface UsesItem {
+  name: string
+  details?: string
+  link?: string
+  context: string
+  tags?: string[]
+}
+
+export interface UsesCategory {
+  id: string
+  title: string
+  description?: string
+  items: UsesItem[]
+}
