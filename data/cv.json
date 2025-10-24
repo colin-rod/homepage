@@ -1,36 +1,194 @@
 {
-  "summary": "Professional summary will be added here",
+  "summary": "Senior Product Leader with 15+ years driving product vision, team leadership, and operational excellence in quick commerce, e-commerce, and marketplace platforms. Proven ability to launch and scale operations from zero to $1M+ ARR, build high-performing cross-functional teams of 50+ people, and deliver 40% cost reductions through data-driven product innovation and strategic execution.",
   "skills": [
     {
-      "category": "Product",
-      "items": ["Product Management", "Strategy", "Roadmap Planning"]
+      "category": "Product & Strategy",
+      "items": [
+        "Product Management",
+        "Strategy",
+        "Roadmap Planning",
+        "Product Analytics",
+        "A/B Testing",
+        "Feature Flagging"
+      ]
     },
     {
-      "category": "Technical",
-      "items": ["TypeScript", "React", "Next.js"]
+      "category": "Development",
+      "items": [
+        "TypeScript",
+        "React",
+        "Next.js",
+        "Visual Studio Code",
+        "Git & GitHub",
+        "API Development"
+      ]
+    },
+    {
+      "category": "DevOps & Infrastructure",
+      "items": ["Docker", "Vercel", "CI/CD Pipelines", "Supabase", "Database Management"]
+    },
+    {
+      "category": "API & Integration",
+      "items": [
+        "Postman",
+        "API Testing",
+        "Stripe Payments",
+        "Twilio SMS",
+        "Resend Email",
+        "SendGrid"
+      ]
+    },
+    {
+      "category": "Design & Prototyping",
+      "items": ["Figma", "Canva", "UI/UX Design", "Wireframing", "Design Systems"]
+    },
+    {
+      "category": "Analytics & Monitoring",
+      "items": ["PostHog", "Sentry", "LogRocket", "Tableau", "Google Sheets", "Data Visualization"]
+    },
+    {
+      "category": "Productivity & Collaboration",
+      "items": ["Notion", "Linear", "Google Calendar", "Documentation", "Project Management"]
     }
   ],
   "experience": [
     {
-      "id": "example-exp",
-      "title": "Example Role",
-      "company": "Example Company",
+      "id": "independent-pm-dev-2024",
+      "title": "Independent Product Manager & Full-Stack Developer",
+      "company": "Independent",
       "location": "Remote",
       "startDate": "2024-01-01",
       "endDate": null,
-      "description": "Role description will be added here",
+      "description": "Focused on building and validating independent product ideas end-to-end, combining product strategy, full-stack engineering, and fast iteration cycles. Emphasised user-first design, rapid experimentation, and shipping real software.",
       "highlights": [
-        "Achievement 1",
-        "Achievement 2"
+        "TribeApp - Privacy-First Family & Community Media Sharing Platform: Defined product vision and MVP for secure platform enabling families and local communities to store and share media; implemented authentication and privacy features using Supabase RLS and secure storage; built responsive prototype in Next.js with real-time flows (sign-up, sharing, permissions) and positioned for future scaling",
+        "BabyPool - Collaborative Baby Name & Guessing Game App: Created mobile-first product for comparing, voting, and gamifying baby name guesses with family and friends; designed onboarding, invitation, and leaderboard flows to drive retention; ran multiple prototype iterations with real users, refining UX and scoring rules based on feedback",
+        "Technical Stack: Full-stack development using React, Next.js, TypeScript, Tailwind CSS; Backend & data architecture with Supabase (Postgres, Auth, Storage, Realtime), deployed via Vercel/GitHub Actions; Built features and prototypes using OpenAI APIs, integrated external APIs, and ran lightweight A/B tests to measure user demand"
+      ],
+      "tags": ["product", "tech", "strategy"]
+    },
+    {
+      "id": "antler-eir-2023",
+      "title": "Entrepreneur in Residence",
+      "company": "Antler",
+      "location": "Germany",
+      "startDate": "2023-01-01",
+      "endDate": "2024-12-31",
+      "description": "Led end-to-end product development from ideation to functional MVP across fintech, retail, and sustainability verticals, conducting go-to-market analyses and customer discovery.",
+      "highlights": [
+        "Conducted extensive customer discovery to understand pain points, designed product mockups in Figma, and built business models evaluating market opportunity and go-to-market strategies",
+        "Collaborated with technical co-founders and developers to build and launch functional MVPs, securing engagement with VCs for pre-seed funding evaluation"
       ],
       "tags": ["product", "strategy"]
+    },
+    {
+      "id": "doordash-head-merchant-de-2021",
+      "title": "Head of Merchant Services DE",
+      "company": "DoorDash/Wolt",
+      "location": "Germany",
+      "startDate": "2021-01-01",
+      "endDate": "2023-12-31",
+      "description": "American On-Demand Delivery Platform • 16,000 employees • US$ 6B revenue. Launched DoorDash's Germany operations as the first employee in the country, spearheading localisation of operations, content, and product for successful market entry.",
+      "highlights": [
+        "Strategic Leadership & Market Entry: Launched DoorDash's Germany operations as first employee, localizing operations, content, and product for successful market entry. Scaled business to >$1M ARR within three months through strategic planning, go-to-market execution, and post-launch performance analyses",
+        "Team Building & Leadership: Built and led a high-performing team of 50 international managers (30 employees and 150 external contractors), providing direction, mentorship, and support through rapid growth phase and merger with Wolt",
+        "Change Management: Led team through merger and acquisition, implementing change management initiatives while developing an execution strategies playbook that improved operational efficiencies by 20% in 4 months",
+        "Product & Systems: Developed and deployed product solutions via CRM systems (Salesforce, Pipedrive), project management systems (Monday.com, JIRA, Asana), and API integrations (OpenAI) using SQL (Snowflake, Looker, Tableau), API interfaces, and low-code tooling",
+        "Data-Driven Product Development: Architected merchant discovery and ranking systems optimising restaurant visibility in customer app, collaborating with ML engineers to define ranking signals. Improved merchant discoverability contributed to a 20% increase in trial and repeat order satisfaction scores",
+        "AI & Automation: Developed an AI-assisted onboarding process using OpenAI API integrations with Monday.com, reducing merchant touchpoints by 50%, improving turnaround time by 15%",
+        "Performance Marketing & Growth: Owned merchant acquisition, retention, portfolio management, and discount management, achieving 5% increase in conversion rates while reducing operational overhead by 30%",
+        "Campaign Management: Managed communications across 5,000+ suppliers over 50+ campaigns (Iterable), engaging with 5,000+ suppliers. Conducted A/B testing to optimise performance, achieving 8% increase in conversions and opens",
+        "Financial & Operational Management: Owned P&L responsibility (>$1M annual), driving sustainable growth and profitability for the department through strategic resource allocation and performance optimisation. Led strategic planning and analysis, including retention forecasting and budgeting, collaborating with local finance teams, fiscal leadership, and department heads to ensure alignment and secure stakeholder buy-in. Led end-to-end contract review process, including supplier onboarding, sourcing, and contract negotiations, resulting in a 12% reduction in operational costs across service provider agreements. Executed account renewals, achieving multi-year cost savings of $700K",
+        "Product Operations & Systems: Established growth strategies for enterprise and SMB merchants, defined KPIs, and developed dashboards and reporting, providing a smooth and efficient process for new partners. Automated internal processes, supporting merchant operations, ensuring seamless integration across operational, commercial, customer service, and CRM communication channels. Managed creation of payment accounts (Stripe) and implemented card-fraud measures, reducing fraud incidents by 45% while maintaining secure transaction processing. Established onboarding operations for merchants, defined KPIs, and developed reporting to provide a smooth and efficient process for new partners",
+        "Strategic Planning & Execution: Developed long-term strategies and short-term action plans to achieve company objectives by balancing immediate needs with scalable product development. Leveraged low-code tools for rapid implementation, managing strategic experiments, and created actionable roadmaps. Established KPIs and implemented the OKR framework for the team, monitoring progress against targets and executing corrective actions to ensure alignment with strategic objectives and performance optimisation. Led Germany's geographic expansion opportunities, and maintained data hygiene and pipelines in Salesforce and Monday.com",
+        "Team Development & Performance Management: Developed and implemented team management systems, including KPI-linked performance frameworks, career progression paths, role definitions, performance-based incentives, standardised training guides, and partnerships with vendors to scale capacity while maintaining quality"
+      ],
+      "tags": ["product", "strategy", "tech"]
+    },
+    {
+      "id": "wayfair-strategy-ops-2018",
+      "title": "Strategy & Operations Manager",
+      "company": "Wayfair DE",
+      "location": "Germany",
+      "startDate": "2018-01-01",
+      "endDate": "2021-12-31",
+      "description": "American e-commerce company • 16,000 employees • US$ 9B revenue. Led strategic product leadership and operations management.",
+      "highlights": [
+        "Strategic Product Leadership: Spearheaded the Customer Experience First program from inception to global rollout, using predictive analytics and machine learning models. Reduced incident rates by 15% and return rates by 30%, resulting in $40M cost reduction. Managed team of 5 analysts, including hiring, onboarding, executing strategic projects, building source of truth data tables in SQL and BigQuery, developing dashboards in Tableau, Power BI and Data Studio, and evaluating opportunities across operations, account management, and finance",
+        "Product & Data Systems: Engineered customer ranking using LLMs & JS, designing dimensional models supporting product discovery, category performance, and customer navigation analytics. Analysed customer navigation patterns and flows, identifying optimisation opportunities for category browsing and improving conversion performance. Developed real-time dashboards for C-level leadership, providing insights into product discoverability, merchandising performance, and operational KPIs",
+        "Operations & Process Excellence: Implemented Agile Project Management principles and tools (JIRA, Asana,) including program roadmaps, resource planning, workshops, project documentation, and risk assessments. Executed merchant training rollouts to 5,000+ suppliers with 100+ analysts, providing mentorship, documentation, and training workshops for usage and best practices. Developed big data and AI machine learning models for prediction, optimisation, space reduction, and demand forecasting"
+      ],
+      "tags": ["product", "strategy", "tech"]
+    },
+    {
+      "id": "amazon-pathways-ops-2017",
+      "title": "Pathways Operations Manager",
+      "company": "Amazon DE",
+      "location": "Germany",
+      "startDate": "2017-01-01",
+      "endDate": "2018-12-31",
+      "description": "American e-commerce and cloud computing company • 750,000 employees • US$ 250B revenue. Led operations leadership at the fulfillment centre.",
+      "highlights": [
+        "Operations Leadership: Managed operations at the fulfilment centre, leading a team of 100 employees, including 50 direct reports. Analysed space utilisation and capacity efficiency by 16% through data-driven process optimization",
+        "Process Improvement: Designed and implemented performance monitoring tools using Minitab, increasing productivity and reducing costs",
+        "Reporting & Analytics: Delivered daily reports to senior management, identifying obstacles and action plans"
+      ],
+      "tags": ["strategy", "operations"]
+    },
+    {
+      "id": "ohb-project-manager-2013",
+      "title": "Project Manager, Telecom Payloads",
+      "company": "OHB Systems AG",
+      "location": "Germany",
+      "startDate": "2013-01-01",
+      "endDate": "2016-12-31",
+      "description": "European developer and manufacturer of space systems • 2,000 employees • €US800M revenue. Led project and product leadership.",
+      "highlights": [
+        "Project & Product Leadership: Oversaw spacecraft design and development for communications payloads on satellites valued at US$120M for the European Space Agency",
+        "Stakeholder Management: Collaborated with a multinational network of customers, subcontractors, and internal design teams; established clear baselines and managed complex project timelines",
+        "Risk Management: Prepared monthly design and schedule reviews for stakeholders, identifying technical challenges, forecasting schedule impacts, and highlighting risk mitigation activities",
+        "Process Optimization: Initiated program-wide optimisation process resulting in 10% schedule improvement of mission-critical deliverables and 3-month launch date advancement"
+      ],
+      "tags": ["strategy", "operations"]
+    },
+    {
+      "id": "comdev-senior-engineer-2007",
+      "title": "Senior Member of Technical Staff",
+      "company": "Com Dev Intl Ltd. (Now Honeywell)",
+      "location": "Canada/Brazil",
+      "startDate": "2007-01-01",
+      "endDate": "2013-12-31",
+      "description": "Global satellite technology and space sciences company • 1,200 employees • US$185M revenue. Led engineering leadership and product development.",
+      "highlights": [
+        "Engineering Leadership & Product Development: Managed programs valued at $50M each, coordinating multidisciplinary teams and implementing processes ensuring on-time project execution",
+        "Team Leadership: Supervised and mentored a team of 5 engineers, resulting in a 40% reduction in costs and a 200% improvement in team turnaround time",
+        "Product Innovation: Led development of next-generation spacecraft components, reducing manufacturing costs by 20% and delivery time by 15%",
+        "AI & Optimization: Implemented an AI-based neural network algorithm, reducing design time by over 800%, designing components currently used in 20% of geostationary satellites worldwide"
+      ],
+      "tags": ["tech", "strategy"]
     }
   ],
   "education": [
     {
-      "degree": "Example Degree",
-      "institution": "Example University",
-      "year": 2020
+      "degree": "MBA",
+      "institution": "INSEAD",
+      "year": 2017,
+      "location": "Singapore/France",
+      "description": "Class of July 2017. GMAT 720 (92nd percentile). Member of Consulting Club; Technology, Media & Telecommunications Club"
+    },
+    {
+      "degree": "B. Eng, Electrical",
+      "institution": "McMaster University",
+      "year": 2007,
+      "location": "Canada",
+      "description": "Awarded Dean's Honour List 2005 & 2007"
+    },
+    {
+      "degree": "High School Diploma",
+      "institution": "St. Mary's Catholic High School",
+      "year": 2003,
+      "location": "Dubai, UAE",
+      "description": ""
     }
   ],
   "projects": ["example-project"]
