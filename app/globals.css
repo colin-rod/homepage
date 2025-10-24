@@ -140,6 +140,18 @@
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(90deg, #d3643e 0%, #c38a27 100%);
   }
+
+  /* Pulse highlight animation for search results */
+  @keyframes pulse-highlight {
+    0% {
+      background-color: rgb(251 191 36 / 0.3); /* amber-100 equivalent */
+      border-color: #d3643e;
+    }
+    100% {
+      background-color: transparent;
+      border-color: #e3e1dd; /* divider */
+    }
+  }
 }
 
 /* Print-optimized CV styles */
