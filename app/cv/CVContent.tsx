@@ -116,7 +116,7 @@ export default function CVContent({ cvData }: CVContentProps) {
   return (
     <div className="mx-auto max-w-4xl px-6 lg:px-8">
       {/* Page Header */}
-      <FadeIn>
+      <FadeIn threshold={0.05}>
         <div className="mb-16">
           <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl mb-6">
             Curriculum Vitae
@@ -126,7 +126,7 @@ export default function CVContent({ cvData }: CVContentProps) {
       </FadeIn>
 
       {/* Filter Buttons */}
-      <FadeIn delay={0.1}>
+      <FadeIn delay={0.1} threshold={0.05}>
         <div className="mb-8" role="group" aria-label="Filter CV by focus area">
           <h3 className="text-sm font-semibold text-text mb-3">Filter by focus:</h3>
           <div className="flex flex-wrap gap-3">
@@ -174,7 +174,7 @@ export default function CVContent({ cvData }: CVContentProps) {
       </FadeIn>
 
       {/* Download CV Buttons */}
-      <FadeIn delay={0.2}>
+      <FadeIn delay={0.2} threshold={0.05}>
         <div className="mb-12 card bg-accent-warm/5 border-accent-warm/20">
           <h3 className="text-sm font-semibold text-text mb-3">Download as PDF:</h3>
           <p className="text-sm text-text-secondary mb-4">
@@ -219,7 +219,7 @@ export default function CVContent({ cvData }: CVContentProps) {
       </FadeIn>
 
       {/* Skills Section */}
-      <FadeIn delay={0.3}>
+      <FadeIn delay={0.3} threshold={0.05}>
         <section className="mb-16">
           <h2 className="text-2xl font-bold text-text mb-8">Skills & Expertise</h2>
           <motion.div
@@ -227,7 +227,7 @@ export default function CVContent({ cvData }: CVContentProps) {
             variants={staggerContainerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.05 }}
           >
             {cvData.skills.map((skillCategory) => (
               <motion.div key={skillCategory.category} variants={staggerItemVariants}>
@@ -244,7 +244,7 @@ export default function CVContent({ cvData }: CVContentProps) {
       </FadeIn>
 
       {/* Experience Section */}
-      <FadeIn delay={0.4}>
+      <FadeIn delay={0.04} threshold={0.05}>
         <section className="mb-16">
           <h2 className="text-2xl font-bold text-text mb-8">Professional Experience</h2>
           <AnimatePresence mode="wait">
@@ -295,7 +295,7 @@ export default function CVContent({ cvData }: CVContentProps) {
       </FadeIn>
 
       {/* Education Section */}
-      <FadeIn delay={0.5}>
+      <FadeIn delay={0.05} threshold={0.05}>
         <section className="mb-16">
           <h2 className="text-2xl font-bold text-text mb-8">Education</h2>
           <motion.div
@@ -303,7 +303,7 @@ export default function CVContent({ cvData }: CVContentProps) {
             variants={staggerContainerVariants}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.05 }}
           >
             {cvData.education.map((edu, index) => (
               <motion.div key={index} variants={staggerItemVariants}>
@@ -321,7 +321,7 @@ export default function CVContent({ cvData }: CVContentProps) {
       </FadeIn>
 
       {/* CTA Section */}
-      <FadeIn delay={0.6}>
+      <FadeIn delay={0.06} threshold={0.05}>
         <section className="border-t border-divider pt-12">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-text mb-4">Download CV</h2>

@@ -26,7 +26,7 @@ export default function CVPage() {
     <>
       <Navigation />
       <PageTransition>
-        <main id="main-content" className="py-24 sm:py-32">
+        <main id="main-content" className="pt-12 pb-24 sm:pt-16 sm:pb-32">
           <CVContent cvData={cv} />
         </main>
       </PageTransition>
