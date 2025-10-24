@@ -69,7 +69,7 @@ test.describe('CV Main Page', () => {
     // Should have experience entries
     const main = page.getByRole('main')
     const content = await main.textContent()
-    expect(content).toMatch(/\d{4}/)  // Should have years
+    expect(content).toMatch(/\d{4}/) // Should have years
   })
 
   test('should display education section', async ({ page }) => {
@@ -121,7 +121,9 @@ test.describe('CV Filtering', () => {
     await expect(page.getByText(/showing tech experience/i)).toBeVisible()
   })
 
-  test('should return to all experience when clicking All filter after filtering', async ({ page }) => {
+  test('should return to all experience when clicking All filter after filtering', async ({
+    page,
+  }) => {
     // First filter by Product
     await page.getByRole('button', { name: /^product$/i }).click()
     await expect(page.getByText(/showing product experience/i)).toBeVisible()
@@ -303,7 +305,10 @@ test.describe('CV Accessibility', () => {
     await page.goto('/cv')
 
     // Get only the filter buttons (not mobile menu buttons which may have no text)
-    const filterButtons = await page.locator('button').filter({ hasText: /all|product|strategy|technical/i }).all()
+    const filterButtons = await page
+      .locator('button')
+      .filter({ hasText: /all|product|strategy|technical/i })
+      .all()
 
     for (const button of filterButtons) {
       const text = await button.textContent()
@@ -392,5 +397,187 @@ test.describe('CV Navigation Flow', () => {
     // Go back
     await page.goBack()
     await expect(page).toHaveURL('/cv')
+  })
+})
+
+test.describe('CV Expandable Role Details (CRO-671)', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/cv')
+  })
+
+  test('should render all roles in condensed view by default', async ({ page }) => {
+    // Wait for the Professional Experience section to load
+    await expect(page.getByRole('heading', { name: /professional experience/i })).toBeVisible()
+
+    // Look for "+X more" indicators showing roles are condensed
+    const moreIndicators = page.getByText(/\+\d+ more/i)
+    const count = await moreIndicators.count()
+
+    // Should have at least one role with condensed view (roles with >3 highlights)
+    expect(count).toBeGreaterThan(0)
+  })
+
+  test('should expand role to show all highlights when card is clicked', async ({ page }) => {
+    // Wait for experience section
+    await expect(page.getByRole('heading', { name: /professional experience/i })).toBeVisible()
+
+    // Find an expandable role card (with aria-expanded attribute)
+    const expandableCard = page.getByRole('button', { name: /expand to show all/i }).first()
+
+    if (await expandableCard.isVisible()) {
+      // Verify it's collapsed initially
+      await expect(expandableCard).toHaveAttribute('aria-expanded', 'false')
+
+      // Check for "+X more" text before expanding
+      const initialText = await expandableCard.textContent()
+      expect(initialText).toMatch(/\+\d+ more/i)
+
+      // Click to expand
+      await expandableCard.click()
+
+      // Verify it's now expanded
+      await expect(expandableCard).toHaveAttribute('aria-expanded', 'true')
+
+      // The "+X more" indicator should not be visible or changed
+      const expandedText = await expandableCard.textContent()
+      expect(expandedText).not.toMatch(/\+\d+ more/i)
+    }
+  })
+
+  test('should collapse role when expanded card is clicked again', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: /professional experience/i })).toBeVisible()
+
+    const expandableCard = page.getByRole('button', { name: /expand to show all/i }).first()
+
+    if (await expandableCard.isVisible()) {
+      // Expand
+      await expandableCard.click()
+      await expect(expandableCard).toHaveAttribute('aria-expanded', 'true')
+
+      // Collapse
+      await expandableCard.click()
+      await expect(expandableCard).toHaveAttribute('aria-expanded', 'false')
+
+      // "+X more" should be visible again
+      const collapsedText = await expandableCard.textContent()
+      expect(collapsedText).toMatch(/\+\d+ more/i)
+    }
+  })
+
+  test('should allow multiple cards to be expanded independently', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: /professional experience/i })).toBeVisible()
+
+    const expandableCards = page.getByRole('button', { name: /expand to show all/i })
+    const count = await expandableCards.count()
+
+    if (count >= 2) {
+      const firstCard = expandableCards.nth(0)
+      const secondCard = expandableCards.nth(1)
+
+      // Expand first card
+      await firstCard.click()
+      await expect(firstCard).toHaveAttribute('aria-expanded', 'true')
+
+      // Expand second card
+      await secondCard.click()
+      await expect(secondCard).toHaveAttribute('aria-expanded', 'true')
+
+      // Verify first card is still expanded
+      await expect(firstCard).toHaveAttribute('aria-expanded', 'true')
+    }
+  })
+
+  test('should reset all expand states when filter is changed', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: /professional experience/i })).toBeVisible()
+
+    // Find an expandable card
+    const expandableCard = page.getByRole('button', { name: /expand to show all/i }).first()
+
+    if (await expandableCard.isVisible()) {
+      // Expand the card
+      await expandableCard.click()
+      await expect(expandableCard).toHaveAttribute('aria-expanded', 'true')
+
+      // Change filter (e.g., click "Product")
+      await page.getByRole('button', { name: /^product$/i }).click()
+
+      // Wait for filter to apply
+      await expect(page.getByText(/showing product experience/i)).toBeVisible()
+
+      // All cards should be collapsed again
+      // Re-query for expandable cards after filter change
+      const cardsAfterFilter = page.getByRole('button', { name: /expand to show all/i })
+      const countAfter = await cardsAfterFilter.count()
+
+      if (countAfter > 0) {
+        // Check that the first card (which may be different now) is collapsed
+        const firstCardAfterFilter = cardsAfterFilter.first()
+        await expect(firstCardAfterFilter).toHaveAttribute('aria-expanded', 'false')
+      }
+    }
+  })
+
+  test('should support keyboard navigation for expanding/collapsing', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: /professional experience/i })).toBeVisible()
+
+    const expandableCard = page.getByRole('button', { name: /expand to show all/i }).first()
+
+    if (await expandableCard.isVisible()) {
+      // Focus the card
+      await expandableCard.focus()
+
+      // Press Enter to expand
+      await page.keyboard.press('Enter')
+      await expect(expandableCard).toHaveAttribute('aria-expanded', 'true')
+
+      // Press Space to collapse
+      await page.keyboard.press('Space')
+      await expect(expandableCard).toHaveAttribute('aria-expanded', 'false')
+    }
+  })
+
+  test('should work on mobile viewport', async ({ page }) => {
+    // Set mobile viewport
+    await page.setViewportSize({ width: 375, height: 667 })
+
+    await page.goto('/cv')
+    await expect(page.getByRole('heading', { name: /professional experience/i })).toBeVisible()
+
+    // Find expandable cards
+    const expandableCard = page.getByRole('button', { name: /expand to show all/i }).first()
+
+    if (await expandableCard.isVisible()) {
+      // Tap to expand (same as click on mobile)
+      await expandableCard.tap()
+      await expect(expandableCard).toHaveAttribute('aria-expanded', 'true')
+
+      // Tap again to collapse
+      await expandableCard.tap()
+      await expect(expandableCard).toHaveAttribute('aria-expanded', 'false')
+    }
+  })
+
+  test('should animate expand/collapse smoothly without layout shift', async ({ page }) => {
+    await expect(page.getByRole('heading', { name: /professional experience/i })).toBeVisible()
+
+    const expandableCard = page.getByRole('button', { name: /expand to show all/i }).first()
+
+    if (await expandableCard.isVisible()) {
+      // Get initial bounding box
+      const initialBox = await expandableCard.boundingBox()
+
+      // Expand
+      await expandableCard.click()
+      await page.waitForTimeout(300) // Wait for animation to complete
+
+      // Get expanded bounding box
+      const expandedBox = await expandableCard.boundingBox()
+
+      // Card should not have shifted horizontally (x position should be same or very close)
+      expect(Math.abs((initialBox?.x || 0) - (expandedBox?.x || 0))).toBeLessThan(5)
+
+      // Height should have increased
+      expect(expandedBox?.height || 0).toBeGreaterThan(initialBox?.height || 0)
+    }
   })
 })

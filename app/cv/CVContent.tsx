@@ -1,7 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { CV, CVFilterType } from '@/lib/types'
+import { expandableCardVariants } from '@/components/animations/variants'
+import { usePostHog } from 'posthog-js/react'
 
 interface CVContentProps {
   cvData: CV
@@ -10,10 +13,18 @@ interface CVContentProps {
 /**
  * CV Content Component (Client)
  *
- * Handles filtering and display of CV content
+ * Handles filtering and display of CV content with expandable role cards
  */
 export default function CVContent({ cvData }: CVContentProps) {
   const [activeFilter, setActiveFilter] = useState<CVFilterType>('all')
+  const [expandedRoles, setExpandedRoles] = useState<Set<string>>(new Set())
+  const shouldReduceMotion = useReducedMotion()
+  const posthog = usePostHog()
+
+  // Reset expanded roles when filter changes
+  useEffect(() => {
+    setExpandedRoles(new Set())
+  }, [activeFilter])
 
   // Helper function to format dates
   const formatDate = (dateString: string | null | undefined): string => {
@@ -27,6 +38,38 @@ export default function CVContent({ cvData }: CVContentProps) {
     activeFilter === 'all'
       ? cvData.experience
       : cvData.experience.filter((exp) => exp.tags.includes(activeFilter))
+
+  // Toggle role expansion with PostHog tracking
+  const handleToggleRole = (roleId: string, roleName: string) => {
+    const newExpanded = new Set(expandedRoles)
+    const isExpanding = !newExpanded.has(roleId)
+
+    if (isExpanding) {
+      newExpanded.add(roleId)
+      posthog?.capture('cv_role_expanded', {
+        role_id: roleId,
+        role_name: roleName,
+        filter: activeFilter,
+      })
+    } else {
+      newExpanded.delete(roleId)
+      posthog?.capture('cv_role_collapsed', {
+        role_id: roleId,
+        role_name: roleName,
+        filter: activeFilter,
+      })
+    }
+
+    setExpandedRoles(newExpanded)
+  }
+
+  // Keyboard handler for accessibility
+  const handleKeyDown = (e: React.KeyboardEvent, roleId: string, roleName: string) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      handleToggleRole(roleId, roleName)
+    }
+  }
 
   const filters: { label: string; value: CVFilterType }[] = [
     { label: 'All', value: 'all' },
@@ -149,54 +192,134 @@ export default function CVContent({ cvData }: CVContentProps) {
           </div>
         ) : (
           <div className="space-y-8">
-            {filteredExperience.map((exp) => (
-              <div key={exp.id} className="card">
-                {/* Position Header */}
-                <div className="mb-4">
-                  <h3 className="text-xl font-bold text-primary mb-1">{exp.title}</h3>
-                  <p className="text-lg text-text-secondary">
-                    {exp.company} • {exp.location}
-                  </p>
-                  <p className="text-sm text-text-secondary mt-1">
-                    {formatDate(exp.startDate)} – {formatDate(exp.endDate)}
-                  </p>
-                </div>
+            {filteredExperience.map((exp) => {
+              const isExpanded = expandedRoles.has(exp.id)
+              const highlightCount = exp.highlights?.length || 0
+              const condensedCount = 3
+              const hasMoreHighlights = highlightCount > condensedCount
+              const visibleHighlights = isExpanded
+                ? exp.highlights
+                : exp.highlights?.slice(0, condensedCount)
+              const hiddenHighlights = exp.highlights?.slice(condensedCount)
+              const remainingCount = highlightCount - condensedCount
 
-                {/* Description */}
-                <p className="text-text-secondary mb-4">{exp.description}</p>
+              return (
+                <div
+                  key={exp.id}
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={isExpanded}
+                  aria-label={
+                    isExpanded
+                      ? `Collapse ${exp.title} at ${exp.company}`
+                      : `Expand to show all ${highlightCount} achievements for ${exp.title} at ${exp.company}`
+                  }
+                  onClick={() => handleToggleRole(exp.id, `${exp.title} at ${exp.company}`)}
+                  onKeyDown={(e) => handleKeyDown(e, exp.id, `${exp.title} at ${exp.company}`)}
+                  className={`card transition-all duration-200 ${
+                    hasMoreHighlights
+                      ? 'cursor-pointer hover:border-accent-warm focus:outline-none focus:ring-2 focus:ring-accent-warm focus:ring-offset-2'
+                      : ''
+                  }`}
+                >
+                  {/* Position Header */}
+                  <div className="mb-4">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <h3 className="text-xl font-bold text-primary mb-1">{exp.title}</h3>
+                        <p className="text-lg text-text-secondary">
+                          {exp.company} • {exp.location}
+                        </p>
+                        <p className="text-sm text-text-secondary mt-1">
+                          {formatDate(exp.startDate)} – {formatDate(exp.endDate)}
+                        </p>
+                      </div>
+                      {hasMoreHighlights && (
+                        <div className="flex-shrink-0">
+                          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-accent-warm/10 text-accent-warm">
+                            {isExpanded ? 'Click to collapse' : `+${remainingCount} more`}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
 
-                {/* Highlights */}
-                {exp.highlights && exp.highlights.length > 0 && (
-                  <div>
-                    <h4 className="text-sm font-semibold text-text uppercase mb-3">
-                      Key Achievements
-                    </h4>
-                    <ul className="space-y-2">
-                      {exp.highlights.map((highlight, index) => (
-                        <li key={index} className="flex items-start">
-                          <span className="text-accent-warm mr-2">•</span>
-                          <span className="text-text-secondary">{highlight}</span>
-                        </li>
+                  {/* Description */}
+                  <p className="text-text-secondary mb-4">{exp.description}</p>
+
+                  {/* Highlights */}
+                  {exp.highlights && exp.highlights.length > 0 && (
+                    <div>
+                      <h4 className="text-sm font-semibold text-text uppercase mb-3">
+                        Key Achievements
+                      </h4>
+                      <ul className="space-y-2">
+                        {/* Always visible highlights (first 3) */}
+                        {visibleHighlights?.map((highlight, index) => (
+                          <li key={index} className="flex items-start">
+                            <span className="text-accent-warm mr-2">•</span>
+                            <span className="text-text-secondary">{highlight}</span>
+                          </li>
+                        ))}
+
+                        {/* Expandable highlights (remaining) */}
+                        {hasMoreHighlights && !shouldReduceMotion && (
+                          <AnimatePresence initial={false}>
+                            {isExpanded && hiddenHighlights && (
+                              <motion.div
+                                initial="collapsed"
+                                animate="expanded"
+                                exit="collapsed"
+                                variants={expandableCardVariants}
+                              >
+                                {hiddenHighlights.map((highlight, index) => (
+                                  <li
+                                    key={condensedCount + index}
+                                    className="flex items-start mt-2"
+                                  >
+                                    <span className="text-accent-warm mr-2">•</span>
+                                    <span className="text-text-secondary">{highlight}</span>
+                                  </li>
+                                ))}
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        )}
+
+                        {/* Fallback for reduced motion - no animation */}
+                        {hasMoreHighlights &&
+                          shouldReduceMotion &&
+                          isExpanded &&
+                          hiddenHighlights && (
+                            <>
+                              {hiddenHighlights.map((highlight, index) => (
+                                <li key={condensedCount + index} className="flex items-start">
+                                  <span className="text-accent-warm mr-2">•</span>
+                                  <span className="text-text-secondary">{highlight}</span>
+                                </li>
+                              ))}
+                            </>
+                          )}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Tags */}
+                  {exp.tags && exp.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-divider">
+                      {exp.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-xs px-2 py-1 rounded bg-accent-warm/10 text-accent-warm"
+                        >
+                          {tag}
+                        </span>
                       ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Tags */}
-                {exp.tags && exp.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t border-divider">
-                    {exp.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs px-2 py-1 rounded bg-accent-warm/10 text-accent-warm"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
         )}
       </section>

@@ -122,3 +122,42 @@ export const staggerItemVariants: Variants = {
     },
   },
 }
+
+/**
+ * Expandable card variants
+ * For expand/collapse animations in CV role cards
+ * Smooth height transition with opacity fade
+ */
+export const expandableCardVariants: Variants = {
+  collapsed: {
+    height: 0,
+    opacity: 0,
+    overflow: 'hidden',
+    transition: {
+      height: {
+        duration: 0.2,
+        ease: 'easeOut',
+      },
+      opacity: {
+        duration: 0.15,
+        ease: 'easeOut',
+      },
+    },
+  },
+  expanded: {
+    height: 'auto',
+    opacity: 1,
+    overflow: 'visible',
+    transition: {
+      height: {
+        duration: 0.2,
+        ease: 'easeOut',
+      },
+      opacity: {
+        duration: 0.2,
+        ease: 'easeOut',
+        delay: 0.05,
+      },
+    },
+  },
+}
