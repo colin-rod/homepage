@@ -102,6 +102,7 @@ export interface CVEducation {
   degree: string
   institution: string
   year: number
+  location?: string
   description?: string
 }
 
