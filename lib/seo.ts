@@ -22,7 +22,7 @@ export const siteConfig = {
   ],
   author: {
     name: 'Colin Rodrigues',
-    email: 'contact@colinrodrigues.com', // TODO: Replace with actual email
+    email: 'mail@colinrodrigues.com',
   },
 }
 

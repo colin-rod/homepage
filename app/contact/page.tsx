@@ -58,10 +58,10 @@ export default function ContactPage() {
                 </div>
                 <h3 className="text-lg font-semibold text-text mb-2">Email</h3>
                 <a
-                  href="mailto:colin.rods@gmail.com?subject=Hello from your website"
+                  href="mailto:mail@colinrodrigues.com?subject=Hello from your website"
                   className="text-accent-warm hover:underline inline-block"
                 >
-                  colin.rods@gmail.com
+                  mail@colinrodrigues.com
                 </a>
                 <p className="italic text-text-secondary mt-1">
                   Best place to start a conversation.
@@ -128,7 +128,7 @@ export default function ContactPage() {
                 Email&apos;s the best way to get in touch — I usually reply within a day or two
               </p>
               <a
-                href="mailto:colin.rods@gmail.com?subject=Hello from your website"
+                href="mailto:mail@colinrodrigues.com?subject=Hello from your website"
                 className="btn btn-primary inline-block"
               >
                 Send me an email →

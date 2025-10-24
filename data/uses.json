@@ -165,7 +165,7 @@
           "name": "Resend",
           "details": "Transactional email API",
           "link": "https://resend.com/",
-          "favicon": "https://resend.com/favicon-32x32.png",
+          "favicon": "https://cdn.resend.com/brand/resend-icon-black.png",
           "context": "Used for sending onboarding and invite emails",
           "tags": ["email", "notifications"]
         },
