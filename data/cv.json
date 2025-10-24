@@ -65,7 +65,19 @@
         "BabyPool - Collaborative Baby Name & Guessing Game App: Created mobile-first product for comparing, voting, and gamifying baby name guesses with family and friends; designed onboarding, invitation, and leaderboard flows to drive retention; ran multiple prototype iterations with real users, refining UX and scoring rules based on feedback",
         "Technical Stack: Full-stack development using React, Next.js, TypeScript, Tailwind CSS; Backend & data architecture with Supabase (Postgres, Auth, Storage, Realtime), deployed via Vercel/GitHub Actions; Built features and prototypes using OpenAI APIs, integrated external APIs, and ran lightweight A/B tests to measure user demand"
       ],
-      "tags": ["product", "tech", "strategy"]
+      "tags": ["product", "tech", "strategy"],
+      "skills": [
+        "Product Management",
+        "TypeScript",
+        "React",
+        "Next.js",
+        "Supabase",
+        "Vercel",
+        "GitHub",
+        "A/B Testing",
+        "UI/UX Design",
+        "Product Analytics"
+      ]
     },
     {
       "id": "antler-eir-2023",
@@ -79,7 +91,8 @@
         "Conducted extensive customer discovery to understand pain points, designed product mockups in Figma, and built business models evaluating market opportunity and go-to-market strategies",
         "Collaborated with technical co-founders and developers to build and launch functional MVPs, securing engagement with VCs for pre-seed funding evaluation"
       ],
-      "tags": ["product", "strategy"]
+      "tags": ["product", "strategy"],
+      "skills": ["Product Management", "Strategy", "Figma", "UI/UX Design", "Roadmap Planning"]
     },
     {
       "id": "doordash-head-merchant-de-2021",
@@ -103,7 +116,21 @@
         "Strategic Planning & Execution: Developed long-term strategies and short-term action plans to achieve company objectives by balancing immediate needs with scalable product development. Leveraged low-code tools for rapid implementation, managing strategic experiments, and created actionable roadmaps. Established KPIs and implemented the OKR framework for the team, monitoring progress against targets and executing corrective actions to ensure alignment with strategic objectives and performance optimisation. Led Germany's geographic expansion opportunities, and maintained data hygiene and pipelines in Salesforce and Monday.com",
         "Team Development & Performance Management: Developed and implemented team management systems, including KPI-linked performance frameworks, career progression paths, role definitions, performance-based incentives, standardised training guides, and partnerships with vendors to scale capacity while maintaining quality"
       ],
-      "tags": ["product", "strategy", "tech"]
+      "tags": ["product", "strategy", "tech"],
+      "skills": [
+        "Product Management",
+        "Strategy",
+        "Roadmap Planning",
+        "Product Analytics",
+        "A/B Testing",
+        "API Development",
+        "Database Management",
+        "Stripe Payments",
+        "Data Visualization",
+        "Tableau",
+        "Project Management",
+        "Documentation"
+      ]
     },
     {
       "id": "wayfair-strategy-ops-2018",
@@ -118,7 +145,17 @@
         "Product & Data Systems: Engineered customer ranking using LLMs & JS, designing dimensional models supporting product discovery, category performance, and customer navigation analytics. Analysed customer navigation patterns and flows, identifying optimisation opportunities for category browsing and improving conversion performance. Developed real-time dashboards for C-level leadership, providing insights into product discoverability, merchandising performance, and operational KPIs",
         "Operations & Process Excellence: Implemented Agile Project Management principles and tools (JIRA, Asana,) including program roadmaps, resource planning, workshops, project documentation, and risk assessments. Executed merchant training rollouts to 5,000+ suppliers with 100+ analysts, providing mentorship, documentation, and training workshops for usage and best practices. Developed big data and AI machine learning models for prediction, optimisation, space reduction, and demand forecasting"
       ],
-      "tags": ["product", "strategy", "tech"]
+      "tags": ["product", "strategy", "tech"],
+      "skills": [
+        "Product Management",
+        "Strategy",
+        "Product Analytics",
+        "Data Visualization",
+        "Tableau",
+        "Database Management",
+        "Project Management",
+        "Documentation"
+      ]
     },
     {
       "id": "amazon-pathways-ops-2017",
@@ -133,7 +170,8 @@
         "Process Improvement: Designed and implemented performance monitoring tools using Minitab, increasing productivity and reducing costs",
         "Reporting & Analytics: Delivered daily reports to senior management, identifying obstacles and action plans"
       ],
-      "tags": ["strategy", "operations"]
+      "tags": ["strategy", "operations"],
+      "skills": ["Strategy", "Project Management", "Data Visualization", "Documentation"]
     },
     {
       "id": "ohb-project-manager-2013",
@@ -149,7 +187,8 @@
         "Risk Management: Prepared monthly design and schedule reviews for stakeholders, identifying technical challenges, forecasting schedule impacts, and highlighting risk mitigation activities",
         "Process Optimization: Initiated program-wide optimisation process resulting in 10% schedule improvement of mission-critical deliverables and 3-month launch date advancement"
       ],
-      "tags": ["strategy", "operations"]
+      "tags": ["strategy", "operations"],
+      "skills": ["Strategy", "Roadmap Planning", "Project Management", "Documentation"]
     },
     {
       "id": "comdev-senior-engineer-2007",
@@ -165,7 +204,8 @@
         "Product Innovation: Led development of next-generation spacecraft components, reducing manufacturing costs by 20% and delivery time by 15%",
         "AI & Optimization: Implemented an AI-based neural network algorithm, reducing design time by over 800%, designing components currently used in 20% of geostationary satellites worldwide"
       ],
-      "tags": ["tech", "strategy"]
+      "tags": ["tech", "strategy"],
+      "skills": ["Strategy", "Project Management", "Documentation"]
     }
   ],
   "education": [

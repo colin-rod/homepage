@@ -96,6 +96,7 @@ export interface CVExperience {
   description: string
   highlights: string[]
   tags: string[] // For filtering (e.g., ['product', 'strategy'])
+  skills?: string[] // Skills used in this role (for skill-based filtering)
 }
 
 export interface CVEducation {

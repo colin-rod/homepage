@@ -22,6 +22,7 @@ interface CVContentProps {
 export default function CVContent({ cvData }: CVContentProps) {
   const [activeFilter, setActiveFilter] = useState<CVFilterType>('all')
   const [expandedRoles, setExpandedRoles] = useState<Set<string>>(new Set())
+  const [activeSkills, setActiveSkills] = useState<Set<string>>(new Set())
   const posthog = usePostHog()
 
   // Reset expanded roles when filter changes
@@ -36,11 +37,50 @@ export default function CVContent({ cvData }: CVContentProps) {
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
   }
 
-  // Filter experience based on active filter
-  const filteredExperience =
-    activeFilter === 'all'
-      ? cvData.experience
-      : cvData.experience.filter((exp) => exp.tags.includes(activeFilter))
+  // Filter experience based on active filter AND active skills (combined filtering)
+  const filteredExperience = cvData.experience.filter((exp) => {
+    // First, filter by role type tags (Product/Strategy/Tech)
+    const matchesRoleFilter = activeFilter === 'all' || exp.tags.includes(activeFilter)
+
+    // Then, filter by skills (OR logic: match ANY selected skill)
+    const matchesSkillFilter =
+      activeSkills.size === 0 || (exp.skills && exp.skills.some((skill) => activeSkills.has(skill)))
+
+    // Both filters must match (AND logic)
+    return matchesRoleFilter && matchesSkillFilter
+  })
+
+  // Toggle skill filter with PostHog tracking
+  const handleSkillClick = (skill: string) => {
+    const newActiveSkills = new Set(activeSkills)
+
+    if (newActiveSkills.has(skill)) {
+      newActiveSkills.delete(skill)
+      posthog?.capture('cv_skill_deselected', {
+        skill,
+        active_filter: activeFilter,
+        remaining_skills: Array.from(newActiveSkills),
+      })
+    } else {
+      newActiveSkills.add(skill)
+      posthog?.capture('cv_skill_selected', {
+        skill,
+        active_filter: activeFilter,
+        active_skills: Array.from(newActiveSkills),
+      })
+    }
+
+    setActiveSkills(newActiveSkills)
+  }
+
+  // Clear all skill filters
+  const handleClearSkills = () => {
+    posthog?.capture('cv_skills_cleared', {
+      cleared_skills: Array.from(activeSkills),
+      active_filter: activeFilter,
+    })
+    setActiveSkills(new Set())
+  }
 
   // Toggle role expansion with PostHog tracking
   const handleToggleRole = (roleId: string, roleName: string) => {
@@ -105,13 +145,31 @@ export default function CVContent({ cvData }: CVContentProps) {
               </button>
             ))}
           </div>
-          <p className="text-sm text-text-secondary mt-3" aria-live="polite" aria-atomic="true">
-            {activeFilter === 'all'
-              ? 'Showing all experience'
-              : `Showing ${activeFilter} experience (${filteredExperience.length} ${
-                  filteredExperience.length === 1 ? 'position' : 'positions'
-                })`}
-          </p>
+          <div className="mt-3 flex flex-wrap items-center gap-3">
+            <p className="text-sm text-text-secondary" aria-live="polite" aria-atomic="true">
+              {activeSkills.size === 0
+                ? activeFilter === 'all'
+                  ? 'Showing all experience'
+                  : `Showing ${activeFilter} experience (${filteredExperience.length} ${
+                      filteredExperience.length === 1 ? 'position' : 'positions'
+                    })`
+                : activeFilter === 'all'
+                  ? `Showing roles with: ${Array.from(activeSkills).join(', ')} (${filteredExperience.length} ${
+                      filteredExperience.length === 1 ? 'position' : 'positions'
+                    })`
+                  : `Showing ${activeFilter} roles with: ${Array.from(activeSkills).join(', ')} (${filteredExperience.length} ${
+                      filteredExperience.length === 1 ? 'position' : 'positions'
+                    })`}
+            </p>
+            {activeSkills.size > 0 && (
+              <button
+                onClick={handleClearSkills}
+                className="text-xs px-3 py-1 rounded-full bg-neutral-surface border border-divider text-text hover:border-accent-warm hover:bg-accent-warm/5 transition-colors"
+              >
+                Clear skills
+              </button>
+            )}
+          </div>
         </div>
       </FadeIn>
 
@@ -173,7 +231,12 @@ export default function CVContent({ cvData }: CVContentProps) {
           >
             {cvData.skills.map((skillCategory) => (
               <motion.div key={skillCategory.category} variants={staggerItemVariants}>
-                <SkillCategoryCard category={skillCategory.category} skills={skillCategory.items} />
+                <SkillCategoryCard
+                  category={skillCategory.category}
+                  skills={skillCategory.items}
+                  activeSkills={activeSkills}
+                  onSkillClick={handleSkillClick}
+                />
               </motion.div>
             ))}
           </motion.div>
@@ -192,33 +255,40 @@ export default function CVContent({ cvData }: CVContentProps) {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
             >
-              {filteredExperience.length === 0 ? (
-                <div className="card text-center py-12">
-                  <p className="text-text-secondary">
-                    No experience found for the selected filter. Try selecting a different filter.
-                  </p>
-                </div>
-              ) : (
+              <>
+                {filteredExperience.length === 0 && (
+                  <div className="card text-center py-8 mb-8 bg-accent-warm/5 border-accent-warm/20">
+                    <p className="text-text-secondary mb-2">
+                      <strong>No roles found</strong> matching the selected{' '}
+                      {activeSkills.size > 0 ? 'skills' : 'filters'}.
+                    </p>
+                    <p className="text-sm text-text-secondary">
+                      Showing all experience below. Try different filters or clear skill selections.
+                    </p>
+                  </div>
+                )}
                 <div className="space-y-8">
-                  {filteredExperience.map((exp) => (
-                    <ExperienceCard
-                      key={exp.id}
-                      id={exp.id}
-                      title={exp.title}
-                      company={exp.company}
-                      location={exp.location}
-                      startDate={exp.startDate}
-                      endDate={exp.endDate}
-                      description={exp.description}
-                      highlights={exp.highlights || []}
-                      tags={exp.tags || []}
-                      isExpanded={expandedRoles.has(exp.id)}
-                      onToggle={() => handleToggleRole(exp.id, `${exp.title} at ${exp.company}`)}
-                      formatDate={formatDate}
-                    />
-                  ))}
+                  {(filteredExperience.length > 0 ? filteredExperience : cvData.experience).map(
+                    (exp) => (
+                      <ExperienceCard
+                        key={exp.id}
+                        id={exp.id}
+                        title={exp.title}
+                        company={exp.company}
+                        location={exp.location}
+                        startDate={exp.startDate}
+                        endDate={exp.endDate}
+                        description={exp.description}
+                        highlights={exp.highlights || []}
+                        tags={exp.tags || []}
+                        isExpanded={expandedRoles.has(exp.id)}
+                        onToggle={() => handleToggleRole(exp.id, `${exp.title} at ${exp.company}`)}
+                        formatDate={formatDate}
+                      />
+                    )
+                  )}
                 </div>
-              )}
+              </>
             </motion.div>
           </AnimatePresence>
         </section>
