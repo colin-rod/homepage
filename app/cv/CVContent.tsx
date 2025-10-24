@@ -1,14 +1,16 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CV, CVFilterType } from '@/lib/types'
 import { staggerContainerVariants, staggerItemVariants } from '@/components/animations/variants'
 import { usePostHog } from 'posthog-js/react'
+import Fuse from 'fuse.js'
 import FadeIn from '@/components/animations/FadeIn'
 import SkillCategoryCard from '@/components/features/cv/SkillCategoryCard'
 import ExperienceCard from '@/components/features/cv/ExperienceCard'
 import EducationCard from '@/components/features/cv/EducationCard'
+import SearchBar from '@/components/features/cv/SearchBar'
 
 interface CVContentProps {
   cvData: CV
@@ -23,7 +25,27 @@ export default function CVContent({ cvData }: CVContentProps) {
   const [activeFilter, setActiveFilter] = useState<CVFilterType>('all')
   const [expandedRoles, setExpandedRoles] = useState<Set<string>>(new Set())
   const [activeSkills, setActiveSkills] = useState<Set<string>>(new Set())
+  const [searchQuery, setSearchQuery] = useState<string>('')
   const posthog = usePostHog()
+
+  // Initialize Fuse.js for fuzzy search
+  const fuse = useMemo(
+    () =>
+      new Fuse(cvData.experience, {
+        keys: [
+          { name: 'title', weight: 0.3 },
+          { name: 'company', weight: 0.3 },
+          { name: 'skills', weight: 0.2 },
+          { name: 'description', weight: 0.1 },
+          { name: 'highlights', weight: 0.1 },
+        ],
+        threshold: 0.4, // Moderate fuzzy matching (0 = exact, 1 = match anything)
+        includeScore: true,
+        includeMatches: true,
+        minMatchCharLength: 2,
+      }),
+    [cvData.experience]
+  )
 
   // Reset expanded roles when filter changes
   useEffect(() => {
@@ -37,7 +59,31 @@ export default function CVContent({ cvData }: CVContentProps) {
     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
   }
 
+  // Search results (independent of other filters)
+  const searchResults = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return cvData.experience
+    }
+
+    const results = fuse.search(searchQuery)
+
+    // Track search events
+    if (results.length === 0) {
+      posthog?.capture('cv_search_no_results', {
+        query: searchQuery,
+      })
+    } else {
+      posthog?.capture('cv_search_submitted', {
+        query: searchQuery,
+        results_count: results.length,
+      })
+    }
+
+    return results.map((result) => result.item)
+  }, [searchQuery, fuse, cvData.experience, posthog])
+
   // Filter experience based on active filter AND active skills (combined filtering)
+  // Note: Search is INDEPENDENT and shown separately
   const filteredExperience = cvData.experience.filter((exp) => {
     // First, filter by role type tags (Product/Strategy/Tech)
     const matchesRoleFilter = activeFilter === 'all' || exp.tags.includes(activeFilter)
@@ -49,6 +95,10 @@ export default function CVContent({ cvData }: CVContentProps) {
     // Both filters must match (AND logic)
     return matchesRoleFilter && matchesSkillFilter
   })
+
+  // Determine which experience list to display
+  // If search is active, show search results; otherwise show filtered results
+  const displayedExperience = searchQuery.trim() ? searchResults : filteredExperience
 
   // Toggle skill filter with PostHog tracking
   const handleSkillClick = (skill: string) => {
@@ -80,6 +130,19 @@ export default function CVContent({ cvData }: CVContentProps) {
       active_filter: activeFilter,
     })
     setActiveSkills(new Set())
+  }
+
+  // Handle search query change
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query)
+  }
+
+  // Handle search clear
+  const handleSearchClear = () => {
+    setSearchQuery('')
+    posthog?.capture('cv_search_cleared', {
+      previous_query: searchQuery,
+    })
   }
 
   // Toggle role expansion with PostHog tracking
@@ -173,6 +236,19 @@ export default function CVContent({ cvData }: CVContentProps) {
         </div>
       </FadeIn>
 
+      {/* Search Bar */}
+      <FadeIn delay={0.15} threshold={0.05}>
+        <div className="mb-8">
+          <SearchBar
+            value={searchQuery}
+            onChange={handleSearchChange}
+            onClear={handleSearchClear}
+            resultsCount={displayedExperience.length}
+            totalCount={cvData.experience.length}
+          />
+        </div>
+      </FadeIn>
+
       {/* Download CV Buttons */}
       <FadeIn delay={0.2} threshold={0.05}>
         <div className="mb-12 card bg-accent-warm/5 border-accent-warm/20">
@@ -249,26 +325,31 @@ export default function CVContent({ cvData }: CVContentProps) {
           <h2 className="text-2xl font-bold text-text mb-8">Professional Experience</h2>
           <AnimatePresence mode="wait">
             <motion.div
-              key={activeFilter}
+              key={`${activeFilter}-${searchQuery}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
             >
               <>
-                {filteredExperience.length === 0 && (
+                {displayedExperience.length === 0 && (
                   <div className="card text-center py-8 mb-8 bg-accent-warm/5 border-accent-warm/20">
                     <p className="text-text-secondary mb-2">
-                      <strong>No roles found</strong> matching the selected{' '}
-                      {activeSkills.size > 0 ? 'skills' : 'filters'}.
+                      <strong>No roles found</strong>{' '}
+                      {searchQuery
+                        ? `matching "${searchQuery}"`
+                        : `matching the selected ${activeSkills.size > 0 ? 'skills' : 'filters'}`}
+                      .
                     </p>
                     <p className="text-sm text-text-secondary">
-                      Showing all experience below. Try different filters or clear skill selections.
+                      {searchQuery
+                        ? 'Try a different search term.'
+                        : 'Showing all experience below. Try different filters or clear skill selections.'}
                     </p>
                   </div>
                 )}
                 <div className="space-y-8">
-                  {(filteredExperience.length > 0 ? filteredExperience : cvData.experience).map(
+                  {(displayedExperience.length > 0 ? displayedExperience : cvData.experience).map(
                     (exp) => (
                       <ExperienceCard
                         key={exp.id}
@@ -284,6 +365,7 @@ export default function CVContent({ cvData }: CVContentProps) {
                         isExpanded={expandedRoles.has(exp.id)}
                         onToggle={() => handleToggleRole(exp.id, `${exp.title} at ${exp.company}`)}
                         formatDate={formatDate}
+                        searchQuery={searchQuery}
                       />
                     )
                   )}

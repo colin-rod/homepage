@@ -14,6 +14,7 @@
 
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { expandableCardVariants } from '@/components/animations/variants'
+import HighlightText from './HighlightText'
 
 export interface ExperienceCardProps {
   id: string
@@ -28,6 +29,7 @@ export interface ExperienceCardProps {
   isExpanded: boolean
   onToggle: () => void
   formatDate: (date: string | null | undefined) => string
+  searchQuery?: string
 }
 
 export default function ExperienceCard({
@@ -43,6 +45,7 @@ export default function ExperienceCard({
   isExpanded,
   onToggle,
   formatDate,
+  searchQuery = '',
 }: ExperienceCardProps) {
   const shouldReduceMotion = useReducedMotion()
 
@@ -84,9 +87,11 @@ export default function ExperienceCard({
       <div className="mb-4">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
-            <h3 className="text-xl font-bold text-primary mb-1">{title}</h3>
+            <h3 className="text-xl font-bold text-primary mb-1">
+              <HighlightText text={title} searchQuery={searchQuery} />
+            </h3>
             <p className="text-lg text-text-secondary">
-              {company} • {location}
+              <HighlightText text={company} searchQuery={searchQuery} /> • {location}
             </p>
             <p className="text-sm text-text-secondary mt-1">
               {formatDate(startDate)} – {formatDate(endDate)}
@@ -103,7 +108,9 @@ export default function ExperienceCard({
       </div>
 
       {/* Description */}
-      <p className="text-text-secondary mb-4">{description}</p>
+      <p className="text-text-secondary mb-4">
+        <HighlightText text={description} searchQuery={searchQuery} />
+      </p>
 
       {/* Highlights */}
       {highlights.length > 0 && (
@@ -114,7 +121,9 @@ export default function ExperienceCard({
             {visibleHighlights.map((highlight, index) => (
               <li key={index} className="flex items-start">
                 <span className="text-accent-warm mr-2">•</span>
-                <span className="text-text-secondary">{highlight}</span>
+                <span className="text-text-secondary">
+                  <HighlightText text={highlight} searchQuery={searchQuery} />
+                </span>
               </li>
             ))}
 
@@ -131,7 +140,9 @@ export default function ExperienceCard({
                     {hiddenHighlights.map((highlight, index) => (
                       <li key={condensedCount + index} className="flex items-start mt-2">
                         <span className="text-accent-warm mr-2">•</span>
-                        <span className="text-text-secondary">{highlight}</span>
+                        <span className="text-text-secondary">
+                          <HighlightText text={highlight} searchQuery={searchQuery} />
+                        </span>
                       </li>
                     ))}
                   </motion.div>
@@ -145,7 +156,9 @@ export default function ExperienceCard({
                 {hiddenHighlights.map((highlight, index) => (
                   <li key={condensedCount + index} className="flex items-start">
                     <span className="text-accent-warm mr-2">•</span>
-                    <span className="text-text-secondary">{highlight}</span>
+                    <span className="text-text-secondary">
+                      <HighlightText text={highlight} searchQuery={searchQuery} />
+                    </span>
                   </li>
                 ))}
               </>
