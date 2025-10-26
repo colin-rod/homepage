@@ -288,18 +288,6 @@ export default function CVContent({ cvData }: CVContentProps) {
               className="text-xl text-text-secondary leading-relaxed"
             >
               {cvData.focusSummaries?.[activeFilter] || cvData.summary}
-              {activeFilter !== 'all' && (
-                <span className="block mt-2 text-base font-medium text-text">
-                  Showing {filteredExperience.length}{' '}
-                  {filteredExperience.length === 1 ? 'role' : 'roles'}
-                </span>
-              )}
-              {activeFilter === 'all' && (
-                <span className="block mt-2 text-base font-medium text-text">
-                  Showing all {filteredExperience.length}{' '}
-                  {filteredExperience.length === 1 ? 'role' : 'roles'}
-                </span>
-              )}
             </motion.p>
           </AnimatePresence>
         </div>
