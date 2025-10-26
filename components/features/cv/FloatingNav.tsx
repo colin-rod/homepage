@@ -69,13 +69,13 @@ export default function FloatingNav() {
   const handleNavClick = (id: string, label: string) => {
     const element = document.getElementById(id)
     if (element) {
-      // Smooth scroll to center the section in viewport
+      // Smooth scroll to the top of the section with a small offset
       const elementRect = element.getBoundingClientRect()
       const absoluteElementTop = elementRect.top + window.scrollY
-      const middle = absoluteElementTop - window.innerHeight / 2 + elementRect.height / 2
+      const offset = 80 // Small offset to account for any spacing/padding
 
       window.scrollTo({
-        top: middle,
+        top: absoluteElementTop - offset,
         behavior: 'smooth',
       })
 
