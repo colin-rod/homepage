@@ -130,6 +130,28 @@
         "Tableau",
         "Project Management",
         "Documentation"
+      ],
+      "kpis": [
+        {
+          "label": "ARR",
+          "value": "$1M+",
+          "category": "revenue"
+        },
+        {
+          "label": "Team Size",
+          "value": "50 people",
+          "category": "team"
+        },
+        {
+          "label": "Efficiency Gain",
+          "value": "20%",
+          "category": "efficiency"
+        },
+        {
+          "label": "Cost Savings",
+          "value": "$700K",
+          "category": "cost"
+        }
       ]
     },
     {
@@ -155,6 +177,23 @@
         "Database Management",
         "Project Management",
         "Documentation"
+      ],
+      "kpis": [
+        {
+          "label": "Cost Reduction",
+          "value": "$40M",
+          "category": "cost"
+        },
+        {
+          "label": "Team Size",
+          "value": "5 analysts",
+          "category": "team"
+        },
+        {
+          "label": "Return Rate",
+          "value": "30% reduction",
+          "category": "efficiency"
+        }
       ]
     },
     {
@@ -205,7 +244,24 @@
         "AI & Optimization: Implemented an AI-based neural network algorithm, reducing design time by over 800%, designing components currently used in 20% of geostationary satellites worldwide"
       ],
       "tags": ["tech", "strategy"],
-      "skills": ["Strategy", "Project Management", "Documentation"]
+      "skills": ["Strategy", "Project Management", "Documentation"],
+      "kpis": [
+        {
+          "label": "Design Time",
+          "value": "800% faster",
+          "category": "efficiency"
+        },
+        {
+          "label": "Cost Reduction",
+          "value": "20%",
+          "category": "cost"
+        },
+        {
+          "label": "Market Share",
+          "value": "20% satellites",
+          "category": "growth"
+        }
+      ]
     }
   ],
   "education": [

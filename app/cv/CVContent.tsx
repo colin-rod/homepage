@@ -472,6 +472,7 @@ export default function CVContent({ cvData }: CVContentProps) {
                         formatDate={formatDate}
                         searchQuery={searchQuery}
                         isHighlighted={highlightedCardId === exp.id}
+                        kpis={exp.kpis}
                       />
                     )
                   )}

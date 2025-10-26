@@ -86,6 +86,12 @@ export interface CVSkillCategory {
   items: string[]
 }
 
+export interface KPI {
+  label: string // "ARR", "Team Size", "Cost Savings", etc.
+  value: string // "$1M+", "50 people", "20% reduction", etc.
+  category: 'revenue' | 'team' | 'efficiency' | 'growth' | 'cost'
+}
+
 export interface CVExperience {
   id: string
   title: string
@@ -97,6 +103,7 @@ export interface CVExperience {
   highlights: string[]
   tags: string[] // For filtering (e.g., ['product', 'strategy'])
   skills?: string[] // Skills used in this role (for skill-based filtering)
+  kpis?: KPI[] // Key performance indicators for the role
 }
 
 export interface CVEducation {

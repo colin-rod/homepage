@@ -17,6 +17,8 @@ import { forwardRef } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { expandableCardVariants } from '@/components/animations/variants'
 import HighlightText from './HighlightText'
+import KPIBadgeRow from './KPIBadgeRow'
+import { KPI } from '@/lib/types'
 
 export interface ExperienceCardProps {
   id: string
@@ -33,6 +35,7 @@ export interface ExperienceCardProps {
   formatDate: (date: string | null | undefined) => string
   searchQuery?: string
   isHighlighted?: boolean
+  kpis?: KPI[]
 }
 
 const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
@@ -52,6 +55,7 @@ const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
       formatDate,
       searchQuery = '',
       isHighlighted = false,
+      kpis,
     },
     ref
   ) => {
@@ -122,6 +126,9 @@ const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
             )}
           </div>
         </div>
+
+        {/* KPI Badges */}
+        {kpis && kpis.length > 0 && <KPIBadgeRow kpis={kpis} />}
 
         {/* Description */}
         <p className="text-text-secondary mb-4">
