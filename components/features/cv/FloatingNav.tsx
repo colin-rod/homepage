@@ -13,7 +13,7 @@
  */
 
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { usePostHog } from 'posthog-js/react'
 
 interface NavSection {
@@ -26,12 +26,10 @@ const sections: NavSection[] = [
   { id: 'skills', label: 'Skills' },
   { id: 'experience', label: 'Experience' },
   { id: 'education', label: 'Education' },
-  { id: 'download', label: 'Download CV' },
 ]
 
 export default function FloatingNav() {
   const [activeSection, setActiveSection] = useState<string>('overview')
-  const [isVisible, setIsVisible] = useState(true)
   const posthog = usePostHog()
 
   // Detect active section based on scroll position (section centered in viewport)
@@ -60,9 +58,6 @@ export default function FloatingNav() {
       if (closestSection !== activeSection) {
         setActiveSection(closestSection)
       }
-
-      // Fade in/out based on scroll position (fade out at very top)
-      setIsVisible(window.scrollY > 100)
     }
 
     handleScroll() // Initial check
@@ -100,51 +95,46 @@ export default function FloatingNav() {
   const progress = ((activeIndex + 1) / sections.length) * 100
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.nav
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: 20 }}
-          transition={{ duration: 0.3 }}
-          className="fixed right-8 top-1/2 -translate-y-1/2 z-50 hidden lg:block"
-          aria-label="Page navigation"
-        >
-          <div className="relative">
-            {/* Progress bar background */}
-            <div className="absolute left-0 top-0 w-0.5 h-full bg-divider rounded-full" />
+    <motion.nav
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.3 }}
+      className="fixed right-8 top-24 z-50 hidden lg:block"
+      aria-label="Page navigation"
+    >
+      <div className="relative">
+        {/* Progress bar background */}
+        <div className="absolute left-0 top-0 w-0.5 h-full bg-divider rounded-full" />
 
-            {/* Animated progress indicator */}
-            <motion.div
-              className="absolute left-0 top-0 w-0.5 bg-accent-warm rounded-full"
-              initial={{ height: '0%' }}
-              animate={{ height: `${progress}%` }}
-              transition={{ duration: 0.3, ease: 'easeInOut' }}
-            />
+        {/* Animated progress indicator */}
+        <motion.div
+          className="absolute left-0 top-0 w-0.5 bg-accent-warm rounded-full"
+          initial={{ height: '0%' }}
+          animate={{ height: `${progress}%` }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
+        />
 
-            {/* Navigation items */}
-            <ul className="relative space-y-6 pl-6">
-              {sections.map(({ id, label }) => {
-                const isActive = activeSection === id
+        {/* Navigation items */}
+        <ul className="relative space-y-6 pl-6">
+          {sections.map(({ id, label }) => {
+            const isActive = activeSection === id
 
-                return (
-                  <li key={id}>
-                    <button
-                      onClick={() => handleNavClick(id, label)}
-                      className={`text-sm transition-all duration-300 hover:text-accent-warm ${
-                        isActive ? 'font-bold text-accent-warm' : 'text-text-secondary'
-                      }`}
-                      aria-current={isActive ? 'true' : 'false'}
-                    >
-                      {label}
-                    </button>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        </motion.nav>
-      )}
-    </AnimatePresence>
+            return (
+              <li key={id}>
+                <button
+                  onClick={() => handleNavClick(id, label)}
+                  className={`text-sm transition-all duration-300 hover:text-accent-warm ${
+                    isActive ? 'font-bold text-accent-warm' : 'text-text-secondary'
+                  }`}
+                  aria-current={isActive ? 'true' : 'false'}
+                >
+                  {label}
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
+    </motion.nav>
   )
 }
