@@ -17,6 +17,7 @@ import { forwardRef } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { expandableCardVariants } from '@/components/animations/variants'
 import HighlightText from './HighlightText'
+import MarkdownText from './MarkdownText'
 import KPIBadgeRow from './KPIBadgeRow'
 import { KPI } from '@/lib/types'
 
@@ -145,7 +146,7 @@ const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
                 <li key={index} className="flex items-start">
                   <span className="text-accent-warm mr-2">•</span>
                   <span className="text-text-secondary">
-                    <HighlightText text={highlight} searchQuery={searchQuery} />
+                    <MarkdownText text={highlight} searchQuery={searchQuery} />
                   </span>
                 </li>
               ))}
@@ -164,7 +165,7 @@ const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
                         <li key={condensedCount + index} className="flex items-start mt-2">
                           <span className="text-accent-warm mr-2">•</span>
                           <span className="text-text-secondary">
-                            <HighlightText text={highlight} searchQuery={searchQuery} />
+                            <MarkdownText text={highlight} searchQuery={searchQuery} />
                           </span>
                         </li>
                       ))}
@@ -180,7 +181,7 @@ const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
                     <li key={condensedCount + index} className="flex items-start">
                       <span className="text-accent-warm mr-2">•</span>
                       <span className="text-text-secondary">
-                        <HighlightText text={highlight} searchQuery={searchQuery} />
+                        <MarkdownText text={highlight} searchQuery={searchQuery} />
                       </span>
                     </li>
                   ))}
