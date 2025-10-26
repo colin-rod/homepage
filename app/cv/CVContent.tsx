@@ -14,6 +14,7 @@ import SearchBar from '@/components/features/cv/SearchBar'
 import SearchResultsPanel, {
   type SearchResultItem,
 } from '@/components/features/cv/SearchResultsPanel'
+import FloatingNav from '@/components/features/cv/FloatingNav'
 
 interface CVContentProps {
   cvData: CV
@@ -272,9 +273,12 @@ export default function CVContent({ cvData }: CVContentProps) {
 
   return (
     <div className="mx-auto max-w-4xl px-6 lg:px-8">
-      {/* Page Header */}
+      {/* Floating Navigation */}
+      <FloatingNav />
+
+      {/* Page Header / Overview Section */}
       <FadeIn threshold={0.05}>
-        <div className="mb-16">
+        <div id="overview" className="mb-16">
           <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl mb-6">
             Curriculum Vitae
           </h1>
@@ -366,7 +370,7 @@ export default function CVContent({ cvData }: CVContentProps) {
 
       {/* Download CV Buttons */}
       <FadeIn delay={0.2} threshold={0.05}>
-        <div className="mb-12 card bg-accent-warm/5 border-accent-warm/20">
+        <div id="download" className="mb-12 card bg-accent-warm/5 border-accent-warm/20">
           <h3 className="text-sm font-semibold text-text mb-3">Download as PDF:</h3>
           <p className="text-sm text-text-secondary mb-4">
             Click below to open a print-optimized version. Use your browser&apos;s print function
@@ -411,7 +415,7 @@ export default function CVContent({ cvData }: CVContentProps) {
 
       {/* Skills Section */}
       <FadeIn delay={0.3} threshold={0.05}>
-        <section className="mb-16">
+        <section id="skills" className="mb-16">
           <h2 className="text-2xl font-bold text-text mb-8">Skills & Expertise</h2>
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 gap-6"
@@ -436,7 +440,7 @@ export default function CVContent({ cvData }: CVContentProps) {
 
       {/* Experience Section */}
       <FadeIn delay={0.04} threshold={0.05}>
-        <section className="mb-16">
+        <section id="experience" className="mb-16">
           <h2 className="text-2xl font-bold text-text mb-8">Professional Experience</h2>
           <AnimatePresence mode="wait">
             <motion.div
@@ -496,7 +500,7 @@ export default function CVContent({ cvData }: CVContentProps) {
 
       {/* Education Section */}
       <FadeIn delay={0.05} threshold={0.05}>
-        <section className="mb-16">
+        <section id="education" className="mb-16">
           <h2 className="text-2xl font-bold text-text mb-8">Education</h2>
           <motion.div
             className="space-y-6"
