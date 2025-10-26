@@ -110,8 +110,8 @@ export default function KPIBadge({ label, value, category }: KPIBadgeProps) {
   useEffect(() => {
     if (!isInView || !hasNumber || hasAnimated) return
 
-    const duration = 1500 // 1.5 seconds
-    const steps = 60
+    const duration = 800 // 0.8 seconds
+    const steps = 50
     const increment = numericValue! / steps
     let current = 0
     let step = 0
