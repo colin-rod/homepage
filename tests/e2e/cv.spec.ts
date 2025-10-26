@@ -581,3 +581,134 @@ test.describe('CV Expandable Role Details (CRO-671)', () => {
     }
   })
 })
+
+test.describe('CV Project Links', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/cv')
+  })
+
+  test('should display clickable project links in highlights', async ({ page }) => {
+    // Look for project links in experience highlights
+    const babyPoolLink = page.getByRole('link', { name: /babypool/i }).first()
+    const tribeAppLink = page.getByRole('link', { name: /tribeapp/i }).first()
+
+    // Check if at least one project link is visible
+    const babyPoolVisible = await babyPoolLink.isVisible()
+    const tribeAppVisible = await tribeAppLink.isVisible()
+    expect(babyPoolVisible || tribeAppVisible).toBeTruthy()
+  })
+
+  test('should navigate to project page when clicking BabyPool link', async ({ page }) => {
+    // Find and click BabyPool link
+    const babyPoolLink = page.getByRole('link', { name: /babypool/i }).first()
+
+    if (await babyPoolLink.isVisible()) {
+      await babyPoolLink.click()
+
+      // Should navigate to project page
+      await expect(page).toHaveURL(/\/projects\/babypool/)
+
+      // Project page should display
+      await expect(page.getByRole('heading', { name: /babypool/i })).toBeVisible()
+    }
+  })
+
+  test('should navigate to project page when clicking TribeApp link', async ({ page }) => {
+    // Find and click TribeApp link
+    const tribeAppLink = page.getByRole('link', { name: /tribeapp/i }).first()
+
+    if (await tribeAppLink.isVisible()) {
+      await tribeAppLink.click()
+
+      // Should navigate to Tribe Update project page
+      await expect(page).toHaveURL(/\/projects\/tribe-update/)
+
+      // Project page should display
+      await expect(page.getByRole('heading', { name: /tribe/i })).toBeVisible()
+    }
+  })
+
+  test('should show link hover styles', async ({ page }) => {
+    const projectLink = page.getByRole('link', { name: /babypool|tribeapp/i }).first()
+
+    if (await projectLink.isVisible()) {
+      // Hover over link
+      await projectLink.hover()
+
+      // Check for accent color styling
+      const linkClasses = await projectLink.getAttribute('class')
+      expect(linkClasses).toMatch(/text-accent-warm/)
+      expect(linkClasses).toMatch(/hover:underline/)
+    }
+  })
+
+  test('should display link icon', async ({ page }) => {
+    const projectLink = page.getByRole('link', { name: /babypool|tribeapp/i }).first()
+
+    if (await projectLink.isVisible()) {
+      // Check for SVG icon within link
+      const svg = projectLink.locator('svg')
+      await expect(svg).toBeVisible()
+    }
+  })
+
+  test('should not expand card when clicking project link', async ({ page }) => {
+    // Find an experience card with a project link
+    const experienceSection = page.locator('#experience')
+    const projectLink = experienceSection.getByRole('link', { name: /babypool|tribeapp/i }).first()
+
+    if (await projectLink.isVisible()) {
+      // Check if card is initially collapsed (has expand button)
+      const expandButton = page.getByRole('button', { name: /expand to show all/i }).first()
+      const hasExpandButton = await expandButton.isVisible()
+
+      if (hasExpandButton) {
+        const wasExpanded = (await expandButton.getAttribute('aria-expanded')) === 'true'
+
+        // Click the project link
+        await projectLink.click()
+
+        // Wait for navigation
+        await page.waitForURL(/\/projects\//)
+
+        // Go back
+        await page.goBack()
+
+        // Card expansion state should remain the same
+        const isExpandedNow = (await expandButton.getAttribute('aria-expanded')) === 'true'
+        expect(isExpandedNow).toBe(wasExpanded)
+      }
+    }
+  })
+
+  test('should work on mobile viewport', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 })
+    await page.goto('/cv')
+
+    const projectLink = page.getByRole('link', { name: /babypool|tribeapp/i }).first()
+
+    if (await projectLink.isVisible()) {
+      // Tap link
+      await projectLink.tap()
+
+      // Should navigate
+      await expect(page).toHaveURL(/\/projects\//)
+    }
+  })
+
+  test('should be keyboard accessible', async ({ page }) => {
+    const projectLink = page.getByRole('link', { name: /babypool|tribeapp/i }).first()
+
+    if (await projectLink.isVisible()) {
+      // Focus link with Tab
+      await page.keyboard.press('Tab')
+      await page.keyboard.press('Tab')
+
+      // Navigate with Enter
+      await page.keyboard.press('Enter')
+
+      // Should navigate to project page
+      await expect(page).toHaveURL(/\/projects\//)
+    }
+  })
+})

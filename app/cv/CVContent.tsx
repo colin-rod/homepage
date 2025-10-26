@@ -476,6 +476,7 @@ export default function CVContent({ cvData }: CVContentProps) {
                         id={exp.id}
                         title={exp.title}
                         company={exp.company}
+                        icon={exp.icon}
                         location={exp.location}
                         startDate={exp.startDate}
                         endDate={exp.endDate}

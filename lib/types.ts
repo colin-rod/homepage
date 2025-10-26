@@ -96,6 +96,7 @@ export interface CVExperience {
   id: string
   title: string
   company: string
+  icon?: string
   location: string
   startDate: string // ISO 8601
   endDate?: string | null

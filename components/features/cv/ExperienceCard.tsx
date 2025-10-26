@@ -13,6 +13,7 @@
  * - Supports scroll-to navigation with pulse highlight
  */
 
+import Image from 'next/image'
 import { forwardRef } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { expandableCardVariants } from '@/components/animations/variants'
@@ -25,6 +26,7 @@ export interface ExperienceCardProps {
   id: string
   title: string
   company: string
+  icon?: string
   location: string
   startDate: string
   endDate?: string | null
@@ -45,6 +47,7 @@ const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
       id,
       title,
       company,
+      icon,
       location,
       startDate,
       endDate,
@@ -106,25 +109,40 @@ const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
       >
         {/* Position Header */}
         <div className="mb-4">
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex-1">
-              <h3 className="text-xl font-bold text-primary mb-1">
-                <HighlightText text={title} searchQuery={searchQuery} />
-              </h3>
-              <p className="text-lg text-text-secondary">
-                <HighlightText text={company} searchQuery={searchQuery} /> • {location}
-              </p>
-              <p className="text-sm text-text-secondary mt-1">
-                {formatDate(startDate)} – {formatDate(endDate)}
-              </p>
-            </div>
-            {hasMoreHighlights && (
-              <div className="flex-shrink-0">
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-accent-warm/10 text-accent-warm">
-                  {isExpanded ? 'Click to collapse' : `+${remainingCount} more`}
-                </span>
+          <div className="flex items-start gap-4">
+            {icon && (
+              <div className="flex-shrink-0 w-12 h-12 rounded-lg border border-divider bg-neutral-surface flex items-center justify-center overflow-hidden">
+                <Image
+                  src={icon}
+                  alt={`${company} logo`}
+                  width={48}
+                  height={48}
+                  className="h-full w-full object-contain"
+                />
               </div>
             )}
+            <div className="flex-1">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex-1">
+                  <h3 className="text-xl font-bold text-primary mb-1">
+                    <HighlightText text={title} searchQuery={searchQuery} />
+                  </h3>
+                  <p className="text-lg text-text-secondary">
+                    <HighlightText text={company} searchQuery={searchQuery} /> • {location}
+                  </p>
+                  <p className="text-sm text-text-secondary mt-1">
+                    {formatDate(startDate)} – {formatDate(endDate)}
+                  </p>
+                </div>
+                {hasMoreHighlights && (
+                  <div className="flex-shrink-0">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-accent-warm/10 text-accent-warm">
+                      {isExpanded ? 'Click to collapse' : `+${remainingCount} more`}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -146,7 +164,11 @@ const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
                 <li key={index} className="flex items-start">
                   <span className="text-accent-warm mr-2">•</span>
                   <span className="text-text-secondary">
-                    <MarkdownText text={highlight} searchQuery={searchQuery} />
+                    <MarkdownText
+                      text={highlight}
+                      searchQuery={searchQuery}
+                      trackingContext={{ roleId: id, company }}
+                    />
                   </span>
                 </li>
               ))}
@@ -165,7 +187,11 @@ const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
                         <li key={condensedCount + index} className="flex items-start mt-2">
                           <span className="text-accent-warm mr-2">•</span>
                           <span className="text-text-secondary">
-                            <MarkdownText text={highlight} searchQuery={searchQuery} />
+                            <MarkdownText
+                              text={highlight}
+                              searchQuery={searchQuery}
+                              trackingContext={{ roleId: id, company }}
+                            />
                           </span>
                         </li>
                       ))}
@@ -181,7 +207,11 @@ const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
                     <li key={condensedCount + index} className="flex items-start">
                       <span className="text-accent-warm mr-2">•</span>
                       <span className="text-text-secondary">
-                        <MarkdownText text={highlight} searchQuery={searchQuery} />
+                        <MarkdownText
+                          text={highlight}
+                          searchQuery={searchQuery}
+                          trackingContext={{ roleId: id, company }}
+                        />
                       </span>
                     </li>
                   ))}

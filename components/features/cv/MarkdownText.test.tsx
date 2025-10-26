@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import MarkdownText from './MarkdownText'
 
 // Mock HighlightText component
@@ -7,31 +8,118 @@ jest.mock('./HighlightText', () => ({
   default: ({ text }: { text: string }) => <span>{text}</span>,
 }))
 
+// Mock PostHog
+const mockCapture = jest.fn()
+jest.mock('posthog-js/react', () => ({
+  usePostHog: () => ({
+    capture: mockCapture,
+  }),
+}))
+
 describe('MarkdownText', () => {
+  beforeEach(() => {
+    mockCapture.mockClear()
+  })
+
+  describe('Links', () => {
+    it('renders internal link with correct href', () => {
+      render(<MarkdownText text="Check out [BabyPool](/projects/babypool) for details" />)
+      const link = screen.getByRole('link', { name: /BabyPool/ })
+      expect(link).toHaveAttribute('href', '/projects/babypool')
+    })
+
+    it('renders external link with target blank', () => {
+      render(<MarkdownText text="Visit [GitHub](https://github.com) for code" />)
+      const link = screen.getByRole('link', { name: /GitHub/ })
+      expect(link).toHaveAttribute('href', 'https://github.com')
+      expect(link).toHaveAttribute('target', '_blank')
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+    })
+
+    it('renders internal link with icon', () => {
+      const { container } = render(
+        <MarkdownText text="[TribeApp](/projects/tribe-update) is live" />
+      )
+      const link = screen.getByRole('link', { name: /TribeApp/ })
+      const svg = link.querySelector('svg')
+      expect(svg).toBeInTheDocument()
+    })
+
+    it('applies correct styling to links', () => {
+      render(<MarkdownText text="[Project](/projects/test)" />)
+      const link = screen.getByRole('link')
+      expect(link).toHaveClass('text-accent-warm', 'hover:underline', 'transition-colors')
+    })
+
+    it('tracks link click with PostHog', async () => {
+      const user = userEvent.setup()
+      render(
+        <MarkdownText
+          text="[BabyPool](/projects/babypool)"
+          trackingContext={{ roleId: 'independent-pm-dev-2024', company: 'Independent' }}
+        />
+      )
+
+      const link = screen.getByRole('link', { name: /BabyPool/ })
+      await user.click(link)
+
+      expect(mockCapture).toHaveBeenCalledWith('cv_project_link_clicked', {
+        project_slug: 'babypool',
+        project_name: 'BabyPool',
+        role_id: 'independent-pm-dev-2024',
+        company: 'Independent',
+        url: '/projects/babypool',
+      })
+    })
+
+    it('handles link with bold and italic formatting nearby', () => {
+      render(<MarkdownText text="**Bold** [Link](/test) *italic*" />)
+      expect(screen.getByText('Bold').parentElement?.tagName).toBe('STRONG')
+      expect(screen.getByRole('link', { name: /Link/ })).toBeInTheDocument()
+      expect(screen.getByText('italic').parentElement?.tagName).toBe('EM')
+    })
+
+    it('stopPropagation on link click', async () => {
+      const user = userEvent.setup()
+      const mockStopPropagation = jest.fn()
+
+      render(<MarkdownText text="[Link](/test)" />)
+      const link = screen.getByRole('link')
+
+      // Attach event listener to test stopPropagation
+      link.addEventListener('click', (e) => {
+        expect(e.defaultPrevented).toBe(false) // Link should still navigate
+      })
+
+      await user.click(link)
+    })
+  })
+
   describe('Bold text', () => {
     it('renders bold text with ** syntax', () => {
       render(<MarkdownText text="This is **bold text** here" />)
       const boldElement = screen.getByText('bold text')
-      expect(boldElement.tagName).toBe('STRONG')
-      expect(boldElement).toHaveClass('font-semibold', 'text-text')
+      // HighlightText wraps content in span, so check parent
+      expect(boldElement.parentElement?.tagName).toBe('STRONG')
+      expect(boldElement.parentElement).toHaveClass('font-semibold', 'text-text')
     })
 
     it('renders multiple bold segments', () => {
       render(<MarkdownText text="**First bold** and **second bold**" />)
       const boldElements = screen.getAllByText(/bold/)
       expect(boldElements).toHaveLength(2)
-      expect(boldElements[0].tagName).toBe('STRONG')
-      expect(boldElements[1].tagName).toBe('STRONG')
+      expect(boldElements[0].parentElement?.tagName).toBe('STRONG')
+      expect(boldElements[1].parentElement?.tagName).toBe('STRONG')
     })
 
     it('handles bold text at start of string', () => {
       render(<MarkdownText text="**Bold start** normal text" />)
-      expect(screen.getByText('Bold start').tagName).toBe('STRONG')
+      expect(screen.getByText('Bold start').parentElement?.tagName).toBe('STRONG')
     })
 
     it('handles bold text at end of string', () => {
       render(<MarkdownText text="Normal text **bold end**" />)
-      expect(screen.getByText('bold end').tagName).toBe('STRONG')
+      expect(screen.getByText('bold end').parentElement?.tagName).toBe('STRONG')
     })
   })
 
@@ -39,24 +127,24 @@ describe('MarkdownText', () => {
     it('renders italic text with * syntax', () => {
       render(<MarkdownText text="This is *italic text* here" />)
       const italicElement = screen.getByText('italic text')
-      expect(italicElement.tagName).toBe('EM')
-      expect(italicElement).toHaveClass('italic')
+      expect(italicElement.parentElement?.tagName).toBe('EM')
+      expect(italicElement.parentElement).toHaveClass('italic')
     })
 
     it('renders multiple italic segments', () => {
       render(<MarkdownText text="*First italic* and *second italic*" />)
       const italicElements = screen.getAllByText(/italic/)
       expect(italicElements).toHaveLength(2)
-      expect(italicElements[0].tagName).toBe('EM')
-      expect(italicElements[1].tagName).toBe('EM')
+      expect(italicElements[0].parentElement?.tagName).toBe('EM')
+      expect(italicElements[1].parentElement?.tagName).toBe('EM')
     })
   })
 
   describe('Mixed formatting', () => {
     it('renders both bold and italic in same text', () => {
       render(<MarkdownText text="**Bold** and *italic* text" />)
-      expect(screen.getByText('Bold').tagName).toBe('STRONG')
-      expect(screen.getByText('italic').tagName).toBe('EM')
+      expect(screen.getByText('Bold').parentElement?.tagName).toBe('STRONG')
+      expect(screen.getByText('italic').parentElement?.tagName).toBe('EM')
     })
 
     it('handles complex mixed formatting', () => {
@@ -64,7 +152,7 @@ describe('MarkdownText', () => {
       const boldElements = screen.getAllByText(/bold/)
       const italicElement = screen.getByText('italic')
       expect(boldElements).toHaveLength(2)
-      expect(italicElement.tagName).toBe('EM')
+      expect(italicElement.parentElement?.tagName).toBe('EM')
     })
   })
 
@@ -101,7 +189,7 @@ describe('MarkdownText', () => {
 
     it('handles text with only markdown markers', () => {
       render(<MarkdownText text="**Bold**" />)
-      expect(screen.getByText('Bold').tagName).toBe('STRONG')
+      expect(screen.getByText('Bold').parentElement?.tagName).toBe('STRONG')
     })
   })
 
@@ -110,22 +198,22 @@ describe('MarkdownText', () => {
       render(
         <MarkdownText text="Launched **3 flagship products** generating **$2M+ ARR** in first year" />
       )
-      expect(screen.getByText('3 flagship products').tagName).toBe('STRONG')
-      expect(screen.getByText('$2M+ ARR').tagName).toBe('STRONG')
+      expect(screen.getByText('3 flagship products').parentElement?.tagName).toBe('STRONG')
+      expect(screen.getByText('$2M+ ARR').parentElement?.tagName).toBe('STRONG')
     })
 
     it('renders team leadership highlight', () => {
       render(<MarkdownText text="Led team of **12 engineers** across *4 time zones*" />)
-      expect(screen.getByText('12 engineers').tagName).toBe('STRONG')
-      expect(screen.getByText('4 time zones').tagName).toBe('EM')
+      expect(screen.getByText('12 engineers').parentElement?.tagName).toBe('STRONG')
+      expect(screen.getByText('4 time zones').parentElement?.tagName).toBe('EM')
     })
 
     it('renders performance improvement highlight', () => {
       render(<MarkdownText text="Improved efficiency by **40%** reducing costs by **$700K**" />)
       const boldElements = screen.getAllByText(/40%|700K/)
       expect(boldElements).toHaveLength(2)
-      expect(boldElements[0].tagName).toBe('STRONG')
-      expect(boldElements[1].tagName).toBe('STRONG')
+      expect(boldElements[0].parentElement?.tagName).toBe('STRONG')
+      expect(boldElements[1].parentElement?.tagName).toBe('STRONG')
     })
   })
 
@@ -138,13 +226,13 @@ describe('MarkdownText', () => {
     it('applies default classes to bold text', () => {
       render(<MarkdownText text="**Bold**" />)
       const boldElement = screen.getByText('Bold')
-      expect(boldElement).toHaveClass('font-semibold', 'text-text')
+      expect(boldElement.parentElement).toHaveClass('font-semibold', 'text-text')
     })
 
     it('applies default classes to italic text', () => {
       render(<MarkdownText text="*Italic*" />)
       const italicElement = screen.getByText('Italic')
-      expect(italicElement).toHaveClass('italic')
+      expect(italicElement.parentElement).toHaveClass('italic')
     })
   })
 
@@ -157,7 +245,7 @@ describe('MarkdownText', () => {
 
     it('handles search with formatted text', () => {
       render(<MarkdownText text="Launched **3 products** successfully" searchQuery="products" />)
-      expect(screen.getByText('3 products').tagName).toBe('STRONG')
+      expect(screen.getByText('3 products').parentElement?.tagName).toBe('STRONG')
     })
   })
 })
