@@ -1,5 +1,12 @@
 {
   "summary": "Senior Product Leader with 15+ years driving product vision, team leadership, and operational excellence in quick commerce, e-commerce, and marketplace platforms. Proven ability to launch and scale operations from zero to $1M+ ARR, build high-performing cross-functional teams of 50+ people, and deliver 40% cost reductions through data-driven product innovation and strategic execution.",
+  "focusSummaries": {
+    "all": "Senior Product Leader with 15+ years driving product vision, team leadership, and operational excellence in quick commerce, e-commerce, and marketplace platforms. Proven ability to launch and scale operations from zero to $1M+ ARR, build high-performing cross-functional teams of 50+ people, and deliver 40% cost reductions through data-driven product innovation and strategic execution.",
+    "product": "Product-focused leader with deep expertise in end-to-end product management, from vision and strategy to roadmap execution and delivery. Experienced in launching new products from 0→1, scaling existing platforms, and building data-driven product cultures across high-growth startups and large-scale marketplace platforms.",
+    "strategy": "Strategic operator with proven ability to design and execute cross-functional initiatives that drive business growth, operational efficiency, and organizational transformation. Expert in strategic planning, stakeholder alignment, go-to-market execution, and building scalable processes across product, operations, and customer success teams.",
+    "tech": "Technical product leader with hands-on engineering experience and deep understanding of modern web architectures, APIs, and development workflows. Skilled at bridging product and engineering, making technical trade-offs, and leading teams to deliver scalable, high-quality technical solutions across full-stack development, infrastructure, and data platforms."
+  },
+  "lastUpdated": "2025-10-26",
   "skills": [
     {
       "category": "Product & Strategy",

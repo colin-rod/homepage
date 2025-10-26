@@ -278,7 +278,30 @@ export default function CVContent({ cvData }: CVContentProps) {
           <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl mb-6">
             Curriculum Vitae
           </h1>
-          <p className="text-xl text-text-secondary leading-relaxed">{cvData.summary}</p>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={activeFilter}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.3 }}
+              className="text-xl text-text-secondary leading-relaxed"
+            >
+              {cvData.focusSummaries?.[activeFilter] || cvData.summary}
+              {activeFilter !== 'all' && (
+                <span className="block mt-2 text-base font-medium text-text">
+                  Showing {filteredExperience.length}{' '}
+                  {filteredExperience.length === 1 ? 'role' : 'roles'}
+                </span>
+              )}
+              {activeFilter === 'all' && (
+                <span className="block mt-2 text-base font-medium text-text">
+                  Showing all {filteredExperience.length}{' '}
+                  {filteredExperience.length === 1 ? 'role' : 'roles'}
+                </span>
+              )}
+            </motion.p>
+          </AnimatePresence>
         </div>
       </FadeIn>
 

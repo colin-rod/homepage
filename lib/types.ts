@@ -116,6 +116,13 @@ export interface CVEducation {
 
 export interface CV {
   summary: string
+  focusSummaries?: {
+    all: string
+    product: string
+    strategy: string
+    tech: string
+  }
+  lastUpdated?: string // ISO 8601 date (YYYY-MM-DD) - manually edited to track when CV was last updated
   skills: CVSkillCategory[]
   experience: CVExperience[]
   education: CVEducation[]
