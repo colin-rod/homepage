@@ -1,0 +1,254 @@
+{
+  "categories": [
+    {
+      "id": "hardware",
+      "title": "Hardware",
+      "description": "Physical setup.",
+      "items": [
+        {
+          "name": "MacBook Air M1 (2020)",
+          "link": "https://www.apple.com/macbook-air/",
+          "favicon": "https://www.apple.com/favicon.ico",
+          "context": "Primary workstation",
+          "tags": ["laptop", "apple"]
+        },
+        {
+          "name": "HP EliteDisplay E223",
+          "details": "21.5\" external monitor",
+          "link": "https://www.hp.com/us-en/shop/pdp/hp-elitedisplay-e223-215-inch-monitor",
+          "favicon": "/images/favicons/hp.png",
+          "context": "External display for additional workspace during deep focus sessions.",
+          "tags": ["display", "setup"]
+        }
+      ]
+    },
+    {
+      "id": "development",
+      "title": "Development Toolkit",
+      "description": "Core stack for building, testing, and shipping projects.",
+      "items": [
+        {
+          "name": "Visual Studio Code",
+          "details": "Primary code editor",
+          "link": "https://code.visualstudio.com/",
+          "favicon": "https://code.visualstudio.com/favicon.ico",
+          "context": "Main IDE for all development work",
+          "tags": ["editor", "ide"]
+        },
+        {
+          "name": "Claude Code",
+          "details": "AI pair programmer",
+          "link": "https://claude.ai/",
+          "favicon": "https://claude.ai/favicon.ico",
+          "context": "Used for rapid prototyping, code reviews, and generating documentation alongside ChatGPT.",
+          "tags": ["ai", "assistant"]
+        },
+        {
+          "name": "ChatGPT CODEX",
+          "details": "AI development assistant",
+          "link": "https://chat.openai.com/",
+          "favicon": "https://chat.openai.com/favicon.ico",
+          "context": "Used for debugging, brainstorming architectures, and refining code and UI copy.",
+          "tags": ["ai", "assistant"]
+        },
+        {
+          "name": "Linear",
+          "details": "Product planning & issue tracking",
+          "link": "https://linear.app/",
+          "favicon": "https://linear.app/favicon.ico",
+          "context": "Used to scope and manage projects, apply PM principles, and link hypotheses to delivered outcomes.",
+          "tags": ["product", "planning", "pm"]
+        },
+        {
+          "name": "GitHub",
+          "details": "Version control & collaboration",
+          "link": "https://github.com/",
+          "favicon": "https://github.githubassets.com/favicons/favicon.svg",
+          "context": "Code hosting, collaboration, and CI pipelines for personal and open-source projects.",
+          "tags": ["git", "repository", "version-control"]
+        },
+        {
+          "name": "Postman",
+          "details": "API testing & documentation",
+          "link": "https://www.postman.com/",
+          "favicon": "/images/favicons/Postman.png",
+          "context": "Used for testing endpoints, mocking APIs, and debugging backend integrations.",
+          "tags": ["api", "testing"]
+        },
+        {
+          "name": "Docker",
+          "details": "Local container environment",
+          "link": "https://www.docker.com/",
+          "favicon": "/images/favicons/docker-mark-blue.svg",
+          "context": "Ensures consistent local development environments and smooth deployments.",
+          "tags": ["containers", "devops"]
+        }
+      ]
+    },
+    {
+      "id": "operations",
+      "title": "Operations & Productivity",
+      "description": "Tools that connect strategy, design, and execution.",
+      "items": [
+        {
+          "name": "Notion",
+          "details": "Documentation & knowledge base",
+          "link": "https://www.notion.so/",
+          "favicon": "https://www.notion.so/front-static/favicon.ico",
+          "context": "Personal and project documentation, long-form notes, and checklists.",
+          "tags": ["notes", "docs", "productivity"]
+        },
+        {
+          "name": "Google Sheets",
+          "details": "Data modeling and lightweight analytics",
+          "link": "https://www.google.com/sheets/about/",
+          "favicon": "https://ssl.gstatic.com/docs/spreadsheets/favicon3.ico",
+          "context": "For quick modeling, tracking experiments, and MVP analytics.",
+          "tags": ["analytics", "spreadsheets"]
+        },
+        {
+          "name": "Figma",
+          "details": "UI & product design",
+          "link": "https://www.figma.com/",
+          "favicon": "https://static.figma.com/app/icon/1/favicon.png",
+          "context": "Used for wireframes, prototypes, and design systems for web apps.",
+          "tags": ["design", "ui", "prototyping"]
+        },
+        {
+          "name": "Canva",
+          "details": "Lightweight design & content creation",
+          "link": "https://www.canva.com/",
+          "favicon": "https://static.canva.com/static/images/favicon.ico",
+          "context": "For quick visuals, decks, and marketing collateral.",
+          "tags": ["design", "visuals", "content"]
+        },
+        {
+          "name": "Raindrop.io",
+          "details": "Bookmarking & curation",
+          "link": "https://raindrop.io/",
+          "favicon": "/images/favicons/raindrop.png",
+          "context": "Organizes inspiration, references, and articles for future reading.",
+          "tags": ["organization", "bookmarks", "knowledge"]
+        },
+        {
+          "name": "Google Calendar",
+          "details": "Scheduling & time management",
+          "link": "https://calendar.google.com/",
+          "favicon": "https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg",
+          "context": "Manages focus blocks, meetings, and project timelines.",
+          "tags": ["time", "schedule", "organization"]
+        }
+      ]
+    },
+    {
+      "id": "infrastructure",
+      "title": "Infrastructure & Analytics",
+      "description": "Platforms and APIs that power, scale, and measure products.",
+      "items": [
+        {
+          "name": "Vercel",
+          "details": "Frontend hosting & CI/CD",
+          "link": "https://vercel.com/",
+          "favicon": "https://assets.vercel.com/image/upload/front/favicon/vercel/favicon.ico",
+          "context": "Primary platform for deploying frontend apps",
+          "tags": ["hosting", "frontend", "ci-cd"]
+        },
+        {
+          "name": "Supabase",
+          "details": "Open-source backend & database",
+          "link": "https://supabase.com/",
+          "favicon": "https://supabase.com/favicon/favicon-32x32.png",
+          "context": "Backend for authentication, Postgres DB and edge functions.",
+          "tags": ["backend", "database", "auth"]
+        },
+        {
+          "name": "Resend",
+          "details": "Transactional email API",
+          "link": "https://resend.com/",
+          "favicon": "https://cdn.resend.com/brand/resend-icon-black.png",
+          "context": "Used for sending onboarding and invite emails",
+          "tags": ["email", "notifications"]
+        },
+        {
+          "name": "SendGrid",
+          "details": "Email delivery & marketing",
+          "link": "https://sendgrid.com/",
+          "favicon": "https://sendgrid.com/favicon.ico",
+          "context": "For high-volume email delivery and analytics in production.",
+          "tags": ["email", "marketing"]
+        },
+        {
+          "name": "Twilio",
+          "details": "SMS & voice communication",
+          "link": "https://www.twilio.com/",
+          "favicon": "https://www.twilio.com/assets/favicon.ico",
+          "context": "Used for SMS verification and user notifications.",
+          "tags": ["sms", "api", "communication"]
+        },
+        {
+          "name": "Stripe",
+          "details": "Payments & billing",
+          "link": "https://stripe.com/",
+          "favicon": "https://stripe.com/favicon.ico",
+          "context": "Handles payments and subscriptions for products and prototypes.",
+          "tags": ["payments", "billing", "api"]
+        },
+        {
+          "name": "LogRocket",
+          "details": "Session replay & frontend monitoring",
+          "link": "https://logrocket.com/",
+          "favicon": "https://logrocket-assets.io/img/favicon-32x32.png",
+          "context": "Replays user sessions to understand behavior and debug UI issues.",
+          "tags": ["analytics", "debugging", "frontend"]
+        },
+        {
+          "name": "Sentry",
+          "details": "Error & performance monitoring",
+          "link": "https://sentry.io/",
+          "favicon": "https://sentry.io/static/images/favicon/apple-touch-icon.png",
+          "context": "Tracks and resolves exceptions across frontend and backend environments.",
+          "tags": ["monitoring", "errors"]
+        },
+        {
+          "name": "PostHog",
+          "details": "Product analytics & experimentation",
+          "link": "https://posthog.com/",
+          "favicon": "https://posthog.com/favicon.ico",
+          "context": "For tracking user events, running A/B experiments, and feature flagging.",
+          "tags": ["analytics", "product", "experimentation"]
+        },
+        {
+          "name": "Tableau",
+          "details": "Data visualization & BI",
+          "link": "https://www.tableau.com/",
+          "favicon": "https://www.tableau.com/themes/custom/tableau_www/favicon.ico",
+          "context": "Used for advanced data analysis and performance dashboards.",
+          "tags": ["data", "visualization", "bi"]
+        }
+      ]
+    },
+    {
+      "id": "lifestyle",
+      "title": "Lifestyle & Habits",
+      "description": "Tools and routines that support focus and balance.",
+      "items": [
+        {
+          "name": "TickTick",
+          "details": "Task & habit manager",
+          "link": "https://ticktick.com/",
+          "favicon": "https://www.ticktick.com/favicon.ico",
+          "context": "Daily planner for managing habits, reminders, and recurring tasks.",
+          "tags": ["productivity", "habits"]
+        },
+        {
+          "name": "Spotify",
+          "details": "Music & ambient focus",
+          "link": "https://www.spotify.com/",
+          "favicon": "https://www.scdn.co/i/_global/favicon.png",
+          "context": "Music.",
+          "tags": ["music", "focus"]
+        }
+      ]
+    }
+  ]
+}

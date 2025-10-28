@@ -1,0 +1,243 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Terracotta Midnight v2 Color Palette */
+  --color-primary: #20465b;
+  --color-primary-dark: #132c3d;
+  --color-primary-light: #2e6079;
+
+  --color-accent-warm: #d3643e;
+  --color-accent-warm-dark: #a84e2d;
+  --color-accent-gold: #c38a27;
+
+  --color-bridge-sage: #7f9388;
+  --color-bridge-steel: #426377;
+
+  --color-bg: #faf8f5;
+  --color-surface: #ffffff;
+
+  --color-text: #222426;
+  --color-text-secondary: #5a5f61;
+  --color-text-light: #f7f9fa;
+
+  --color-divider: #e3e1dd;
+}
+
+@layer base {
+  * {
+    @apply border-divider;
+  }
+
+  body {
+    @apply font-sans antialiased;
+  }
+
+  /* Enhanced focus styles for keyboard navigation */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent-warm;
+  }
+
+  a:focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent-warm rounded-sm;
+  }
+
+  button:focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent-warm;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl font-bold tracking-tight;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl font-semibold tracking-tight;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl font-semibold;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl font-semibold;
+  }
+
+  h5 {
+    @apply text-lg md:text-xl font-semibold;
+  }
+
+  h6 {
+    @apply text-base md:text-lg font-semibold;
+  }
+
+  p {
+    @apply text-base leading-relaxed;
+  }
+
+  a {
+    @apply text-accent-warm hover:text-accent-warm-dark transition-colors;
+  }
+}
+
+@layer components {
+  /* Button styles */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent-warm text-white hover:bg-accent-warm-dark focus:ring-accent-warm;
+  }
+
+  .btn-secondary {
+    @apply btn bg-bridge-steel text-white hover:bg-primary focus:ring-bridge-steel;
+  }
+
+  .btn-outline {
+    @apply btn border-2 border-accent-warm text-accent-warm hover:bg-accent-warm hover:text-white focus:ring-accent-warm;
+  }
+
+  /* Card styles */
+  .card {
+    @apply bg-neutral-surface rounded-lg border border-divider p-6 shadow-soft transition-shadow hover:shadow-lg;
+  }
+
+  /* Badge styles */
+  .badge {
+    @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply badge bg-primary/10 text-primary;
+  }
+
+  .badge-accent {
+    @apply badge bg-accent-warm/10 text-accent-warm;
+  }
+
+  .badge-success {
+    @apply badge bg-semantic-success/10 text-semantic-success;
+  }
+}
+
+@layer utilities {
+  /* Custom gradient utilities */
+  .gradient-hero {
+    background: linear-gradient(120deg, #132c3d 0%, #20465b 50%, #d3643e 100%);
+  }
+
+  .gradient-cta {
+    background: linear-gradient(90deg, #d3643e 0%, #c38a27 100%);
+  }
+
+  .gradient-timeline {
+    background: linear-gradient(90deg, #c38a27 0%, #d3643e 50%, #426377 100%);
+  }
+
+  /* Text gradient */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(90deg, #d3643e 0%, #c38a27 100%);
+  }
+
+  /* Pulse highlight animation for search results */
+  @keyframes pulse-highlight {
+    0% {
+      background-color: rgb(251 191 36 / 0.3); /* amber-100 equivalent */
+      border-color: #d3643e;
+    }
+    100% {
+      background-color: transparent;
+      border-color: #e3e1dd; /* divider */
+    }
+  }
+
+  /* KPI badge pulse/glow animation (once on scroll into view) */
+  @keyframes kpi-pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow: 0 0 12px currentColor;
+    }
+  }
+
+  .animate-kpi-pulse {
+    animation: kpi-pulse 1s ease-in-out;
+  }
+
+  /* Hide scrollbar while maintaining scroll functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}
+
+/* Print-optimized CV styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Hide everything except main content */
+  header,
+  nav,
+  footer,
+  button {
+    display: none !important;
+  }
+
+  .cv-download {
+    max-width: 100%;
+    margin: 0;
+    padding: 0.5in;
+  }
+
+  /* Typography optimizations */
+  body {
+    font-size: 11pt;
+    line-height: 1.4;
+  }
+
+  h1 {
+    font-size: 24pt;
+  }
+
+  h2 {
+    font-size: 16pt;
+  }
+
+  h3 {
+    font-size: 13pt;
+  }
+
+  /* Page breaks */
+  section {
+    page-break-inside: avoid;
+  }
+
+  /* Link visibility */
+  a {
+    color: black;
+    text-decoration: none;
+  }
+
+  a[href]:after {
+    content: ' (' attr(href) ')';
+  }
+
+  /* Remove shadows and decorative elements */
+  * {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+}

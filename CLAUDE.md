@@ -5,6 +5,7 @@
 This is a **modern, interactive portfolio website** showcasing Colin's professional journey, projects, and expertise. The site combines visual storytelling with functional tools to create a comprehensive professional hub.
 
 **Key Features:**
+
 - Interactive timeline of career and personal milestones
 - Dynamic, filterable CV system with PDF export
 - Project showcase with detailed case studies
@@ -26,32 +27,38 @@ This is a **modern, interactive portfolio website** showcasing Colin's professio
 ## 🏗️ Tech Stack
 
 ### Core Framework
+
 - **Next.js 14+** (App Router) - SSR, routing, and performance
 - **TypeScript** - Type safety throughout
 - **React 18+** - UI components
 
 ### Styling & Design
+
 - **Tailwind CSS** - Utility-first styling
 - **shadcn/ui** - High-quality component library
 - **Radix UI** - Accessible primitives
 - **Design System** - See [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md) for colors and tokens
 
 ### Animations
+
 - **Framer Motion** - UI transitions and page animations (Future Enhancement)
 - **GSAP + ScrollTrigger** - Timeline scroll animations (Future Enhancement)
 - **Lenis** - Smooth scroll library (Future Enhancement)
 
 ### Data & Content
+
 - **Local JSON files** (`/data` folder) - Primary data source
 - **MDX** - Blog posts and project pages
 - **TypeScript interfaces** - Shared type definitions
 
 ### Testing
+
 - **Jest** - Unit testing
 - **React Testing Library** - Component testing
 - **Playwright** - E2E testing
 
 ### DevOps & Deployment
+
 - **GitHub** - Version control
 - **GitHub Actions** - CI/CD pipeline
 - **Vercel** - Hosting and deployment
@@ -158,13 +165,15 @@ npm test -- --watch
 
 # Run tests with coverage
 npm test -- --coverage
-
-# Run E2E tests
-npm run test:e2e
-
-# Run E2E tests in UI mode
-npm run test:e2e:ui
 ```
+
+**IMPORTANT: E2E Testing Guidelines**
+
+- **DO NOT run E2E tests locally** - They are flaky in local development environments
+- E2E tests are run automatically in CI/CD pipeline (GitHub Actions)
+- E2E tests run on every push and pull request
+- Focus on unit and component tests for local development
+- If you need to verify E2E behavior, push to a branch and let CI run the tests
 
 ---
 
@@ -349,6 +358,7 @@ main (production)
 ### Development Workflow
 
 1. **Create feature branch** from `development`:
+
    ```bash
    git checkout development
    git pull origin development
@@ -356,6 +366,7 @@ main (production)
    ```
 
 2. **Write tests first (TDD)**:
+
    ```bash
    # Create test file
    touch components/Hero.test.tsx
@@ -364,18 +375,26 @@ main (production)
    ```
 
 3. **Implement feature** to pass tests:
+
    ```bash
    # Write code
    # Tests should pass
    ```
 
 4. **Commit with conventional commits**:
+
    ```bash
    git add .
    git commit -m "feat(homepage): add hero section with CTA buttons"
    ```
 
+   **Note:** Pre-commit hooks automatically run:
+   - ESLint with auto-fix on staged `.js`/`.jsx`/`.ts`/`.tsx` files
+   - Prettier formatting on staged files
+   - If checks fail, fix the issues and commit again
+
 5. **Push and create PR**:
+
    ```bash
    git push origin feature/epic-2-homepage
    # Create PR on GitHub: feature/epic-2-homepage → development
@@ -407,6 +426,7 @@ Use [Conventional Commits](https://www.conventionalcommits.org/):
 ```
 
 **Types:**
+
 - `feat`: New feature
 - `fix`: Bug fix
 - `docs`: Documentation changes
@@ -416,6 +436,7 @@ Use [Conventional Commits](https://www.conventionalcommits.org/):
 - `chore`: Build process, tooling, dependencies
 
 **Examples:**
+
 ```
 feat(cv): add tag-based filtering
 fix(timeline): correct scroll animation timing
@@ -439,6 +460,7 @@ On every push to any branch:
 5. **Build** - Next.js production build
 
 On PR to `main`:
+
 - All above checks
 - Manual deployment approval
 
@@ -490,12 +512,14 @@ See [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md) for complete details.
 **"Warm light over cool depth."**
 
 A harmonized, contrast-tested hybrid combining:
+
 - **Deep navy-teal** base for structure and professionalism
 - **Terracotta + gold** accents for warmth and personality
 - **Sage + steel** bridges for smooth transitions
 - **Warm off-whites** for readable content
 
 **Key Colors:**
+
 - Primary: `#20465B` (Navy-teal)
 - Accent: `#D3643E` (Terracotta)
 - Highlight: `#C38A27` (Gold)
@@ -503,6 +527,7 @@ A harmonized, contrast-tested hybrid combining:
 - Text: `#222426` (Charcoal)
 
 The design system also includes:
+
 - Typography scale (fluid, responsive)
 - Spacing system (4px base)
 - Border radius tokens
@@ -518,10 +543,12 @@ The design system also includes:
 ### PRD (Product Requirements Document)
 
 The complete PRD is available in Linear:
+
 - **Project:** Personal Homepage
 - **URL:** https://linear.app/crod/project/personal-homepage-cb1f8417097b
 
 Key sections:
+
 1. Overview
 2. Goals & Objectives
 3. Product Summary
@@ -606,11 +633,41 @@ npm run test:e2e:ui      # Run E2E tests in UI mode
 npm run validate-data    # Validate JSON data against schemas
 ```
 
+### Pre-commit Hooks
+
+This project uses **Husky** and **lint-staged** to automatically run quality checks before commits.
+
+**Configured hooks:**
+
+- **ESLint** - Auto-fixes linting issues on staged `.js`/`.jsx`/`.ts`/`.tsx` files
+- **Prettier** - Formats staged files (code, JSON, Markdown, CSS)
+
+**How it works:**
+
+1. When you run `git commit`, Husky triggers the pre-commit hook
+2. lint-staged runs only on staged files (fast!)
+3. ESLint fixes any auto-fixable issues
+4. Prettier formats all staged files
+5. If any errors remain, the commit is blocked until you fix them
+
+**Setup files:**
+
+- `.husky/pre-commit` - Hook script
+- `package.json` - lint-staged configuration
+- `.prettierrc` - Prettier formatting rules
+
+**Bypassing hooks (not recommended):**
+
+```bash
+git commit --no-verify -m "message"
+```
+
 ---
 
 ## 📝 Issue Tracking
 
 All work is tracked in Linear with:
+
 - **Priority labels** (P0-P4)
 - **Dependencies** between issues
 - **Acceptance criteria** in descriptions
@@ -629,6 +686,7 @@ All work is tracked in Linear with:
 ## 🤝 Contributing
 
 This is a personal project, but the workflow is documented for:
+
 - Collaboration with Claude (AI pair programming)
 - Potential future contributors
 - Portfolio demonstration of best practices
@@ -636,6 +694,7 @@ This is a personal project, but the workflow is documented for:
 ### Code Review Checklist
 
 Before merging a PR:
+
 - [ ] All tests pass (unit, component, E2E)
 - [ ] TypeScript compiles without errors
 - [ ] ESLint passes with no warnings
@@ -650,6 +709,7 @@ Before merging a PR:
 ## 📚 Resources
 
 ### Documentation
+
 - [Next.js Docs](https://nextjs.org/docs)
 - [Tailwind CSS](https://tailwindcss.com/docs)
 - [shadcn/ui](https://ui.shadcn.com/)
@@ -657,6 +717,7 @@ Before merging a PR:
 - [React Testing Library](https://testing-library.com/react)
 
 ### Tools
+
 - [Linear (Project Management)](https://linear.app/crod)
 - [GitHub (Code)](https://github.com/colin-rod/homepage)
 - [Vercel (Hosting)](https://vercel.com)
@@ -669,20 +730,21 @@ Before merging a PR:
 
 From the PRD, success is measured by:
 
-| Metric | Target |
-|--------|--------|
-| Lighthouse Performance | >90 |
-| Lighthouse Accessibility | >90 |
-| Average Visit Duration | >60 seconds |
-| PDF Generation Success | 100% (all filters work) |
-| SEO Ranking | Top 3 for "Colin [Lastname]" |
-| CTA Conversion Rate | ≥20% (Contact or Download CV) |
+| Metric                   | Target                        |
+| ------------------------ | ----------------------------- |
+| Lighthouse Performance   | >90                           |
+| Lighthouse Accessibility | >90                           |
+| Average Visit Duration   | >60 seconds                   |
+| PDF Generation Success   | 100% (all filters work)       |
+| SEO Ranking              | Top 3 for "Colin [Lastname]"  |
+| CTA Conversion Rate      | ≥20% (Contact or Download CV) |
 
 ---
 
 ## 🔮 Future Enhancements (Post-MVP)
 
 See **EPIC 14** in Linear for:
+
 - GSAP + ScrollTrigger timeline animations
 - Framer Motion page transitions
 - 3D Timeline zoom view (React Three Fiber)
@@ -699,6 +761,7 @@ See **EPIC 14** in Linear for:
 ## 📞 Support
 
 For issues or questions:
+
 - Linear: Track bugs and features
 - GitHub Issues: Technical problems
 - GitHub Discussions: Questions and ideas
