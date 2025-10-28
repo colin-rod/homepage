@@ -1,10 +1,10 @@
 {
-  "summary": "Senior Product Leader with 15+ years driving product vision, team leadership, and operational excellence in quick commerce, e-commerce, and marketplace platforms. Proven ability to launch and scale operations from zero to $1M+ ARR, build high-performing cross-functional teams of 50+ people, and deliver 40% cost reductions through data-driven product innovation and strategic execution.",
+  "summary": "I am a product leader with 15+ years helping teams build, launch, and scale products in quick commerce, e-commerce, and marketplaces. I have grown new operations from zero to over $1M ARR, built and led teams of 50+ people, and found smart ways to cut costs by over 40%; all through clear strategy, strong execution, and a love for solving real problems.",
   "focusSummaries": {
-    "all": "Senior Product Leader with 15+ years driving product vision, team leadership, and operational excellence in quick commerce, e-commerce, and marketplace platforms. Proven ability to launch and scale operations from zero to $1M+ ARR, build high-performing cross-functional teams of 50+ people, and deliver 40% cost reductions through data-driven product innovation and strategic execution.",
-    "product": "Product-focused leader with deep expertise in end-to-end product management, from vision and strategy to roadmap execution and delivery. Experienced in launching new products from 0→1, scaling existing platforms, and building data-driven product cultures across high-growth startups and large-scale marketplace platforms.",
-    "strategy": "Strategic operator with proven ability to design and execute cross-functional initiatives that drive business growth, operational efficiency, and organizational transformation. Expert in strategic planning, stakeholder alignment, go-to-market execution, and building scalable processes across product, operations, and customer success teams.",
-    "tech": "Technical product leader with hands-on engineering experience and deep understanding of modern web architectures, APIs, and development workflows. Skilled at bridging product and engineering, making technical trade-offs, and leading teams to deliver scalable, high-quality technical solutions across full-stack development, infrastructure, and data platforms."
+    "all": "I have spent the past 15+ years leading products, teams, and operations across quick commerce, e-commerce, and marketplaces. I enjoy turning ideas into something real, launching from zero, scaling fast, and helping teams work better together through data, clarity, and focus.",
+    "product": "I love building products people actually use. From shaping the vision to delivering the roadmap, I have led teams through 0→1 launches, scaled platforms, and built a culture where decisions are grounded in data and empathy for users.",
+    "strategy": "I am at my best when bringing structure to complexity, helping connecting dots across teams, setting a clear direction, and turning strategy into action. I have led cross-functional projects that improved efficiency, grew revenue, and helped teams pull in the same direction.",
+    "tech": "I come from a technical background, so I speak both product and engineering. I enjoy bridging the two; making smart trade-offs, shaping technical strategy, and leading teams that build scalable, reliable systems that actually make a difference."
   },
   "lastUpdated": "2025-10-26",
   "skills": [
@@ -61,15 +61,18 @@
   "experience": [
     {
       "id": "independent-pm-dev-2024",
-      "title": "Independent Product Manager & Full-Stack Developer",
+      "title": "Founder, Independent Product Manager & Full-Stack Developer",
       "company": "Independent",
       "icon": "/images/companies/independent.svg",
       "location": "Remote",
       "startDate": "2024-01-01",
       "endDate": null,
-      "description": "Focused on building and validating independent product ideas end-to-end, combining product strategy, full-stack engineering, and fast iteration cycles. Emphasised user-first design, rapid experimentation, and shipping real software.",
+      "description": "Focused on building and validating independent product and business ideas, combining product strategy, full-stack engineering, and fast iteration cycles. Emphasised user-first design, rapid experimentation, and shipping real software.",
       "highlights": [
-        "[TribeApp](/projects/tribe-update) - Privacy-First Family & Community Media Sharing Platform: Defined product vision and MVP for secure platform enabling families and local communities to store and share media; implemented authentication and privacy features using Supabase RLS and secure storage; built responsive prototype in Next.js with real-time flows (sign-up, sharing, permissions) and positioned for future scaling",
+        {
+          "text": "[TribeApp](/projects/tribe-update) - Privacy-First Family & Community Media Sharing Platform: Defined product vision and built MVP for secure platform enabling families and local communities to store and share media; implemented authentication and privacy features using Supabase RLS and secure storage; built responsive prototype in Next.js with real-time flows (sign-up, sharing, permissions) and positioned for future scaling",
+          "skills": ["Product Management", "React", "Next.js", "Supabase", "UI/UX Design"]
+        },
         "[BabyPool](/projects/babypool) - Collaborative Baby Name & Guessing Game App: Created mobile-first product for comparing, voting, and gamifying baby name guesses with family and friends; designed onboarding, invitation, and leaderboard flows to drive retention; ran multiple prototype iterations with real users, refining UX and scoring rules based on feedback",
         "Technical Stack: Full-stack development using React, Next.js, TypeScript, Tailwind CSS; Backend & data architecture with Supabase (Postgres, Auth, Storage, Realtime), deployed via Vercel/GitHub Actions; Built features and prototypes using OpenAI APIs, integrated external APIs, and ran lightweight A/B tests to measure user demand"
       ],

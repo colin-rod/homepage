@@ -92,6 +92,12 @@ export interface KPI {
   category: 'revenue' | 'team' | 'efficiency' | 'growth' | 'cost'
 }
 
+// Highlight entry that can be tagged with skills for granular filtering
+export interface HighlightEntry {
+  text: string // The highlight text (supports markdown)
+  skills?: string[] // Skills demonstrated in this specific highlight
+}
+
 export interface CVExperience {
   id: string
   title: string
@@ -101,7 +107,7 @@ export interface CVExperience {
   startDate: string // ISO 8601
   endDate?: string | null
   description: string
-  highlights: string[]
+  highlights: (string | HighlightEntry)[] // Support both string and object formats
   tags: string[] // For filtering (e.g., ['product', 'strategy'])
   skills?: string[] // Skills used in this role (for skill-based filtering)
   kpis?: KPI[] // Key performance indicators for the role

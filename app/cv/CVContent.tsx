@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CV, CVFilterType } from '@/lib/types'
+import { CV, CVFilterType, HighlightEntry } from '@/lib/types'
 import { staggerContainerVariants, staggerItemVariants } from '@/components/animations/variants'
 import { usePostHog } from 'posthog-js/react'
 import Fuse from 'fuse.js'
@@ -72,6 +72,38 @@ export default function CVContent({ cvData }: CVContentProps) {
       return matchesRoleFilter && matchesSkillFilter
     })
   }, [cvData.experience, activeFilter, activeSkills])
+
+  /**
+   * Filter highlights based on active skills
+   * Returns filtered highlights for a given experience entry
+   * Supports both string and HighlightEntry formats for backward compatibility
+   */
+  const getFilteredHighlights = (
+    highlights: (string | HighlightEntry)[],
+    activeSkills: Set<string>
+  ): (string | HighlightEntry)[] => {
+    // If no skills selected, show all highlights
+    if (activeSkills.size === 0) {
+      return highlights
+    }
+
+    return highlights.filter((highlight) => {
+      // Handle string format (backward compatibility - show all)
+      if (typeof highlight === 'string') {
+        return true
+      }
+
+      // Handle HighlightEntry format
+      // Show highlight if:
+      // 1. It has no skills tagged (neutral highlight)
+      // 2. It has at least one skill that matches active skills
+      if (!highlight.skills || highlight.skills.length === 0) {
+        return true
+      }
+
+      return highlight.skills.some((skill) => activeSkills.has(skill))
+    })
+  }
 
   // Search WITHIN filtered results and extract match metadata
   const searchResults = useMemo((): SearchResultItem[] => {
@@ -469,28 +501,37 @@ export default function CVContent({ cvData }: CVContentProps) {
                 )}
                 <div className="space-y-8">
                   {(displayedExperience.length > 0 ? displayedExperience : cvData.experience).map(
-                    (exp) => (
-                      <ExperienceCard
-                        key={exp.id}
-                        ref={cardRefs.current.get(exp.id)}
-                        id={exp.id}
-                        title={exp.title}
-                        company={exp.company}
-                        icon={exp.icon}
-                        location={exp.location}
-                        startDate={exp.startDate}
-                        endDate={exp.endDate}
-                        description={exp.description}
-                        highlights={exp.highlights || []}
-                        tags={exp.tags || []}
-                        isExpanded={expandedRoles.has(exp.id)}
-                        onToggle={() => handleToggleRole(exp.id, `${exp.title} at ${exp.company}`)}
-                        formatDate={formatDate}
-                        searchQuery={searchQuery}
-                        isHighlighted={highlightedCardId === exp.id}
-                        kpis={exp.kpis}
-                      />
-                    )
+                    (exp) => {
+                      const filteredHighlights = getFilteredHighlights(
+                        exp.highlights || [],
+                        activeSkills
+                      )
+                      return (
+                        <ExperienceCard
+                          key={exp.id}
+                          ref={cardRefs.current.get(exp.id)}
+                          id={exp.id}
+                          title={exp.title}
+                          company={exp.company}
+                          icon={exp.icon}
+                          location={exp.location}
+                          startDate={exp.startDate}
+                          endDate={exp.endDate}
+                          description={exp.description}
+                          highlights={filteredHighlights}
+                          totalHighlights={exp.highlights?.length || 0}
+                          tags={exp.tags || []}
+                          isExpanded={expandedRoles.has(exp.id)}
+                          onToggle={() =>
+                            handleToggleRole(exp.id, `${exp.title} at ${exp.company}`)
+                          }
+                          formatDate={formatDate}
+                          searchQuery={searchQuery}
+                          isHighlighted={highlightedCardId === exp.id}
+                          kpis={exp.kpis}
+                        />
+                      )
+                    }
                   )}
                 </div>
               </>

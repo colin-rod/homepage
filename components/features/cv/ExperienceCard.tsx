@@ -20,7 +20,7 @@ import { expandableCardVariants } from '@/components/animations/variants'
 import HighlightText from './HighlightText'
 import MarkdownText from './MarkdownText'
 import KPIBadgeRow from './KPIBadgeRow'
-import { KPI } from '@/lib/types'
+import { KPI, HighlightEntry } from '@/lib/types'
 
 export interface ExperienceCardProps {
   id: string
@@ -31,7 +31,8 @@ export interface ExperienceCardProps {
   startDate: string
   endDate?: string | null
   description: string
-  highlights: string[]
+  highlights: (string | HighlightEntry)[]
+  totalHighlights?: number // Total before filtering
   tags: string[]
   isExpanded: boolean
   onToggle: () => void
@@ -53,6 +54,7 @@ const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
       endDate,
       description,
       highlights,
+      totalHighlights,
       tags,
       isExpanded,
       onToggle,
@@ -64,6 +66,11 @@ const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
     ref
   ) => {
     const shouldReduceMotion = useReducedMotion()
+
+    // Helper to get text from highlight (handles both string and HighlightEntry)
+    const getHighlightText = (highlight: string | HighlightEntry): string => {
+      return typeof highlight === 'string' ? highlight : highlight.text
+    }
 
     const highlightCount = highlights.length
     const condensedCount = 3
@@ -155,9 +162,16 @@ const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
         </p>
 
         {/* Highlights */}
-        {highlights.length > 0 && (
+        {highlights.length > 0 ? (
           <div>
-            <h4 className="text-sm font-semibold text-text uppercase mb-3">Key Achievements</h4>
+            <div className="flex items-center justify-between mb-3">
+              <h4 className="text-sm font-semibold text-text uppercase">Key Achievements</h4>
+              {totalHighlights && totalHighlights > highlights.length && (
+                <span className="text-xs text-text-secondary">
+                  Showing {highlights.length} of {totalHighlights} highlights
+                </span>
+              )}
+            </div>
             <ul className="space-y-2">
               {/* Always visible highlights (first 3) */}
               {visibleHighlights.map((highlight, index) => (
@@ -165,7 +179,7 @@ const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
                   <span className="text-accent-warm mr-2">•</span>
                   <span className="text-text-secondary">
                     <MarkdownText
-                      text={highlight}
+                      text={getHighlightText(highlight)}
                       searchQuery={searchQuery}
                       trackingContext={{ roleId: id, company }}
                     />
@@ -188,7 +202,7 @@ const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
                           <span className="text-accent-warm mr-2">•</span>
                           <span className="text-text-secondary">
                             <MarkdownText
-                              text={highlight}
+                              text={getHighlightText(highlight)}
                               searchQuery={searchQuery}
                               trackingContext={{ roleId: id, company }}
                             />
@@ -208,7 +222,7 @@ const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
                       <span className="text-accent-warm mr-2">•</span>
                       <span className="text-text-secondary">
                         <MarkdownText
-                          text={highlight}
+                          text={getHighlightText(highlight)}
                           searchQuery={searchQuery}
                           trackingContext={{ roleId: id, company }}
                         />
@@ -219,7 +233,14 @@ const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
               )}
             </ul>
           </div>
-        )}
+        ) : totalHighlights && totalHighlights > 0 ? (
+          <div className="rounded-lg bg-neutral-surface border border-divider p-4">
+            <p className="text-sm text-text-secondary text-center">
+              No highlights match the selected skills. This role has {totalHighlights} total{' '}
+              {totalHighlights === 1 ? 'highlight' : 'highlights'} that may use other skills.
+            </p>
+          </div>
+        ) : null}
 
         {/* Tags */}
         {tags.length > 0 && (

@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { getCVData } from '@/lib/data'
 import { formatDate } from '@/lib/utils'
+import { HighlightEntry } from '@/lib/types'
 
 interface CVDownloadPageProps {
   searchParams: Promise<{
@@ -84,9 +85,13 @@ export default async function CVDownloadPage({ searchParams }: CVDownloadPagePro
               <p className="text-secondary mb-2 print:text-sm">{exp.description}</p>
               {exp.highlights && exp.highlights.length > 0 && (
                 <ul className="list-disc list-inside space-y-1 text-secondary print:text-sm">
-                  {exp.highlights.map((highlight, idx) => (
-                    <li key={idx}>{highlight}</li>
-                  ))}
+                  {exp.highlights.map((highlight, idx) => {
+                    // Handle both string and HighlightEntry formats
+                    const text = typeof highlight === 'string' ? highlight : highlight.text
+                    // Strip markdown syntax for print
+                    const plainText = text.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+                    return <li key={idx}>{plainText}</li>
+                  })}
                 </ul>
               )}
             </div>
