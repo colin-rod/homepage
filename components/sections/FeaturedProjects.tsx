@@ -63,17 +63,6 @@ export default function FeaturedProjects() {
                         >
                           {project.quarter ? `${project.quarter} ${project.year}` : project.year}
                         </time>
-                        <span
-                          className={`badge ${
-                            project.status === 'active'
-                              ? 'badge-success'
-                              : project.status === 'completed'
-                                ? 'badge-primary'
-                                : 'badge-accent'
-                          }`}
-                        >
-                          {project.status}
-                        </span>
                       </div>
 
                       <div className="group relative">

@@ -1,46 +1,5 @@
 [
   {
-    "id": "sample-full-project",
-    "title": "Sample Project With Full Metadata",
-    "slug": "sample-full-project",
-    "description": "Reference implementation that exercises every project data field",
-    "detailedDescription": "Used across the site to validate rendering paths for detailed project entries, covering links, images, learnings, and metadata fields.",
-    "type": "project",
-    "scope": "Led the end-to-end discovery, design, and delivery of the v1 release",
-    "prd": "docs/sample-full-project-prd.pdf",
-    "businessModel": "Freemium SaaS with usage-based billing for premium insights",
-    "status": "completed",
-    "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL", "Stripe"],
-    "tags": ["saas", "freemium", "analytics", "payments", "testing", "documentation"],
-    "whyBuilt": "Needed a comprehensive example to test new portfolio components",
-    "learnings": [
-      {
-        "content": "Documenting every field helps catch UI regressions early",
-        "sentiment": "positive"
-      },
-      {
-        "content": "Automated visual tests benefit from consistent sample data",
-        "sentiment": "positive"
-      }
-    ],
-    "favicon": "/images/projects/sample-full-project/favicon.svg",
-    "links": {
-      "live": "https://example.com/sample-full-project",
-      "github": "https://github.com/example/sample-full-project",
-      "blog": "https://example.com/blog/sample-full-project",
-      "prd": "https://example.com/docs/sample-full-project-prd"
-    },
-    "images": [
-      "/images/projects/sample-full-project/dashboard.png",
-      "/images/projects/sample-full-project/mobile.png",
-      "https://example.com/sample-full-project/screenshot-dashboard.png",
-      "https://example.com/sample-full-project/screenshot-mobile.png"
-    ],
-    "featured": false,
-    "year": 2025,
-    "quarter": "Q1"
-  },
-  {
     "id": "tribe-update",
     "title": "Tribe Update",
     "slug": "tribe-update",
@@ -574,7 +533,7 @@
     "type": "project",
     "scope": "Leading end-to-end product design, technical architecture, and MVP delivery for a collaborative travel planning SaaS",
     "prd": "https://linear.app/crod/project/tripthreads-mvp-cda67386ed0a/overview",
-    "businessModel": "Freemium SaaS with Pro tier (€7/month or €70/year) unlocking unlimited participants, offline write access, chat/tasks/polls, trip recap generator, unlimited media, and multi-currency export. Add-ons include trip recap print book (€10) and extra storage (€2/month/10GB).",
+    "businessModel": "Freemium SaaS with Pro tier (\u20ac7/month or \u20ac70/year) unlocking unlimited participants, offline write access, chat/tasks/polls, trip recap generator, unlimited media, and multi-currency export. Add-ons include trip recap print book (\u20ac10) and extra storage (\u20ac2/month/10GB).",
     "status": "planned",
     "techStack": [
       "Next.js",

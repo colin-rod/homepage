@@ -5,7 +5,7 @@ import { Metadata, Viewport } from 'next'
  */
 export const siteConfig = {
   name: 'Colin Rodrigues',
-  title: 'Colin Rodrigues - Product & Strategy',
+  title: 'Colin Rodrigues',
   description:
     'Interactive portfolio showcasing professional journey, projects, and expertise in product management and strategy.',
   url: 'https://colinrodrigues.com',
