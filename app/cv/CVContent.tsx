@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Filter } from 'lucide-react'
 import { CV, CVFilterType, HighlightEntry } from '@/lib/types'
 import { staggerContainerVariants, staggerItemVariants } from '@/components/animations/variants'
 import { usePostHog } from 'posthog-js/react'
@@ -448,7 +449,16 @@ export default function CVContent({ cvData }: CVContentProps) {
       {/* Skills Section */}
       <FadeIn delay={0.3} threshold={0.05}>
         <section id="skills" className="mb-16">
-          <h2 className="text-2xl font-bold text-text mb-8">Skills & Expertise</h2>
+          <div className="mb-8">
+            <div className="flex items-center gap-2">
+              <Filter aria-hidden="true" className="h-5 w-5 text-accent-warm" />
+              <h2 className="text-2xl font-bold text-text">Skills & Expertise</h2>
+            </div>
+            <div className="mt-4 space-y-1">
+              <p className="text-sm font-semibold text-text">Filter by Skill</p>
+              <p className="text-sm text-text-secondary">Tap a tag to narrow the list.</p>
+            </div>
+          </div>
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 gap-6"
             variants={staggerContainerVariants}
