@@ -515,7 +515,7 @@
     "links": {
       "prd": "https://linear.app/crod/project/hue-6a04b2642a68"
     },
-    "featured": false,
+    "featured": true,
     "year": 2026,
     "quarter": "Q1"
   },
