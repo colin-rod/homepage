@@ -7,6 +7,48 @@
     "tech": "I come from a technical background, so I speak both product and engineering. I enjoy bridging the two; making smart trade-offs, shaping technical strategy, and leading teams that build scalable, reliable systems that actually make a difference."
   },
   "lastUpdated": "2025-10-26",
+  "focusMetrics": {
+    "all": {
+      "achievements": [
+        "🚀 Scaled operations from 0 to $1M+ ARR in 3 months",
+        "👥 Built and led cross-functional teams of 50+ people",
+        "💰 Delivered $40M+ in cost savings through strategic initiatives",
+        "🌍 Launched and scaled products across multiple markets",
+        "📊 15+ years leading product, strategy, and operations",
+        "⚡ Reduced operational costs by 40% through process optimization"
+      ]
+    },
+    "product": {
+      "achievements": [
+        "🚀 Launched DoorDash Germany as first employee (0→$1M ARR)",
+        "📱 Built MVPs for TribeApp and BabyPool using Next.js + Supabase",
+        "📈 Improved merchant discoverability by 20% through ML ranking",
+        "🎯 Led 4+ product launches across fintech, retail, and sustainability",
+        "🤖 Reduced onboarding touchpoints by 50% with AI automation",
+        "✅ Achieved 8% conversion increase through A/B testing"
+      ]
+    },
+    "strategy": {
+      "achievements": [
+        "💰 Delivered $40M cost reduction through predictive analytics",
+        "📊 Achieved $700K multi-year savings via contract optimization",
+        "🎯 Improved operational efficiency by 20% in 4 months",
+        "🔧 Reduced operational overhead by 30% through automation",
+        "📉 Cut fraud incidents by 45% with strategic controls",
+        "🚀 Designed restructuring that improved margins by 20%"
+      ]
+    },
+    "tech": {
+      "achievements": [
+        "⚡ Reduced design time by 800% using AI neural networks",
+        "🛠️ Built full-stack apps with React, Next.js, TypeScript",
+        "🔗 Integrated Supabase, Stripe, Twilio, OpenAI APIs",
+        "📊 Engineered customer ranking systems using LLMs & JS",
+        "🚀 Deployed via Vercel with CI/CD pipelines (GitHub Actions)",
+        "🧪 Implemented TDD workflows with Jest and Playwright"
+      ]
+    }
+  },
   "skills": [
     {
       "category": "Product & Strategy",
