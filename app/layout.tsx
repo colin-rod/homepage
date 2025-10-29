@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { baseMetadata, viewport as baseViewport } from '@/lib/seo'
+import { Analytics } from '@vercel/analytics/react'
 import { PostHogProvider } from '@/components/providers/PostHogProvider'
 import { PostHogPageView } from '@/components/providers/PostHogPageView'
 import './globals.css'
@@ -26,6 +27,7 @@ export default function RootLayout({
           <PostHogPageView />
           {children}
         </PostHogProvider>
+        <Analytics />
       </body>
     </html>
   )
