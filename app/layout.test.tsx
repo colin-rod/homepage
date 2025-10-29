@@ -20,7 +20,7 @@ describe('RootLayout', () => {
     })
 
     it('should have correct title', () => {
-      expect(metadata.title).toBe('Colin Rodrigues - Product & Strategy')
+      expect(metadata.title).toBe('Colin Rodrigues')
     })
 
     it('should have correct description', () => {

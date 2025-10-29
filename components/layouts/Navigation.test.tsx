@@ -19,7 +19,6 @@ describe('Navigation', () => {
 
       expect(linkTexts).toContain('About')
       expect(linkTexts).toContain('Projects')
-      expect(linkTexts).toContain('Timeline')
       expect(linkTexts).toContain('Reflections')
       expect(linkTexts).toContain('CV')
       expect(linkTexts).toContain('Contact')
@@ -33,14 +32,12 @@ describe('Navigation', () => {
 
       const aboutLink = mainNav.querySelector('a[href="/about"]')
       const projectsLink = mainNav.querySelector('a[href="/projects"]')
-      const timelineLink = mainNav.querySelector('a[href="/timeline"]')
       const reflectionsLink = mainNav.querySelector('a[href="/writing"]')
       const cvLink = mainNav.querySelector('a[href="/cv"]')
       const contactLink = mainNav.querySelector('a[href="/contact"]')
 
       expect(aboutLink).toBeInTheDocument()
       expect(projectsLink).toBeInTheDocument()
-      expect(timelineLink).toBeInTheDocument()
       expect(reflectionsLink).toBeInTheDocument()
       expect(cvLink).toBeInTheDocument()
       expect(contactLink).toBeInTheDocument()

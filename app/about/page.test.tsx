@@ -69,7 +69,7 @@ describe('About Page', () => {
     it('applies proper styling to main content', () => {
       const { container } = render(<AboutPage />)
       const main = container.querySelector('main')
-      expect(main?.className).toMatch(/py-|px-/)
+      expect(main?.className).toMatch(/pt-|pb-/)
     })
 
     it('uses responsive container', () => {

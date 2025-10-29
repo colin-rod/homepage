@@ -42,7 +42,7 @@ describe('CV Download Page', () => {
     it('shows experience section', async () => {
       const searchParams = createMockSearchParams()
       render(await CVDownloadPage({ searchParams }))
-      expect(screen.getByText(/experience|professional experience/i)).toBeInTheDocument()
+      expect(screen.getByRole('heading', { name: /professional experience/i })).toBeInTheDocument()
     })
 
     it('shows education section', async () => {
