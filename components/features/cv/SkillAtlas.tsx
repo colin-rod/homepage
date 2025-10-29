@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CV, CVFilterType, CVExperience, HighlightEntry } from '@/lib/types'
 import { cn } from '@/lib/utils'
@@ -8,6 +8,7 @@ import { staggerContainerVariants, staggerItemVariants } from '@/components/anim
 
 type FocusKey = Exclude<CVFilterType, 'all'>
 const focusOrder: FocusKey[] = ['product', 'strategy', 'tech']
+const COLLAPSED_COUNT = 3
 
 interface SkillAtlasProps {
   cvData: CV
@@ -258,6 +259,7 @@ export default function SkillAtlas({
   const [activeTooltip, setActiveTooltip] = useState<{ focus: FocusKey; skill: string } | null>(
     null
   )
+  const [expandedColumns, setExpandedColumns] = useState<Set<FocusKey>>(new Set())
 
   const atlasData = useMemo(() => buildAtlasData(cvData), [cvData])
   const visibleFocuses: FocusKey[] =
@@ -268,6 +270,29 @@ export default function SkillAtlas({
       : visibleFocuses.length === 2
         ? 'md:grid-cols-2'
         : 'md:grid-cols-1'
+
+  useEffect(() => {
+    setHoveredFocus(null)
+    setActiveTooltip(null)
+
+    if (activeFilter === 'all') {
+      setExpandedColumns(new Set())
+    } else {
+      setExpandedColumns(new Set([activeFilter as FocusKey]))
+    }
+  }, [activeFilter])
+
+  const toggleColumnExpansion = useCallback((focus: FocusKey) => {
+    setExpandedColumns((prev) => {
+      const next = new Set(prev)
+      if (next.has(focus)) {
+        next.delete(focus)
+      } else {
+        next.add(focus)
+      }
+      return next
+    })
+  }, [])
 
   return (
     <section id="skills" className="mb-16">
@@ -297,6 +322,8 @@ export default function SkillAtlas({
             const meta = focusDisplay[focus]
             const skills = atlasData[focus]
             const isSingleFocus = visibleFocuses.length === 1
+            const isExpanded = expandedColumns.has(focus)
+            const visibleSkills = isExpanded ? skills : skills.slice(0, COLLAPSED_COUNT)
             return (
               <motion.div
                 key={focus}
@@ -319,7 +346,7 @@ export default function SkillAtlas({
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {skills.map((skill) => {
+                  {visibleSkills.map((skill) => {
                     const isActive = activeSkills.has(skill.name)
                     const isShared = skill.isShared
 
@@ -346,6 +373,18 @@ export default function SkillAtlas({
                     )
                   })}
                 </div>
+                {skills.length > COLLAPSED_COUNT && (
+                  <button
+                    type="button"
+                    onClick={() => toggleColumnExpansion(focus)}
+                    className={cn(
+                      'mt-4 text-sm font-semibold transition-opacity duration-150 hover:opacity-80',
+                      meta.headerClasses
+                    )}
+                  >
+                    {isExpanded ? 'Show less' : 'Show more'}
+                  </button>
+                )}
               </motion.div>
             )
           })}
@@ -363,6 +402,8 @@ export default function SkillAtlas({
         {visibleFocuses.map((focus) => {
           const meta = focusDisplay[focus]
           const skills = atlasData[focus]
+          const isExpanded = expandedColumns.has(focus)
+          const visibleSkills = isExpanded ? skills : skills.slice(0, COLLAPSED_COUNT)
           const isDimmed =
             visibleFocuses.length > 1 && hoveredFocus !== null && hoveredFocus !== focus
 
@@ -398,7 +439,7 @@ export default function SkillAtlas({
               </div>
 
               <div className="flex flex-wrap gap-2">
-                {skills.map((skill) => {
+                {visibleSkills.map((skill) => {
                   const isActive = activeSkills.has(skill.name)
                   const isShared = skill.isShared
                   const showTooltip =
@@ -468,6 +509,20 @@ export default function SkillAtlas({
                   )
                 })}
               </div>
+              {skills.length > COLLAPSED_COUNT && (
+                <div className="mt-4">
+                  <button
+                    type="button"
+                    onClick={() => toggleColumnExpansion(focus)}
+                    className={cn(
+                      'text-sm font-semibold transition-opacity duration-150 hover:opacity-80',
+                      meta.headerClasses
+                    )}
+                  >
+                    {isExpanded ? 'Show less' : 'Show more'}
+                  </button>
+                </div>
+              )}
             </motion.div>
           )
         })}
@@ -475,7 +530,3 @@ export default function SkillAtlas({
     </section>
   )
 }
-useEffect(() => {
-  setHoveredFocus(null)
-  setActiveTooltip(null)
-}, [activeFilter])
