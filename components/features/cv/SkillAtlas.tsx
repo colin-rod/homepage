@@ -1,17 +1,19 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CV, CVFilterType, CVExperience, HighlightEntry } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import { staggerContainerVariants, staggerItemVariants } from '@/components/animations/variants'
 
 type FocusKey = Exclude<CVFilterType, 'all'>
+const focusOrder: FocusKey[] = ['product', 'strategy', 'tech']
 
 interface SkillAtlasProps {
   cvData: CV
   activeSkills: Set<string>
   onSkillClick: (skill: string) => void
+  activeFilter: CVFilterType
 }
 
 interface SkillContext {
@@ -146,8 +148,6 @@ function getHighlightForSkill(experience: CVExperience, skill: string): string |
 }
 
 function buildAtlasData(cvData: CV): AtlasColumn {
-  const focusKeys: FocusKey[] = ['product', 'strategy', 'tech']
-
   const skillMap = new Map<
     string,
     {
@@ -185,7 +185,7 @@ function buildAtlasData(cvData: CV): AtlasColumn {
   // Enrich with experience data for focus mapping + context
   cvData.experience.forEach((experience) => {
     const focusTags = experience.tags.filter((tag): tag is FocusKey =>
-      focusKeys.includes(tag as FocusKey)
+      focusOrder.includes(tag as FocusKey)
     )
 
     if (!experience.skills) {
@@ -196,7 +196,7 @@ function buildAtlasData(cvData: CV): AtlasColumn {
       const entry = getOrCreateSkill(skill)
       const highlight = getHighlightForSkill(experience, skill)
       const contexts = entry.contexts
-      const focus = focusTags.length ? focusTags : focusKeys
+      const focus = focusTags.length ? focusTags : focusOrder
 
       focus.forEach((tag) => entry.focuses.add(tag))
 
@@ -217,7 +217,7 @@ function buildAtlasData(cvData: CV): AtlasColumn {
   }
 
   skillMap.forEach((entry) => {
-    const focuses = entry.focuses.size > 0 ? Array.from(entry.focuses) : focusKeys
+    const focuses = entry.focuses.size > 0 ? Array.from(entry.focuses) : focusOrder
     const contexts = Array.from(entry.contexts.values())
 
     const atlasSkill: AtlasSkill = {
@@ -241,20 +241,33 @@ function buildAtlasData(cvData: CV): AtlasColumn {
     return a.name.localeCompare(b.name)
   }
 
-  focusKeys.forEach((focus) => {
+  focusOrder.forEach((focus) => {
     columns[focus].sort(sortSkills)
   })
 
   return columns
 }
 
-export default function SkillAtlas({ cvData, activeSkills, onSkillClick }: SkillAtlasProps) {
+export default function SkillAtlas({
+  cvData,
+  activeSkills,
+  onSkillClick,
+  activeFilter,
+}: SkillAtlasProps) {
   const [hoveredFocus, setHoveredFocus] = useState<FocusKey | null>(null)
   const [activeTooltip, setActiveTooltip] = useState<{ focus: FocusKey; skill: string } | null>(
     null
   )
 
   const atlasData = useMemo(() => buildAtlasData(cvData), [cvData])
+  const visibleFocuses: FocusKey[] =
+    activeFilter === 'all' ? focusOrder : [activeFilter as FocusKey]
+  const gridColsClass =
+    visibleFocuses.length === 3
+      ? 'md:grid-cols-3'
+      : visibleFocuses.length === 2
+        ? 'md:grid-cols-2'
+        : 'md:grid-cols-1'
 
   return (
     <section id="skills" className="mb-16">
@@ -272,21 +285,26 @@ export default function SkillAtlas({ cvData, activeSkills, onSkillClick }: Skill
       {/* Mobile horizontal scroll */}
       <div className="-mx-6 mb-6 md:hidden">
         <motion.div
-          className="flex gap-4 overflow-x-auto px-6 pb-4"
+          className={cn(
+            'flex gap-4 px-6 pb-4',
+            visibleFocuses.length > 1 ? 'overflow-x-auto' : 'overflow-visible'
+          )}
           variants={staggerContainerVariants}
           initial="hidden"
           animate="visible"
         >
-          {(Object.keys(atlasData) as FocusKey[]).map((focus) => {
+          {visibleFocuses.map((focus) => {
             const meta = focusDisplay[focus]
             const skills = atlasData[focus]
+            const isSingleFocus = visibleFocuses.length === 1
             return (
               <motion.div
                 key={focus}
                 variants={staggerItemVariants}
                 className={cn(
-                  'relative flex-shrink-0 rounded-2xl border backdrop-blur px-5 py-6 shadow-sm min-w-[80%]',
-                  meta.columnClasses
+                  'relative flex-shrink-0 rounded-2xl border backdrop-blur px-5 py-6 shadow-sm',
+                  meta.columnClasses,
+                  isSingleFocus ? 'min-w-full' : 'min-w-[80%]'
                 )}
               >
                 <div className="sticky top-0 mb-4 bg-transparent">
@@ -336,16 +354,17 @@ export default function SkillAtlas({ cvData, activeSkills, onSkillClick }: Skill
 
       {/* Desktop grid */}
       <motion.div
-        className="hidden gap-6 md:grid md:grid-cols-3"
+        className={cn('hidden gap-6 md:grid', gridColsClass)}
         variants={staggerContainerVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }}
       >
-        {(Object.keys(atlasData) as FocusKey[]).map((focus) => {
+        {visibleFocuses.map((focus) => {
           const meta = focusDisplay[focus]
           const skills = atlasData[focus]
-          const isDimmed = hoveredFocus !== null && hoveredFocus !== focus
+          const isDimmed =
+            visibleFocuses.length > 1 && hoveredFocus !== null && hoveredFocus !== focus
 
           return (
             <motion.div
@@ -456,3 +475,7 @@ export default function SkillAtlas({ cvData, activeSkills, onSkillClick }: Skill
     </section>
   )
 }
+useEffect(() => {
+  setHoveredFocus(null)
+  setActiveTooltip(null)
+}, [activeFilter])

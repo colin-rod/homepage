@@ -397,7 +397,12 @@ export default function CVContent({ cvData }: CVContentProps) {
 
       {/* Skill Atlas */}
       <FadeIn delay={0.16} threshold={0.05}>
-        <SkillAtlas cvData={cvData} activeSkills={activeSkills} onSkillClick={handleSkillClick} />
+        <SkillAtlas
+          cvData={cvData}
+          activeSkills={activeSkills}
+          onSkillClick={handleSkillClick}
+          activeFilter={activeFilter}
+        />
       </FadeIn>
 
       {/* Search Bar */}
