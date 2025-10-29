@@ -67,7 +67,7 @@
       "location": "Remote",
       "startDate": "2024-01-01",
       "endDate": null,
-      "description": "Focused on building and validating independent product and business ideas, combining product strategy, full-stack engineering, and fast iteration cycles. Emphasised user-first design, rapid experimentation, and shipping real software.",
+      "description": "Focused on building and validating product and business ideas while balancing a young family.",
       "highlights": [
         {
           "text": "[TribeApp](/projects/tribe-update) - Privacy-First Family & Community Media Sharing Platform: Defined product vision and built MVP for secure platform enabling families and local communities to store and share media; implemented authentication and privacy features using Supabase RLS and secure storage; built responsive prototype in Next.js with real-time flows (sign-up, sharing, permissions) and positioned for future scaling",

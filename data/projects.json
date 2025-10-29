@@ -534,7 +534,7 @@
     "scope": "Leading end-to-end product design, technical architecture, and MVP delivery for a collaborative travel planning SaaS",
     "prd": "https://linear.app/crod/project/tripthreads-mvp-cda67386ed0a/overview",
     "businessModel": "Freemium SaaS with Pro tier (\u20ac7/month or \u20ac70/year) unlocking unlimited participants, offline write access, chat/tasks/polls, trip recap generator, unlimited media, and multi-currency export. Add-ons include trip recap print book (\u20ac10) and extra storage (\u20ac2/month/10GB).",
-    "status": "planned",
+    "status": "in-progress",
     "techStack": [
       "Next.js",
       "React",
