@@ -16,6 +16,7 @@ import SearchResultsPanel, {
   type SearchResultItem,
 } from '@/components/features/cv/SearchResultsPanel'
 import FloatingNav from '@/components/features/cv/FloatingNav'
+import { FocusTicker } from '@/components/features/cv/FocusTicker'
 
 interface CVContentProps {
   cvData: CV
@@ -327,6 +328,23 @@ export default function CVContent({ cvData }: CVContentProps) {
               {cvData.focusSummaries?.[activeFilter] || cvData.summary}
             </motion.p>
           </AnimatePresence>
+
+          {/* Achievements Ticker */}
+          {cvData.focusMetrics?.[activeFilter]?.achievements && (
+            <div className="mt-6 p-4 bg-accent-warm/5 border border-accent-warm/20 rounded-lg">
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-semibold text-accent-warm uppercase tracking-wide shrink-0">
+                  Key Achievements
+                </span>
+                <div className="flex-1 min-w-0">
+                  <FocusTicker
+                    items={cvData.focusMetrics[activeFilter].achievements}
+                    rotationSpeed={4000}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </FadeIn>
 
