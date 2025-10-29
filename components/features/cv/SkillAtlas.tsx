@@ -256,18 +256,6 @@ export default function SkillAtlas({ cvData, activeSkills, onSkillClick }: Skill
 
   const atlasData = useMemo(() => buildAtlasData(cvData), [cvData])
 
-  const focusSummaries = {
-    product:
-      cvData.focusSummaries?.product?.split('. ')[0]?.replace(/\.$/, '') ??
-      'Shipping user-centric products, roadmaps, and experiments.',
-    strategy:
-      cvData.focusSummaries?.strategy?.split('. ')[0]?.replace(/\.$/, '') ??
-      'Scaling operations, aligning teams, and driving growth.',
-    tech:
-      cvData.focusSummaries?.tech?.split('. ')[0]?.replace(/\.$/, '') ??
-      'Bridging product and engineering with modern tooling.',
-  }
-
   return (
     <section id="skills" className="mb-16">
       <div className="mb-6">
@@ -276,8 +264,8 @@ export default function SkillAtlas({ cvData, activeSkills, onSkillClick }: Skill
         </p>
         <h2 className="text-3xl font-bold text-text sm:text-4xl">Explore skills by focus area</h2>
         <p className="mt-3 text-sm text-text-secondary max-w-2xl">
-          Hover a column to spotlight it, tap a skill to filter the experience timeline, and explore
-          where each capability was earned across product, strategy, and technical roles.
+          Hover over a skill to see which roles these were used in. Click on the skill to filter the
+          experience and explore where each capability was used.
         </p>
       </div>
 
@@ -301,7 +289,7 @@ export default function SkillAtlas({ cvData, activeSkills, onSkillClick }: Skill
                   meta.columnClasses
                 )}
               >
-                <div className="sticky top-0 mb-4 flex flex-col gap-2 bg-transparent">
+                <div className="sticky top-0 mb-4 bg-transparent">
                   <div className="flex items-center gap-2">
                     <span
                       aria-hidden="true"
@@ -311,7 +299,6 @@ export default function SkillAtlas({ cvData, activeSkills, onSkillClick }: Skill
                       {meta.label}
                     </h3>
                   </div>
-                  <p className="text-xs text-text-secondary">{focusSummaries[focus]}</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {skills.map((skill) => {
@@ -383,7 +370,6 @@ export default function SkillAtlas({ cvData, activeSkills, onSkillClick }: Skill
                       {meta.label}
                     </h3>
                   </div>
-                  <p className="mt-2 text-xs text-text-secondary">{focusSummaries[focus]}</p>
                 </div>
                 {skills.length > 0 && (
                   <span className="text-xs font-semibold uppercase tracking-wide text-text-secondary">
