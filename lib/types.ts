@@ -121,6 +121,10 @@ export interface CVEducation {
   description?: string
 }
 
+export interface CVFocusMetrics {
+  achievements: string[] // Rotating ticker items with emojis
+}
+
 export interface CV {
   summary: string
   focusSummaries?: {
@@ -128,6 +132,12 @@ export interface CV {
     product: string
     strategy: string
     tech: string
+  }
+  focusMetrics?: {
+    all: CVFocusMetrics
+    product: CVFocusMetrics
+    strategy: CVFocusMetrics
+    tech: CVFocusMetrics
   }
   lastUpdated?: string // ISO 8601 date (YYYY-MM-DD) - manually edited to track when CV was last updated
   skills: CVSkillCategory[]
