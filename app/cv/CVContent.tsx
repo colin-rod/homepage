@@ -428,49 +428,30 @@ export default function CVContent({ cvData }: CVContentProps) {
         />
       )}
 
-      {/* Download CV Buttons */}
+      {/* Download CV Section */}
       <FadeIn delay={0.2} threshold={0.05}>
-        <div id="download" className="mb-12 card bg-accent-warm/5 border-accent-warm/20">
-          <h3 className="text-sm font-semibold text-text mb-3">Download as PDF:</h3>
-          <p className="text-sm text-text-secondary mb-4">
-            Click below to open a print-optimized version. Use your browser&apos;s print function
-            (Cmd/Ctrl+P) to save as PDF.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            <a
-              href="/cv/download?filter=all"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline text-center"
-            >
-              Download Full CV
-            </a>
-            <a
-              href="/cv/download?filter=product"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline text-center"
-            >
-              Product Focus
-            </a>
-            <a
-              href="/cv/download?filter=strategy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline text-center"
-            >
-              Strategy Focus
-            </a>
-            <a
-              href="/cv/download?filter=tech"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline text-center"
-            >
-              Technical Focus
-            </a>
+        <section id="download" className="border-t border-divider pt-12 mb-16">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-text mb-4">Download CV</h2>
+            <p className="text-lg text-text-secondary mb-8">
+              Get a customized version of my CV tailored to specific role types
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+              <a href="/cv/download?filter=product" className="btn btn-primary text-center">
+                Download Product CV
+              </a>
+              <a href="/cv/download?filter=strategy" className="btn btn-primary text-center">
+                Download Strategy CV
+              </a>
+              <a href="/cv/download?filter=tech" className="btn btn-primary text-center">
+                Download Technical CV
+              </a>
+              <a href="/cv/download?filter=all" className="btn btn-secondary text-center">
+                Download Full CV
+              </a>
+            </div>
           </div>
-        </div>
+        </section>
       </FadeIn>
 
       {/* Experience Section */}
@@ -566,32 +547,6 @@ export default function CVContent({ cvData }: CVContentProps) {
               </motion.div>
             ))}
           </motion.div>
-        </section>
-      </FadeIn>
-
-      {/* CTA Section */}
-      <FadeIn delay={0.06} threshold={0.05}>
-        <section className="border-t border-divider pt-12">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-text mb-4">Download CV</h2>
-            <p className="text-lg text-text-secondary mb-8">
-              Get a customized version of my CV tailored to specific role types
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
-              <a href="/cv/download?filter=product" className="btn btn-primary text-center">
-                Download Product CV
-              </a>
-              <a href="/cv/download?filter=strategy" className="btn btn-primary text-center">
-                Download Strategy CV
-              </a>
-              <a href="/cv/download?filter=tech" className="btn btn-primary text-center">
-                Download Technical CV
-              </a>
-              <a href="/cv/download?filter=all" className="btn btn-secondary text-center">
-                Download Full CV
-              </a>
-            </div>
-          </div>
         </section>
       </FadeIn>
     </div>
