@@ -60,8 +60,7 @@ test.describe('Accessibility - Keyboard Navigation', () => {
     // Continue tabbing through nav
     await page.keyboard.press('Tab') // Now
     await page.keyboard.press('Tab') // Projects
-    await page.keyboard.press('Tab') // Timeline
-    await page.keyboard.press('Tab') // Reflections
+    await page.keyboard.press('Tab') // Uses
     await page.keyboard.press('Tab') // CV
     await page.keyboard.press('Tab') // Contact
 
