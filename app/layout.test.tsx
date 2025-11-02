@@ -12,6 +12,12 @@ jest.mock('@/components/providers/PostHogPageView', () => ({
   PostHogPageView: () => <div data-testid="posthog-pageview" />,
 }))
 
+jest.mock('@vercel/analytics/react', () => ({
+  Analytics: function MockAnalytics() {
+    return <div data-testid="vercel-analytics" />
+  },
+}))
+
 describe('RootLayout', () => {
   describe('Metadata Export', () => {
     it('should export metadata from baseMetadata', () => {
@@ -20,7 +26,7 @@ describe('RootLayout', () => {
     })
 
     it('should have correct title', () => {
-      expect(metadata.title).toBe('Colin Rodrigues - Product & Strategy')
+      expect(metadata.title).toBe('Colin Rodrigues')
     })
 
     it('should have correct description', () => {
@@ -183,6 +189,16 @@ describe('RootLayout', () => {
 
       // Children should be preserved
       expect(providerChildren[1]).toBe(multipleChildren)
+    })
+
+    it('should include Vercel Analytics component', () => {
+      const result = RootLayout({ children: <div>Test</div> })
+      const body = result.props.children
+      const bodyChildren = body.props.children
+      const analytics = bodyChildren[2]
+
+      expect(analytics).toBeDefined()
+      expect(analytics.type.name).toBe('MockAnalytics')
     })
   })
 })

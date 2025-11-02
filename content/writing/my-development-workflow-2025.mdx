@@ -1,104 +1,144 @@
 ---
 title: My Development Workflow in 2025
+slug: dev-workflow-2025
 date: 2025-10-22
-summary: How I combine Linear, Claude, OpenAI, and GitHub to ship products faster while maintaining quality. A deep dive into my modern development stack and practices.
+summary: A deep dive into my development stack and practices.
 tags: [product, tech, workflow, ai]
 draft: true
 ---
 
-# My Development Workflow in 2025
-
-**[Note: This is a draft. Fill in with your personal experiences and insights.]**
-
-Over the past year, I've refined my development workflow to balance speed with quality. Here's how I work today and why these choices matter.
-
-## The Stack
-
-### Project Management: Linear
-
-[Why you chose Linear, how you use it, what makes it effective for you]
-
-- Breaking down work into epics and issues
-- Tracking dependencies
-- Managing estimates and scope
-- [Your specific practices]
-
-### AI Pair Programming: Claude
-
-[Your experience working with Claude, specific use cases, when it works best]
-
-- Code generation and refactoring
-- Architectural decisions
-- Test-driven development
-- [Specific workflows or patterns you've developed]
-
-### Content & Ideation: OpenAI
-
-[How you use ChatGPT/OpenAI differently from Claude]
-
-- Brainstorming and ideation
-- Content generation
-- [Other use cases]
-
-### Version Control: GitHub
-
-[Your Git workflow, CI/CD practices]
-
-- Branch strategy
-- PR process
-- Automated testing
-- [How you integrate AI tools with Git]
-
-## The Workflow
-
-### 1. Planning Phase
-
-[How you start a new feature or project]
-
-### 2. Development Phase
-
-[Your TDD approach, how you work with AI]
-
-### 3. Review & Ship
-
-[Your testing strategy, deployment process]
-
-## What I've Learned
-
-### What Works Well
-
-[Specific wins, time saved, quality improvements]
-
-### What Doesn't Work
-
-[Pitfalls, when AI fails, when you need human judgment]
-
-### Evolving Practices
-
-[What you're experimenting with, what you want to improve]
-
-## Tools & Philosophy
-
-[Your principles for choosing tools, evaluating new options]
-
-### Why This Matters
-
-[How this workflow helps you ship better products]
-
-## Looking Forward
-
-[Where you think this is going, what's next in your workflow evolution]
+Over the past year, I’ve rebuilt how I work. Between AI coding partners, better tooling, and a bit of structure, I’ve gone from half-finished side projects to shipping working products that actually make sense.  
+This post is a look at what my workflow looks like in 2025 and a peek into how tools like `Claude Code`, `ChatGPT`, and `Linear` fit together, and what I’ve learned about balancing speed and structure (while maintaining my sanity) along the way.
 
 ---
 
-## Resources
+# Slow start
 
-[Links to tools mentioned, related articles, inspiration]
+Over the past two years, I’ve seen how new advances in Artificial Intelligence have unlocked the ability for hobby developers to build and develop tools and solutions at a speed previously unseen.  
+This acceleration has resulted in a [Cambrian explosion](https://en.wikipedia.org/wiki/Cambrian_explosion) — a sudden burst of creativity and experimentation that feels like everyone is building *something* new every week.  
+As someone who started their career in engineering and then took a deviation into the world of business and entrepreneurship, I saw tremendous potential in these tools to bring my (admittedly half-baked) ideas to life.  
 
-- [Linear](https://linear.app)
-- [Claude](https://claude.ai)
-- [OpenAI](https://openai.com)
-- [GitHub](https://github.com)
+In my journey through entrepreneurship, I always had a list of business ideas or projects of various scales, which I had bouncing around my head or hastily written down in various notes apps.  
+There was always something blocking the pursuit of these initiatives (need for capital, resources, not scalable, etc.), but most often it was the need for development skills, which I didn’t really have.  
+While I could speak engineering, I knew that when staring at pages of code, I lose focus and don’t have a lot of patience with the minutiae of code.  
+
+If these tools could serve to abstract away this need for technical expertise, they might reduce the barrier to entry and enable me to build and experiment faster with lower risks.  
+
+At first, I was chasing speed and was trying to build faster, but I realised that this was not getting me very far since I was directionless. What I really needed wasn’t just speed — it was *momentum*.  
+
+---
+
+## First Steps
+
+After realizing the potential of these tools, I decided to get my hands dirty.  
+
+I initially tried the cohort of “vibe coding” apps — a term used for AI-assisted IDEs like [`Cursor`](https://cursor.sh), [`Lovable`](https://lovable.dev), and [`Replit`](https://replit.com) that let you code by describing intent rather than syntax.  
+While I found these tools easy to use, they didn’t really give me confidence that I could build something stable.  
+Things would look correct, but as I kept working on the products, I would keep running into issues I couldn't get out of.  
+My code would develop into spaghetti and become unmanageable, which really put me off the idea that “vibe-coding” was the answer.  
+
+---
+
+## New Launches
+
+Those first attempts were messy, but they helped me understand what I actually needed from an AI coding partner.  
+
+This all changed with the launch of [`Claude Code`](https://claude.ai/code).  
+All of a sudden, the AI was *in* my codebase, and I could instruct it with a much larger context window directly in my CLI.  
+This was much closer to what I was looking for, and I jumped on it to see how far I could take my projects.  
+
+I loved it. It was to the point and was able to solve just about everything I threw at it. The code was modular and manageable (to the extent that even I could understand it).  
+More importantly, it gave me direction. I could finally see how my projects fit together — not as random bursts of output, but as connected steps toward a tangible product.  
+All of a sudden, the gap between my ideas and execution felt smaller — like I finally had some *momentum*.  
+
+Together with `Claude Code`, I was able to build a few hobby projects and deploy some experiments, but it was at this point that I got to the next hurdle.  
+But with greater speed came a new problem: managing scope.
+
+---
+
+## An Explosion of Features
+
+Once I found a setup that worked, I leaned in — but it turned out I might have leaned on it a bit too hard.  
+
+It was now really easy to build new features. Whatever I could think of could be built, and I would do it.  
+If I thought it would add value, I would try it and push my code into longer and longer solutions.  
+
+Then it would break.  
+
+And I was right back where I started. I realized that I now had more power, but my scope was exploding since I didn’t have a good plan around what I needed to be doing.  
+My mindset was “can it be done?” not “should it be done?”  
+I didn’t have a good definition of what success was or what “done” was.  
+New features could just be added with minimal effort — I needed a way to rein things in and give my work some direction.  
+
+Once I started layering in structure, I noticed something interesting — I could go after *larger* projects without losing control.  
+Structure gave my work more *mass*. It added weight and stability, which meant I could build bigger systems or even juggle multiple projects concurrently without things collapsing under their own speed.  
+That’s when momentum really started to take shape — not just motion, but motion with direction *and weight*.  
+
+---
+
+## Bringing Order to the Chaos
+
+I needed to slow down, add some structure, and start defining what “done” actually meant.  
+
+Now that I had a better idea as to what I was capable of building, I went back to my well of ideas and started working through them with `Claude Code` to scope them out.  
+Could they be built? Did they make sense? Would they take too much effort to maintain and scale?  
+
+Initially, I turned to `Claude Code` to help with this, but I found that for these sorts of brainstorming exercises, the answers weren’t as inventive as I’d like.  
+On some advice, I tried out [`ChatGPT`](https://chat.openai.com) as an alternative and found it to be a better thought partner for these sorts of exercises.  
+Together with the newer models from [`OpenAI`](https://openai.com), I was able to have nuanced conversations evaluating the scope and feasibility of my ideas and breaking them into manageable pieces with a defined scope of work.  
+
+---
+
+## Adding Structure
+
+Once I knew how to evaluate ideas, the next challenge was managing the actual execution.  
+
+The next piece that I needed to do was to prioritize the projects and track the work.  
+I turned to [`Linear`](https://linear.app) as a project management tool. With it, I was able to scope my projects into epics and issues, set up milestones, tags, priorities, and dependencies.  
+This helped me get a better handle on how much complexity a task would take and how it would impact other parts of the project.  
+
+I was also able to better timebox by enabling sprints, where I could evaluate how many story points I could complete in a given session or day.  
+`Claude Code`’s time-out windows actually came in handy here — they served as natural five-hour bursts of focused context before the session expired.  
+This enabled me to more accurately track my progress and plan where I’d be in the short term.  
+
+To manage feature development, I moved more strictly to Git- and TDD-based development.  
+I instructed `Claude Code` or [`OpenAI Codex`](https://openai.com/research/codex) to write the tests before writing any code.  
+I also set up Git instructions to always develop in new branches and submit work as pull requests that I’d review in [`GitHub`](https://github.com).  
+This enabled me to review what was done, identify any issues, and request corrections within the same context window before merging.  
+Switching to this workflow helped prevent errors from propagating through the codebase and minimized the risks of context windows being polluted since I was starting fresh with every new issue or branch.  
+
+---
+
+## Tools in My 2025 Development Workflow
+
+| Category | Tool | Purpose |
+|-----------|------|---------|
+| AI Coding Partner | [`Claude Code`](https://claude.ai/code) | Core development assistant for building and debugging |
+| Brainstorming & Ideation | [`ChatGPT`](https://chat.openai.com) | Helps scope, refine, and challenge project ideas |
+| Model Foundation | [`OpenAI Codex`](https://openai.com/research/codex) | Generates and tests code during TDD |
+| Project Management | [`Linear`](https://linear.app) | Planning, sprinting, and tracking progress |
+| Codebase Management | [`GitHub`](https://github.com) | Version control and pull request review |
+| Early Experiments | [`Cursor`](https://cursor.sh), [`Lovable`](https://lovable.dev), [`Replit`](https://replit.com) | Low-friction AI coding environments for quick tests |
+
+---
+
+> ## What I’ve Learned About Working With AI
+>
+> Working with AI as a coding partner has been incredibly enlightening.  
+> I’ve learned that:
+> - **Scope management** matters more than ever. As the barriers to build come down, it’s even more important to keep focus on the end goal.  
+> - **Context is a currency.** Keeping sessions small and focused makes AI output exponentially better.  
+> - **Burnout hides in productivity.** Just because I *can* build faster doesn’t mean I *should* keep going nonstop.  
+> - The most valuable thing AI gives me isn’t speed; it’s *momentum*.  
+>   Momentum is mass times velocity — speed with direction. And that direction is what makes the work feel meaningful.
+
+---
+
+So this is where I am now.  
+Juggling between bursts of writing code, reviewing pull requests, scoping future work — with childcare sandwiched in between.  
+And it works for me.  
+
+What’s next? Playing around more with `Claude Code` and `Codex` on the web; exploring Claude Skills; and continuing to build and ship — this time with a clearer sense of direction and enough structure to keep the *momentum* going.  
 
 ---
 

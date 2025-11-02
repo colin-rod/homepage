@@ -2,13 +2,11 @@
 
 import { useState, useEffect, useMemo, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Filter } from 'lucide-react'
 import { CV, CVFilterType, HighlightEntry } from '@/lib/types'
 import { staggerContainerVariants, staggerItemVariants } from '@/components/animations/variants'
 import { usePostHog } from 'posthog-js/react'
 import Fuse from 'fuse.js'
 import FadeIn from '@/components/animations/FadeIn'
-import SkillCategoryCard from '@/components/features/cv/SkillCategoryCard'
 import ExperienceCard from '@/components/features/cv/ExperienceCard'
 import EducationCard from '@/components/features/cv/EducationCard'
 import SearchBar from '@/components/features/cv/SearchBar'
@@ -17,6 +15,7 @@ import SearchResultsPanel, {
 } from '@/components/features/cv/SearchResultsPanel'
 import FloatingNav from '@/components/features/cv/FloatingNav'
 import { FocusTicker } from '@/components/features/cv/FocusTicker'
+import SkillAtlas from '@/components/features/cv/SkillAtlas'
 
 interface CVContentProps {
   cvData: CV
@@ -396,8 +395,18 @@ export default function CVContent({ cvData }: CVContentProps) {
         </div>
       </FadeIn>
 
+      {/* Skill Atlas */}
+      <FadeIn delay={0.16} threshold={0.05}>
+        <SkillAtlas
+          cvData={cvData}
+          activeSkills={activeSkills}
+          onSkillClick={handleSkillClick}
+          activeFilter={activeFilter}
+        />
+      </FadeIn>
+
       {/* Search Bar */}
-      <FadeIn delay={0.15} threshold={0.05}>
+      <FadeIn delay={0.2} threshold={0.05}>
         <div className="mb-8">
           <SearchBar
             value={searchQuery}
@@ -419,82 +428,32 @@ export default function CVContent({ cvData }: CVContentProps) {
         />
       )}
 
-      {/* Download CV Buttons */}
+      {/* Download CV Section */}
       <FadeIn delay={0.2} threshold={0.05}>
-        <div id="download" className="mb-12 card bg-accent-warm/5 border-accent-warm/20">
-          <h3 className="text-sm font-semibold text-text mb-3">Download as PDF:</h3>
-          <p className="text-sm text-text-secondary mb-4">
-            Click below to open a print-optimized version. Use your browser&apos;s print function
-            (Cmd/Ctrl+P) to save as PDF.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            <a
-              href="/cv/download?filter=all"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline text-center"
-            >
-              Download Full CV
-            </a>
-            <a
-              href="/cv/download?filter=product"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline text-center"
-            >
-              Product Focus
-            </a>
-            <a
-              href="/cv/download?filter=strategy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline text-center"
-            >
-              Strategy Focus
-            </a>
-            <a
-              href="/cv/download?filter=tech"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline text-center"
-            >
-              Technical Focus
-            </a>
-          </div>
-        </div>
-      </FadeIn>
-
-      {/* Skills Section */}
-      <FadeIn delay={0.3} threshold={0.05}>
-        <section id="skills" className="mb-16">
-          <div className="mb-8">
-            <div className="flex items-center gap-2">
-              <Filter aria-hidden="true" className="h-5 w-5 text-accent-warm" />
-              <h2 className="text-2xl font-bold text-text">Skills & Expertise</h2>
-            </div>
-            <div className="mt-4 space-y-1">
-              <p className="text-sm font-semibold text-text">Filter by Skill</p>
-              <p className="text-sm text-text-secondary">Tap a tag to narrow the list.</p>
+        <section id="download" className="border-t border-divider pt-12 mb-16">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-text mb-4">Download CV</h2>
+            <p className="text-lg text-text-secondary mb-8">
+              Get a customized version of my CV tailored to specific role types
+            </p>
+            <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:justify-start max-w-4xl mx-auto">
+              <a href="/cv/download?filter=product" className="btn btn-primary text-center">
+                Download Product CV
+              </a>
+              <a href="/cv/download?filter=strategy" className="btn btn-primary text-center">
+                Download Strategy CV
+              </a>
+              <a href="/cv/download?filter=tech" className="btn btn-primary text-center">
+                Download Technical CV
+              </a>
+              <a
+                href="/cv/download?filter=all"
+                className="btn btn-secondary text-center sm:ml-auto"
+              >
+                Download Full CV
+              </a>
             </div>
           </div>
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-            variants={staggerContainerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.05 }}
-          >
-            {cvData.skills.map((skillCategory) => (
-              <motion.div key={skillCategory.category} variants={staggerItemVariants}>
-                <SkillCategoryCard
-                  category={skillCategory.category}
-                  skills={skillCategory.items}
-                  activeSkills={activeSkills}
-                  onSkillClick={handleSkillClick}
-                />
-              </motion.div>
-            ))}
-          </motion.div>
         </section>
       </FadeIn>
 
@@ -591,32 +550,6 @@ export default function CVContent({ cvData }: CVContentProps) {
               </motion.div>
             ))}
           </motion.div>
-        </section>
-      </FadeIn>
-
-      {/* CTA Section */}
-      <FadeIn delay={0.06} threshold={0.05}>
-        <section className="border-t border-divider pt-12">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-text mb-4">Download CV</h2>
-            <p className="text-lg text-text-secondary mb-8">
-              Get a customized version of my CV tailored to specific role types
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
-              <a href="/cv/download?filter=product" className="btn btn-primary text-center">
-                Download Product CV
-              </a>
-              <a href="/cv/download?filter=strategy" className="btn btn-primary text-center">
-                Download Strategy CV
-              </a>
-              <a href="/cv/download?filter=tech" className="btn btn-primary text-center">
-                Download Technical CV
-              </a>
-              <a href="/cv/download?filter=all" className="btn btn-secondary text-center">
-                Download Full CV
-              </a>
-            </div>
-          </div>
         </section>
       </FadeIn>
     </div>
