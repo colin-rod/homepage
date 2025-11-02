@@ -436,7 +436,7 @@ export default function CVContent({ cvData }: CVContentProps) {
             <p className="text-lg text-text-secondary mb-8">
               Get a customized version of my CV tailored to specific role types
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:justify-start max-w-4xl mx-auto">
               <a href="/cv/download?filter=product" className="btn btn-primary text-center">
                 Download Product CV
               </a>
@@ -446,7 +446,10 @@ export default function CVContent({ cvData }: CVContentProps) {
               <a href="/cv/download?filter=tech" className="btn btn-primary text-center">
                 Download Technical CV
               </a>
-              <a href="/cv/download?filter=all" className="btn btn-secondary text-center">
+              <a
+                href="/cv/download?filter=all"
+                className="btn btn-secondary text-center sm:ml-auto"
+              >
                 Download Full CV
               </a>
             </div>

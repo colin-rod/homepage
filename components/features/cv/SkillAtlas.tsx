@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CV, CVFilterType, CVExperience, HighlightEntry } from '@/lib/types'
 import { cn } from '@/lib/utils'
@@ -259,7 +259,7 @@ export default function SkillAtlas({
   const [activeTooltip, setActiveTooltip] = useState<{ focus: FocusKey; skill: string } | null>(
     null
   )
-  const [expandedColumns, setExpandedColumns] = useState<Set<FocusKey>>(new Set())
+  const [showAllSkills, setShowAllSkills] = useState(activeFilter !== 'all')
 
   const atlasData = useMemo(() => buildAtlasData(cvData), [cvData])
   const visibleFocuses: FocusKey[] =
@@ -275,24 +275,13 @@ export default function SkillAtlas({
     setHoveredFocus(null)
     setActiveTooltip(null)
 
-    if (activeFilter === 'all') {
-      setExpandedColumns(new Set())
-    } else {
-      setExpandedColumns(new Set([activeFilter as FocusKey]))
-    }
+    setShowAllSkills(activeFilter !== 'all')
   }, [activeFilter])
 
-  const toggleColumnExpansion = useCallback((focus: FocusKey) => {
-    setExpandedColumns((prev) => {
-      const next = new Set(prev)
-      if (next.has(focus)) {
-        next.delete(focus)
-      } else {
-        next.add(focus)
-      }
-      return next
-    })
-  }, [])
+  const hasExpandableColumns = useMemo(
+    () => visibleFocuses.some((focus) => atlasData[focus].length > COLLAPSED_COUNT),
+    [atlasData, visibleFocuses]
+  )
 
   return (
     <section id="skills" className="mb-16">
@@ -322,7 +311,8 @@ export default function SkillAtlas({
             const meta = focusDisplay[focus]
             const skills = atlasData[focus]
             const isSingleFocus = visibleFocuses.length === 1
-            const isExpanded = expandedColumns.has(focus)
+            const columnNeedsToggle = skills.length > COLLAPSED_COUNT
+            const isExpanded = showAllSkills || !columnNeedsToggle
             const visibleSkills = isExpanded ? skills : skills.slice(0, COLLAPSED_COUNT)
             return (
               <motion.div
@@ -373,18 +363,6 @@ export default function SkillAtlas({
                     )
                   })}
                 </div>
-                {skills.length > COLLAPSED_COUNT && (
-                  <button
-                    type="button"
-                    onClick={() => toggleColumnExpansion(focus)}
-                    className={cn(
-                      'mt-4 text-sm font-semibold transition-opacity duration-150 hover:opacity-80',
-                      meta.headerClasses
-                    )}
-                  >
-                    {isExpanded ? 'Show less' : 'Show more'}
-                  </button>
-                )}
               </motion.div>
             )
           })}
@@ -402,7 +380,8 @@ export default function SkillAtlas({
         {visibleFocuses.map((focus) => {
           const meta = focusDisplay[focus]
           const skills = atlasData[focus]
-          const isExpanded = expandedColumns.has(focus)
+          const columnNeedsToggle = skills.length > COLLAPSED_COUNT
+          const isExpanded = showAllSkills || !columnNeedsToggle
           const visibleSkills = isExpanded ? skills : skills.slice(0, COLLAPSED_COUNT)
           const isDimmed =
             visibleFocuses.length > 1 && hoveredFocus !== null && hoveredFocus !== focus
@@ -509,24 +488,21 @@ export default function SkillAtlas({
                   )
                 })}
               </div>
-              {skills.length > COLLAPSED_COUNT && (
-                <div className="mt-4">
-                  <button
-                    type="button"
-                    onClick={() => toggleColumnExpansion(focus)}
-                    className={cn(
-                      'text-sm font-semibold transition-opacity duration-150 hover:opacity-80',
-                      meta.headerClasses
-                    )}
-                  >
-                    {isExpanded ? 'Show less' : 'Show more'}
-                  </button>
-                </div>
-              )}
             </motion.div>
           )
         })}
       </motion.div>
+      {hasExpandableColumns && (
+        <div className="mt-6 text-center">
+          <button
+            type="button"
+            onClick={() => setShowAllSkills((prev) => !prev)}
+            className="text-sm font-semibold text-accent-warm transition-opacity duration-150 hover:opacity-80"
+          >
+            {showAllSkills ? 'Show less' : 'Show more'}
+          </button>
+        </div>
+      )}
     </section>
   )
 }
