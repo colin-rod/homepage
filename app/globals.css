@@ -81,6 +81,27 @@
 }
 
 @layer components {
+  /* Prose table styles for MDX content */
+  .prose table {
+    @apply w-full border-collapse;
+  }
+
+  .prose thead {
+    @apply border-b-2 border-divider;
+  }
+
+  .prose th {
+    @apply px-4 py-3 text-left font-semibold text-text bg-neutral-bg;
+  }
+
+  .prose td {
+    @apply px-4 py-3 border-t border-divider;
+  }
+
+  .prose tr:hover {
+    @apply bg-neutral-bg/50;
+  }
+
   /* Button styles */
   .btn {
     @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2;
