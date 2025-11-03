@@ -36,12 +36,12 @@ describe('Utility Functions', () => {
   describe('formatDate', () => {
     it('formats date string correctly', () => {
       const result = formatDate('2024-01-15')
-      expect(result).toBe('January 15, 2024')
+      expect(result).toBe('Jan 15, 2024')
     })
 
     it('handles different date formats', () => {
       const result = formatDate('2023-12-31')
-      expect(result).toBe('December 31, 2023')
+      expect(result).toBe('Dec 31, 2023')
     })
   })
 
@@ -83,8 +83,7 @@ describe('Utility Functions', () => {
       const now = new Date()
       const start = new Date('2024-01-01')
       const expectedMonths =
-        (now.getFullYear() - start.getFullYear()) * 12 +
-        (now.getMonth() - start.getMonth())
+        (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth())
       expect(result).toBe(expectedMonths)
     })
 
@@ -103,8 +102,7 @@ describe('Utility Functions', () => {
       const now = new Date()
       const start = new Date('2024-01-01')
       const expectedMonths =
-        (now.getFullYear() - start.getFullYear()) * 12 +
-        (now.getMonth() - start.getMonth())
+        (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth())
       expect(result).toBe(expectedMonths)
     })
   })

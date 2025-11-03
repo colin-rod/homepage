@@ -10,7 +10,7 @@ export const siteConfig = {
     'Interactive portfolio showcasing professional journey, projects, and expertise in product management and strategy.',
   url: 'https://colinrodrigues.com',
   ogImage: '/og-image.png',
-  twitterHandle: '@colinrod', // TODO: Replace with actual Twitter handle
+  twitterHandle: undefined, // No Twitter account
   keywords: [
     'Colin Rodrigues',
     'Product Management',
@@ -90,8 +90,14 @@ export const baseMetadata: Metadata = {
   manifest: '/site.webmanifest',
 
   // Verification (for search console)
+  // To get Google Search Console verification code:
+  // 1. Go to https://search.google.com/search-console
+  // 2. Add your property (colinrodrigues.com)
+  // 3. Choose "HTML tag" verification method
+  // 4. Copy the content value from the meta tag (e.g., "abc123xyz...")
+  // 5. Add it to the google field below
   verification: {
-    google: '', // TODO: Add Google Search Console verification code
+    google: '', // Add Google Search Console verification code here
     // yandex: '',
     // yahoo: '',
   },
