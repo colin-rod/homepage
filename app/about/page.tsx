@@ -40,9 +40,9 @@ export default function AboutPage() {
                 </p>
                 <p>
                   Fatherhood changed a lot for me: It&apos;s ceratinly changed how I spend my time,
-                  and it's changed how I think about work and what I create (spoiler alert: lately
-                  it&apos;s mostly just a lot of tech thats meant to solve my own problems). This
-                  site is my way of showcasing how my creativity, experience and everyday life
+                  and it&apos;s changed how I think about work and what I create (spoiler alert:
+                  lately it&apos;s mostly just a lot of tech thats meant to solve my own problems).
+                  This site is my way of showcasing how my creativity, experience and everyday life
                   intersect. A home for what I&apos;m learning, experimenting with, and still
                   figuring out.
                 </p>
