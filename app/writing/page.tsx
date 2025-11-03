@@ -10,6 +10,7 @@ import { formatDate } from '@/lib/utils'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
 import PageTransition from '@/components/animations/PageTransition'
+import TimelineScrollbar from '@/components/features/writing/TimelineScrollbar'
 
 export const metadata = {
   title: 'Reflections | Colin Rodrigues',
@@ -34,6 +35,9 @@ export default function WritingPage() {
                 Thoughts on product development, strategy, and technology.
               </p>
             </header>
+
+            {/* Timeline Scrollbar */}
+            {posts.length > 0 && <TimelineScrollbar posts={posts} />}
 
             {/* Blog Posts List */}
             {posts.length === 0 ? (
