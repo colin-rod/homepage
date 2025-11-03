@@ -21,7 +21,7 @@ export function formatDate(dateString: string): string {
   const date = new Date(dateString)
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
-    month: 'long',
+    month: 'short',
     day: 'numeric',
   })
 }
@@ -29,10 +29,7 @@ export function formatDate(dateString: string): string {
 /**
  * Format a date range (start - end)
  */
-export function formatDateRange(
-  startDate: string,
-  endDate?: string | null
-): string {
+export function formatDateRange(startDate: string, endDate?: string | null): string {
   const start = new Date(startDate)
   const startFormatted = start.toLocaleDateString('en-US', {
     year: 'numeric',
@@ -55,16 +52,12 @@ export function formatDateRange(
 /**
  * Calculate duration between two dates in months
  */
-export function calculateDuration(
-  startDate: string,
-  endDate?: string | null
-): number {
+export function calculateDuration(startDate: string, endDate?: string | null): number {
   const start = new Date(startDate)
   const end = endDate ? new Date(endDate) : new Date()
 
   const months =
-    (end.getFullYear() - start.getFullYear()) * 12 +
-    (end.getMonth() - start.getMonth())
+    (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth())
 
   return months
 }
