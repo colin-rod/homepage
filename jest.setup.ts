@@ -36,6 +36,7 @@ jest.mock('lucide-react', () => ({
   Filter: (props: any) => React.createElement('svg', { ...props, 'data-testid': 'filter-icon' }),
   Code2: (props: any) => React.createElement('svg', { ...props, 'data-testid': 'code2-icon' }),
   X: (props: any) => React.createElement('svg', { ...props, 'data-testid': 'x-icon' }),
+  Clock: (props: any) => React.createElement('svg', { ...props, 'data-testid': 'clock-icon' }),
   ChevronDown: (props: any) =>
     React.createElement('svg', { ...props, 'data-testid': 'chevron-down-icon' }),
   ChevronUp: (props: any) =>
@@ -68,3 +69,19 @@ jest.mock('lucide-react', () => ({
   LucideIcon: (props: any) =>
     React.createElement('svg', { ...props, 'data-testid': 'lucide-icon' }),
 }))
+
+const originalConsoleError = console.error
+
+// Suppress jsdom's unimplemented navigation error that fires when links are clicked in tests
+console.error = (...args: any[]) => {
+  const message = args[0]?.message ?? args[0]
+
+  if (
+    typeof message === 'string' &&
+    message.includes('Not implemented: navigation (except hash changes)')
+  ) {
+    return
+  }
+
+  originalConsoleError(...args)
+}

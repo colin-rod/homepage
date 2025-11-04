@@ -94,11 +94,11 @@ export function FocusTicker({ items, rotationSpeed = 4000 }: FocusTickerProps) {
         </AnimatePresence>
       )}
 
-      {/* Hidden duplicate items for screen readers (for seamless loop perception) */}
+      {/* Hidden items for screen readers (exclude current item to avoid duplicate announcements) */}
       <div className="sr-only">
-        {items.map((item, index) => (
-          <span key={index}>{item}</span>
-        ))}
+        {items.map((item, index) =>
+          index === currentIndex ? null : <span key={index}>{item}</span>
+        )}
       </div>
     </div>
   )
