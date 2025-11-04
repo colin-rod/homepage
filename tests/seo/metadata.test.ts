@@ -105,8 +105,9 @@ describe('SEO Metadata Configuration', () => {
       expect(metadata.twitter?.images).toBeDefined()
     })
 
-    it('has Twitter creator handle', () => {
-      expect(metadata.twitter?.creator).toBeDefined()
+    it('does not have Twitter creator handle when not configured', () => {
+      // Twitter creator is optional - only present if twitterHandle is configured
+      expect(metadata.twitter?.creator).toBeUndefined()
     })
   })
 

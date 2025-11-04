@@ -31,6 +31,10 @@ lerna-debug.log*
 # Vercel
 .vercel
 
+# Sentry
+.sentryclirc
+sentry.properties
+
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts

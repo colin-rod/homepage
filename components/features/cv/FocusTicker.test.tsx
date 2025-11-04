@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { act, render, screen, waitFor } from '@testing-library/react'
 import { FocusTicker } from './FocusTicker'
 
 // Mock framer-motion to avoid animation complexities in tests
@@ -137,7 +137,9 @@ describe('FocusTicker', () => {
     })
 
     afterEach(() => {
-      jest.runOnlyPendingTimers()
+      act(() => {
+        jest.runOnlyPendingTimers()
+      })
       jest.useRealTimers()
     })
 
@@ -148,10 +150,18 @@ describe('FocusTicker', () => {
       expect(screen.getByText(mockAchievements[0])).toBeInTheDocument()
 
       // Fast-forward time to trigger rotation
-      jest.advanceTimersByTime(1000)
+      act(() => {
+        jest.advanceTimersByTime(1000)
+      })
 
       // Ticker should still be rendering (continuous loop)
-      expect(screen.getByText(mockAchievements[0])).toBeInTheDocument()
+      const tickerContents = screen.getAllByTestId('ticker-content')
+      expect(tickerContents.length).toBeGreaterThan(0)
+      expect(
+        tickerContents.some((element) =>
+          mockAchievements.includes(element.textContent?.trim() ?? '')
+        )
+      ).toBe(true)
     })
 
     it('does not pause on hover', () => {

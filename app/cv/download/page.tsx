@@ -1,7 +1,6 @@
 import { Metadata } from 'next'
 import { getCVData } from '@/lib/data'
 import { formatDate } from '@/lib/utils'
-import { HighlightEntry } from '@/lib/types'
 
 interface CVDownloadPageProps {
   searchParams: Promise<{

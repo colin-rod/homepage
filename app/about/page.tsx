@@ -35,26 +35,22 @@ export default function AboutPage() {
             <section className="mb-16">
               <div className="prose prose-lg max-w-none text-text-secondary space-y-6">
                 <p>
-                  Hi, I&apos;m Colin; a builder, a father, and someone who&apos;s constantly curious
-                  about how ideas turn into things that matter.
+                  Hi, I&apos;m Colin. I&apos;m a builder, a father, and someone who&apos;s
+                  constantly curious about how ideas turn into things that matter.
                 </p>
                 <p>
-                  Fatherhood shifted a lot for me; not just how I spend my time, but what I want
-                  that time to mean. It&apos;s changed how I think about work and what I create.
-                  These days, I&apos;m less focused on scale for its own sake and more on harmony;
-                  finding ways to bring creativity, technology, and everyday life together in a way
-                  that feels meaningful.
-                </p>
-                <p>
-                  This site is my way of weaving those threads together
-                  <br /> A home for what I&apos;m learning, experimenting with, and still figuring
-                  out.
+                  Fatherhood changed a lot for me: It&apos;s ceratinly changed how I spend my time,
+                  and it&apos;s changed how I think about work and what I create (spoiler alert:
+                  lately it&apos;s mostly just a lot of tech thats meant to solve my own problems).
+                  This site is my way of showcasing how my creativity, experience and everyday life
+                  intersect. A home for what I&apos;m learning, experimenting with, and still
+                  figuring out.
                 </p>
                 <h2 className="text-2xl font-bold text-text mb-4">Building Through Curiosity</h2>
                 <p>
                   I started my career in engineering, and lately, I&apos;ve found myself drawn back
-                  to it — rediscovering the creative and problem-solving itch that first got me into
-                  building. Tools like{' '}
+                  to it. I&apos;m rediscovering the creative and problem-solving itch that first got
+                  me into building. Tools like{' '}
                   <a href="https://claude.ai" target="_blank" rel="noopener noreferrer">
                     Claude Code
                   </a>
@@ -81,8 +77,8 @@ export default function AboutPage() {
                 <h2 className="text-2xl font-bold text-text mb-4">Why I&apos;m Sharing</h2>
                 <p>
                   Most of what I build starts as a personal problem; something small and specific I
-                  want to solve. Some stay that way; others evolve into larger projects. I use this
-                  space to document that process; to chart the path from idea to experiment to
+                  want to solve. Some stay that way and others evolve into larger projects. I use
+                  this space to document that process; to chart the path from idea to experiment to
                   something more tangible, and to share it openly so others can learn from it too.
                 </p>
                 <p>
@@ -95,14 +91,8 @@ export default function AboutPage() {
             </section>
 
             {/* Recent Activity Section */}
-            <section className="mb-16">
-              <h2 className="text-2xl font-bold text-text mb-4">Building in Public</h2>
-              <p className="text-text-secondary mb-6">
-                Here&apos;s a snapshot of my recent coding activity. I believe in learning and
-                building in public, sharing the process as much as the outcomes.
-              </p>
-              <GitHubChart username="colin-rod" color="D3643E" />
-            </section>
+
+            <GitHubChart username="colin-rod" color="D3643E" />
 
             {/* CTA Section */}
             <section className="border-t border-divider pt-12">

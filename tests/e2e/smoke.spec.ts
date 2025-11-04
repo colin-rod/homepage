@@ -40,11 +40,11 @@ test.describe('Smoke Tests - Critical Paths', () => {
     await expect(page).toHaveTitle(/cv|curriculum vitae/i)
     await expect(page.getByRole('heading', { name: /curriculum vitae/i, level: 1 })).toBeVisible()
 
-    // Verify filter buttons exist
-    await expect(page.getByRole('button', { name: /all/i })).toBeVisible()
-    await expect(page.getByRole('button', { name: /product/i })).toBeVisible()
-    await expect(page.getByRole('button', { name: /strategy/i })).toBeVisible()
-    await expect(page.getByRole('button', { name: /technical/i })).toBeVisible()
+    // Verify filter buttons exist (use exact match to avoid matching "show all" buttons)
+    await expect(page.getByRole('button', { name: 'All', exact: true })).toBeVisible()
+    await expect(page.getByRole('button', { name: /^product$/i })).toBeVisible()
+    await expect(page.getByRole('button', { name: /^strategy$/i })).toBeVisible()
+    await expect(page.getByRole('button', { name: /^technical$/i })).toBeVisible()
   })
 
   test('CV filtering should work correctly', async ({ page }) => {
@@ -65,8 +65,11 @@ test.describe('Smoke Tests - Critical Paths', () => {
   test('CV download links should be present', async ({ page }) => {
     await page.goto('/cv')
 
+    // Scroll to download section
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+
     // Verify download section exists
-    await expect(page.getByRole('heading', { name: /download as pdf/i })).toBeVisible()
+    await expect(page.getByRole('heading', { name: /download cv/i })).toBeVisible()
 
     // Verify at least one download link exists
     const downloadLinks = page.getByRole('link', { name: /download.*cv/i })

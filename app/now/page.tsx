@@ -42,18 +42,27 @@ export default function NowPage() {
               <ul className="list-disc list-inside prose prose-lg max-w-none text-text-secondary space-y-4">
                 <li>
                   Designing and shipping this site using Next.js 15, TypeScript, and Tailwind CSS. I
-                  want to work on my frontend skills and experiment a bit more on the ux.
+                  want to work on my frontend skills and experiment a bit more on the UX.
                 </li>
                 <li>
                   Working in Linear to scope and manage projects, applying project management
-                  principles to timebox work, manage estimates, and reduce scope creep during “vibe
-                  engineering.”
+                  principles to timebox work, manage estimates, and deliver results
                 </li>
                 <li>
-                  Implementing Test-Driven Development (TDD) methodologies to build things correctly
-                  from the start.
+                  Implementing{' '}
+                  <a
+                    href="https://en.wikipedia.org/wiki/Test-driven_development"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent-warm hover:underline"
+                  >
+                    Test-Driven Development (TDD)
+                  </a>{' '}
+                  methodologies to build things correctly from the start.
                 </li>
-                <li>Audiograph - Designing a way to visualise and explore Spotify data.</li>
+                <li>
+                  Audiograph - Designing a way to visualise and explore historical Spotify data.
+                </li>
                 <li>
                   TribeUpdate - Building a slow social media tool to help people share and consume
                   content more thoughtfully.
@@ -80,29 +89,29 @@ export default function NowPage() {
                 </p>
                 <p>
                   I conduct high-level research to validate the idea, understand the problem space,
-                  and identify current solutions. I typically turn to ChatGPT as a sparring partner
-                  here. As part of this scoping, I generate a PRD (Product Requirements Document) to
-                  outline the problem, target audience, goals, and success metrics. If the idea is
-                  monetizable, I also do a quick market analysis to understand the business model
-                  and tradeoffs.
+                  and identify current solutions taht exist in the market. I typically turn to
+                  ChatGPT as a sparring partner here. As part of this scoping, I generate a PRD
+                  (Product Requirements Document) to outline the problem, target audience, goals,
+                  and success metrics. If the idea is monetizable, I also do a quick market analysis
+                  to understand the business model and tradeoffs.
                 </p>
                 <p>
                   Once I have a solid understanding, I move into creating a project plan in Linear.
                   I start by breaking down the project into Epics and Issues, grouping the epics
                   into milestones and identifying critical dependencies. I like Linear&apos;s
-                  ability to visualize blocking and blocked issues—it helps me manage the flow of
-                  work. I also use Fibonacci story points to estimate effort and complexity at the
+                  ability to visualize blocking and blocked issues beacuse it helps me manage the
+                  flow of work. I also use story points to estimate effort and complexity at the
                   issue level, which helps me prioritize and plan sprints and cycles more
                   effectively.
                 </p>
                 <p>
                   I start with Codex for architectural decisions since I find it better at
                   high-level design and thinking through tradeoffs. Once I have a solid architecture
-                  planned out, I move into development following Test-Driven Development (TDD)
-                  principles. I write tests first to define expected behavior and outcomes. This
-                  approach helps me clarify requirements, catch edge cases early, and ensure code
-                  quality. I typically use Codex at this stage to scope out test requirements and
-                  ensure completeness.
+                  planned out, I move into development following Test-Driven Development principles.
+                  I write tests first to define expected behavior and outcomes. This approach helps
+                  me clarify requirements, catch edge cases early, and ensure code quality. I
+                  typically use Codex at this stage to scope out test requirements and ensure
+                  completeness.
                 </p>
                 <p>
                   At this stage, I switch to Claude Code as my AI pair programmer to help with code

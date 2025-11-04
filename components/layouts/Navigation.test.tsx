@@ -86,10 +86,16 @@ describe('Navigation', () => {
       const menuButton = screen.getByRole('button', { name: /menu/i })
       await user.click(menuButton)
 
-      // Click a link in mobile menu
+      // Click a link in mobile menu (prevent real navigation in jsdom)
       const mobileNav = screen.getByRole('navigation', { name: /mobile/i })
-      const aboutLink = mobileNav.querySelector('a[href="/about"]')
-      if (aboutLink) await user.click(aboutLink)
+      const aboutLink = mobileNav.querySelector<HTMLAnchorElement>('a[href="/about"]')
+
+      if (aboutLink) {
+        const preventNavigation = (event: Event) => event.preventDefault()
+        aboutLink.addEventListener('click', preventNavigation)
+        await user.click(aboutLink)
+        aboutLink.removeEventListener('click', preventNavigation)
+      }
 
       // Menu should close (AnimatePresence removes it from DOM)
       await screen.findByRole('navigation', { name: /main/i }) // Wait for animation

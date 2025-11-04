@@ -7,10 +7,10 @@ export const siteConfig = {
   name: 'Colin Rodrigues',
   title: 'Colin Rodrigues',
   description:
-    'Interactive portfolio showcasing professional journey, projects, and expertise in product management and strategy.',
+    "I'm Colin, a product-minded builder turning ideas into things that matter. Explore portfolio projects and product management lessons across tech and life.",
   url: 'https://colinrodrigues.com',
   ogImage: '/og-image.png',
-  twitterHandle: '@colinrod', // TODO: Replace with actual Twitter handle
+  twitterHandle: undefined, // No Twitter account
   keywords: [
     'Colin Rodrigues',
     'Product Management',
@@ -62,7 +62,7 @@ export const baseMetadata: Metadata = {
     card: 'summary_large_image',
     title: siteConfig.title,
     description: siteConfig.description,
-    creator: siteConfig.twitterHandle,
+    ...(siteConfig.twitterHandle ? { creator: siteConfig.twitterHandle } : {}),
     images: [siteConfig.ogImage],
   },
 
@@ -91,7 +91,7 @@ export const baseMetadata: Metadata = {
 
   // Verification (for search console)
   verification: {
-    google: '', // TODO: Add Google Search Console verification code
+    google: 'iImYJchro6ebBevmBHSHSz2abbtaIS9ny4VQXe_Zees',
     // yandex: '',
     // yahoo: '',
   },

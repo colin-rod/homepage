@@ -29,7 +29,7 @@ describe('Contact Page', () => {
 
     it('shows email address with mailto link', () => {
       render(<ContactPage />)
-      const emailLink = screen.getByRole('link', { name: /colin\.rods@gmail\.com/i })
+      const emailLink = screen.getByRole('link', { name: /mail@colinrodrigues\.com/i })
       expect(emailLink).toBeInTheDocument()
       expect(emailLink.getAttribute('href')).toMatch(/^mailto:/)
     })
@@ -85,7 +85,7 @@ describe('Contact Page', () => {
 
     it('applies hover effects to contact links', () => {
       render(<ContactPage />)
-      const emailLink = screen.getByRole('link', { name: /colin\.rods@gmail\.com/i })
+      const emailLink = screen.getByRole('link', { name: /mail@colinrodrigues\.com/i })
       const linkedinLink = screen.getByRole('link', { name: /linkedin/i })
       const githubLink = screen.getByRole('link', { name: /github/i })
 
@@ -112,7 +112,7 @@ describe('Contact Page', () => {
 
     it('mailto link opens in email client', () => {
       render(<ContactPage />)
-      const emailLink = screen.getByRole('link', { name: /colin\.rods@gmail\.com/i })
+      const emailLink = screen.getByRole('link', { name: /mail@colinrodrigues\.com/i })
       expect(emailLink.getAttribute('href')).toMatch(/^mailto:/)
     })
 

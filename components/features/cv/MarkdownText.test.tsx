@@ -37,9 +37,7 @@ describe('MarkdownText', () => {
     })
 
     it('renders internal link with icon', () => {
-      const { container } = render(
-        <MarkdownText text="[TribeApp](/projects/tribe-update) is live" />
-      )
+      render(<MarkdownText text="[TribeApp](/projects/tribe-update) is live" />)
       const link = screen.getByRole('link', { name: /TribeApp/ })
       const svg = link.querySelector('svg')
       expect(svg).toBeInTheDocument()
@@ -81,7 +79,6 @@ describe('MarkdownText', () => {
 
     it('stopPropagation on link click', async () => {
       const user = userEvent.setup()
-      const mockStopPropagation = jest.fn()
 
       render(<MarkdownText text="[Link](/test)" />)
       const link = screen.getByRole('link')

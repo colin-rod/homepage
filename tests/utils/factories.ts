@@ -1,21 +1,22 @@
+import type { Project, TimelineEvent, CV, BlogPost } from '@/lib/types'
+
 /**
  * Mock data factories for testing
- * These will be expanded as we define our data models in CRO-634
+ * Uses actual type definitions from lib/types.ts
  */
 
 /**
  * Creates a mock project object
- * TODO: Update with actual Project type from lib/types.ts after CRO-634
  */
-export function createMockProject(overrides = {}) {
+export function createMockProject(overrides: Partial<Project> = {}): Project {
   return {
     id: 'test-project-1',
     title: 'Test Project',
     slug: 'test-project',
     description: 'A test project description',
     detailedDescription: 'Test project summary',
-    type: 'project' as const,
-    status: 'live' as const,
+    type: 'project',
+    status: 'live',
     techStack: ['Next.js', 'TypeScript', 'Tailwind'],
     tags: ['web', 'product'],
     featured: false,
@@ -27,14 +28,13 @@ export function createMockProject(overrides = {}) {
 
 /**
  * Creates a mock timeline event
- * TODO: Update with actual TimelineEvent type from lib/types.ts after CRO-634
  */
-export function createMockTimelineEvent(overrides = {}) {
+export function createMockTimelineEvent(overrides: Partial<TimelineEvent> = {}): TimelineEvent {
   return {
     id: 'test-event-1',
     title: 'Test Event',
     organization: 'Test Org',
-    type: 'job' as const,
+    type: 'job',
     startDate: '2024-01-01',
     endDate: null,
     summary: 'Test event summary',
@@ -45,9 +45,8 @@ export function createMockTimelineEvent(overrides = {}) {
 
 /**
  * Creates mock CV data
- * TODO: Update with actual CV type from lib/types.ts after CRO-634
  */
-export function createMockCVData(overrides = {}) {
+export function createMockCVData(overrides: Partial<CV> = {}): CV {
   return {
     summary: 'Professional summary',
     skills: [
@@ -83,9 +82,8 @@ export function createMockCVData(overrides = {}) {
 
 /**
  * Creates mock blog post metadata
- * TODO: Update with actual BlogPost type from lib/types.ts after CRO-634
  */
-export function createMockBlogPost(overrides = {}) {
+export function createMockBlogPost(overrides: Partial<BlogPost> = {}): BlogPost {
   return {
     slug: 'test-post',
     title: 'Test Blog Post',
