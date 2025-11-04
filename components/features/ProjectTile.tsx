@@ -95,7 +95,14 @@ export default function ProjectTile({ project }: ProjectTileProps) {
         </div>
 
         {/* Title */}
-        <h3 className="text-xl font-bold text-primary mb-3 line-clamp-2">{project.title}</h3>
+        <h3 className="text-xl font-bold text-primary mb-3 line-clamp-2">
+          <Link
+            href={`/projects/${project.slug}`}
+            className="transition-colors hover:text-accent-warm focus-visible:underline"
+          >
+            {project.title}
+          </Link>
+        </h3>
 
         {/* Description - Now the main content, more lines visible */}
         <p className="text-sm text-text mb-4 line-clamp-8 leading-relaxed">{project.description}</p>

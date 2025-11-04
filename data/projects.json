@@ -71,7 +71,7 @@
     "description": "A modern, interactive portfolio with dynamic CV system and project showcase",
     "detailedDescription": "Built with Next.js 15, featuring a dynamic CV filtering system, timeline of highlights, and interactive project showcase.",
     "type": "project",
-    "status": "in-progress",
+    "status": "completed",
     "techStack": ["Next.js", "TypeScript", "Tailwind CSS"],
     "tags": ["portfolio", "personal-brand", "resume", "cv", "filtering", "timeline", "seo"],
     "featured": true,
