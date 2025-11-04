@@ -3,12 +3,32 @@ import type { HTMLAttributes, PropsWithChildren } from 'react'
 import SkillAtlas from './SkillAtlas'
 import { CV, CVFilterType } from '@/lib/types'
 
-type MotionDivProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>
+type MotionDivProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>> & {
+  variants?: unknown
+  initial?: unknown
+  animate?: unknown
+  whileInView?: unknown
+  exit?: unknown
+  viewport?: unknown
+  transition?: unknown
+}
 
 // Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: MotionDivProps) => <div {...props}>{children}</div>,
+    div: ({ children, ...props }: MotionDivProps) => {
+      const {
+        variants: _variants,
+        initial: _initial,
+        animate: _animate,
+        whileInView: _whileInView,
+        exit: _exit,
+        viewport: _viewport,
+        transition: _transition,
+        ...domProps
+      } = props
+      return <div {...domProps}>{children}</div>
+    },
   },
   AnimatePresence: ({ children }: PropsWithChildren) => <>{children}</>,
 }))

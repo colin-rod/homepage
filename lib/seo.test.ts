@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
 import { generatePageMetadata, siteConfig, baseMetadata, viewport } from './seo'
 
-const toArray = <T>(value: T | T[] | undefined): T[] => {
+function toArray<T>(value: T | T[] | undefined): T[] {
   if (value === undefined) {
     return []
   }
   return Array.isArray(value) ? value : [value]
 }
 
-const assertImageDescriptor = (
+function assertImageDescriptor(
   value: unknown,
   message: string
 ): asserts value is {
@@ -16,7 +16,7 @@ const assertImageDescriptor = (
   width?: number | string
   height?: number | string
   alt?: string
-} => {
+} {
   if (typeof value !== 'object' || value === null || !('url' in value)) {
     throw new Error(message)
   }
@@ -29,24 +29,21 @@ type RobotsData = {
   [key: string]: unknown
 }
 
-const assertRobotsObject = (
-  robots: string | RobotsData | undefined
-): asserts robots is RobotsData => {
+function assertRobotsObject(
+  robots: string | RobotsData | null | undefined
+): asserts robots is RobotsData {
   if (!robots || typeof robots === 'string') {
     throw new Error('Expected robots configuration object')
   }
 }
 
-const assertRecord = (
-  value: unknown,
-  message: string
-): asserts value is Record<string, unknown> => {
+function assertRecord(value: unknown, message: string): asserts value is Record<string, unknown> {
   if (typeof value !== 'object' || value === null) {
     throw new Error(message)
   }
 }
 
-const getFirstOpenGraphImage = (openGraph: NonNullable<Metadata['openGraph']>) => {
+function getFirstOpenGraphImage(openGraph: NonNullable<Metadata['openGraph']>) {
   const images = toArray(openGraph.images)
   expect(images).not.toHaveLength(0)
   const firstImage = images[0]
@@ -54,7 +51,7 @@ const getFirstOpenGraphImage = (openGraph: NonNullable<Metadata['openGraph']>) =
   return firstImage
 }
 
-const getFirstTwitterImage = (twitter: NonNullable<Metadata['twitter']>) => {
+function getFirstTwitterImage(twitter: NonNullable<Metadata['twitter']>) {
   const images = toArray(twitter.images)
   expect(images).not.toHaveLength(0)
   const firstImage = images[0]

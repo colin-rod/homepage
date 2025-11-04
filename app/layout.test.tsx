@@ -30,9 +30,7 @@ describe('RootLayout', () => {
     })
 
     it('should have correct description', () => {
-      expect(metadata.description).toBe(
-        'Interactive portfolio showcasing professional journey, projects, and expertise in product management and strategy.'
-      )
+      expect(metadata.description).toBe(baseMetadata.description)
     })
 
     it('should have keywords array', () => {

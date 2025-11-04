@@ -173,7 +173,10 @@ describe('UsesPage', () => {
     render(<UsesPage />)
 
     const macbookFavicon = screen.getByAltText('MacBook Pro icon')
-    expect(macbookFavicon).toHaveAttribute('src', '/favicon-apple.png')
+    const macbookSrc = macbookFavicon.getAttribute('src')
+    expect(macbookSrc).toBeTruthy()
+    const macbookImageUrl = new URL(`http://localhost${macbookSrc}`)
+    expect(macbookImageUrl.searchParams.get('url')).toBe('/favicon-apple.png')
   })
 
   it('does not render favicon when not provided', () => {
