@@ -29,7 +29,7 @@ jest.mock('./KPIBadge', () => {
 
 describe('KPIBadgeRow', () => {
   const mockKPIs: KPI[] = [
-    { label: 'Revenue Growth', value: '+40%', category: 'financial' },
+    { label: 'Revenue Growth', value: '+40%', category: 'revenue' },
     { label: 'User Growth', value: '+50%', category: 'growth' },
     { label: 'Team Size', value: '25', category: 'team' },
   ]
@@ -366,7 +366,7 @@ describe('KPIBadgeRow', () => {
 
   describe('Edge Cases', () => {
     it('handles single KPI', () => {
-      const singleKPI: KPI[] = [{ label: 'Revenue', value: '+40%', category: 'financial' }]
+      const singleKPI: KPI[] = [{ label: 'Revenue', value: '+40%', category: 'revenue' }]
       render(<KPIBadgeRow kpis={singleKPI} />)
       expect(screen.getByTestId('kpi-badge')).toBeInTheDocument()
     })
@@ -375,7 +375,7 @@ describe('KPIBadgeRow', () => {
       const manyKPIs: KPI[] = Array.from({ length: 20 }, (_, i) => ({
         label: `Metric ${i}`,
         value: `${i}%`,
-        category: 'test',
+        category: 'efficiency',
       }))
       render(<KPIBadgeRow kpis={manyKPIs} />)
       const badges = screen.getAllByTestId('kpi-badge')
@@ -384,7 +384,11 @@ describe('KPIBadgeRow', () => {
 
     it('handles KPIs without category', () => {
       const kpisWithoutCategory: KPI[] = [
-        { label: 'Revenue', value: '+40%', category: undefined as unknown as string },
+        {
+          label: 'Revenue',
+          value: '+40%',
+          category: undefined as unknown as 'revenue' | 'team' | 'efficiency' | 'growth' | 'cost',
+        },
       ]
       render(<KPIBadgeRow kpis={kpisWithoutCategory} />)
       expect(screen.getByTestId('kpi-badge')).toBeInTheDocument()

@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import ExperienceCard, { ExperienceCardProps } from './ExperienceCard'
-import { HighlightEntry } from '@/lib/types'
+import { HighlightEntry, KPI } from '@/lib/types'
 
 // Mock framer-motion to avoid animation issues in tests
 jest.mock('framer-motion', () => ({
@@ -107,9 +107,9 @@ describe('ExperienceCard', () => {
     })
 
     it('renders KPI badges when provided', () => {
-      const kpis = [
-        { label: 'Revenue Growth', value: '+40%' },
-        { label: 'User Growth', value: '+50%' },
+      const kpis: KPI[] = [
+        { label: 'Revenue Growth', value: '+40%', category: 'revenue' },
+        { label: 'User Growth', value: '+50%', category: 'growth' },
       ]
       render(<ExperienceCard {...defaultProps} kpis={kpis} />)
       expect(screen.getByTestId('kpi-badge-row')).toBeInTheDocument()

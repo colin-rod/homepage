@@ -69,7 +69,13 @@ describe('SkillAtlas', () => {
       },
     ],
     education: [],
-    focusSummaries: {},
+    projects: [],
+    focusSummaries: {
+      all: 'All skills summary',
+      product: 'Product skills summary',
+      strategy: 'Strategy skills summary',
+      tech: 'Tech skills summary',
+    },
   }
 
   const mockOnSkillClick = jest.fn()
