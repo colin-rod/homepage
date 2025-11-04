@@ -7,7 +7,7 @@ export const siteConfig = {
   name: 'Colin Rodrigues',
   title: 'Colin Rodrigues',
   description:
-    'Interactive portfolio showcasing professional journey, projects, and expertise in product management and strategy.',
+    "I'm Colin, a builder, father, and product-minded tinkerer exploring how ideas turn into things that matter. This site documents what I'm learning, experimenting with, and building at the intersection of tech, creativity, and everyday life.",
   url: 'https://colinrodrigues.com',
   ogImage: '/og-image.png',
   twitterHandle: undefined, // No Twitter account

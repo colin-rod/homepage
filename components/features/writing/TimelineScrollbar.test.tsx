@@ -29,7 +29,6 @@ describe('TimelineScrollbar', () => {
 
     const labels = container.querySelectorAll('.space-y-4 > div')
     const firstLabel = labels[0].textContent
-    const lastLabel = labels[labels.length - 1].textContent
 
     // First label should be newest (March 2024)
     expect(firstLabel).toContain('Mar')
@@ -43,7 +42,7 @@ describe('TimelineScrollbar', () => {
       { date: '2023-12-20', slug: 'post-3', title: 'Post 3' },
     ]
 
-    const { container } = render(<TimelineScrollbar posts={postsAcrossYears} />)
+    render(<TimelineScrollbar posts={postsAcrossYears} />)
 
     // January (month 0) should be highlighted as year start
     const januaryLabel = screen.getByText('Jan 2024')
@@ -128,7 +127,7 @@ describe('TimelineScrollbar', () => {
       { date: '2024-03-01', slug: 'post-2', title: 'March Post' },
     ]
 
-    const { container } = render(<TimelineScrollbar posts={posts} />)
+    render(<TimelineScrollbar posts={posts} />)
 
     // Should generate June, May, April, March
     expect(screen.getByText('Jun 2024')).toBeInTheDocument()

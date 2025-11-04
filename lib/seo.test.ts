@@ -44,10 +44,11 @@ describe('seo', () => {
 
     it('includes Open Graph image with correct dimensions', () => {
       expect(baseMetadata.openGraph?.images).toBeDefined()
-      const images = baseMetadata.openGraph?.images as any[]
-      expect(images[0].url).toBe('/og-image.png')
-      expect(images[0].width).toBe(1200)
-      expect(images[0].height).toBe(630)
+      expect(baseMetadata.openGraph?.images?.[0]).toMatchObject({
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+      })
     })
 
     it('includes Twitter Card metadata', () => {
@@ -64,10 +65,10 @@ describe('seo', () => {
     })
 
     it('includes Google Bot configuration', () => {
-      const googleBot = (baseMetadata.robots as any)?.googleBot
+      const googleBot = baseMetadata.robots?.googleBot
       expect(googleBot).toBeDefined()
-      expect(googleBot.index).toBe(true)
-      expect(googleBot.follow).toBe(true)
+      expect(googleBot?.index).toBe(true)
+      expect(googleBot?.follow).toBe(true)
     })
 
     it('includes icons configuration', () => {
@@ -82,7 +83,7 @@ describe('seo', () => {
 
     it('includes Google verification token', () => {
       expect(baseMetadata.verification).toBeDefined()
-      expect((baseMetadata.verification as any)?.google).toBeTruthy()
+      expect(baseMetadata.verification?.google).toBeTruthy()
     })
   })
 
@@ -97,7 +98,11 @@ describe('seo', () => {
     it('includes theme color for light and dark modes', () => {
       expect(viewport.themeColor).toBeDefined()
       expect(viewport.themeColor).toBeInstanceOf(Array)
-      expect((viewport.themeColor as any[]).length).toBe(2)
+      if (Array.isArray(viewport.themeColor)) {
+        expect(viewport.themeColor).toHaveLength(2)
+      } else {
+        throw new Error('Expected themeColor to be an array')
+      }
     })
   })
 
@@ -124,18 +129,14 @@ describe('seo', () => {
         '/custom-og.png'
       )
 
-      const ogImages = metadata.openGraph?.images as any[]
-      expect(ogImages[0].url).toBe('/custom-og.png')
-
-      const twitterImages = metadata.twitter?.images as string[]
-      expect(twitterImages[0]).toBe('/custom-og.png')
+      expect(metadata.openGraph?.images?.[0]).toMatchObject({ url: '/custom-og.png' })
+      expect(metadata.twitter?.images?.[0]).toBe('/custom-og.png')
     })
 
     it('uses default OG image when no custom image provided', () => {
       const metadata = generatePageMetadata('Contact', 'Get in touch', '/contact')
 
-      const ogImages = metadata.openGraph?.images as any[]
-      expect(ogImages[0].url).toBe('/og-image.png')
+      expect(metadata.openGraph?.images?.[0]).toMatchObject({ url: '/og-image.png' })
     })
 
     it('includes formatted page title in Open Graph', () => {
@@ -165,16 +166,18 @@ describe('seo', () => {
     it('includes image dimensions in Open Graph', () => {
       const metadata = generatePageMetadata('Test', 'Test page', '/test')
 
-      const ogImages = metadata.openGraph?.images as any[]
-      expect(ogImages[0].width).toBe(1200)
-      expect(ogImages[0].height).toBe(630)
+      expect(metadata.openGraph?.images?.[0]).toMatchObject({
+        width: 1200,
+        height: 630,
+      })
     })
 
     it('includes alt text for Open Graph image', () => {
       const metadata = generatePageMetadata('Portfolio', 'My work', '/projects')
 
-      const ogImages = metadata.openGraph?.images as any[]
-      expect(ogImages[0].alt).toBe('Portfolio | Colin Rodrigues')
+      expect(metadata.openGraph?.images?.[0]).toMatchObject({
+        alt: 'Portfolio | Colin Rodrigues',
+      })
     })
 
     it('generates canonical URL correctly', () => {

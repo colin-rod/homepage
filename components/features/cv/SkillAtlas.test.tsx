@@ -1,35 +1,16 @@
 import { render, screen, fireEvent } from '@testing-library/react'
+import type { HTMLAttributes, PropsWithChildren } from 'react'
 import SkillAtlas from './SkillAtlas'
 import { CV, CVFilterType } from '@/lib/types'
+
+type MotionDivProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>
 
 // Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({
-      children,
-      onMouseEnter,
-      onMouseLeave,
-      whileInView,
-      viewport,
-      initial,
-      animate,
-      transition,
-      ...props
-    }: React.PropsWithChildren<Record<string, unknown>> & {
-      onMouseEnter?: () => void
-      onMouseLeave?: () => void
-      whileInView?: unknown
-      viewport?: unknown
-      initial?: unknown
-      animate?: unknown
-      transition?: unknown
-    }) => (
-      <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} {...props}>
-        {children}
-      </div>
-    ),
+    div: ({ children, ...props }: MotionDivProps) => <div {...props}>{children}</div>,
   },
-  AnimatePresence: ({ children }: React.PropsWithChildren) => <>{children}</>,
+  AnimatePresence: ({ children }: PropsWithChildren) => <>{children}</>,
 }))
 
 describe('SkillAtlas', () => {

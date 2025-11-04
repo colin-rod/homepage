@@ -1,11 +1,14 @@
 import { render, screen } from '@testing-library/react'
+import type { HTMLAttributes, PropsWithChildren } from 'react'
 import CardHover from './CardHover'
 import { useReducedMotion } from 'framer-motion'
+
+type MotionDivProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>
 
 // Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: any) => (
+    div: ({ children, ...props }: MotionDivProps) => (
       <div data-motion="true" {...props}>
         {children}
       </div>

@@ -1,6 +1,10 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import type { HTMLAttributes, NavHTMLAttributes, PropsWithChildren } from 'react'
 import FloatingNav from './FloatingNav'
 import { usePostHog } from 'posthog-js/react'
+
+type MotionNavProps = PropsWithChildren<NavHTMLAttributes<HTMLElement>>
+type MotionDivProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>
 
 // Mock PostHog
 jest.mock('posthog-js/react', () => ({
@@ -10,8 +14,8 @@ jest.mock('posthog-js/react', () => ({
 // Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    nav: ({ children, ...props }: any) => <nav {...props}>{children}</nav>,
-    div: ({ children, ...props }: any) => <div {...props}>{children}</div>,
+    nav: ({ children, ...props }: MotionNavProps) => <nav {...props}>{children}</nav>,
+    div: ({ children, ...props }: MotionDivProps) => <div {...props}>{children}</div>,
   },
 }))
 

@@ -262,8 +262,10 @@ export default function SkillAtlas({
   const [showAllSkills, setShowAllSkills] = useState(activeFilter !== 'all')
 
   const atlasData = useMemo(() => buildAtlasData(cvData), [cvData])
-  const visibleFocuses: FocusKey[] =
-    activeFilter === 'all' ? focusOrder : [activeFilter as FocusKey]
+  const visibleFocuses = useMemo<FocusKey[]>(
+    () => (activeFilter === 'all' ? focusOrder : [activeFilter as FocusKey]),
+    [activeFilter]
+  )
   const gridColsClass =
     visibleFocuses.length === 3
       ? 'md:grid-cols-3'

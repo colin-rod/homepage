@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import Image from 'next/image'
 import { generatePageMetadata } from '@/lib/seo'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
@@ -60,13 +61,14 @@ export default function UsesPage() {
                           <div className="space-y-3">
                             <div className="flex items-center gap-3">
                               {item.favicon && (
-                                <img
+                                <Image
                                   src={item.favicon}
                                   alt={`${item.name} icon`}
                                   className="h-6 w-6 rounded-md border border-divider/60 bg-white object-contain p-0.5 shadow-sm"
                                   loading="lazy"
                                   width={24}
                                   height={24}
+                                  unoptimized={item.favicon.startsWith('http')}
                                 />
                               )}
                               <h3 className="text-lg font-semibold text-text">{item.name}</h3>

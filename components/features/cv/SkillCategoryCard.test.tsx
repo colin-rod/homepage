@@ -1,9 +1,12 @@
 import { render, screen, fireEvent } from '@testing-library/react'
+import type { PropsWithChildren } from 'react'
 import SkillCategoryCard, { type SkillCategoryCardProps } from './SkillCategoryCard'
+
+type MockCardHoverProps = PropsWithChildren<{ className?: string }>
 
 // Mock CardHover component
 jest.mock('@/components/animations/CardHover', () => {
-  return function MockCardHover({ children, className }: any) {
+  return function MockCardHover({ children, className }: MockCardHoverProps) {
     return <div className={className}>{children}</div>
   }
 })

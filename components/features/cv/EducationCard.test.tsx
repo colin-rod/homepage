@@ -1,9 +1,12 @@
 import { render, screen } from '@testing-library/react'
+import type { PropsWithChildren } from 'react'
 import EducationCard, { type EducationCardProps } from './EducationCard'
+
+type MockCardHoverProps = PropsWithChildren<{ className?: string }>
 
 // Mock CardHover component
 jest.mock('@/components/animations/CardHover', () => {
-  return function MockCardHover({ children, className }: any) {
+  return function MockCardHover({ children, className }: MockCardHoverProps) {
     return <div className={className}>{children}</div>
   }
 })
@@ -134,7 +137,7 @@ describe('EducationCard', () => {
       year: 2015,
     }
 
-    const { container } = render(<EducationCard {...props} />)
+    render(<EducationCard {...props} />)
 
     const institutionText = screen.getByText('Princeton')
     expect(institutionText.tagName).toBe('P')
