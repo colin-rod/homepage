@@ -8,18 +8,18 @@ function toArray<T>(value: T | T[] | undefined): T[] {
   return Array.isArray(value) ? value : [value]
 }
 
-function assertImageDescriptor(
-  value: unknown,
-  message: string
-): asserts value is {
+type ImageDescriptor = {
   url: string | URL
   width?: number | string
   height?: number | string
   alt?: string
-} {
+}
+
+function toImageDescriptor(value: unknown, message: string): ImageDescriptor {
   if (typeof value !== 'object' || value === null || !('url' in value)) {
     throw new Error(message)
   }
+  return value as ImageDescriptor
 }
 
 type RobotsData = {
@@ -29,26 +29,27 @@ type RobotsData = {
   [key: string]: unknown
 }
 
-function assertRobotsObject(
-  robots: string | RobotsData | null | undefined
-): asserts robots is RobotsData {
+function getRobotsObject(robots: string | RobotsData | null | undefined): RobotsData {
   if (!robots || typeof robots === 'string') {
     throw new Error('Expected robots configuration object')
   }
+  return robots
 }
 
-function assertRecord(value: unknown, message: string): asserts value is Record<string, unknown> {
+type RobotsRecord = Record<string, unknown>
+
+function getRobotsRecord(value: unknown, message: string): RobotsRecord {
   if (typeof value !== 'object' || value === null) {
     throw new Error(message)
   }
+  return value as RobotsRecord
 }
 
 function getFirstOpenGraphImage(openGraph: NonNullable<Metadata['openGraph']>) {
   const images = toArray(openGraph.images)
   expect(images).not.toHaveLength(0)
   const firstImage = images[0]
-  assertImageDescriptor(firstImage, 'Expected Open Graph image descriptor')
-  return firstImage
+  return toImageDescriptor(firstImage, 'Expected Open Graph image descriptor')
 }
 
 function getFirstTwitterImage(twitter: NonNullable<Metadata['twitter']>) {
@@ -119,8 +120,7 @@ describe('seo', () => {
       const images = toArray(openGraph.images)
       expect(images).not.toHaveLength(0)
       const firstImage = images[0]
-      assertImageDescriptor(firstImage, 'Expected Open Graph image descriptor')
-      expect(firstImage).toMatchObject({
+      expect(toImageDescriptor(firstImage, 'Expected Open Graph image descriptor')).toMatchObject({
         url: '/og-image.png',
         width: 1200,
         height: 630,
@@ -142,9 +142,8 @@ describe('seo', () => {
     })
 
     it('includes robots configuration', () => {
-      const robots = baseMetadata.robots
+      const robots = getRobotsObject(baseMetadata.robots)
       expect(robots).toBeDefined()
-      assertRobotsObject(robots)
       if (typeof robots.index !== 'boolean') {
         throw new Error('Expected robots.index to be a boolean')
       }
@@ -156,20 +155,24 @@ describe('seo', () => {
     })
 
     it('includes Google Bot configuration', () => {
-      const robots = baseMetadata.robots
+      const robots = getRobotsObject(baseMetadata.robots)
       expect(robots).toBeDefined()
-      assertRobotsObject(robots)
       const googleBot = robots.googleBot
       expect(googleBot).toBeDefined()
-      assertRecord(googleBot, 'Expected googleBot configuration to be an object')
-      if (typeof googleBot.index !== 'boolean') {
+      const googleBotRecord = getRobotsRecord(
+        googleBot,
+        'Expected googleBot configuration to be an object'
+      )
+      const googleBotIndex = googleBotRecord.index
+      if (typeof googleBotIndex !== 'boolean') {
         throw new Error('Expected googleBot.index to be a boolean')
       }
-      if (typeof googleBot.follow !== 'boolean') {
+      const googleBotFollow = googleBotRecord.follow
+      if (typeof googleBotFollow !== 'boolean') {
         throw new Error('Expected googleBot.follow to be a boolean')
       }
-      expect(googleBot.index).toBe(true)
-      expect(googleBot.follow).toBe(true)
+      expect(googleBotIndex).toBe(true)
+      expect(googleBotFollow).toBe(true)
     })
 
     it('includes icons configuration', () => {
