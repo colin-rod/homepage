@@ -105,10 +105,14 @@ describe('GitHubChart', () => {
     render(<GitHubChart username="colin-rod" />)
 
     await waitFor(() => {
-      const link = screen.getByRole('link')
-      expect(link).toHaveAttribute('href', 'https://github.com/colin-rod')
-      expect(link).toHaveAttribute('target', '_blank')
-      expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+      const links = screen.getAllByRole('link')
+      // Should have two links: one for the logo and one for the chart
+      expect(links).toHaveLength(2)
+      links.forEach((link) => {
+        expect(link).toHaveAttribute('href', 'https://github.com/colin-rod')
+        expect(link).toHaveAttribute('target', '_blank')
+        expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+      })
     })
   })
 
@@ -179,8 +183,11 @@ describe('GitHubChart', () => {
     })
 
     await waitFor(() => {
-      const link = screen.getByRole('link')
-      expect(link).toHaveAttribute('href', 'https://github.com/test-user-123')
+      const links = screen.getAllByRole('link')
+      // All links should point to the correct username's GitHub profile
+      links.forEach((link) => {
+        expect(link).toHaveAttribute('href', 'https://github.com/test-user-123')
+      })
     })
   })
 })

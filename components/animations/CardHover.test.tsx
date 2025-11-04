@@ -8,7 +8,13 @@ type MotionDivProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>
 // Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, ...props }: MotionDivProps) => (
+    div: ({
+      children,
+      initial,
+      whileHover,
+      variants,
+      ...props
+    }: MotionDivProps & { initial?: unknown; whileHover?: unknown; variants?: unknown }) => (
       <div data-motion="true" {...props}>
         {children}
       </div>
