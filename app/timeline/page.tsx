@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { generatePageMetadata } from '@/lib/seo'
 import { getTimelineEvents } from '@/lib/data'
+import { formatDateOrPresent } from '@/lib/utils'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
 import PageTransition from '@/components/animations/PageTransition'
@@ -26,13 +27,6 @@ export default function TimelinePage() {
     const dateB = new Date(b.startDate)
     return dateB.getTime() - dateA.getTime()
   })
-
-  // Helper function to format dates
-  const formatDate = (dateString: string | null | undefined): string => {
-    if (!dateString) return 'Present'
-    const date = new Date(dateString)
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
-  }
 
   // Helper function to get event type badge color
   const getEventTypeBadge = (type: string): string => {
@@ -91,8 +85,8 @@ export default function TimelinePage() {
                     </div>
 
                     <p className="text-sm text-text-secondary mb-3">
-                      {formatDate(event.startDate)}
-                      {event.endDate && ` – ${formatDate(event.endDate)}`}
+                      {formatDateOrPresent(event.startDate)}
+                      {event.endDate && ` – ${formatDateOrPresent(event.endDate)}`}
                       {event.location && ` • ${event.location}`}
                     </p>
 

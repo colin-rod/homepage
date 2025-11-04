@@ -95,7 +95,7 @@ export default function AboutPage() {
             <GitHubChart username="colin-rod" color="D3643E" />
 
             {/* CTA Section */}
-            <section className="border-t border-divider pt-12">
+            <section className="pt-12">
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-text mb-4">Let&apos;s Connect</h2>
                 <p className="text-lg text-text-secondary mb-8">

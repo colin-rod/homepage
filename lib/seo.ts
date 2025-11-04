@@ -7,7 +7,7 @@ export const siteConfig = {
   name: 'Colin Rodrigues',
   title: 'Colin Rodrigues',
   description:
-    "I'm Colin, a product-minded builder turning ideas into things that matter. Explore portfolio projects and product management lessons across tech and life.",
+    "I'm Colin, a product-minded builder turning ideas into things that matter. Explore my portfolio projects and product management lessons across tech and life.",
   url: 'https://colinrodrigues.com',
   ogImage: '/og-image.png',
   twitterHandle: undefined, // No Twitter account
@@ -103,13 +103,15 @@ export const baseMetadata: Metadata = {
  * @param description - Page description
  * @param path - Page path (e.g., '/about')
  * @param image - Optional custom OG image
+ * @param robots - Optional robots configuration (defaults to allowing indexing)
  * @returns Metadata object
  */
 export function generatePageMetadata(
   title: string,
   description: string,
   path: string = '',
-  image?: string
+  image?: string,
+  robots?: Metadata['robots']
 ): Metadata {
   const pageTitle = `${title} | ${siteConfig.name}`
   const pageUrl = `${siteConfig.url}${path}`
@@ -118,6 +120,7 @@ export function generatePageMetadata(
   return {
     title: pageTitle,
     description,
+    ...(robots && { robots }),
     openGraph: {
       title: pageTitle,
       description,

@@ -17,9 +17,7 @@ const POSTS_DIRECTORY = path.join(process.cwd(), 'content/writing')
 export function getPostSlugs(): string[] {
   try {
     const files = fs.readdirSync(POSTS_DIRECTORY)
-    return files
-      .filter((file) => file.endsWith('.mdx'))
-      .map((file) => file.replace(/\.mdx$/, ''))
+    return files.filter((file) => file.endsWith('.mdx')).map((file) => file.replace(/\.mdx$/, ''))
   } catch {
     // Directory doesn't exist yet or is empty
     return []
@@ -43,27 +41,60 @@ function calculateReadingTime(content: string): number {
  * Get a single blog post by slug
  * @param slug - The post slug (filename without extension)
  * @returns BlogPost object with metadata and content
- * @throws Error if file doesn't exist
+ * @throws Error if file doesn't exist or is invalid
  */
 export function getPostBySlug(slug: string): BlogPost {
-  const fullPath = path.join(POSTS_DIRECTORY, `${slug}.mdx`)
-  const fileContents = fs.readFileSync(fullPath, 'utf8')
-  const { data, content } = matter(fileContents)
+  try {
+    const fullPath = path.join(POSTS_DIRECTORY, `${slug}.mdx`)
 
-  // Ensure date is always a string (gray-matter may parse it as Date)
-  const dateString =
-    data.date instanceof Date
-      ? data.date.toISOString().split('T')[0]
-      : data.date
+    // Check if file exists before trying to read it
+    if (!fs.existsSync(fullPath)) {
+      throw new Error(`Blog post not found: ${slug}`)
+    }
 
-  return {
-    slug,
-    title: data.title,
-    date: dateString,
-    summary: data.summary,
-    tags: data.tags || [],
-    content,
-    readingTime: calculateReadingTime(content),
+    const fileContents = fs.readFileSync(fullPath, 'utf8')
+    const { data, content } = matter(fileContents)
+
+    // Validate required frontmatter fields
+    if (!data.title) {
+      throw new Error(`Blog post "${slug}" is missing required field: title`)
+    }
+    if (!data.date) {
+      throw new Error(`Blog post "${slug}" is missing required field: date`)
+    }
+    if (!data.summary) {
+      throw new Error(`Blog post "${slug}" is missing required field: summary`)
+    }
+
+    // Ensure date is always a string (gray-matter may parse it as Date)
+    const dateString = data.date instanceof Date ? data.date.toISOString().split('T')[0] : data.date
+
+    return {
+      slug,
+      title: data.title,
+      date: dateString,
+      summary: data.summary,
+      tags: data.tags || [],
+      content,
+      readingTime: calculateReadingTime(content),
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      // Re-throw our custom errors with context
+      if (error.message.startsWith('Blog post')) {
+        throw error
+      }
+      // Wrap filesystem errors
+      if ('code' in error && error.code === 'ENOENT') {
+        throw new Error(`Blog post not found: ${slug}`)
+      }
+      if ('code' in error && error.code === 'EACCES') {
+        throw new Error(`Permission denied reading blog post: ${slug}`)
+      }
+      // Generic error
+      throw new Error(`Failed to load blog post "${slug}": ${error.message}`)
+    }
+    throw error
   }
 }
 
@@ -100,10 +131,7 @@ export function getAllPosts(includeContent = false): BlogPost[] {
  * @param includeContent - Whether to include full content
  * @returns Array of filtered BlogPost objects
  */
-export function getPostsByTag(
-  tag: string,
-  includeContent = false
-): BlogPost[] {
+export function getPostsByTag(tag: string, includeContent = false): BlogPost[] {
   const allPosts = getAllPosts(includeContent)
   return allPosts.filter((post) => post.tags.includes(tag))
 }

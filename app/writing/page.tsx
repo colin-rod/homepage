@@ -3,19 +3,22 @@
  * Lists all blog posts with metadata
  */
 
+import { Metadata } from 'next'
 import Link from 'next/link'
 import { Clock } from 'lucide-react'
 import { getAllPosts } from '@/lib/blog'
 import { formatDate } from '@/lib/utils'
+import { generatePageMetadata } from '@/lib/seo'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
 import PageTransition from '@/components/animations/PageTransition'
 import TimelineScrollbar from '@/components/features/writing/TimelineScrollbar'
 
-export const metadata = {
-  title: 'Reflections | Colin Rodrigues',
-  description: 'Thoughts on product, strategy, and technology.',
-}
+export const metadata: Metadata = generatePageMetadata(
+  'Reflections',
+  'Thoughts on product, strategy, and technology.',
+  '/writing'
+)
 
 export default function WritingPage() {
   const posts = getAllPosts(false) // Don't include content for list view

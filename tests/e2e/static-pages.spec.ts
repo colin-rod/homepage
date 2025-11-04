@@ -50,17 +50,16 @@ test.describe('About Page', () => {
     // Check for "Building in Public" section
     await expect(page.getByRole('heading', { name: /building in public/i })).toBeVisible()
 
-    // Check for chart image from ghchart.rshah.org
-    const chartImage = page.locator('img[src*="ghchart.rshah.org"]')
-    await expect(chartImage).toBeVisible()
-
-    // Verify it has proper alt text for accessibility
-    await expect(chartImage).toHaveAttribute('alt', /github contribution chart/i)
+    // Check for link to GitHub profile
+    const githubLink = page.getByRole('link', { name: /view colin-rod's github profile/i })
+    await expect(githubLink).toBeVisible()
+    await expect(githubLink).toHaveAttribute('href', 'https://github.com/colin-rod')
   })
 
-  test('GitHub chart should have proper username in URL', async ({ page }) => {
-    const chartImage = page.locator('img[src*="ghchart.rshah.org"]')
-    await expect(chartImage).toHaveAttribute('src', /colin-rod/)
+  test('GitHub chart should link to user profile', async ({ page }) => {
+    const githubLink = page.getByRole('link', { name: /view colin-rod's github profile/i })
+    await expect(githubLink).toHaveAttribute('href', 'https://github.com/colin-rod')
+    await expect(githubLink).toHaveAttribute('target', '_blank')
   })
 
   test('should be responsive on mobile', async ({ page }) => {
