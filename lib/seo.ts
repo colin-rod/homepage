@@ -90,14 +90,8 @@ export const baseMetadata: Metadata = {
   manifest: '/site.webmanifest',
 
   // Verification (for search console)
-  // To get Google Search Console verification code:
-  // 1. Go to https://search.google.com/search-console
-  // 2. Add your property (colinrodrigues.com)
-  // 3. Choose "HTML tag" verification method
-  // 4. Copy the content value from the meta tag (e.g., "abc123xyz...")
-  // 5. Add it to the google field below
   verification: {
-    google: '', // Add Google Search Console verification code here
+    google: 'iImYJchro6ebBevmBHSHSz2abbtaIS9ny4VQXe_Zees',
     // yandex: '',
     // yahoo: '',
   },
