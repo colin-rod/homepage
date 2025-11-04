@@ -93,12 +93,12 @@ export default function GitHubChart({ username, title, className = '' }: GitHubC
   return (
     <div className={className}>
       {title && <h3 className="text-xl font-semibold text-text mb-4">{title}</h3>}
-      <div className="w-full overflow-x-auto">
+      <div className="w-full flex justify-center overflow-x-auto">
         <a
           href={`https://github.com/${username}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="block"
+          className="inline-block"
           aria-label={`View ${username}'s GitHub profile`}
         >
           <ActivityCalendar
