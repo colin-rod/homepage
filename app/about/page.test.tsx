@@ -12,7 +12,25 @@ import AboutPage from './page'
  * - Proper page structure and SEO
  */
 
+// Mock fetch for GitHubChart component
+global.fetch = jest.fn()
+
+// Mock the ActivityCalendar component
+jest.mock('react-activity-calendar', () => {
+  return function MockActivityCalendar() {
+    return <div data-testid="activity-calendar">Activity Calendar</div>
+  }
+})
+
 describe('About Page', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+    // Mock a failed fetch so the chart doesn't render in these tests
+    ;(global.fetch as jest.Mock).mockResolvedValue({
+      ok: false,
+      status: 503,
+    })
+  })
   describe('Content', () => {
     it('renders the main page heading', () => {
       render(<AboutPage />)

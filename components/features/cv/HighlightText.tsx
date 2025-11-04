@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 /**
  * HighlightText Component
  *
@@ -11,12 +13,16 @@ interface HighlightTextProps {
 }
 
 export default function HighlightText({ text, searchQuery }: HighlightTextProps) {
-  if (!searchQuery.trim()) {
+  // Memoize regex creation to avoid recompiling on every render
+  const regex = useMemo(() => {
+    if (!searchQuery.trim()) return null
+    return new RegExp(`(${searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi')
+  }, [searchQuery])
+
+  if (!regex) {
     return <>{text}</>
   }
 
-  // Create a regex to find all occurrences (case-insensitive)
-  const regex = new RegExp(`(${searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi')
   const parts = text.split(regex)
 
   return (

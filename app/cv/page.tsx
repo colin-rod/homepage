@@ -4,6 +4,7 @@ import { getCVData } from '@/lib/data'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
 import PageTransition from '@/components/animations/PageTransition'
+import { FeatureErrorBoundary } from '@/components/ErrorBoundary'
 import CVContent from './CVContent'
 
 export const metadata: Metadata = generatePageMetadata(
@@ -27,7 +28,9 @@ export default function CVPage() {
       <Navigation />
       <PageTransition>
         <main id="main-content" className="pt-12 pb-24 sm:pt-16 sm:pb-32">
-          <CVContent cvData={cv} />
+          <FeatureErrorBoundary featureName="CV">
+            <CVContent cvData={cv} />
+          </FeatureErrorBoundary>
         </main>
       </PageTransition>
       <Footer />

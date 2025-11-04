@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { getCVData } from '@/lib/data'
-import { formatDate } from '@/lib/utils'
+import { formatDateOrPresent } from '@/lib/utils'
+import { generatePageMetadata } from '@/lib/seo'
 
 interface CVDownloadPageProps {
   searchParams: Promise<{
@@ -8,14 +9,16 @@ interface CVDownloadPageProps {
   }>
 }
 
-export const metadata: Metadata = {
-  title: 'CV - Colin Rodrigues',
-  description: 'Professional CV and resume for Colin Rodrigues',
-  robots: {
+export const metadata: Metadata = generatePageMetadata(
+  'CV',
+  'Professional CV and resume for Colin Rodrigues',
+  '/cv/download',
+  undefined,
+  {
     index: false,
     follow: false,
-  },
-}
+  }
+)
 
 /**
  * CV Download Page
@@ -78,7 +81,7 @@ export default async function CVDownloadPage({ searchParams }: CVDownloadPagePro
                   {exp.company} • {exp.location}
                 </p>
                 <p className="text-secondary text-sm print:text-xs">
-                  {formatDate(exp.startDate)} - {exp.endDate ? formatDate(exp.endDate) : 'Present'}
+                  {formatDateOrPresent(exp.startDate)} - {formatDateOrPresent(exp.endDate)}
                 </p>
               </div>
               <p className="text-secondary mb-2 print:text-sm">{exp.description}</p>

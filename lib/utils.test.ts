@@ -1,6 +1,7 @@
 import {
   cn,
   formatDate,
+  formatDateOrPresent,
   formatDateRange,
   calculateDuration,
   formatDuration,
@@ -34,14 +35,56 @@ describe('Utility Functions', () => {
   })
 
   describe('formatDate', () => {
-    it('formats date string correctly', () => {
+    it('formats date string with day by default', () => {
       const result = formatDate('2024-01-15')
       expect(result).toBe('Jan 15, 2024')
     })
 
-    it('handles different date formats', () => {
+    it('formats date string without day when specified', () => {
+      const result = formatDate('2024-01-15', false)
+      expect(result).toBe('Jan 2024')
+    })
+
+    it('handles different date formats with day', () => {
       const result = formatDate('2023-12-31')
       expect(result).toBe('Dec 31, 2023')
+    })
+
+    it('handles different date formats without day', () => {
+      const result = formatDate('2023-12-31', false)
+      expect(result).toBe('Dec 2023')
+    })
+  })
+
+  describe('formatDateOrPresent', () => {
+    it('formats date string without day by default', () => {
+      const result = formatDateOrPresent('2024-01-15')
+      expect(result).toBe('Jan 2024')
+    })
+
+    it('formats date string with day when specified', () => {
+      const result = formatDateOrPresent('2024-01-15', 'Present', true)
+      expect(result).toBe('Jan 15, 2024')
+    })
+
+    it('returns "Present" for null date', () => {
+      const result = formatDateOrPresent(null)
+      expect(result).toBe('Present')
+    })
+
+    it('returns "Present" for undefined date', () => {
+      const result = formatDateOrPresent(undefined)
+      expect(result).toBe('Present')
+    })
+
+    it('uses custom present label', () => {
+      const result = formatDateOrPresent(null, 'Current')
+      expect(result).toBe('Current')
+    })
+
+    it('handles valid date with custom present label', () => {
+      const result = formatDateOrPresent('2024-01-15', 'Current')
+      expect(result).toBe('Jan 2024')
     })
   })
 

@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CV, CVFilterType, HighlightEntry } from '@/lib/types'
 import { staggerContainerVariants, staggerItemVariants } from '@/components/animations/variants'
+import { formatDateOrPresent } from '@/lib/utils'
 import { usePostHog } from 'posthog-js/react'
 import Fuse from 'fuse.js'
 import FadeIn from '@/components/animations/FadeIn'
@@ -50,13 +51,6 @@ export default function CVContent({ cvData }: CVContentProps) {
   useEffect(() => {
     setExpandedRoles(new Set())
   }, [activeFilter])
-
-  // Helper function to format dates
-  const formatDate = (dateString: string | null | undefined): string => {
-    if (!dateString) return 'Present'
-    const date = new Date(dateString)
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short' })
-  }
 
   // Filter experience based on active filter AND active skills (combined filtering)
   const filteredExperience = useMemo(() => {
@@ -106,14 +100,9 @@ export default function CVContent({ cvData }: CVContentProps) {
     })
   }
 
-  // Search WITHIN filtered results and extract match metadata
-  const searchResults = useMemo((): SearchResultItem[] => {
-    if (!searchQuery.trim() || searchQuery.length < 2) {
-      return []
-    }
-
-    // Create a temporary Fuse instance for the filtered results
-    const filteredFuse = new Fuse(filteredExperience, {
+  // Memoize Fuse instance to avoid expensive re-initialization on every search
+  const fuseInstance = useMemo(() => {
+    return new Fuse(filteredExperience, {
       keys: [
         { name: 'title', weight: 0.3 },
         { name: 'company', weight: 0.3 },
@@ -126,8 +115,15 @@ export default function CVContent({ cvData }: CVContentProps) {
       includeMatches: true,
       minMatchCharLength: 2,
     })
+  }, [filteredExperience])
 
-    const results = filteredFuse.search(searchQuery)
+  // Search WITHIN filtered results and extract match metadata
+  const searchResults = useMemo((): SearchResultItem[] => {
+    if (!searchQuery.trim() || searchQuery.length < 2) {
+      return []
+    }
+
+    const results = fuseInstance.search(searchQuery)
 
     // Track search events
     if (results.length === 0) {
@@ -162,7 +158,9 @@ export default function CVContent({ cvData }: CVContentProps) {
         previewText,
       }
     })
-  }, [searchQuery, filteredExperience, posthog])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Note: filteredExperience.length is used only for analytics, not computation
+  }, [searchQuery, fuseInstance, posthog])
 
   // Always display filtered experience (never hide cards based on search)
   const displayedExperience = filteredExperience
@@ -512,7 +510,7 @@ export default function CVContent({ cvData }: CVContentProps) {
                           onToggle={() =>
                             handleToggleRole(exp.id, `${exp.title} at ${exp.company}`)
                           }
-                          formatDate={formatDate}
+                          formatDate={formatDateOrPresent}
                           searchQuery={searchQuery}
                           isHighlighted={highlightedCardId === exp.id}
                           kpis={exp.kpis}

@@ -16,14 +16,33 @@ export function cn(...inputs: ClassValue[]) {
 
 /**
  * Format a date string to a readable format
+ * @param dateString - The date string to format (ISO 8601 format)
+ * @param includeDay - Whether to include the day in the output (default: true)
+ * @returns Formatted date string (e.g., "Jan 15, 2024" or "Jan 2024")
  */
-export function formatDate(dateString: string): string {
+export function formatDate(dateString: string, includeDay: boolean = true): string {
   const date = new Date(dateString)
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
-    day: 'numeric',
+    ...(includeDay && { day: 'numeric' }),
   })
+}
+
+/**
+ * Format a date with optional null handling
+ * @param dateString - The date string to format (ISO 8601 format) or null/undefined
+ * @param presentLabel - The label to use for null/undefined dates (default: 'Present')
+ * @param includeDay - Whether to include the day in the output (default: false for date ranges)
+ * @returns Formatted date string or present label
+ */
+export function formatDateOrPresent(
+  dateString: string | null | undefined,
+  presentLabel: string = 'Present',
+  includeDay: boolean = false
+): string {
+  if (!dateString) return presentLabel
+  return formatDate(dateString, includeDay)
 }
 
 /**

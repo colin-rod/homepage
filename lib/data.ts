@@ -1,19 +1,48 @@
 /**
  * Data loading utilities
- * Functions to load and process data from JSON files
+ * Functions to load and process data from JSON files with runtime validation
  */
 
 import { Project, TimelineEvent, CV, UsesCategory } from './types'
+import {
+  ProjectsArraySchema,
+  TimelineEventsArraySchema,
+  CVSchema,
+  UsesCategoriesArraySchema,
+} from './validators'
 import projectsData from '@/data/projects.json'
 import timelineData from '@/data/timeline.json'
 import cvData from '@/data/cv.json'
 import usesData from '@/data/uses.json'
 
 /**
- * Get all projects
+ * Cached validated data to avoid re-parsing on every call
+ */
+let cachedProjects: Project[] | null = null
+let cachedTimelineEvents: TimelineEvent[] | null = null
+let cachedCVData: CV | null = null
+let cachedUsesCategories: UsesCategory[] | null = null
+
+/**
+ * Get all projects with runtime validation
+ * @throws {Error} if validation fails
  */
 export function getProjects(): Project[] {
-  return projectsData as Project[]
+  if (cachedProjects) {
+    return cachedProjects
+  }
+
+  const validated = ProjectsArraySchema.safeParse(projectsData)
+
+  if (!validated.success) {
+    console.error('Project data validation failed:', validated.error.format())
+    throw new Error(
+      `Project data validation failed: ${validated.error.issues.map((e) => `${e.path.join('.')}: ${e.message}`).join(', ')}`
+    )
+  }
+
+  cachedProjects = validated.data
+  return validated.data
 }
 
 /**
@@ -60,10 +89,25 @@ export function getTools(): Project[] {
 }
 
 /**
- * Get all timeline events
+ * Get all timeline events with runtime validation
+ * @throws {Error} if validation fails
  */
 export function getTimelineEvents(): TimelineEvent[] {
-  return timelineData as TimelineEvent[]
+  if (cachedTimelineEvents) {
+    return cachedTimelineEvents
+  }
+
+  const validated = TimelineEventsArraySchema.safeParse(timelineData)
+
+  if (!validated.success) {
+    console.error('Timeline data validation failed:', validated.error.format())
+    throw new Error(
+      `Timeline data validation failed: ${validated.error.issues.map((e) => `${e.path.join('.')}: ${e.message}`).join(', ')}`
+    )
+  }
+
+  cachedTimelineEvents = validated.data
+  return validated.data
 }
 
 /**
@@ -81,10 +125,25 @@ export function getTimelineEventsByTag(tag: string): TimelineEvent[] {
 }
 
 /**
- * Get CV data
+ * Get CV data with runtime validation
+ * @throws {Error} if validation fails
  */
 export function getCVData(): CV {
-  return cvData as CV
+  if (cachedCVData) {
+    return cachedCVData
+  }
+
+  const validated = CVSchema.safeParse(cvData)
+
+  if (!validated.success) {
+    console.error('CV data validation failed:', validated.error.format())
+    throw new Error(
+      `CV data validation failed: ${validated.error.issues.map((e) => `${e.path.join('.')}: ${e.message}`).join(', ')}`
+    )
+  }
+
+  cachedCVData = validated.data
+  return validated.data
 }
 
 /**
@@ -171,9 +230,24 @@ export function getProjectsBySwimlanes(): Record<Swimlane, Project[]> {
 }
 
 /**
- * Get uses categories and items
+ * Get uses categories and items with runtime validation
+ * @throws {Error} if validation fails
  */
 export function getUsesCategories(): UsesCategory[] {
+  if (cachedUsesCategories) {
+    return cachedUsesCategories
+  }
+
   const data = usesData as { categories: UsesCategory[] }
-  return data.categories
+  const validated = UsesCategoriesArraySchema.safeParse(data.categories)
+
+  if (!validated.success) {
+    console.error('Uses data validation failed:', validated.error.format())
+    throw new Error(
+      `Uses data validation failed: ${validated.error.issues.map((e) => `${e.path.join('.')}: ${e.message}`).join(', ')}`
+    )
+  }
+
+  cachedUsesCategories = validated.data
+  return validated.data
 }
