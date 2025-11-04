@@ -1,22 +1,21 @@
 'use client'
 
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CV, CVFilterType, HighlightEntry } from '@/lib/types'
+import { CV, CVFilterType } from '@/lib/types'
 import { staggerContainerVariants, staggerItemVariants } from '@/components/animations/variants'
 import { formatDateOrPresent } from '@/lib/utils'
 import { usePostHog } from 'posthog-js/react'
-import Fuse from 'fuse.js'
 import FadeIn from '@/components/animations/FadeIn'
 import ExperienceCard from '@/components/features/cv/ExperienceCard'
 import EducationCard from '@/components/features/cv/EducationCard'
 import SearchBar from '@/components/features/cv/SearchBar'
-import SearchResultsPanel, {
-  type SearchResultItem,
-} from '@/components/features/cv/SearchResultsPanel'
+import SearchResultsPanel from '@/components/features/cv/SearchResultsPanel'
 import FloatingNav from '@/components/features/cv/FloatingNav'
 import { FocusTicker } from '@/components/features/cv/FocusTicker'
 import SkillAtlas from '@/components/features/cv/SkillAtlas'
+import { useCVFilters } from './hooks/useCVFilters'
+import { useCVSearch } from './hooks/useCVSearch'
 
 interface CVContentProps {
   cvData: CV
@@ -28,10 +27,10 @@ interface CVContentProps {
  * Handles filtering and display of CV content with expandable role cards
  */
 export default function CVContent({ cvData }: CVContentProps) {
-  const [activeFilter, setActiveFilter] = useState<CVFilterType>('all')
-  const [expandedRoles, setExpandedRoles] = useState<Set<string>>(new Set())
-  const [activeSkills, setActiveSkills] = useState<Set<string>>(new Set())
+  // Use custom hooks for filters and search
+  const filters = useCVFilters(cvData)
   const [searchQuery, setSearchQuery] = useState<string>('')
+  const search = useCVSearch(filters.filteredExperience, searchQuery)
   const [highlightedCardId, setHighlightedCardId] = useState<string | null>(null)
   const posthog = usePostHog()
 
@@ -47,154 +46,39 @@ export default function CVContent({ cvData }: CVContentProps) {
     })
   }, [cvData.experience])
 
-  // Reset expanded roles when filter changes
-  useEffect(() => {
-    setExpandedRoles(new Set())
-  }, [activeFilter])
-
-  // Filter experience based on active filter AND active skills (combined filtering)
-  const filteredExperience = useMemo(() => {
-    return cvData.experience.filter((exp) => {
-      // First, filter by role type tags (Product/Strategy/Tech)
-      const matchesRoleFilter = activeFilter === 'all' || exp.tags.includes(activeFilter)
-
-      // Then, filter by skills (OR logic: match ANY selected skill)
-      const matchesSkillFilter =
-        activeSkills.size === 0 ||
-        (exp.skills && exp.skills.some((skill) => activeSkills.has(skill)))
-
-      // Both filters must match (AND logic)
-      return matchesRoleFilter && matchesSkillFilter
-    })
-  }, [cvData.experience, activeFilter, activeSkills])
-
-  /**
-   * Filter highlights based on active skills
-   * Returns filtered highlights for a given experience entry
-   * Supports both string and HighlightEntry formats for backward compatibility
-   */
-  const getFilteredHighlights = (
-    highlights: (string | HighlightEntry)[],
-    activeSkills: Set<string>
-  ): (string | HighlightEntry)[] => {
-    // If no skills selected, show all highlights
-    if (activeSkills.size === 0) {
-      return highlights
-    }
-
-    return highlights.filter((highlight) => {
-      // Handle string format (backward compatibility - show all)
-      if (typeof highlight === 'string') {
-        return true
-      }
-
-      // Handle HighlightEntry format
-      // Show highlight if:
-      // 1. It has no skills tagged (neutral highlight)
-      // 2. It has at least one skill that matches active skills
-      if (!highlight.skills || highlight.skills.length === 0) {
-        return true
-      }
-
-      return highlight.skills.some((skill) => activeSkills.has(skill))
-    })
-  }
-
-  // Memoize Fuse instance to avoid expensive re-initialization on every search
-  const fuseInstance = useMemo(() => {
-    return new Fuse(filteredExperience, {
-      keys: [
-        { name: 'title', weight: 0.3 },
-        { name: 'company', weight: 0.3 },
-        { name: 'skills', weight: 0.2 },
-        { name: 'description', weight: 0.1 },
-        { name: 'highlights', weight: 0.1 },
-      ],
-      threshold: 0.4,
-      includeScore: true,
-      includeMatches: true,
-      minMatchCharLength: 2,
-    })
-  }, [filteredExperience])
-
-  // Search WITHIN filtered results and extract match metadata
-  const searchResults = useMemo((): SearchResultItem[] => {
-    if (!searchQuery.trim() || searchQuery.length < 2) {
-      return []
-    }
-
-    const results = fuseInstance.search(searchQuery)
-
-    // Track search events
-    if (results.length === 0) {
-      posthog?.capture('cv_search_no_results', {
-        query: searchQuery,
-        filtered_results_count: filteredExperience.length,
-      })
-    } else {
-      posthog?.capture('cv_search_submitted', {
-        query: searchQuery,
-        results_count: results.length,
-        filtered_results_count: filteredExperience.length,
-      })
-    }
-
-    // Transform Fuse results into SearchResultItem format
-    return results.map((result) => {
-      const firstMatch = result.matches?.[0]
-      let previewText = ''
-
-      if (firstMatch?.value) {
-        // Extract preview text from first match (truncate to 80 chars)
-        const value = Array.isArray(firstMatch.value) ? firstMatch.value[0] : firstMatch.value
-        previewText = typeof value === 'string' ? value.substring(0, 80) + '...' : ''
-      }
-
-      return {
-        id: result.item.id,
-        title: result.item.title,
-        company: result.item.company,
-        matchCount: result.matches?.length || 0,
-        previewText,
-      }
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    // Note: filteredExperience.length is used only for analytics, not computation
-  }, [searchQuery, fuseInstance, posthog])
-
   // Always display filtered experience (never hide cards based on search)
-  const displayedExperience = filteredExperience
+  const displayedExperience = filters.filteredExperience
 
   // Toggle skill filter with PostHog tracking
   const handleSkillClick = (skill: string) => {
-    const newActiveSkills = new Set(activeSkills)
+    const newActiveSkills = new Set(filters.activeSkills)
 
     if (newActiveSkills.has(skill)) {
       newActiveSkills.delete(skill)
       posthog?.capture('cv_skill_deselected', {
         skill,
-        active_filter: activeFilter,
+        active_filter: filters.activeFilter,
         remaining_skills: Array.from(newActiveSkills),
       })
     } else {
       newActiveSkills.add(skill)
       posthog?.capture('cv_skill_selected', {
         skill,
-        active_filter: activeFilter,
+        active_filter: filters.activeFilter,
         active_skills: Array.from(newActiveSkills),
       })
     }
 
-    setActiveSkills(newActiveSkills)
+    filters.setActiveSkills(newActiveSkills)
   }
 
   // Clear all skill filters
   const handleClearSkills = () => {
     posthog?.capture('cv_skills_cleared', {
-      cleared_skills: Array.from(activeSkills),
-      active_filter: activeFilter,
+      cleared_skills: Array.from(filters.activeSkills),
+      active_filter: filters.activeFilter,
     })
-    setActiveSkills(new Set())
+    filters.setActiveSkills(new Set())
   }
 
   // Handle search query change
@@ -205,7 +89,7 @@ export default function CVContent({ cvData }: CVContentProps) {
   // Handle search clear
   const handleSearchClear = () => {
     setSearchQuery('')
-    setActiveFilter('all') // Reset to all experience
+    filters.setActiveFilter('all') // Reset to all experience
     posthog?.capture('cv_search_cleared', {
       previous_query: searchQuery,
     })
@@ -233,7 +117,7 @@ export default function CVContent({ cvData }: CVContentProps) {
       }, 2000)
 
       // Track result click
-      const result = searchResults.find((r) => r.id === id)
+      const result = search.searchResults.find((r) => r.id === id)
       posthog?.capture('cv_search_result_clicked', {
         result_id: id,
         result_title: result?.title,
@@ -263,17 +147,17 @@ export default function CVContent({ cvData }: CVContentProps) {
 
   // Track when search panel opens
   useEffect(() => {
-    if (searchResults.length > 0) {
+    if (search.searchResults.length > 0) {
       posthog?.capture('cv_search_panel_opened', {
         query: searchQuery,
-        results_count: searchResults.length,
+        results_count: search.searchResults.length,
       })
     }
-  }, [searchResults.length, searchQuery, posthog])
+  }, [search.searchResults.length, searchQuery, posthog])
 
   // Toggle role expansion with PostHog tracking
   const handleToggleRole = (roleId: string, roleName: string) => {
-    const newExpanded = new Set(expandedRoles)
+    const newExpanded = new Set(filters.expandedRoles)
     const isExpanding = !newExpanded.has(roleId)
 
     if (isExpanding) {
@@ -281,21 +165,21 @@ export default function CVContent({ cvData }: CVContentProps) {
       posthog?.capture('cv_role_expanded', {
         role_id: roleId,
         role_name: roleName,
-        filter: activeFilter,
+        filter: filters.activeFilter,
       })
     } else {
       newExpanded.delete(roleId)
       posthog?.capture('cv_role_collapsed', {
         role_id: roleId,
         role_name: roleName,
-        filter: activeFilter,
+        filter: filters.activeFilter,
       })
     }
 
-    setExpandedRoles(newExpanded)
+    filters.setExpandedRoles(newExpanded)
   }
 
-  const filters: { label: string; value: CVFilterType }[] = [
+  const filterOptions: { label: string; value: CVFilterType }[] = [
     { label: 'All', value: 'all' },
     { label: 'Product', value: 'product' },
     { label: 'Strategy', value: 'strategy' },
@@ -315,19 +199,19 @@ export default function CVContent({ cvData }: CVContentProps) {
           </h1>
           <AnimatePresence mode="wait">
             <motion.p
-              key={activeFilter}
+              key={filters.activeFilter}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
               transition={{ duration: 0.3 }}
               className="text-xl text-text-secondary leading-relaxed"
             >
-              {cvData.focusSummaries?.[activeFilter] || cvData.summary}
+              {cvData.focusSummaries?.[filters.activeFilter] || cvData.summary}
             </motion.p>
           </AnimatePresence>
 
           {/* Achievements Ticker */}
-          {cvData.focusMetrics?.[activeFilter]?.achievements && (
+          {cvData.focusMetrics?.[filters.activeFilter]?.achievements && (
             <div className="mt-6 p-4 bg-accent-warm/5 border border-accent-warm/20 rounded-lg">
               <div className="flex items-center gap-3">
                 <span className="text-xs font-semibold text-accent-warm uppercase tracking-wide shrink-0">
@@ -335,7 +219,7 @@ export default function CVContent({ cvData }: CVContentProps) {
                 </span>
                 <div className="flex-1 min-w-0">
                   <FocusTicker
-                    items={cvData.focusMetrics[activeFilter].achievements}
+                    items={cvData.focusMetrics[filters.activeFilter].achievements}
                     rotationSpeed={4000}
                   />
                 </div>
@@ -350,13 +234,13 @@ export default function CVContent({ cvData }: CVContentProps) {
         <div className="mb-8" role="group" aria-label="Filter CV by focus area">
           <h3 className="text-sm font-semibold text-text mb-3">Filter by focus:</h3>
           <div className="flex flex-wrap gap-3">
-            {filters.map((filter) => (
+            {filterOptions.map((filter) => (
               <button
                 key={filter.value}
-                onClick={() => setActiveFilter(filter.value)}
-                aria-pressed={activeFilter === filter.value}
+                onClick={() => filters.setActiveFilter(filter.value)}
+                aria-pressed={filters.activeFilter === filter.value}
                 className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                  activeFilter === filter.value
+                  filters.activeFilter === filter.value
                     ? 'bg-accent-warm text-white'
                     : 'bg-neutral-surface border border-divider text-text hover:border-accent-warm'
                 }`}
@@ -367,21 +251,21 @@ export default function CVContent({ cvData }: CVContentProps) {
           </div>
           <div className="mt-3 flex flex-wrap items-center gap-3">
             <p className="text-sm text-text-secondary" aria-live="polite" aria-atomic="true">
-              {activeSkills.size === 0
-                ? activeFilter === 'all'
+              {filters.activeSkills.size === 0
+                ? filters.activeFilter === 'all'
                   ? 'Showing all experience'
-                  : `Showing ${activeFilter} experience (${filteredExperience.length} ${
-                      filteredExperience.length === 1 ? 'position' : 'positions'
+                  : `Showing ${filters.activeFilter} experience (${filters.filteredExperience.length} ${
+                      filters.filteredExperience.length === 1 ? 'position' : 'positions'
                     })`
-                : activeFilter === 'all'
-                  ? `Showing roles with: ${Array.from(activeSkills).join(', ')} (${filteredExperience.length} ${
-                      filteredExperience.length === 1 ? 'position' : 'positions'
+                : filters.activeFilter === 'all'
+                  ? `Showing roles with: ${Array.from(filters.activeSkills).join(', ')} (${filters.filteredExperience.length} ${
+                      filters.filteredExperience.length === 1 ? 'position' : 'positions'
                     })`
-                  : `Showing ${activeFilter} roles with: ${Array.from(activeSkills).join(', ')} (${filteredExperience.length} ${
-                      filteredExperience.length === 1 ? 'position' : 'positions'
+                  : `Showing ${filters.activeFilter} roles with: ${Array.from(filters.activeSkills).join(', ')} (${filters.filteredExperience.length} ${
+                      filters.filteredExperience.length === 1 ? 'position' : 'positions'
                     })`}
             </p>
-            {activeSkills.size > 0 && (
+            {filters.activeSkills.size > 0 && (
               <button
                 onClick={handleClearSkills}
                 className="text-xs px-3 py-1 rounded-full bg-neutral-surface border border-divider text-text hover:border-accent-warm hover:bg-accent-warm/5 transition-colors"
@@ -397,9 +281,9 @@ export default function CVContent({ cvData }: CVContentProps) {
       <FadeIn delay={0.16} threshold={0.05}>
         <SkillAtlas
           cvData={cvData}
-          activeSkills={activeSkills}
+          activeSkills={filters.activeSkills}
           onSkillClick={handleSkillClick}
-          activeFilter={activeFilter}
+          activeFilter={filters.activeFilter}
         />
       </FadeIn>
 
@@ -417,9 +301,9 @@ export default function CVContent({ cvData }: CVContentProps) {
       </FadeIn>
 
       {/* Search Results Panel */}
-      {searchResults.length > 0 && searchQuery.length >= 2 && (
+      {search.searchResults.length > 0 && searchQuery.length >= 2 && (
         <SearchResultsPanel
-          results={searchResults}
+          results={search.searchResults}
           query={searchQuery}
           onResultClick={handleResultClick}
           onClose={handlePanelClose}
@@ -461,7 +345,7 @@ export default function CVContent({ cvData }: CVContentProps) {
           <h2 className="text-2xl font-bold text-text mb-8">Professional Experience</h2>
           <AnimatePresence mode="wait">
             <motion.div
-              key={`${activeFilter}-${searchQuery}`}
+              key={`${filters.activeFilter}-${searchQuery}`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
@@ -474,7 +358,7 @@ export default function CVContent({ cvData }: CVContentProps) {
                       <strong>No roles found</strong>{' '}
                       {searchQuery
                         ? `matching "${searchQuery}"`
-                        : `matching the selected ${activeSkills.size > 0 ? 'skills' : 'filters'}`}
+                        : `matching the selected ${filters.activeSkills.size > 0 ? 'skills' : 'filters'}`}
                       .
                     </p>
                     <p className="text-sm text-text-secondary">
@@ -487,9 +371,9 @@ export default function CVContent({ cvData }: CVContentProps) {
                 <div className="space-y-8">
                   {(displayedExperience.length > 0 ? displayedExperience : cvData.experience).map(
                     (exp) => {
-                      const filteredHighlights = getFilteredHighlights(
+                      const filteredHighlights = filters.getFilteredHighlights(
                         exp.highlights || [],
-                        activeSkills
+                        filters.activeSkills
                       )
                       return (
                         <ExperienceCard
@@ -506,7 +390,7 @@ export default function CVContent({ cvData }: CVContentProps) {
                           highlights={filteredHighlights}
                           totalHighlights={exp.highlights?.length || 0}
                           tags={exp.tags || []}
-                          isExpanded={expandedRoles.has(exp.id)}
+                          isExpanded={filters.expandedRoles.has(exp.id)}
                           onToggle={() =>
                             handleToggleRole(exp.id, `${exp.title} at ${exp.company}`)
                           }
