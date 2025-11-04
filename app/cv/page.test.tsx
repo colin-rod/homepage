@@ -3,7 +3,7 @@ import CVPage from './page'
 
 // Mock the CVContent client component
 jest.mock('./CVContent', () => {
-  return function MockCVContent({ cvData }: { cvData: any }) {
+  return function MockCVContent({ cvData }: { cvData: unknown }) {
     return (
       <div data-testid="cv-content">
         <h1>Curriculum Vitae</h1>

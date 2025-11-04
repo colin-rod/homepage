@@ -5,13 +5,21 @@ import { CV, CVFilterType } from '@/lib/types'
 // Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({ children, onMouseEnter, onMouseLeave, ...props }: any) => (
+    div: ({
+      children,
+      onMouseEnter,
+      onMouseLeave,
+      ...props
+    }: React.PropsWithChildren<Record<string, unknown>> & {
+      onMouseEnter?: () => void
+      onMouseLeave?: () => void
+    }) => (
       <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} {...props}>
         {children}
       </div>
     ),
   },
-  AnimatePresence: ({ children }: any) => <>{children}</>,
+  AnimatePresence: ({ children }: React.PropsWithChildren) => <>{children}</>,
 }))
 
 describe('SkillAtlas', () => {
@@ -173,7 +181,7 @@ describe('SkillAtlas', () => {
 
     it('highlights active skills', () => {
       const activeSkills = new Set(['React'])
-      const { container } = render(<SkillAtlas {...defaultProps} activeSkills={activeSkills} />)
+      render(<SkillAtlas {...defaultProps} activeSkills={activeSkills} />)
 
       // Active skills should have different styling
       const reactButtons = screen.getAllByText('React')
@@ -269,7 +277,7 @@ describe('SkillAtlas', () => {
     it('does not show toggle when all skills fit', () => {
       render(<SkillAtlas {...defaultProps} />)
       // With few skills, toggle should not appear
-      const showMoreButton = screen.queryByText(/Show (more|less)/)
+      screen.queryByText(/Show (more|less)/)
       // May or may not appear depending on skill count
     })
 
@@ -390,7 +398,7 @@ describe('SkillAtlas', () => {
         fireEvent.mouseEnter(firstColumn)
 
         // Other columns should be dimmed
-        const dimmedColumns = container.querySelectorAll('.opacity-50')
+        container.querySelectorAll('.opacity-50')
         // May have dimmed columns depending on implementation
       }
     })
@@ -473,7 +481,7 @@ describe('SkillAtlas', () => {
 
   describe('Styling', () => {
     it('applies column-specific colors', () => {
-      const { container } = render(<SkillAtlas {...defaultProps} />)
+      render(<SkillAtlas {...defaultProps} />)
 
       // Product column should have purple colors
       const productHeaders = screen.getAllByText('Product')

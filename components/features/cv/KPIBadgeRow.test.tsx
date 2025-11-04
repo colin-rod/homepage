@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import KPIBadgeRow, { KPIBadgeRowProps } from './KPIBadgeRow'
+import KPIBadgeRow from './KPIBadgeRow'
 import { KPI } from '@/lib/types'
 
 // Mock lucide-react icons
@@ -89,12 +89,12 @@ describe('KPIBadgeRow', () => {
     })
 
     it('returns null when kpis is null', () => {
-      const { container } = render(<KPIBadgeRow kpis={null as any} />)
+      const { container } = render(<KPIBadgeRow kpis={null as unknown as KPI[]} />)
       expect(container.firstChild).toBeNull()
     })
 
     it('returns null when kpis is undefined', () => {
-      const { container } = render(<KPIBadgeRow kpis={undefined as any} />)
+      const { container } = render(<KPIBadgeRow kpis={undefined as unknown as KPI[]} />)
       expect(container.firstChild).toBeNull()
     })
   })
@@ -384,7 +384,7 @@ describe('KPIBadgeRow', () => {
 
     it('handles KPIs without category', () => {
       const kpisWithoutCategory: KPI[] = [
-        { label: 'Revenue', value: '+40%', category: undefined as any },
+        { label: 'Revenue', value: '+40%', category: undefined as unknown as string },
       ]
       render(<KPIBadgeRow kpis={kpisWithoutCategory} />)
       expect(screen.getByTestId('kpi-badge')).toBeInTheDocument()
