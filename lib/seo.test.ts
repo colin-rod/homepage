@@ -1,4 +1,68 @@
+import type { Metadata } from 'next'
 import { generatePageMetadata, siteConfig, baseMetadata, viewport } from './seo'
+
+const toArray = <T>(value: T | T[] | undefined): T[] => {
+  if (value === undefined) {
+    return []
+  }
+  return Array.isArray(value) ? value : [value]
+}
+
+const assertImageDescriptor = (
+  value: unknown,
+  message: string
+): asserts value is {
+  url: string | URL
+  width?: number | string
+  height?: number | string
+  alt?: string
+} => {
+  if (typeof value !== 'object' || value === null || !('url' in value)) {
+    throw new Error(message)
+  }
+}
+
+type RobotsData = {
+  index?: boolean
+  follow?: boolean
+  googleBot?: string | Record<string, unknown>
+  [key: string]: unknown
+}
+
+const assertRobotsObject = (
+  robots: string | RobotsData | undefined
+): asserts robots is RobotsData => {
+  if (!robots || typeof robots === 'string') {
+    throw new Error('Expected robots configuration object')
+  }
+}
+
+const assertRecord = (
+  value: unknown,
+  message: string
+): asserts value is Record<string, unknown> => {
+  if (typeof value !== 'object' || value === null) {
+    throw new Error(message)
+  }
+}
+
+const getFirstOpenGraphImage = (openGraph: NonNullable<Metadata['openGraph']>) => {
+  const images = toArray(openGraph.images)
+  expect(images).not.toHaveLength(0)
+  const firstImage = images[0]
+  assertImageDescriptor(firstImage, 'Expected Open Graph image descriptor')
+  return firstImage
+}
+
+const getFirstTwitterImage = (twitter: NonNullable<Metadata['twitter']>) => {
+  const images = toArray(twitter.images)
+  expect(images).not.toHaveLength(0)
+  const firstImage = images[0]
+  if (typeof firstImage !== 'string') {
+    throw new Error('Expected Twitter image to be a string URL')
+  }
+  return firstImage
+}
 
 describe('seo', () => {
   describe('siteConfig', () => {
@@ -35,16 +99,31 @@ describe('seo', () => {
     })
 
     it('includes Open Graph metadata', () => {
-      expect(baseMetadata.openGraph).toBeDefined()
-      expect(baseMetadata.openGraph?.type).toBe('website')
-      expect(baseMetadata.openGraph?.locale).toBe('en_US')
-      expect(baseMetadata.openGraph?.url).toBe('https://colinrodrigues.com')
-      expect(baseMetadata.openGraph?.title).toBe('Colin Rodrigues')
+      const openGraph = baseMetadata.openGraph
+      expect(openGraph).toBeDefined()
+      if (!openGraph) {
+        throw new Error('Expected Open Graph metadata')
+      }
+      if (!('type' in openGraph)) {
+        throw new Error('Expected Open Graph metadata to include type')
+      }
+      expect(openGraph.type).toBe('website')
+      expect(openGraph.locale).toBe('en_US')
+      expect(openGraph.url).toBe('https://colinrodrigues.com')
+      expect(openGraph.title).toBe('Colin Rodrigues')
     })
 
     it('includes Open Graph image with correct dimensions', () => {
-      expect(baseMetadata.openGraph?.images).toBeDefined()
-      expect(baseMetadata.openGraph?.images?.[0]).toMatchObject({
+      const openGraph = baseMetadata.openGraph
+      expect(openGraph).toBeDefined()
+      if (!openGraph) {
+        throw new Error('Expected Open Graph metadata')
+      }
+      const images = toArray(openGraph.images)
+      expect(images).not.toHaveLength(0)
+      const firstImage = images[0]
+      assertImageDescriptor(firstImage, 'Expected Open Graph image descriptor')
+      expect(firstImage).toMatchObject({
         url: '/og-image.png',
         width: 1200,
         height: 630,
@@ -52,23 +131,48 @@ describe('seo', () => {
     })
 
     it('includes Twitter Card metadata', () => {
-      expect(baseMetadata.twitter).toBeDefined()
-      expect(baseMetadata.twitter?.card).toBe('summary_large_image')
-      expect(baseMetadata.twitter?.title).toBe('Colin Rodrigues')
-      expect(baseMetadata.twitter?.description).toBe(siteConfig.description)
+      const twitter = baseMetadata.twitter
+      expect(twitter).toBeDefined()
+      if (!twitter) {
+        throw new Error('Expected Twitter metadata')
+      }
+      if (!('card' in twitter)) {
+        throw new Error('Expected Twitter metadata to include card')
+      }
+      expect(twitter.card).toBe('summary_large_image')
+      expect(twitter.title).toBe('Colin Rodrigues')
+      expect(twitter.description).toBe(siteConfig.description)
     })
 
     it('includes robots configuration', () => {
-      expect(baseMetadata.robots).toBeDefined()
-      expect(baseMetadata.robots).toHaveProperty('index', true)
-      expect(baseMetadata.robots).toHaveProperty('follow', true)
+      const robots = baseMetadata.robots
+      expect(robots).toBeDefined()
+      assertRobotsObject(robots)
+      if (typeof robots.index !== 'boolean') {
+        throw new Error('Expected robots.index to be a boolean')
+      }
+      if (typeof robots.follow !== 'boolean') {
+        throw new Error('Expected robots.follow to be a boolean')
+      }
+      expect(robots.index).toBe(true)
+      expect(robots.follow).toBe(true)
     })
 
     it('includes Google Bot configuration', () => {
-      const googleBot = baseMetadata.robots?.googleBot
+      const robots = baseMetadata.robots
+      expect(robots).toBeDefined()
+      assertRobotsObject(robots)
+      const googleBot = robots.googleBot
       expect(googleBot).toBeDefined()
-      expect(googleBot?.index).toBe(true)
-      expect(googleBot?.follow).toBe(true)
+      assertRecord(googleBot, 'Expected googleBot configuration to be an object')
+      if (typeof googleBot.index !== 'boolean') {
+        throw new Error('Expected googleBot.index to be a boolean')
+      }
+      if (typeof googleBot.follow !== 'boolean') {
+        throw new Error('Expected googleBot.follow to be a boolean')
+      }
+      expect(googleBot.index).toBe(true)
+      expect(googleBot.follow).toBe(true)
     })
 
     it('includes icons configuration', () => {
@@ -129,14 +233,30 @@ describe('seo', () => {
         '/custom-og.png'
       )
 
-      expect(metadata.openGraph?.images?.[0]).toMatchObject({ url: '/custom-og.png' })
-      expect(metadata.twitter?.images?.[0]).toBe('/custom-og.png')
+      const openGraph = metadata.openGraph
+      expect(openGraph).toBeDefined()
+      if (!openGraph) {
+        throw new Error('Expected Open Graph metadata')
+      }
+      expect(getFirstOpenGraphImage(openGraph)).toMatchObject({ url: '/custom-og.png' })
+
+      const twitter = metadata.twitter
+      expect(twitter).toBeDefined()
+      if (!twitter) {
+        throw new Error('Expected Twitter metadata')
+      }
+      expect(getFirstTwitterImage(twitter)).toBe('/custom-og.png')
     })
 
     it('uses default OG image when no custom image provided', () => {
       const metadata = generatePageMetadata('Contact', 'Get in touch', '/contact')
 
-      expect(metadata.openGraph?.images?.[0]).toMatchObject({ url: '/og-image.png' })
+      const openGraph = metadata.openGraph
+      expect(openGraph).toBeDefined()
+      if (!openGraph) {
+        throw new Error('Expected Open Graph metadata')
+      }
+      expect(getFirstOpenGraphImage(openGraph)).toMatchObject({ url: '/og-image.png' })
     })
 
     it('includes formatted page title in Open Graph', () => {
@@ -166,7 +286,12 @@ describe('seo', () => {
     it('includes image dimensions in Open Graph', () => {
       const metadata = generatePageMetadata('Test', 'Test page', '/test')
 
-      expect(metadata.openGraph?.images?.[0]).toMatchObject({
+      const openGraph = metadata.openGraph
+      expect(openGraph).toBeDefined()
+      if (!openGraph) {
+        throw new Error('Expected Open Graph metadata')
+      }
+      expect(getFirstOpenGraphImage(openGraph)).toMatchObject({
         width: 1200,
         height: 630,
       })
@@ -175,7 +300,12 @@ describe('seo', () => {
     it('includes alt text for Open Graph image', () => {
       const metadata = generatePageMetadata('Portfolio', 'My work', '/projects')
 
-      expect(metadata.openGraph?.images?.[0]).toMatchObject({
+      const openGraph = metadata.openGraph
+      expect(openGraph).toBeDefined()
+      if (!openGraph) {
+        throw new Error('Expected Open Graph metadata')
+      }
+      expect(getFirstOpenGraphImage(openGraph)).toMatchObject({
         alt: 'Portfolio | Colin Rodrigues',
       })
     })

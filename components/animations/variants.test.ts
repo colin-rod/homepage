@@ -1,4 +1,4 @@
-import type { TargetAndTransition, Transition, VariantDefinition } from 'framer-motion'
+import type { TargetAndTransition, Transition, Variant } from 'framer-motion'
 import {
   pageVariants,
   cardHoverVariants,
@@ -11,9 +11,12 @@ import {
 
 type TransitionRecord = Transition & Record<string, unknown>
 
-const ensureVariantObject = (variant: VariantDefinition): TargetAndTransition => {
+const ensureVariantObject = (variant: Variant): TargetAndTransition => {
   if (typeof variant === 'function') {
     throw new Error('Expected static variant object')
+  }
+  if (!variant) {
+    throw new Error('Expected variant object')
   }
   return variant
 }

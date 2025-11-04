@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import type { HTMLAttributes, NavHTMLAttributes, PropsWithChildren } from 'react'
+import type { HTMLAttributes, PropsWithChildren } from 'react'
 import FloatingNav from './FloatingNav'
 import { usePostHog } from 'posthog-js/react'
 
-type MotionNavProps = PropsWithChildren<NavHTMLAttributes<HTMLElement>>
+type MotionNavProps = PropsWithChildren<HTMLAttributes<HTMLElement>>
 type MotionDivProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>
 
 // Mock PostHog
