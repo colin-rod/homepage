@@ -62,7 +62,7 @@ export const baseMetadata: Metadata = {
     card: 'summary_large_image',
     title: siteConfig.title,
     description: siteConfig.description,
-    creator: siteConfig.twitterHandle,
+    ...(siteConfig.twitterHandle ? { creator: siteConfig.twitterHandle } : {}),
     images: [siteConfig.ogImage],
   },
 

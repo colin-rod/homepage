@@ -9,10 +9,20 @@ jest.mock('framer-motion', () => ({
       children,
       onMouseEnter,
       onMouseLeave,
+      whileInView,
+      viewport,
+      initial,
+      animate,
+      transition,
       ...props
     }: React.PropsWithChildren<Record<string, unknown>> & {
       onMouseEnter?: () => void
       onMouseLeave?: () => void
+      whileInView?: unknown
+      viewport?: unknown
+      initial?: unknown
+      animate?: unknown
+      transition?: unknown
     }) => (
       <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} {...props}>
         {children}
