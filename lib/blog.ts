@@ -77,6 +77,7 @@ export function getPostBySlug(slug: string): BlogPost {
       tags: data.tags || [],
       content,
       readingTime: calculateReadingTime(content),
+      draft: data.draft,
     }
   } catch (error) {
     if (error instanceof Error) {
@@ -119,8 +120,12 @@ export function getAllPosts(includeContent = false): BlogPost[] {
     return post
   })
 
+  // Filter out draft posts in production
+  const isProduction = process.env.NODE_ENV === 'production'
+  const filteredPosts = isProduction ? posts.filter((post) => post.draft !== true) : posts
+
   // Sort posts by date (newest first)
-  return posts.sort((a, b) => {
+  return filteredPosts.sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime()
   })
 }
