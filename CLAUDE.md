@@ -330,6 +330,17 @@ npm run validate-data
 
 ## 🌿 Git Workflow
 
+> **🤖 AI ASSISTANTS: READ THIS FIRST!**
+>
+> **CRITICAL WORKFLOW RULES:**
+>
+> 1. ✅ **ALWAYS** create branches from `development` (never from `main`)
+> 2. ✅ **ALWAYS** target PRs to `development` branch (never to `main`)
+> 3. ✅ **USE** helper scripts: `./scripts/new-branch.sh` and `./scripts/create-pr.sh`
+> 4. ✅ **READ** `.ai-workflow` file at project root for quick reference
+>
+> **Why?** All features must be tested in staging (`development`) before production (`main`).
+
 ### Branch Strategy
 
 ```
@@ -358,6 +369,14 @@ main (production)
 ### Development Workflow
 
 1. **Create feature branch** from `development`:
+
+   **Option A: Use helper script (recommended for AI assistants)**
+
+   ```bash
+   ./scripts/new-branch.sh "epic-2-homepage"
+   ```
+
+   **Option B: Manual approach**
 
    ```bash
    git checkout development
@@ -395,9 +414,19 @@ main (production)
 
 5. **Push and create PR**:
 
+   **Option A: Use helper script (recommended for AI assistants)**
+
    ```bash
-   git push origin feature/epic-2-homepage
+   git push -u origin feature/epic-2-homepage
+   ./scripts/create-pr.sh "Add hero section" "Implements homepage hero with CTA buttons"
+   ```
+
+   **Option B: Manual approach**
+
+   ```bash
+   git push -u origin feature/epic-2-homepage
    # Create PR on GitHub: feature/epic-2-homepage → development
+   # ⚠️ CRITICAL: Ensure PR targets 'development' branch, NOT 'main'
    ```
 
 6. **PR Review Process**:
