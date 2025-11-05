@@ -161,4 +161,137 @@ This is an older post for testing sorting.`,
       expect(posts.length).toBeGreaterThanOrEqual(3)
     })
   })
+
+  describe('Draft Post Functionality', () => {
+    const draftPost = {
+      filename: 'test-draft-post.mdx',
+      content: `---
+title: Draft Test Post
+date: 2025-01-25
+summary: This is a draft post
+tags: [draft-test]
+draft: true
+---
+
+# Draft Content
+
+This post should be hidden in production.`,
+    }
+
+    const publishedPost = {
+      filename: 'test-published-post.mdx',
+      content: `---
+title: Published Test Post
+date: 2025-01-24
+summary: This is a published post
+tags: [published-test]
+draft: false
+---
+
+# Published Content
+
+This post should always be visible.`,
+    }
+
+    beforeAll(() => {
+      // Create draft and published test posts
+      fs.writeFileSync(path.join(TEST_CONTENT_DIR, draftPost.filename), draftPost.content)
+      fs.writeFileSync(path.join(TEST_CONTENT_DIR, publishedPost.filename), publishedPost.content)
+    })
+
+    afterAll(() => {
+      // Clean up draft test posts
+      const draftPath = path.join(TEST_CONTENT_DIR, draftPost.filename)
+      const publishedPath = path.join(TEST_CONTENT_DIR, publishedPost.filename)
+
+      if (fs.existsSync(draftPath)) {
+        fs.unlinkSync(draftPath)
+      }
+      if (fs.existsSync(publishedPath)) {
+        fs.unlinkSync(publishedPath)
+      }
+    })
+
+    describe('getPostBySlug', () => {
+      it('parses draft field from frontmatter', () => {
+        const post = getPostBySlug('test-draft-post')
+
+        expect(post.draft).toBe(true)
+        expect(post.title).toBe('Draft Test Post')
+      })
+
+      it('parses draft=false from frontmatter', () => {
+        const post = getPostBySlug('test-published-post')
+
+        expect(post.draft).toBe(false)
+        expect(post.title).toBe('Published Test Post')
+      })
+
+      it('treats posts without draft field as published (draft=undefined)', () => {
+        const post = getPostBySlug('test-post-1')
+
+        expect(post.draft).toBeUndefined()
+      })
+    })
+
+    describe('getAllPosts with draft filtering', () => {
+      it('excludes draft posts in production environment', () => {
+        const originalEnv = process.env.NODE_ENV
+        process.env.NODE_ENV = 'production'
+
+        const posts = getAllPosts()
+        const draftPostInList = posts.find((p) => p.slug === 'test-draft-post')
+        const publishedPostInList = posts.find((p) => p.slug === 'test-published-post')
+
+        expect(draftPostInList).toBeUndefined()
+        expect(publishedPostInList).toBeDefined()
+
+        process.env.NODE_ENV = originalEnv
+      })
+
+      it('includes draft posts in development environment', () => {
+        const originalEnv = process.env.NODE_ENV
+        process.env.NODE_ENV = 'development'
+
+        const posts = getAllPosts()
+        const draftPostInList = posts.find((p) => p.slug === 'test-draft-post')
+        const publishedPostInList = posts.find((p) => p.slug === 'test-published-post')
+
+        expect(draftPostInList).toBeDefined()
+        expect(publishedPostInList).toBeDefined()
+
+        process.env.NODE_ENV = originalEnv
+      })
+
+      it('includes draft posts when NODE_ENV is not set (development default)', () => {
+        const originalEnv = process.env.NODE_ENV
+        delete process.env.NODE_ENV
+
+        const posts = getAllPosts()
+        const draftPostInList = posts.find((p) => p.slug === 'test-draft-post')
+
+        expect(draftPostInList).toBeDefined()
+
+        process.env.NODE_ENV = originalEnv
+      })
+
+      it('includes posts with draft=false regardless of environment', () => {
+        const originalEnv = process.env.NODE_ENV
+
+        // Test in production
+        process.env.NODE_ENV = 'production'
+        let posts = getAllPosts()
+        let publishedPost = posts.find((p) => p.slug === 'test-published-post')
+        expect(publishedPost).toBeDefined()
+
+        // Test in development
+        process.env.NODE_ENV = 'development'
+        posts = getAllPosts()
+        publishedPost = posts.find((p) => p.slug === 'test-published-post')
+        expect(publishedPost).toBeDefined()
+
+        process.env.NODE_ENV = originalEnv
+      })
+    })
+  })
 })
