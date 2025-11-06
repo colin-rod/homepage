@@ -163,6 +163,7 @@ export interface BlogPost {
   updatedAt?: string
   tags: string[]
   featured?: boolean
+  draft?: boolean // If true, post is hidden in production
 }
 
 // ============================================================================

@@ -1,0 +1,38 @@
+---
+title: Exploring Trip Threads and NLP Testing
+slug: trip-threads-nlp-testing
+date: 2025-10-28
+summary: Capturing early thoughts on the Trip Threads project and how we validate the NLP experience.
+tags: [ai, product, experimentation]
+draft: true
+---
+
+> **Working notes** on shaping the Trip Threads travel planner and making sure the NLP flows feel trustworthy.
+
+## Framing the Project
+
+Trip Threads started as an answer to the planning chaos that friends surfaced during testing weekends. People wanted **fast itinerary scaffolding** without feeling locked into rigid templates. The concept: treat each trip as a living thread, where conversations, suggestions, and logistics stay woven together.
+
+Early questions I am still exploring:
+
+- What level of structure keeps travellers anchored without overwhelming them?
+- How much real-time collaboration do groups actually want versus async curation?
+- Which integrations are the first “must haves” (maps, bookings, or messaging)?
+
+## NLP Testing Focus
+
+The NLP layer is the most experimental piece. We are running lightweight evaluations in three tracks:
+
+1. **Intent coverage** – compiling a corpus of 120 real planning prompts and grading whether our parser maps them into the right action buckets.
+2. **Response grounding** – tracing each recommendation back to a data citation so testers can see why a hotel or activity surfaced.
+3. **Conversation drift** – simulating five-turn chats to watch how quickly the assistant veers off-topic or repeats itself.
+
+So far, intent coverage is hovering around 68%, with the biggest misses in multi-city itineraries. Grounding is better (80% of responses carry an explicit source), but we still fabricate availability details if we let the model speculate.
+
+## What’s Next
+
+- Build a **prompt debugger** view directly into the Trip Threads console so the product team can replay failed parses.
+- Draft a **content style guide** for tone; users want warmth without fluff.
+- Run a **paired usability test**: one traveller planning solo, another co-planning with a friend, to surface collaboration gaps.
+
+I’ll keep layering findings here before promoting this into a polished write-up.

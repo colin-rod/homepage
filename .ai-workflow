@@ -1,0 +1,47 @@
+================================================================================
+🤖 AI ASSISTANT GIT WORKFLOW - READ THIS FIRST!
+================================================================================
+
+CRITICAL: Always follow this workflow when working with git:
+
+1. START FROM DEVELOPMENT BRANCH
+   ✅ DO: git checkout development && git pull origin development
+   ❌ DON'T: Start from main or any other branch
+
+2. CREATE FEATURE BRANCHES FROM DEVELOPMENT
+   ✅ DO: git checkout -b feature/description
+   ❌ DON'T: Branch from main
+
+3. TARGET PULL REQUESTS TO DEVELOPMENT
+   ✅ DO: Create PRs that merge INTO development
+   ❌ DON'T: Create PRs targeting main
+
+4. USE HELPER SCRIPT (recommended)
+   ./scripts/new-branch.sh "feature-description"
+
+   This script will:
+   - Ensure you're on development
+   - Pull latest changes
+   - Create properly named branch
+   - Remind you about PR target
+
+================================================================================
+WORKFLOW SUMMARY:
+================================================================================
+
+  main (production)          ← Only merge from development
+    ↑
+    └── development (staging) ← ALL PRs target here first
+          ↑
+          └── feature/* branches
+
+================================================================================
+WHY THIS MATTERS:
+================================================================================
+
+- development = staging environment for testing
+- main = production (live site)
+- Features need testing in staging before production
+- This prevents untested code going live
+
+================================================================================
