@@ -576,5 +576,69 @@
     "featured": true,
     "year": 2026,
     "quarter": "Q1"
+  },
+  {
+    "id": "hueshift",
+    "title": "HueShift",
+    "slug": "hueshift",
+    "description": "Interactive tool for parsing, visualizing, and replacing colors in text or code.",
+    "detailedDescription": [
+      "HueShift is a browser-based application that enables developers and designers to paste any text or code containing color values (hex, rgb, hsl, or named colors) and instantly see all detected colors in a gallery view.",
+      "Users can visually replace colors using an integrated color picker, apply changes in real time, and export the updated text for immediate use.",
+      "The tool features live color contrast checking, before/after palette comparison, and a privacy-first architecture where all operations happen client-side.",
+      "Future iterations will introduce account-based project saving, AI-powered palette suggestions, and advanced accessibility auditing."
+    ],
+    "type": "tool",
+    "businessModel": "Freemium SaaS with client-side MVP; Pro plan adds project saving, AI suggestions, and accessibility auditing.",
+    "status": "planned",
+    "links": {
+      "prd": "https://docs.google.com/document/d/14AzxEotAFaMXkIX7perb-dXuHzaHHjWsD8GhepvxGAU/edit?usp=sharing"
+    },
+    "techStack": [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "TinyColor2",
+      "react-colorful",
+      "Vercel"
+    ],
+    "tags": [
+      "design",
+      "colors",
+      "visualization",
+      "accessibility",
+      "tools",
+      "front-end",
+      "developer-productivity",
+      "saas"
+    ],
+    "whyBuilt": [
+      "While refactoring styles for multiple projects, I found it tedious to manually search and replace color codes scattered across files.",
+      "HueShift was built to make color refactoring visual and fast — turning a repetitive developer task into an intuitive workflow.",
+      "The goal was to combine developer precision with designer-friendly visualization in a single interface.",
+      "It also serves as a foundation for exploring more advanced color intelligence features such as accessibility checking and AI-based palette harmony."
+    ],
+    "learnings": [
+      {
+        "content": "Building a text-parsing tool for developers benefits enormously from a responsive UI and live visual feedback.",
+        "sentiment": "positive"
+      },
+      {
+        "content": "Regex-based color parsing is effective but supposting alternative rgba or hsl formats can be challenging.",
+        "sentiment": "neutral"
+      },
+      {
+        "content": "Adding a color contrast checker early revealed accessibility insights that improved UX direction.",
+        "sentiment": "positive"
+      },
+      {
+        "content": "Client-only processing improves privacy but limits functionality such as user history and cloud persistence, requiring future backend integration.",
+        "sentiment": "neutral"
+      }
+    ],
+    "featured": false,
+    "year": 2026,
+    "quarter": "Q1"
   }
 ]
