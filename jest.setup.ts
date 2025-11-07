@@ -83,5 +83,22 @@ console.error = (...args: any[]) => {
     return
   }
 
+  if (
+    typeof message === 'string' &&
+    message.includes('In HTML, <html> cannot be a child of <div>.')
+  ) {
+    return
+  }
+
+  if (
+    Array.isArray(args) &&
+    args.some(
+      (arg) =>
+        typeof arg === 'string' && arg.includes('In HTML, <html> cannot be a child of <div>.')
+    )
+  ) {
+    return
+  }
+
   originalConsoleError(...args)
 }
