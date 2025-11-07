@@ -49,6 +49,13 @@ interface GitHubChartProps {
 }
 
 export default function GitHubChart({ username, title, className = '' }: GitHubChartProps) {
+  const isTestEnv = process.env.NODE_ENV === 'test'
+  const logError = (...args: Parameters<typeof console.error>) => {
+    if (!isTestEnv) {
+      console.error(...args)
+    }
+  }
+
   const [contributions, setContributions] = useState<GitHubContribution[] | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
@@ -59,7 +66,7 @@ export default function GitHubChart({ username, title, className = '' }: GitHubC
         const response = await fetch(`/api/github-contributions?username=${username}`)
 
         if (!response.ok) {
-          console.error('Failed to fetch contributions:', response.status)
+          logError('Failed to fetch contributions:', response.status)
           setHasError(true)
           setIsLoading(false)
           return
@@ -69,7 +76,7 @@ export default function GitHubChart({ username, title, className = '' }: GitHubC
         setContributions(data.contributions)
         setIsLoading(false)
       } catch (error) {
-        console.error('Error fetching contributions:', error)
+        logError('Error fetching contributions:', error)
         setHasError(true)
         setIsLoading(false)
       }
