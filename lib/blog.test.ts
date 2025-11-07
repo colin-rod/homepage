@@ -8,6 +8,19 @@ import * as fs from 'fs'
 import * as path from 'path'
 import { getAllPosts, getPostBySlug, getPostSlugs } from './blog'
 
+const setNodeEnv = (value: string | undefined) => {
+  if (value === undefined) {
+    Reflect.deleteProperty(process.env, 'NODE_ENV')
+  } else {
+    Object.defineProperty(process.env, 'NODE_ENV', {
+      value,
+      writable: true,
+      configurable: true,
+      enumerable: true,
+    })
+  }
+}
+
 const TEST_CONTENT_DIR = path.join(process.cwd(), 'content/writing')
 
 describe('Blog Utilities', () => {
@@ -237,7 +250,7 @@ This post should always be visible.`,
     describe('getAllPosts with draft filtering', () => {
       it('excludes draft posts in production environment', () => {
         const originalEnv = process.env.NODE_ENV
-        process.env.NODE_ENV = 'production'
+        setNodeEnv('production')
 
         const posts = getAllPosts()
         const draftPostInList = posts.find((p) => p.slug === 'test-draft-post')
@@ -246,12 +259,12 @@ This post should always be visible.`,
         expect(draftPostInList).toBeUndefined()
         expect(publishedPostInList).toBeDefined()
 
-        process.env.NODE_ENV = originalEnv
+        setNodeEnv(originalEnv)
       })
 
       it('includes draft posts in development environment', () => {
         const originalEnv = process.env.NODE_ENV
-        process.env.NODE_ENV = 'development'
+        setNodeEnv('development')
 
         const posts = getAllPosts()
         const draftPostInList = posts.find((p) => p.slug === 'test-draft-post')
@@ -260,37 +273,37 @@ This post should always be visible.`,
         expect(draftPostInList).toBeDefined()
         expect(publishedPostInList).toBeDefined()
 
-        process.env.NODE_ENV = originalEnv
+        setNodeEnv(originalEnv)
       })
 
       it('includes draft posts when NODE_ENV is not set (development default)', () => {
         const originalEnv = process.env.NODE_ENV
-        delete process.env.NODE_ENV
+        setNodeEnv(undefined)
 
         const posts = getAllPosts()
         const draftPostInList = posts.find((p) => p.slug === 'test-draft-post')
 
         expect(draftPostInList).toBeDefined()
 
-        process.env.NODE_ENV = originalEnv
+        setNodeEnv(originalEnv)
       })
 
       it('includes posts with draft=false regardless of environment', () => {
         const originalEnv = process.env.NODE_ENV
 
         // Test in production
-        process.env.NODE_ENV = 'production'
+        setNodeEnv('production')
         let posts = getAllPosts()
         let publishedPost = posts.find((p) => p.slug === 'test-published-post')
         expect(publishedPost).toBeDefined()
 
         // Test in development
-        process.env.NODE_ENV = 'development'
+        setNodeEnv('development')
         posts = getAllPosts()
         publishedPost = posts.find((p) => p.slug === 'test-published-post')
         expect(publishedPost).toBeDefined()
 
-        process.env.NODE_ENV = originalEnv
+        setNodeEnv(originalEnv)
       })
     })
   })
