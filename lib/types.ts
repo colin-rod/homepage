@@ -164,6 +164,7 @@ export interface BlogPost {
   tags: string[]
   featured?: boolean
   draft?: boolean // If true, post is hidden in production
+  publish?: boolean // If false, post is hidden in all environments (dev and production)
 }
 
 // ============================================================================

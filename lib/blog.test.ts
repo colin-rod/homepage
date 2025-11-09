@@ -307,4 +307,194 @@ This post should always be visible.`,
       })
     })
   })
+
+  describe('Publish Flag Functionality', () => {
+    const unpublishedPost = {
+      filename: 'test-unpublished-post.mdx',
+      content: `---
+title: Unpublished Test Post
+date: 2025-01-26
+summary: This post is not published
+tags: [unpublished-test]
+publish: false
+---
+
+# Unpublished Content
+
+This post should be hidden in both dev and production.`,
+    }
+
+    const publishedFlagPost = {
+      filename: 'test-published-flag-post.mdx',
+      content: `---
+title: Published Flag Test Post
+date: 2025-01-27
+summary: This post is explicitly published
+tags: [published-test]
+publish: true
+---
+
+# Published Flag Content
+
+This post should always be visible.`,
+    }
+
+    const noPublishFlagPost = {
+      filename: 'test-no-publish-flag-post.mdx',
+      content: `---
+title: No Publish Flag Test Post
+date: 2025-01-28
+summary: This post has no publish flag
+tags: [default-test]
+---
+
+# Default Content
+
+This post should be visible by default (backward compatibility).`,
+    }
+
+    beforeAll(() => {
+      // Create test posts for publish flag testing
+      fs.writeFileSync(
+        path.join(TEST_CONTENT_DIR, unpublishedPost.filename),
+        unpublishedPost.content
+      )
+      fs.writeFileSync(
+        path.join(TEST_CONTENT_DIR, publishedFlagPost.filename),
+        publishedFlagPost.content
+      )
+      fs.writeFileSync(
+        path.join(TEST_CONTENT_DIR, noPublishFlagPost.filename),
+        noPublishFlagPost.content
+      )
+    })
+
+    afterAll(() => {
+      // Clean up publish flag test posts
+      const unpublishedPath = path.join(TEST_CONTENT_DIR, unpublishedPost.filename)
+      const publishedPath = path.join(TEST_CONTENT_DIR, publishedFlagPost.filename)
+      const noFlagPath = path.join(TEST_CONTENT_DIR, noPublishFlagPost.filename)
+
+      if (fs.existsSync(unpublishedPath)) {
+        fs.unlinkSync(unpublishedPath)
+      }
+      if (fs.existsSync(publishedPath)) {
+        fs.unlinkSync(publishedPath)
+      }
+      if (fs.existsSync(noFlagPath)) {
+        fs.unlinkSync(noFlagPath)
+      }
+    })
+
+    describe('getPostBySlug', () => {
+      it('parses publish field from frontmatter', () => {
+        const post = getPostBySlug('test-unpublished-post')
+
+        expect(post.publish).toBe(false)
+        expect(post.title).toBe('Unpublished Test Post')
+      })
+
+      it('parses publish=true from frontmatter', () => {
+        const post = getPostBySlug('test-published-flag-post')
+
+        expect(post.publish).toBe(true)
+        expect(post.title).toBe('Published Flag Test Post')
+      })
+
+      it('treats posts without publish field as published (publish=undefined)', () => {
+        const post = getPostBySlug('test-no-publish-flag-post')
+
+        expect(post.publish).toBeUndefined()
+        expect(post.title).toBe('No Publish Flag Test Post')
+      })
+    })
+
+    describe('getAllPosts with publish filtering', () => {
+      it('excludes unpublished posts (publish=false) in production', () => {
+        const originalEnv = process.env.NODE_ENV
+        setNodeEnv('production')
+
+        const posts = getAllPosts()
+        const unpublishedPostInList = posts.find((p) => p.slug === 'test-unpublished-post')
+        const publishedPostInList = posts.find((p) => p.slug === 'test-published-flag-post')
+        const noFlagPostInList = posts.find((p) => p.slug === 'test-no-publish-flag-post')
+
+        expect(unpublishedPostInList).toBeUndefined()
+        expect(publishedPostInList).toBeDefined()
+        expect(noFlagPostInList).toBeDefined()
+
+        setNodeEnv(originalEnv)
+      })
+
+      it('excludes unpublished posts (publish=false) in development', () => {
+        const originalEnv = process.env.NODE_ENV
+        setNodeEnv('development')
+
+        const posts = getAllPosts()
+        const unpublishedPostInList = posts.find((p) => p.slug === 'test-unpublished-post')
+        const publishedPostInList = posts.find((p) => p.slug === 'test-published-flag-post')
+        const noFlagPostInList = posts.find((p) => p.slug === 'test-no-publish-flag-post')
+
+        expect(unpublishedPostInList).toBeUndefined()
+        expect(publishedPostInList).toBeDefined()
+        expect(noFlagPostInList).toBeDefined()
+
+        setNodeEnv(originalEnv)
+      })
+
+      it('excludes unpublished posts (publish=false) when NODE_ENV is not set', () => {
+        const originalEnv = process.env.NODE_ENV
+        setNodeEnv(undefined)
+
+        const posts = getAllPosts()
+        const unpublishedPostInList = posts.find((p) => p.slug === 'test-unpublished-post')
+
+        expect(unpublishedPostInList).toBeUndefined()
+
+        setNodeEnv(originalEnv)
+      })
+
+      it('includes posts with publish=true in all environments', () => {
+        const originalEnv = process.env.NODE_ENV
+
+        // Test in production
+        setNodeEnv('production')
+        let posts = getAllPosts()
+        let publishedPost = posts.find((p) => p.slug === 'test-published-flag-post')
+        expect(publishedPost).toBeDefined()
+
+        // Test in development
+        setNodeEnv('development')
+        posts = getAllPosts()
+        publishedPost = posts.find((p) => p.slug === 'test-published-flag-post')
+        expect(publishedPost).toBeDefined()
+
+        // Test with no NODE_ENV
+        setNodeEnv(undefined)
+        posts = getAllPosts()
+        publishedPost = posts.find((p) => p.slug === 'test-published-flag-post')
+        expect(publishedPost).toBeDefined()
+
+        setNodeEnv(originalEnv)
+      })
+
+      it('includes posts without publish field (backward compatibility)', () => {
+        const originalEnv = process.env.NODE_ENV
+
+        // Test in production
+        setNodeEnv('production')
+        let posts = getAllPosts()
+        let noFlagPost = posts.find((p) => p.slug === 'test-no-publish-flag-post')
+        expect(noFlagPost).toBeDefined()
+
+        // Test in development
+        setNodeEnv('development')
+        posts = getAllPosts()
+        noFlagPost = posts.find((p) => p.slug === 'test-no-publish-flag-post')
+        expect(noFlagPost).toBeDefined()
+
+        setNodeEnv(originalEnv)
+      })
+    })
+  })
 })
