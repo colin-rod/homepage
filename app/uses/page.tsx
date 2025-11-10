@@ -20,7 +20,7 @@ export default function UsesPage() {
     <>
       <Navigation />
       <PageTransition>
-        <main id="main-content" className="pt-12 pb-24 sm:pt-16 sm:pb-32">
+        <main id="main-content" className="py-24 sm:py-32 pb-24 sm:pb-32">
           <div className="mx-auto max-w-5xl px-6 lg:px-8">
             <header className="mb-12 sm:mb-16">
               <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl mb-4">
