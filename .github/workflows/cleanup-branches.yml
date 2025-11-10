@@ -1,0 +1,41 @@
+name: 🧹 Delete merged branches (safe with PR protection)
+
+on:
+  schedule:
+    - cron: "0 0 * * 0" # every Sunday at midnight UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  delete-merged-branches:
+    runs-on: ubuntu-latest
+
+    # ✅ Only run on specific repos
+    if: |
+      github.repository == 'colininc/playbabypool' ||
+      github.repository == 'colininc/babynameapp'
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Delete merged branches (safe cleanup)
+        uses: phpdocker-io/github-actions-delete-merged-branches@v2
+        with:
+          # ✅ Delete branches merged into these base branches
+          base: main,master,development,dev
+
+          # 🚫 Never delete these long-lived branches
+          exclude: main,master,development,dev,staging,release,production
+
+          # ⏳ Optional: only delete merged branches older than X days
+          days-old: 0
+
+          # 🚀 Don’t just simulate — delete for real
+          dry-run: false
+
+          # 🧠 NEW: Skip branches with open pull requests
+          exclude-open-pr: true
