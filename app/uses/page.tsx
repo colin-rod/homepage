@@ -4,6 +4,7 @@ import { generatePageMetadata } from '@/lib/seo'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
 import PageTransition from '@/components/animations/PageTransition'
+import PageHeader from '@/components/layouts/PageHeader'
 import { getUsesCategories } from '@/lib/data'
 import { ExternalLink } from 'lucide-react'
 
@@ -21,18 +22,18 @@ export default function UsesPage() {
       <Navigation />
       <PageTransition>
         <main id="main-content" className="pt-12 pb-24 sm:pt-16 sm:pb-32">
-          <div className="mx-auto max-w-5xl px-6 lg:px-8">
-            <header className="mb-12 sm:mb-16">
-              <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl mb-4">
-                Uses
-              </h1>
-              <p className="text-lg text-text-secondary leading-relaxed">
-                Inspired by the community at uses.tech, this page captures the tools and habits that
-                support my work. Each entry includes a context panel so future me can remember why a
-                tool stuck around—or why it didn&apos;t.
-              </p>
-            </header>
+          <PageHeader className="mb-12 sm:mb-16">
+            <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl mb-4">
+              Uses
+            </h1>
+            <p className="text-lg text-text-secondary leading-relaxed">
+              Inspired by the community at uses.tech, this page captures the tools and habits that
+              support my work. Each entry includes a context panel so future me can remember why a
+              tool stuck around—or why it didn&apos;t.
+            </p>
+          </PageHeader>
 
+          <div className="mx-auto max-w-5xl px-6 lg:px-8">
             <div className="space-y-16">
               {categories.map((category) => (
                 <section

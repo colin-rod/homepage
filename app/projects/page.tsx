@@ -4,6 +4,7 @@ import { getProjectsBySwimLane, getTools } from '@/lib/data'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
 import PageTransition from '@/components/animations/PageTransition'
+import PageHeader from '@/components/layouts/PageHeader'
 import Swimlane from '@/components/features/Swimlane'
 import { Code2, Rocket, Lightbulb, Archive, Wrench } from 'lucide-react'
 
@@ -36,9 +37,8 @@ export default function ProjectsPage() {
       <Navigation />
       <PageTransition>
         <main id="main-content" className="pt-12 pb-24 sm:pt-16 sm:pb-32">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            {/* Page Header - Compressed */}
-            <div className="mx-auto max-w-2xl text-center mb-10">
+          <PageHeader className="mb-10 text-center">
+            <div className="mx-auto max-w-2xl">
               <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl mb-3">
                 Projects
               </h1>
@@ -46,7 +46,9 @@ export default function ProjectsPage() {
                 A collection of things I&apos;m working on, built, launched, or investigated.
               </p>
             </div>
+          </PageHeader>
 
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
             {/* In Progress Swimlane */}
             <Swimlane
               title="In Progress"

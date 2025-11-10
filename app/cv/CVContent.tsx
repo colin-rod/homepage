@@ -14,6 +14,7 @@ import SearchResultsPanel from '@/components/features/cv/SearchResultsPanel'
 import FloatingNav from '@/components/features/cv/FloatingNav'
 import { FocusTicker } from '@/components/features/cv/FocusTicker'
 import SkillAtlas from '@/components/features/cv/SkillAtlas'
+import PageHeader from '@/components/layouts/PageHeader'
 import { useCVFilters } from './hooks/useCVFilters'
 import { useCVSearch } from './hooks/useCVSearch'
 
@@ -187,253 +188,257 @@ export default function CVContent({ cvData }: CVContentProps) {
   ]
 
   return (
-    <div className="mx-auto max-w-4xl px-6 lg:px-8">
+    <>
       {/* Floating Navigation */}
       <FloatingNav />
 
-      {/* Page Header / Overview Section */}
-      <FadeIn threshold={0.05}>
-        <div id="overview" className="mb-16">
-          <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl mb-6">
-            Curriculum Vitae
-          </h1>
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={filters.activeFilter}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.3 }}
-              className="text-xl text-text-secondary leading-relaxed"
-            >
-              {cvData.focusSummaries?.[filters.activeFilter] || cvData.summary}
-            </motion.p>
-          </AnimatePresence>
+      <PageHeader className="relative">
+        {/* Page Header / Overview Section */}
+        <FadeIn threshold={0.05}>
+          <div id="overview" className="mb-16">
+            <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl mb-6">
+              Curriculum Vitae
+            </h1>
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={filters.activeFilter}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.3 }}
+                className="text-xl text-text-secondary leading-relaxed"
+              >
+                {cvData.focusSummaries?.[filters.activeFilter] || cvData.summary}
+              </motion.p>
+            </AnimatePresence>
 
-          {/* Achievements Ticker */}
-          {cvData.focusMetrics?.[filters.activeFilter]?.achievements && (
-            <div className="mt-6 p-4 bg-accent-warm/5 border border-accent-warm/20 rounded-lg">
-              <div className="flex items-center gap-3">
-                <span className="text-xs font-semibold text-accent-warm uppercase tracking-wide shrink-0">
-                  Key Achievements
-                </span>
-                <div className="flex-1 min-w-0">
-                  <FocusTicker
-                    items={cvData.focusMetrics[filters.activeFilter].achievements}
-                    rotationSpeed={4000}
-                  />
+            {/* Achievements Ticker */}
+            {cvData.focusMetrics?.[filters.activeFilter]?.achievements && (
+              <div className="mt-6 p-4 bg-accent-warm/5 border border-accent-warm/20 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs font-semibold text-accent-warm uppercase tracking-wide shrink-0">
+                    Key Achievements
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <FocusTicker
+                      items={cvData.focusMetrics[filters.activeFilter].achievements}
+                      rotationSpeed={4000}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-        </div>
-      </FadeIn>
-
-      {/* Filter Buttons */}
-      <FadeIn delay={0.1} threshold={0.05}>
-        <div className="mb-8" role="group" aria-label="Filter CV by focus area">
-          <h3 className="text-sm font-semibold text-text mb-3">Filter by focus:</h3>
-          <div className="flex flex-wrap gap-3">
-            {filterOptions.map((filter) => (
-              <button
-                key={filter.value}
-                onClick={() => filters.setActiveFilter(filter.value)}
-                aria-pressed={filters.activeFilter === filter.value}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                  filters.activeFilter === filter.value
-                    ? 'bg-accent-warm text-white'
-                    : 'bg-neutral-surface border border-divider text-text hover:border-accent-warm'
-                }`}
-              >
-                {filter.label}
-              </button>
-            ))}
-          </div>
-          <div className="mt-3 flex flex-wrap items-center gap-3">
-            <p className="text-sm text-text-secondary" aria-live="polite" aria-atomic="true">
-              {filters.activeSkills.size === 0
-                ? filters.activeFilter === 'all'
-                  ? 'Showing all experience'
-                  : `Showing ${filters.activeFilter} experience (${filters.filteredExperience.length} ${
-                      filters.filteredExperience.length === 1 ? 'position' : 'positions'
-                    })`
-                : filters.activeFilter === 'all'
-                  ? `Showing roles with: ${Array.from(filters.activeSkills).join(', ')} (${filters.filteredExperience.length} ${
-                      filters.filteredExperience.length === 1 ? 'position' : 'positions'
-                    })`
-                  : `Showing ${filters.activeFilter} roles with: ${Array.from(filters.activeSkills).join(', ')} (${filters.filteredExperience.length} ${
-                      filters.filteredExperience.length === 1 ? 'position' : 'positions'
-                    })`}
-            </p>
-            {filters.activeSkills.size > 0 && (
-              <button
-                onClick={handleClearSkills}
-                className="text-xs px-3 py-1 rounded-full bg-neutral-surface border border-divider text-text hover:border-accent-warm hover:bg-accent-warm/5 transition-colors"
-              >
-                Clear skills
-              </button>
             )}
           </div>
-        </div>
-      </FadeIn>
+        </FadeIn>
+      </PageHeader>
 
-      {/* Skill Atlas */}
-      <FadeIn delay={0.16} threshold={0.05}>
-        <SkillAtlas
-          cvData={cvData}
-          activeSkills={filters.activeSkills}
-          onSkillClick={handleSkillClick}
-          activeFilter={filters.activeFilter}
-        />
-      </FadeIn>
-
-      {/* Search Bar */}
-      <FadeIn delay={0.2} threshold={0.05}>
-        <div className="mb-8">
-          <SearchBar
-            value={searchQuery}
-            onChange={handleSearchChange}
-            onClear={handleSearchClear}
-            resultsCount={displayedExperience.length}
-            totalCount={cvData.experience.length}
-          />
-        </div>
-      </FadeIn>
-
-      {/* Search Results Panel */}
-      {search.searchResults.length > 0 && searchQuery.length >= 2 && (
-        <SearchResultsPanel
-          results={search.searchResults}
-          query={searchQuery}
-          onResultClick={handleResultClick}
-          onClose={handlePanelClose}
-        />
-      )}
-
-      {/* Download CV Section */}
-      <FadeIn delay={0.2} threshold={0.05}>
-        <section id="download" className="border-t border-divider pt-12 mb-16">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-text mb-4">Download CV</h2>
-            <p className="text-lg text-text-secondary mb-8">
-              Get a customized version of my CV tailored to specific role types
-            </p>
-            <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:justify-start max-w-4xl mx-auto">
-              <a href="/cv/download?filter=product" className="btn btn-primary text-center">
-                Download Product CV
-              </a>
-              <a href="/cv/download?filter=strategy" className="btn btn-primary text-center">
-                Download Strategy CV
-              </a>
-              <a href="/cv/download?filter=tech" className="btn btn-primary text-center">
-                Download Technical CV
-              </a>
-              <a
-                href="/cv/download?filter=all"
-                className="btn btn-secondary text-center sm:ml-auto"
-              >
-                Download Full CV
-              </a>
+      <div className="mx-auto max-w-4xl px-6 lg:px-8">
+        {/* Filter Buttons */}
+        <FadeIn delay={0.1} threshold={0.05}>
+          <div className="mb-8" role="group" aria-label="Filter CV by focus area">
+            <h3 className="text-sm font-semibold text-text mb-3">Filter by focus:</h3>
+            <div className="flex flex-wrap gap-3">
+              {filterOptions.map((filter) => (
+                <button
+                  key={filter.value}
+                  onClick={() => filters.setActiveFilter(filter.value)}
+                  aria-pressed={filters.activeFilter === filter.value}
+                  className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                    filters.activeFilter === filter.value
+                      ? 'bg-accent-warm text-white'
+                      : 'bg-neutral-surface border border-divider text-text hover:border-accent-warm'
+                  }`}
+                >
+                  {filter.label}
+                </button>
+              ))}
+            </div>
+            <div className="mt-3 flex flex-wrap items-center gap-3">
+              <p className="text-sm text-text-secondary" aria-live="polite" aria-atomic="true">
+                {filters.activeSkills.size === 0
+                  ? filters.activeFilter === 'all'
+                    ? 'Showing all experience'
+                    : `Showing ${filters.activeFilter} experience (${filters.filteredExperience.length} ${
+                        filters.filteredExperience.length === 1 ? 'position' : 'positions'
+                      })`
+                  : filters.activeFilter === 'all'
+                    ? `Showing roles with: ${Array.from(filters.activeSkills).join(', ')} (${filters.filteredExperience.length} ${
+                        filters.filteredExperience.length === 1 ? 'position' : 'positions'
+                      })`
+                    : `Showing ${filters.activeFilter} roles with: ${Array.from(filters.activeSkills).join(', ')} (${filters.filteredExperience.length} ${
+                        filters.filteredExperience.length === 1 ? 'position' : 'positions'
+                      })`}
+              </p>
+              {filters.activeSkills.size > 0 && (
+                <button
+                  onClick={handleClearSkills}
+                  className="text-xs px-3 py-1 rounded-full bg-neutral-surface border border-divider text-text hover:border-accent-warm hover:bg-accent-warm/5 transition-colors"
+                >
+                  Clear skills
+                </button>
+              )}
             </div>
           </div>
-        </section>
-      </FadeIn>
+        </FadeIn>
 
-      {/* Experience Section */}
-      <FadeIn delay={0.04} threshold={0.05}>
-        <section id="experience" className="mb-16">
-          <h2 className="text-2xl font-bold text-text mb-8">Professional Experience</h2>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`${filters.activeFilter}-${searchQuery}`}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3, ease: 'easeOut' }}
-            >
-              <>
-                {displayedExperience.length === 0 && (
-                  <div className="card text-center py-8 mb-8 bg-accent-warm/5 border-accent-warm/20">
-                    <p className="text-text-secondary mb-2">
-                      <strong>No roles found</strong>{' '}
-                      {searchQuery
-                        ? `matching "${searchQuery}"`
-                        : `matching the selected ${filters.activeSkills.size > 0 ? 'skills' : 'filters'}`}
-                      .
-                    </p>
-                    <p className="text-sm text-text-secondary">
-                      {searchQuery
-                        ? 'Try a different search term.'
-                        : 'Showing all experience below. Try different filters or clear skill selections.'}
-                    </p>
-                  </div>
-                )}
-                <div className="space-y-8">
-                  {(displayedExperience.length > 0 ? displayedExperience : cvData.experience).map(
-                    (exp) => {
-                      const filteredHighlights = filters.getFilteredHighlights(
-                        exp.highlights || [],
-                        filters.activeSkills
-                      )
-                      return (
-                        <ExperienceCard
-                          key={exp.id}
-                          ref={cardRefs.current.get(exp.id)}
-                          id={exp.id}
-                          title={exp.title}
-                          company={exp.company}
-                          icon={exp.icon}
-                          location={exp.location}
-                          startDate={exp.startDate}
-                          endDate={exp.endDate}
-                          description={exp.description}
-                          highlights={filteredHighlights}
-                          totalHighlights={exp.highlights?.length || 0}
-                          tags={exp.tags || []}
-                          isExpanded={filters.expandedRoles.has(exp.id)}
-                          onToggle={() =>
-                            handleToggleRole(exp.id, `${exp.title} at ${exp.company}`)
-                          }
-                          formatDate={formatDateOrPresent}
-                          searchQuery={searchQuery}
-                          isHighlighted={highlightedCardId === exp.id}
-                          kpis={exp.kpis}
-                        />
-                      )
-                    }
+        {/* Skill Atlas */}
+        <FadeIn delay={0.16} threshold={0.05}>
+          <SkillAtlas
+            cvData={cvData}
+            activeSkills={filters.activeSkills}
+            onSkillClick={handleSkillClick}
+            activeFilter={filters.activeFilter}
+          />
+        </FadeIn>
+
+        {/* Search Bar */}
+        <FadeIn delay={0.2} threshold={0.05}>
+          <div className="mb-8">
+            <SearchBar
+              value={searchQuery}
+              onChange={handleSearchChange}
+              onClear={handleSearchClear}
+              resultsCount={displayedExperience.length}
+              totalCount={cvData.experience.length}
+            />
+          </div>
+        </FadeIn>
+
+        {/* Search Results Panel */}
+        {search.searchResults.length > 0 && searchQuery.length >= 2 && (
+          <SearchResultsPanel
+            results={search.searchResults}
+            query={searchQuery}
+            onResultClick={handleResultClick}
+            onClose={handlePanelClose}
+          />
+        )}
+
+        {/* Download CV Section */}
+        <FadeIn delay={0.2} threshold={0.05}>
+          <section id="download" className="border-t border-divider pt-12 mb-16">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-text mb-4">Download CV</h2>
+              <p className="text-lg text-text-secondary mb-8">
+                Get a customized version of my CV tailored to specific role types
+              </p>
+              <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:justify-start max-w-4xl mx-auto">
+                <a href="/cv/download?filter=product" className="btn btn-primary text-center">
+                  Download Product CV
+                </a>
+                <a href="/cv/download?filter=strategy" className="btn btn-primary text-center">
+                  Download Strategy CV
+                </a>
+                <a href="/cv/download?filter=tech" className="btn btn-primary text-center">
+                  Download Technical CV
+                </a>
+                <a
+                  href="/cv/download?filter=all"
+                  className="btn btn-secondary text-center sm:ml-auto"
+                >
+                  Download Full CV
+                </a>
+              </div>
+            </div>
+          </section>
+        </FadeIn>
+
+        {/* Experience Section */}
+        <FadeIn delay={0.04} threshold={0.05}>
+          <section id="experience" className="mb-16">
+            <h2 className="text-2xl font-bold text-text mb-8">Professional Experience</h2>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`${filters.activeFilter}-${searchQuery}`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+              >
+                <>
+                  {displayedExperience.length === 0 && (
+                    <div className="card text-center py-8 mb-8 bg-accent-warm/5 border-accent-warm/20">
+                      <p className="text-text-secondary mb-2">
+                        <strong>No roles found</strong>{' '}
+                        {searchQuery
+                          ? `matching "${searchQuery}"`
+                          : `matching the selected ${filters.activeSkills.size > 0 ? 'skills' : 'filters'}`}
+                        .
+                      </p>
+                      <p className="text-sm text-text-secondary">
+                        {searchQuery
+                          ? 'Try a different search term.'
+                          : 'Showing all experience below. Try different filters or clear skill selections.'}
+                      </p>
+                    </div>
                   )}
-                </div>
-              </>
-            </motion.div>
-          </AnimatePresence>
-        </section>
-      </FadeIn>
-
-      {/* Education Section */}
-      <FadeIn delay={0.05} threshold={0.05}>
-        <section id="education" className="mb-16">
-          <h2 className="text-2xl font-bold text-text mb-8">Education</h2>
-          <motion.div
-            className="space-y-6"
-            variants={staggerContainerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.05 }}
-          >
-            {cvData.education.map((edu, index) => (
-              <motion.div key={index} variants={staggerItemVariants}>
-                <EducationCard
-                  degree={edu.degree}
-                  institution={edu.institution}
-                  year={edu.year}
-                  location={edu.location}
-                  description={edu.description}
-                />
+                  <div className="space-y-8">
+                    {(displayedExperience.length > 0 ? displayedExperience : cvData.experience).map(
+                      (exp) => {
+                        const filteredHighlights = filters.getFilteredHighlights(
+                          exp.highlights || [],
+                          filters.activeSkills
+                        )
+                        return (
+                          <ExperienceCard
+                            key={exp.id}
+                            ref={cardRefs.current.get(exp.id)}
+                            id={exp.id}
+                            title={exp.title}
+                            company={exp.company}
+                            icon={exp.icon}
+                            location={exp.location}
+                            startDate={exp.startDate}
+                            endDate={exp.endDate}
+                            description={exp.description}
+                            highlights={filteredHighlights}
+                            totalHighlights={exp.highlights?.length || 0}
+                            tags={exp.tags || []}
+                            isExpanded={filters.expandedRoles.has(exp.id)}
+                            onToggle={() =>
+                              handleToggleRole(exp.id, `${exp.title} at ${exp.company}`)
+                            }
+                            formatDate={formatDateOrPresent}
+                            searchQuery={searchQuery}
+                            isHighlighted={highlightedCardId === exp.id}
+                            kpis={exp.kpis}
+                          />
+                        )
+                      }
+                    )}
+                  </div>
+                </>
               </motion.div>
-            ))}
-          </motion.div>
-        </section>
-      </FadeIn>
-    </div>
+            </AnimatePresence>
+          </section>
+        </FadeIn>
+
+        {/* Education Section */}
+        <FadeIn delay={0.05} threshold={0.05}>
+          <section id="education" className="mb-16">
+            <h2 className="text-2xl font-bold text-text mb-8">Education</h2>
+            <motion.div
+              className="space-y-6"
+              variants={staggerContainerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.05 }}
+            >
+              {cvData.education.map((edu, index) => (
+                <motion.div key={index} variants={staggerItemVariants}>
+                  <EducationCard
+                    degree={edu.degree}
+                    institution={edu.institution}
+                    year={edu.year}
+                    location={edu.location}
+                    description={edu.description}
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
+          </section>
+        </FadeIn>
+      </div>
+    </>
   )
 }
