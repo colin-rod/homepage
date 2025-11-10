@@ -4,6 +4,7 @@ import { generatePageMetadata } from '@/lib/seo'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
 import PageTransition from '@/components/animations/PageTransition'
+import PageHeader from '@/components/layouts/PageHeader'
 import { getUsesCategories } from '@/lib/data'
 import { ExternalLink } from 'lucide-react'
 
@@ -33,6 +34,7 @@ export default function UsesPage() {
               </p>
             </header>
 
+          <div className="mx-auto max-w-5xl px-6 lg:px-8">
             <div className="space-y-16">
               {categories.map((category) => (
                 <section
