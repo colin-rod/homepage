@@ -640,5 +640,43 @@
     "featured": false,
     "year": 2026,
     "quarter": "Q1"
+  },
+  {
+    "id": "growthvault",
+    "title": "GrowthVault",
+    "slug": "growthvault",
+    "description": "Portable vault for professionals to collect, own, and reflect on feedback across roles and clients.",
+    "detailedDescription": [
+      "GrowthVault gives professionals, freelancers, and coaches a personal system of record for qualitative feedback, reviews, and growth artifacts across employers and clients.",
+      "The scoped MVP focuses on single-user capture with manual entry, file uploads, tagging by skill, client, project, or timeframe, plus private reflection notes.",
+      "Timeline and dashboard views help users explore longitudinal progress while early AI summaries surface tone and recurring themes for faster retrospectives.",
+      "Freelancers can generate structured feedback request forms, manage privacy defaults, and export their vault for true data portability."
+    ],
+    "type": "project",
+    "scope": "Define the GrowthVault MVP so individuals can own, structure, and analyze their professional feedback in a private workspace.",
+    "status": "concept",
+    "techStack": ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "OpenAI", "Tailwind CSS"],
+    "tags": [
+      "feedback",
+      "career",
+      "growth",
+      "analytics",
+      "privacy",
+      "freelancer",
+      "coaching",
+      "ai"
+    ],
+    "whyBuilt": [
+      "Professionals lose access to reviews and performance insights whenever they change roles or employers.",
+      "Freelancers receive scattered client feedback across channels and rarely analyze it for growth.",
+      "Coaches and mentors need longitudinal visibility into client progress to guide sessions and celebrate wins."
+    ],
+    "learnings": [],
+    "links": {
+      "scopingDocument": "https://docs.google.com/document/d/1j7LTB7thMVPOJoiMK-Rsyud7pQDtRoo_Wo_V4lvn3rw/edit?tab=t.0"
+    },
+    "featured": false,
+    "year": 2026,
+    "quarter": "Q2"
   }
 ]
