@@ -73,6 +73,7 @@ export interface Project {
   featured: boolean
   year: number
   quarter?: ProjectQuarter
+  lastUpdated?: string // ISO 8601 date (YYYY-MM-DD) - when the project was last updated
 }
 
 // ============================================================================

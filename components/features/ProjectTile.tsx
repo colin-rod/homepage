@@ -11,6 +11,20 @@ interface ProjectTileProps {
 }
 
 /**
+ * Format ISO date string to readable format
+ * @param dateString - ISO 8601 date string (YYYY-MM-DD)
+ * @returns Formatted date string (e.g., "Jan 15, 2025")
+ */
+function formatLastUpdated(dateString: string): string {
+  const date = new Date(dateString)
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  })
+}
+
+/**
  * Get icon based on project status or type
  */
 function getProjectIcon(project: Project) {
@@ -129,6 +143,15 @@ export default function ProjectTile({ project }: ProjectTileProps) {
 
           {/* Spacer to push link to bottom */}
           <div className="flex-grow"></div>
+
+          {/* Last Updated Date */}
+          {project.lastUpdated && (
+            <div className="mb-2">
+              <p className="text-xs text-text-secondary">
+                Updated {formatLastUpdated(project.lastUpdated)}
+              </p>
+            </div>
+          )}
 
           {/* Learn More Link - Always visible now for better space usage */}
           <div className="mt-auto pt-2">

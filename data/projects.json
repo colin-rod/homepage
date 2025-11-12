@@ -24,6 +24,7 @@
       "media-sharing",
       "privacy"
     ],
+    "lastUpdated": "2025-06-15",
     "whyBuilt": [
       "As I was sharing updates of our newborn child with multiple groups scattered across different platforms I realised that there should be a way to consolidate this manual uploading process.",
       "The problems we are solving are for users - to simplify uploads by consolidaitng multiple user groups into a single upload channel. ",
@@ -76,7 +77,8 @@
     "tags": ["portfolio", "personal-brand", "resume", "cv", "filtering", "timeline", "seo"],
     "featured": true,
     "year": 2025,
-    "quarter": "Q4"
+    "quarter": "Q4",
+    "lastUpdated": "2025-11-12"
   },
   {
     "id": "audiograph",
@@ -112,6 +114,7 @@
       "time-series",
       "data-export"
     ],
+    "lastUpdated": "2025-10-20",
     "whyBuilt": [
       "When our son was born we had a playlist runnign in the backgorund. A few months after he was born we were curious if we could see what song he was born to",
       "Spotify provides limited listening history but they offer users the ability to export their full listening data",
@@ -374,6 +377,7 @@
       "scoring",
       "family"
     ],
+    "lastUpdated": "2025-04-10",
     "whyBuilt": [
       "Wanted to create a fun, engaging way for friends and family to participate in the pregnancy journey",
       "Existing baby pool tools were outdated or lacked modern features",
@@ -561,6 +565,7 @@
       "social",
       "trip-planning"
     ],
+    "lastUpdated": "2025-11-05",
     "whyBuilt": [
       "Trip planning is fragmented across multiple tools - chats, docs, spreadsheets, and expense apps like Splitwise",
       "No single platform combines itinerary planning, expense tracking, and trip memories in one private workspace",
