@@ -3,7 +3,6 @@ import { generatePageMetadata } from '@/lib/seo'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
 import PageTransition from '@/components/animations/PageTransition'
-import PageHeader from '@/components/layouts/PageHeader'
 import GitHubChart from '@/components/features/GitHubChart'
 
 export const metadata: Metadata = generatePageMetadata(
@@ -31,9 +30,6 @@ export default function AboutPage() {
                 About Me
               </h1>
             </div>
-          </PageHeader>
-
-          <div className="mx-auto max-w-4xl px-6 lg:px-8">
             {/* Background Section */}
             <section className="mb-16">
               <div className="prose prose-lg max-w-none text-text-secondary space-y-6">
