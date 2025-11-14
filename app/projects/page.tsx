@@ -35,7 +35,7 @@ export default function ProjectsPage() {
     <>
       <Navigation />
       <PageTransition>
-        <main id="main-content" className="py-24 sm:py-32">
+        <main id="main-content" className="py-24 sm:py-32 pb-24 sm:pb-32">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             {/* Page Header - Compressed */}
             <div className="mx-auto max-w-2xl text-center mb-10">
@@ -46,7 +46,6 @@ export default function ProjectsPage() {
                 A collection of things I&apos;m working on, built, launched, or investigated.
               </p>
             </div>
-
             {/* In Progress Swimlane */}
             <Swimlane
               title="In Progress"
