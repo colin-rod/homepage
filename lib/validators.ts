@@ -93,6 +93,10 @@ export const ProjectSchema = z.object({
   featured: z.boolean(),
   year: z.number().int().min(2000).max(2100),
   quarter: ProjectQuarterSchema.optional(),
+  lastUpdated: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'Date must be in YYYY-MM-DD format')
+    .optional(),
 })
 
 export const ProjectsArraySchema = z.array(ProjectSchema)
