@@ -3,9 +3,11 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ExternalLink, Github, FileText } from 'lucide-react'
 import { getProjects, getProjectBySlug } from '@/lib/data'
+import { getPostsRelatedToProject } from '@/lib/blog'
 import { generatePageMetadata } from '@/lib/seo'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
+import RelatedArticles from '@/components/features/projects/RelatedArticles'
 
 function normalizeParagraphs(value?: string | string[]) {
   if (!value) {
@@ -74,6 +76,9 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
     : project.year.toString()
   const detailedParagraphs = normalizeParagraphs(project.detailedDescription)
   const whyBuiltParagraphs = normalizeParagraphs(project.whyBuilt)
+
+  // Get related blog posts based on explicit linking and shared tags
+  const relatedPosts = getPostsRelatedToProject(project.tags, 6, project.slug)
 
   return (
     <>
@@ -286,6 +291,13 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               </div>
             </section>
           )}
+
+          {/* Related Articles Section */}
+          <RelatedArticles
+            posts={relatedPosts}
+            projectTags={project.tags}
+            projectSlug={project.slug}
+          />
         </div>
       </main>
       <Footer />

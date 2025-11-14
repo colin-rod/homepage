@@ -8,10 +8,12 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getPostBySlug, getPostSlugs } from '@/lib/blog'
+import { getProjectBySlug } from '@/lib/data'
 import { formatDate } from '@/lib/utils'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
 import PageTransition from '@/components/animations/PageTransition'
+import RelatedProjects from '@/components/features/writing/RelatedProjects'
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -95,6 +97,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     notFound()
   }
 
+  // Get related project if explicitly linked
+  let relatedProject = null
+  if (post.project) {
+    try {
+      relatedProject = getProjectBySlug(post.project)
+    } catch {
+      // Project not found, continue without related project
+    }
+  }
+
   return (
     <>
       <Navigation />
@@ -138,6 +150,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <article className="prose prose-lg dark:prose-invert max-w-none">
               <MDXRemote source={post.content || ''} />
             </article>
+
+            {/* Related Projects Section */}
+            {relatedProject && <RelatedProjects projects={[relatedProject]} />}
 
             {/* Footer with back link */}
             <footer className="mt-12 pt-8 border-t border-divider">

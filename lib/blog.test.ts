@@ -6,7 +6,13 @@
 import { describe, it, expect, beforeAll, afterAll } from '@jest/globals'
 import * as fs from 'fs'
 import * as path from 'path'
-import { getAllPosts, getPostBySlug, getPostSlugs } from './blog'
+import {
+  getAllPosts,
+  getPostBySlug,
+  getPostSlugs,
+  getPostsRelatedToProject,
+  getPostsByProject,
+} from './blog'
 
 const setNodeEnv = (value: string | undefined) => {
   if (value === undefined) {
@@ -549,6 +555,227 @@ This post should be visible by default (backward compatibility).`,
         expect(noFlagPost).toBeDefined()
 
         setNodeEnv(originalEnv)
+      })
+    })
+  })
+
+  describe('getPostsRelatedToProject', () => {
+    const projectTags = ['product', 'tech', 'ai']
+
+    it('returns posts that share at least one tag with the project', () => {
+      const relatedPosts = getPostsRelatedToProject(projectTags)
+
+      // All returned posts should have at least one matching tag
+      relatedPosts.forEach((post) => {
+        const hasMatchingTag = post.tags.some((tag) => projectTags.includes(tag))
+        expect(hasMatchingTag).toBe(true)
+      })
+    })
+
+    it('sorts posts by number of matching tags (descending), then by date', () => {
+      const relatedPosts = getPostsRelatedToProject(['product', 'tech'])
+
+      // Verify we have at least 2 posts to test sorting
+      if (relatedPosts.length >= 2) {
+        const firstPost = relatedPosts[0]
+        const secondPost = relatedPosts[1]
+
+        const firstPostMatches = firstPost.tags.filter((tag) =>
+          ['product', 'tech'].includes(tag)
+        ).length
+        const secondPostMatches = secondPost.tags.filter((tag) =>
+          ['product', 'tech'].includes(tag)
+        ).length
+
+        // Either first post has more matches, or they have same matches and first is newer
+        const isCorrectOrder =
+          firstPostMatches > secondPostMatches ||
+          (firstPostMatches === secondPostMatches &&
+            new Date(firstPost.date).getTime() >= new Date(secondPost.date).getTime())
+
+        expect(isCorrectOrder).toBe(true)
+      }
+    })
+
+    it('returns empty array when no tags provided', () => {
+      const relatedPosts = getPostsRelatedToProject([])
+      expect(relatedPosts).toEqual([])
+    })
+
+    it('returns empty array when project tags is null/undefined', () => {
+      // @ts-expect-error Testing null input
+      const relatedPostsNull = getPostsRelatedToProject(null)
+      expect(relatedPostsNull).toEqual([])
+
+      // @ts-expect-error Testing undefined input
+      const relatedPostsUndefined = getPostsRelatedToProject(undefined)
+      expect(relatedPostsUndefined).toEqual([])
+    })
+
+    it('respects the limit parameter', () => {
+      const limit = 2
+      const relatedPosts = getPostsRelatedToProject(projectTags, limit)
+
+      expect(relatedPosts.length).toBeLessThanOrEqual(limit)
+    })
+
+    it('does not include content by default (performance)', () => {
+      const relatedPosts = getPostsRelatedToProject(projectTags)
+
+      relatedPosts.forEach((post) => {
+        expect(post.content).toBeUndefined()
+      })
+    })
+
+    it('returns posts with metadata fields populated', () => {
+      const relatedPosts = getPostsRelatedToProject(projectTags)
+
+      if (relatedPosts.length > 0) {
+        const post = relatedPosts[0]
+        expect(post.title).toBeDefined()
+        expect(post.slug).toBeDefined()
+        expect(post.date).toBeDefined()
+        expect(post.summary).toBeDefined()
+        expect(post.tags).toBeDefined()
+        expect(Array.isArray(post.tags)).toBe(true)
+      }
+    })
+
+    it('excludes draft posts in production environment', () => {
+      const originalEnv = process.env.NODE_ENV
+      setNodeEnv('production')
+
+      const relatedPosts = getPostsRelatedToProject(['draft-test'])
+
+      // Should not include any draft posts
+      const hasDraftPosts = relatedPosts.some((post) => post.draft === true)
+      expect(hasDraftPosts).toBe(false)
+
+      setNodeEnv(originalEnv)
+    })
+
+    it('includes draft posts in development environment', () => {
+      const originalEnv = process.env.NODE_ENV
+      setNodeEnv('development')
+
+      const relatedPosts = getPostsRelatedToProject(['draft-test'])
+
+      // May include draft posts in development
+      // We're just verifying it doesn't crash, actual draft post may not exist
+      expect(Array.isArray(relatedPosts)).toBe(true)
+
+      setNodeEnv(originalEnv)
+    })
+  })
+
+  describe('getPostsByProject', () => {
+    it('returns posts that explicitly link to a project', () => {
+      const projectSlug = 'tripthreads-mvp'
+      const posts = getPostsByProject(projectSlug)
+
+      expect(posts.length).toBeGreaterThan(0)
+      posts.forEach((post) => {
+        expect(post.project).toBe(projectSlug)
+      })
+    })
+
+    it('returns empty array when no projectSlug provided', () => {
+      const posts = getPostsByProject('')
+      expect(posts).toEqual([])
+    })
+
+    it('returns empty array when no posts match the project', () => {
+      const posts = getPostsByProject('nonexistent-project')
+      expect(posts).toEqual([])
+    })
+
+    it('sorts posts by date (newest first)', () => {
+      const projectSlug = 'tripthreads-mvp'
+      const posts = getPostsByProject(projectSlug)
+
+      if (posts.length > 1) {
+        for (let i = 0; i < posts.length - 1; i++) {
+          const currentDate = new Date(posts[i].date).getTime()
+          const nextDate = new Date(posts[i + 1].date).getTime()
+          expect(currentDate).toBeGreaterThanOrEqual(nextDate)
+        }
+      }
+    })
+
+    it('does not include content by default (performance)', () => {
+      const projectSlug = 'tripthreads-mvp'
+      const posts = getPostsByProject(projectSlug)
+
+      posts.forEach((post) => {
+        expect(post.content).toBeUndefined()
+      })
+    })
+
+    it('includes content when includeContent is true', () => {
+      const projectSlug = 'tripthreads-mvp'
+      const posts = getPostsByProject(projectSlug, true)
+
+      if (posts.length > 0) {
+        posts.forEach((post) => {
+          expect(post.content).toBeDefined()
+          expect(typeof post.content).toBe('string')
+        })
+      }
+    })
+  })
+
+  describe('getPostsRelatedToProject with explicit linking', () => {
+    const projectTags = ['ai', 'product', 'travel']
+    const projectSlug = 'tripthreads-mvp'
+
+    it('prioritizes explicitly linked posts over tag matches', () => {
+      const posts = getPostsRelatedToProject(projectTags, 10, projectSlug)
+
+      if (posts.length > 0) {
+        // Check if first posts are explicitly linked
+        const explicitPosts = posts.filter((post) => post.project === projectSlug)
+        const tagOnlyPosts = posts.filter((post) => post.project !== projectSlug)
+
+        if (explicitPosts.length > 0 && tagOnlyPosts.length > 0) {
+          // Explicit posts should come before tag-only posts
+          const lastExplicitIndex = posts.findIndex((post) => post.project !== projectSlug)
+          expect(lastExplicitIndex).toBeGreaterThan(0)
+        }
+      }
+    })
+
+    it('includes both explicit and tag-matched posts', () => {
+      const posts = getPostsRelatedToProject(projectTags, 10, projectSlug)
+
+      if (posts.length > 1) {
+        const hasExplicit = posts.some((post) => post.project === projectSlug)
+        const hasTagMatch = posts.some(
+          (post) =>
+            post.project !== projectSlug && post.tags.some((tag) => projectTags.includes(tag))
+        )
+
+        // At least one type should exist
+        expect(hasExplicit || hasTagMatch).toBe(true)
+      }
+    })
+
+    it('works without projectSlug (backward compatibility)', () => {
+      const posts = getPostsRelatedToProject(projectTags, 10)
+
+      // Should still return tag-matched posts
+      posts.forEach((post) => {
+        const hasMatchingTag = post.tags.some((tag) => projectTags.includes(tag))
+        expect(hasMatchingTag).toBe(true)
+      })
+    })
+
+    it('handles case where no posts explicitly link to project', () => {
+      const posts = getPostsRelatedToProject(projectTags, 10, 'nonexistent-project')
+
+      // Should still return tag-matched posts
+      posts.forEach((post) => {
+        const hasMatchingTag = post.tags.some((tag) => projectTags.includes(tag))
+        expect(hasMatchingTag).toBe(true)
       })
     })
   })

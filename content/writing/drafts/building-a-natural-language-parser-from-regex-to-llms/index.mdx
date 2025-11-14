@@ -1,21 +1,25 @@
 ---
 title: "Building a Natural Language Parser: From Regex to LLMs"
-date: 2025-01-01
-summary: "How I evaluated four different approaches to natural language parsing — and why accuracy won."
+date: 2025-11-15
+summary: "How I evaluated four approaches to natural language parsing."
 tags: [ai, llm, product, engineering, case-study]
-draft: true
 ---
 
 # Building a Natural Language Parser: From Regex to LLMs
 **How I evaluated four different approaches to natural language parsing — and why accuracy won.**
 
-Natural language input became a defining feature of TripThreads. It reduces friction, lets people add expenses and travel plans quickly, and makes the app feel modern and effortless.
+From my initial scoping and development work on TripThreads my hypothesis was that enabling natural language would unlock the use of the app by enabling users to add expenses and travel plans quickly thereby reducing friction and improving accessibality. 
 
 But implementing a parser that works across messy real-world input is harder than it looks.
 
-Over several months, I explored four different approaches — from classic regex to deterministic NLP to on-device LLMs and finally a hosted LLM — testing **90 real cases** across all versions.
+I explored four different solutions
+— classic regex 
+- deterministic NLP 
+- on-device LLMs 
+- hosted LLM
+To evaluate the results I created a test suite of 90 typical inputs covering typical use cases that my app would cover. This covered basic inputs and in the future test I intend to cover edge cases and more user testing to ensure coverage.
 
-This is the story of how each approach worked, where it broke, and what ultimately made it into production.
+This is a summary of how each approach worked, where it broke, and what ultimately made it into production.
 
 ---
 
@@ -30,24 +34,20 @@ For TripThreads, input speed is everything. Most travel apps make you fill in st
 - participants
 - split rules
 
-That's unnecessary friction.
-
 If users can instead type things like:
 
 - "Dinner €60 split 4 ways"
 - "Flight to Paris Monday 9am"
 - "Alice paid $120 for hotel, Bob owes 40%"
 
-…and the system just takes care of the rest, the experience becomes dramatically faster and more enjoyable.
-
-Natural language input became the core differentiator of the product.
+…and the platform just takes care of extracting the necessary information, parsing it iand storing it in the backend, the experience becomes dramatically faster and more enjoyable.
 
 ---
 
 # Version 1 — Regex Parsing
 **Fast, simple… and brittle.**
 
-Regex was the obvious first step: fast, deterministic, and easy to run on-device. But in practice, it only worked for perfect input.
+Regex was the obvious first step: fast, deterministic, easy to run on-device and not resource intensive. But in practice, it only worked for perfect input.
 
 ### Problems
 
@@ -66,7 +66,7 @@ Great for textbook cases; terrible for real-world use.
 ---
 
 # Version 2 — Deterministic NLP Parser
-**A more sophisticated rules-based system with a full test suite.**
+**A more sophisticated rules-based system with reinforcement learning.**
 
 This parser used:
 
@@ -75,12 +75,14 @@ This parser used:
 - chrono-node for date extraction
 - rules for currency, amounts, and split types
 
+It incorporated a reinforcement learning mechanism so that users woud be able to provide feedback to the system by correcting and errors. These corrections would be scored and they would be used to decide which parser rule to be followed the next time a similar phrase was seen. 
+
 ### Strengths
 
 - Fully offline
 - Extremely fast (&lt;10ms)
 - Deterministic
-- Easy to test (100+ passing tests)
+- Easy to test
 
 ### Weaknesses
 
@@ -91,23 +93,25 @@ Real-world travel messages are too varied:
 - "Museum tmr afternoon"
 - "Brunch yesterday 30 each"
 
-Rule complexity grew without improving overall reliability.
+Even with this Rule complexity grew without improving overall reliability.
 
 ### Accuracy
 
 **55/90 (~61%)**
 
 Better — but still not good enough to be a flagship feature.
+Perhaps if we expanded the reinforcement learning data set we might get more success with this method, but I was trying to move quickly with the development of this platform.
 
 ---
 
 # Version 3 — On-Device LLMs
 **Promising accuracy, unusably slow.**
 
-To improve accuracy without sending data to external services, I tried running small LLMs locally:
+To improve accuracy while minimizing cost I tried running small LLMs locally:
 
 - **Phi-3-mini**
 - **Mistral 7B**
+- **Llama 3.2**
 
 These were run on a **MacBook Air (CPU-only)** using **Ollama**, occasionally packaged via Docker.
 
@@ -116,7 +120,7 @@ These were run on a **MacBook Air (CPU-only)** using **Ollama**, occasionally pa
 - Good flexibility
 - Better accuracy than deterministic parsing
 - Solid privacy guarantees
-- No server dependency
+- No external server dependency
 
 But the performance was unacceptable.
 
@@ -124,18 +128,18 @@ But the performance was unacceptable.
 
 - **Over 30 seconds per request** (CPU-only, no quantization)
 
-For interactive UI, this was a deal-breaker.
+For an interactive UI, this was a deal-breaker.
 
 ### Accuracy
 
-Qualitatively between deterministic parsing and GPT-4o-mini — but irrelevant due to latency.
+**83/90 (~92%)**
 
 ---
 
 # Version 4 — Hosted LLM (GPT-4o-mini)
 **The first approach that actually felt "right."**
 
-I integrated **GPT-4o-mini** through a server-side API route with structured JSON output.
+I integrated **GPT-4o-mini** through a server-side API route with structured JSON output. User text was sanitised (removed any PII info) and was processed by the model. The output was provided in the form of classification data and intent mapping and was stored as a JSON blob.
 
 This version delivered:
 
@@ -158,13 +162,13 @@ A dramatic improvement over all other approaches.
 
 ### Cost
 
-Negligible:
+On calculating a model for a typical user, we find that the costs are negligible:
 
 - ~$0.00005 per parse
 - ~10,000 parses/month → ~$0.50
 - ~100,000 parses/month → ~$5.00
 
-For the UX benefits, this was an easy decision.
+This is more than adequate for our use case. 
 
 ---
 
@@ -174,7 +178,7 @@ For the UX benefits, this was an easy decision.
 |--------|--------|-------|
 | Regex | 42/90 | Only works on clean, simple inputs |
 | Deterministic NLP | 55/90 | Rules don't scale with input complexity |
-| On-Device LLM | ~60–70/90 | Accurate enough, but too slow |
+| On-Device LLM | 83/90 | Accurate enough, but too slow |
 | GPT-4o-mini | 85/90 | Best by a wide margin |
 
 ---
@@ -249,7 +253,7 @@ Key lessons:
 
 - Accuracy beats speed when the feature is core to the product. A fast but wrong parser creates more frustration than value.
 - Rule-based systems don't scale to real-world language. The long tail of expressions is endless.
-- On-device LLMs aren't ready (yet). Without hardware acceleration or quantization, latency is unacceptable.
+- On-device LLMs aren't ready (at least without adequate computing power). Without hardware acceleration or quantization, latency is unacceptable.
 - Testing at scale matters. Ninety test cases across multiple parser versions made the trade-offs clear.
 - Think like a systems PM. Evaluate accuracy, latency, cost, privacy, and UX — not just the model itself.
 
@@ -264,6 +268,7 @@ I'm exploring a hybrid approach:
 3. Result caching to improve speed and reduce cost
 4. Offline fallback using deterministic parsing
 5. User feedback loops to improve model prompts over time
+6. Over time as we collect sufficient user inputs we can develop our own model to transfer off the API.
 
 This combination will balance speed, reliability, and cost while keeping the experience seamless.
 

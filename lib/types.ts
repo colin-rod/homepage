@@ -166,6 +166,7 @@ export interface BlogPost {
   publishedAt?: string // ISO 8601 (alias for date)
   updatedAt?: string
   tags: string[]
+  project?: string // Project slug this post is about (e.g., 'tripthreads-mvp')
   featured?: boolean
   draft?: boolean // If true, post is hidden in production
   publish?: boolean // If false, post is hidden in all environments (dev and production)

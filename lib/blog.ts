@@ -156,6 +156,7 @@ export function getPostBySlug(year: string | null, month: string | null, slug: s
       readingTime: calculateReadingTime(content),
       draft: data.draft,
       publish: data.publish,
+      project: data.project,
     }
   } catch (error) {
     if (error instanceof Error) {
@@ -228,4 +229,79 @@ export function getAllPosts(includeContent = false): BlogPost[] {
 export function getPostsByTag(tag: string, includeContent = false): BlogPost[] {
   const allPosts = getAllPosts(includeContent)
   return allPosts.filter((post) => post.tags.includes(tag))
+}
+
+/**
+ * Get blog posts explicitly linked to a project by project slug
+ * @param projectSlug - The project slug (e.g., 'tripthreads-mvp')
+ * @param includeContent - Whether to include full content (default: false)
+ * @returns Array of BlogPost objects that explicitly reference this project, sorted by date (newest first)
+ */
+export function getPostsByProject(projectSlug: string, includeContent = false): BlogPost[] {
+  if (!projectSlug) {
+    return []
+  }
+
+  const allPosts = getAllPosts(includeContent)
+
+  // Filter posts that explicitly reference this project
+  const projectPosts = allPosts.filter((post) => post.project === projectSlug)
+
+  // Already sorted by date from getAllPosts()
+  return projectPosts
+}
+
+/**
+ * Get blog posts related to a project based on explicit linking and shared tags
+ * @param projectTags - Array of tags from the project
+ * @param limit - Maximum number of posts to return (default: 6)
+ * @param projectSlug - Optional project slug to prioritize explicitly linked posts
+ * @returns Array of BlogPost objects, prioritizing explicit project links, then by tag relevance and date
+ */
+export function getPostsRelatedToProject(
+  projectTags: string[],
+  limit = 6,
+  projectSlug?: string
+): BlogPost[] {
+  if (!projectTags || projectTags.length === 0) {
+    return []
+  }
+
+  const allPosts = getAllPosts(false) // Don't include content for performance
+
+  // Find posts that share at least one tag with the project
+  const relatedPosts = allPosts
+    .map((post) => {
+      // Check if this post explicitly references this project
+      const isExplicitMatch = projectSlug && post.project === projectSlug
+
+      // Count matching tags for relevance sorting
+      const matchingTags = post.tags.filter((tag) => projectTags.includes(tag))
+
+      return {
+        post,
+        isExplicitMatch,
+        matchCount: matchingTags.length,
+        matchingTags,
+      }
+    })
+    .filter((item) => item.isExplicitMatch || item.matchCount > 0) // Explicit match OR at least 1 matching tag
+    .sort((a, b) => {
+      // 1. Prioritize explicitly linked posts
+      if (a.isExplicitMatch !== b.isExplicitMatch) {
+        return a.isExplicitMatch ? -1 : 1
+      }
+
+      // 2. Sort by number of matching tags (descending)
+      if (a.matchCount !== b.matchCount) {
+        return b.matchCount - a.matchCount
+      }
+
+      // 3. Sort by date (newest first)
+      return new Date(b.post.date).getTime() - new Date(a.post.date).getTime()
+    })
+    .slice(0, limit)
+    .map((item) => item.post)
+
+  return relatedPosts
 }
