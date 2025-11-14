@@ -1,6 +1,6 @@
 /**
  * Blog utilities for MDX content management
- * Handles reading, parsing, and organizing blog posts
+ * Handles reading, parsing, and organizing blog posts from year/month/slug folder structure
  */
 
 import fs from 'fs'
@@ -9,19 +9,87 @@ import matter from 'gray-matter'
 import { BlogPost } from './types'
 
 const POSTS_DIRECTORY = path.join(process.cwd(), 'content/writing')
+const DRAFTS_DIRECTORY = path.join(POSTS_DIRECTORY, 'drafts')
 
 /**
- * Get all post slugs from the content/writing directory
- * @returns Array of post slugs (filenames without .mdx extension)
+ * Parse folder path to extract year, month, slug, and draft status
+ * @param folderPath - Path relative to content/writing
+ * @returns Object with year, month, slug, isDraft
  */
-export function getPostSlugs(): string[] {
+function parseFolderPath(folderPath: string): {
+  year: string | null
+  month: string | null
+  slug: string
+  isDraft: boolean
+} {
+  const parts = folderPath.split(path.sep)
+
+  // Check if it's a draft (path starts with "drafts")
+  if (parts[0] === 'drafts') {
+    return {
+      year: null,
+      month: null,
+      slug: parts[1],
+      isDraft: true,
+    }
+  }
+
+  // Published post: year/month/slug
+  return {
+    year: parts[0],
+    month: parts[1],
+    slug: parts[2],
+    isDraft: false,
+  }
+}
+
+/**
+ * Recursively find all index.mdx files in content/writing
+ * @param dir - Directory to search (relative to content/writing)
+ * @param baseDir - Base directory (content/writing)
+ * @returns Array of relative paths to folders containing index.mdx
+ */
+function findAllPostFolders(dir: string = '', baseDir: string = POSTS_DIRECTORY): string[] {
+  const fullPath = path.join(baseDir, dir)
+  const folders: string[] = []
+
   try {
-    const files = fs.readdirSync(POSTS_DIRECTORY)
-    return files.filter((file) => file.endsWith('.mdx')).map((file) => file.replace(/\.mdx$/, ''))
+    const entries = fs.readdirSync(fullPath, { withFileTypes: true })
+
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        const relativePath = path.join(dir, entry.name)
+        const indexPath = path.join(fullPath, entry.name, 'index.mdx')
+
+        // If this folder has index.mdx, it's a post folder
+        if (fs.existsSync(indexPath)) {
+          folders.push(relativePath)
+        } else {
+          // Otherwise, recurse into subdirectories
+          folders.push(...findAllPostFolders(relativePath, baseDir))
+        }
+      }
+    }
   } catch {
-    // Directory doesn't exist yet or is empty
+    // Directory doesn't exist or can't be read
     return []
   }
+
+  return folders
+}
+
+/**
+ * Get all post metadata (year, month, slug, isDraft) from the content/writing directory
+ * @returns Array of post metadata objects
+ */
+export function getPostSlugs(): Array<{
+  year: string | null
+  month: string | null
+  slug: string
+  isDraft: boolean
+}> {
+  const folders = findAllPostFolders()
+  return folders.map(parseFolderPath)
 }
 
 /**
@@ -38,14 +106,20 @@ function calculateReadingTime(content: string): number {
 }
 
 /**
- * Get a single blog post by slug
- * @param slug - The post slug (filename without extension)
+ * Get a single blog post by year, month, and slug (or from drafts)
+ * @param year - Year (e.g., '2025') or null for drafts
+ * @param month - Month (e.g., '11') or null for drafts
+ * @param slug - The post slug (folder name)
  * @returns BlogPost object with metadata and content
  * @throws Error if file doesn't exist or is invalid
  */
-export function getPostBySlug(slug: string): BlogPost {
+export function getPostBySlug(year: string | null, month: string | null, slug: string): BlogPost {
   try {
-    const fullPath = path.join(POSTS_DIRECTORY, `${slug}.mdx`)
+    // Build path based on whether it's a draft
+    const fullPath =
+      year && month
+        ? path.join(POSTS_DIRECTORY, year, month, slug, 'index.mdx')
+        : path.join(DRAFTS_DIRECTORY, slug, 'index.mdx')
 
     // Check if file exists before trying to read it
     if (!fs.existsSync(fullPath)) {
@@ -71,6 +145,9 @@ export function getPostBySlug(slug: string): BlogPost {
 
     return {
       slug,
+      year: year || undefined,
+      month: month || undefined,
+      isDraft: !year || !month,
       title: data.title,
       date: dateString,
       summary: data.summary,
@@ -108,8 +185,8 @@ export function getPostBySlug(slug: string): BlogPost {
 export function getAllPosts(includeContent = false): BlogPost[] {
   const slugs = getPostSlugs()
 
-  const posts = slugs.map((slug) => {
-    const post = getPostBySlug(slug)
+  const posts = slugs.map(({ year, month, slug }) => {
+    const post = getPostBySlug(year, month, slug)
 
     // Optionally exclude content to improve performance for list views
     if (!includeContent) {

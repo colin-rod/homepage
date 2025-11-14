@@ -66,7 +66,14 @@ export default function WritingPage() {
                           <div className="h-px flex-1 bg-gradient-to-r from-accent-warm to-transparent"></div>
                         </div>
                         <article className="card hover:shadow-glow transition-shadow">
-                          <Link href={`/writing/${latestPost.slug}`} className="group block">
+                          <Link
+                            href={
+                              latestPost.isDraft
+                                ? `/writing/drafts/${latestPost.slug}`
+                                : `/writing/${latestPost.year}/${latestPost.month}/${latestPost.slug}`
+                            }
+                            className="group block"
+                          >
                             <h3 className="text-3xl md:text-4xl font-bold mb-3 group-hover:text-accent-warm transition-colors">
                               {latestPost.title}
                             </h3>
@@ -118,7 +125,11 @@ export default function WritingPage() {
                               className="border-b border-divider pb-8 last:border-0"
                             >
                               <Link
-                                href={`/writing/${post.slug}`}
+                                href={
+                                  post.isDraft
+                                    ? `/writing/drafts/${post.slug}`
+                                    : `/writing/${post.year}/${post.month}/${post.slug}`
+                                }
                                 className="group block hover:opacity-80 transition-opacity"
                               >
                                 <h3 className="text-2xl md:text-3xl font-bold mb-2 group-hover:text-accent-warm transition-colors">

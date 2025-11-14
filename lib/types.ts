@@ -155,6 +155,9 @@ export interface BlogPost {
   id?: string
   title: string
   slug: string
+  year?: string // Year folder (e.g., '2025') - undefined for drafts
+  month?: string // Month folder (e.g., '11') - undefined for drafts
+  isDraft?: boolean // True if in drafts folder
   date: string // ISO 8601 - Publication date
   summary: string // Short description/excerpt
   excerpt?: string // Alias for summary (for compatibility)
