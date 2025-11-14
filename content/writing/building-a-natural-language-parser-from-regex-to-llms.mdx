@@ -78,9 +78,9 @@ This parser used:
 
 ### Strengths
 
-- Fully offline  
-- Extremely fast (<10ms)  
-- Deterministic  
+- Fully offline
+- Extremely fast (&lt;10ms)
+- Deterministic
 - Easy to test (100+ passing tests)
 
 ### Weaknesses
@@ -123,7 +123,7 @@ But the performance was unacceptable.
 
 ### Latency
 
-- **>30 seconds per request** (CPU-only, no quantization)
+- **Over 30 seconds per request** (CPU-only, no quantization)
 
 For interactive UI, this was a deal-breaker.
 
@@ -184,9 +184,9 @@ For the UX benefits, this was an easy decision.
 
 | Parser | Latency |
 |--------|----------|
-| Regex | <10ms |
-| Deterministic NLP | <10ms |
-| On-Device LLM (no quant.) | **>30,000ms** |
+| Regex | &lt;10ms |
+| Deterministic NLP | &lt;10ms |
+| On-Device LLM (no quant.) | **&gt;30,000ms** |
 | GPT-4o-mini | 500–1500ms |
 
 ---
@@ -240,7 +240,7 @@ Database Save
 - Supports expenses, itineraries, and hybrid items
 - Easy integration with fuzzy participant matching and multi-payer logic
 
-⸻
+---
 
 ## What I Learned
 
@@ -254,9 +254,9 @@ Key lessons:
 - Testing at scale matters. Ninety test cases across multiple parser versions made the trade-offs clear.
 - Think like a systems PM. Evaluate accuracy, latency, cost, privacy, and UX — not just the model itself.
 
-⸻
+---
 
-## What’s Next
+## What's Next
 
 I’m exploring a hybrid approach:
 
@@ -268,6 +268,6 @@ I’m exploring a hybrid approach:
 
 This combination will balance speed, reliability, and cost while keeping the experience seamless.
 
-⸻
+---
 
 If you want to go deeper into the implementation or see the full test suite, feel free to reach out.
