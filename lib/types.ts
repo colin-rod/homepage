@@ -73,6 +73,7 @@ export interface Project {
   featured: boolean
   year: number
   quarter?: ProjectQuarter
+  lastUpdated?: string // ISO 8601 date (YYYY-MM-DD) - when the project was last updated
 }
 
 // ============================================================================
@@ -164,6 +165,7 @@ export interface BlogPost {
   tags: string[]
   featured?: boolean
   draft?: boolean // If true, post is hidden in production
+  publish?: boolean // If false, post is hidden in all environments (dev and production)
 }
 
 // ============================================================================

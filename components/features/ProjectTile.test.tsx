@@ -189,4 +189,30 @@ describe('ProjectTile', () => {
       expect(img).toHaveAttribute('alt', 'Test Project logo')
     })
   })
+
+  describe('Last Updated Date', () => {
+    it('displays last updated date when provided', () => {
+      const projectWithLastUpdated = {
+        ...mockProject,
+        lastUpdated: '2025-01-15',
+      }
+      render(<ProjectTile project={projectWithLastUpdated} />)
+      expect(screen.getByText(/updated/i)).toBeInTheDocument()
+      expect(screen.getByText(/jan 15, 2025/i)).toBeInTheDocument()
+    })
+
+    it('does not display last updated date when not provided', () => {
+      render(<ProjectTile project={mockProject} />)
+      expect(screen.queryByText(/updated/i)).not.toBeInTheDocument()
+    })
+
+    it('formats last updated date correctly', () => {
+      const projectWithLastUpdated = {
+        ...mockProject,
+        lastUpdated: '2024-12-25',
+      }
+      render(<ProjectTile project={projectWithLastUpdated} />)
+      expect(screen.getByText(/dec 25, 2024/i)).toBeInTheDocument()
+    })
+  })
 })

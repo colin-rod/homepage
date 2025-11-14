@@ -78,6 +78,7 @@ export function getPostBySlug(slug: string): BlogPost {
       content,
       readingTime: calculateReadingTime(content),
       draft: data.draft,
+      publish: data.publish,
     }
   } catch (error) {
     if (error instanceof Error) {
@@ -120,9 +121,20 @@ export function getAllPosts(includeContent = false): BlogPost[] {
     return post
   })
 
-  // Filter out draft posts in production
+  // Filter out unpublished posts (publish=false) in ALL environments
+  // Filter out draft posts in production only
   const isProduction = process.env.NODE_ENV === 'production'
-  const filteredPosts = isProduction ? posts.filter((post) => post.draft !== true) : posts
+  const filteredPosts = posts.filter((post) => {
+    // Always hide posts with publish=false
+    if (post.publish === false) {
+      return false
+    }
+    // In production, also hide draft posts
+    if (isProduction && post.draft === true) {
+      return false
+    }
+    return true
+  })
 
   // Sort posts by date (newest first)
   return filteredPosts.sort((a, b) => {
