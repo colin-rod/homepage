@@ -1,20 +1,20 @@
 ---
 title: "Building Trip Threads: The NLP Journey From Regex to LLMs"
 date: 2025-11-14
-summary: "How I evaluated four different approaches to natural language parsing for Trip Threads — and what I learned about building AI-powered products."
+summary: "How I evaluated four different approaches to natural language parsing for Trip Threads and what I learned about building AI-powered products."
 tags: [ai, product, engineering, case-study]
 project: tripthreads-mvp
 ---
 
-> **How I went from 46% to 94% accuracy** by testing four parser architectures — and learned that product trade-offs matter more than technical elegance.
+> **How I went from 46% to 94% accuracy** by testing four parser architectures and learned how to make that product trade-offs.
 
 ## Why This Matters
 
-I've been [building Trip Threads](/writing/2025/11/building-something-new), a conversational travel planner designed to solve the coordination chaos of group trips. Natural language input became the defining feature — if users could type things like "Dinner €60 split 4 ways" or "Flight to Paris Monday 9am" and the system just handled the rest, the experience would be dramatically faster than traditional forms.
+I've been [building Trip Threads](/writing/2025/11/building-something-new), a conversational travel planner designed to solve the coordination chaos of group trips. Natural language input quickly became the defining feature of the platform with the hypothesis being that if users could type things like "Dinner €60 split 4 ways" or "Flight to Paris Monday 9am" and the system just handled the rest, the experience would be dramatically faster than traditional forms.
 
 But implementing a parser that works across messy real-world input turned out to be harder than I expected.
 
-Over several months, I explored **four different approaches** — from classic regex to deterministic NLP to on-device LLMs and finally a hosted LLM — testing **90 real cases** across all versions.
+Over several coding sessions, I explored **four different approaches** — from classic regex to deterministic NLP to on-device LLMs and finally a hosted LLM — testing **90 real cases** across all versions.
 
 This is the story of how each approach worked, where it broke, and what ultimately made it into production.
 
@@ -48,13 +48,13 @@ When evaluating parsing solutions, I optimized for several constraints:
 
 **Cost**: Minimize ongoing expenses, especially during development and early user testing.
 
-**Latency**: Users expect instant feedback. Any solution over ~2 seconds would break the conversational flow.
+**Latency**: Users expect their inputs to be processed instantly without breaking the conversational flow.
 
 **Development Speed**: I needed to move fast and validate the concept before over-investing in infrastructure.
 
 **Input Data Constraints**: With limited real-world user data, I couldn't train custom models effectively. This pushed me toward off-the-shelf solutions.
 
-These constraints shaped my evaluation criteria and ultimately led me to test four distinct approaches, each with different trade-offs.
+These constraints shaped my evaluation criteria.
 
 ---
 
@@ -160,7 +160,7 @@ For interactive UI, this was a deal-breaker. Users expect instant feedback, espe
 
 Qualitatively somewhere between deterministic parsing and GPT-4o-mini.
 
-**Verdict:** On-device LLMs aren't ready (yet). Without hardware acceleration or quantization, latency is unacceptable for real-time experiences.
+**Verdict:** On-device LLMs aren't suitable for my use case since without hardware acceleration or quantization, latency is unacceptable for real-time experiences.
 
 ---
 
@@ -239,55 +239,6 @@ While not as private as on-device processing, this approach balances privacy wit
 
 ---
 
-## Why I Chose GPT-4o-mini
-
-I chose **GPT-4o-mini** because:
-
-1. **Accuracy was the core differentiator**
-   Natural language input is the flagship feature — correctness is non-negotiable.
-
-2. **Maintenance is minimal**
-   No more managing dozens of regex rules or heuristics. I could iterate on prompts instead of code.
-
-3. **Latency is acceptable within the preview flow**
-   Users review before confirming, so 1–2 seconds feels natural.
-
-4. **Cost is extremely low**
-   Even at high usage, total cost remains trivial compared to hosting or compute.
-
-5. **Handles real human language**
-   Typos, synonyms, ambiguous phrasing, relative dates — all handled gracefully.
-
-This decision also freed up time to focus on other parts of the product: group collaboration, timeline views, and smart expense handling.
-
----
-
-## Testing Strategy: Intent, Grounding, and Drift
-
-Beyond raw accuracy numbers, I ran lightweight evaluations across three dimensions:
-
-### 1. Intent Coverage
-
-I compiled **120 real planning prompts** from actual travel conversations and graded whether the parser mapped them into the right action buckets (expense, itinerary, task, etc.).
-
-**Result:** 68% initially, improved to 85% after prompt refinement.
-
-**Biggest misses:** Multi-city itineraries and ambiguous time references.
-
-### 2. Response Grounding
-
-Every recommendation needed to trace back to a data source. This prevented hallucinations like fabricated hotel availability or nonexistent flight times.
-
-**Result:** 80% of responses carried explicit sources.
-
-### 3. Conversation Drift
-
-I simulated five-turn chats to watch how quickly the assistant veered off-topic or repeated itself.
-
-**Result:** Drift occurred after ~4 exchanges without explicit context reset. Solved by maintaining conversation history with pruning.
-
----
-
 ## What I Learned
 
 Building this parser touched every layer of the stack — model selection, UX, infrastructure, and product trade-offs.
@@ -347,10 +298,6 @@ graph TD
 6. **Continuous learning** from user corrections to improve the custom model
 
 Over time, as we collect sufficient user inputs and corrections, we can train a custom model specifically for travel planning language. This would reduce dependency on external APIs, lower costs, and improve privacy — while maintaining the accuracy benefits of LLM-based parsing.
-
-I'm also building a **prompt debugger** directly into the Trip Threads console so I can replay failed parses and understand edge cases faster.
-
-And I'm drafting a **content style guide** to define tone — users want warmth without fluff, and that's a surprisingly hard balance to strike.
 
 ---
 
