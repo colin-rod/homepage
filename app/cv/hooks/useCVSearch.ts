@@ -70,9 +70,7 @@ export function useCVSearch(filteredExperience: CVExperience[], searchQuery: str
         previewText,
       }
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    // Note: filteredExperience.length is used only for analytics, not computation
-  }, [searchQuery, fuseInstance, posthog])
+  }, [searchQuery, fuseInstance, posthog, filteredExperience.length])
 
   return {
     searchResults,

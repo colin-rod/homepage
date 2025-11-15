@@ -61,7 +61,7 @@ jest.mock('@/components/features/Swimlane', () => {
     title: string
     icon: React.ReactNode
     description?: string
-    projects: any[]
+    projects: Array<{ id: string; title: string; slug: string; summary: string }>
   }) {
     return (
       <div data-testid={`swimlane-${title.toLowerCase().replace(/\s+/g, '-')}`}>

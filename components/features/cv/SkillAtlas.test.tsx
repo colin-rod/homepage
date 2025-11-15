@@ -17,16 +17,10 @@ type MotionDivProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>> & {
 jest.mock('framer-motion', () => ({
   motion: {
     div: ({ children, ...props }: MotionDivProps) => {
-      const {
-        variants: _variants,
-        initial: _initial,
-        animate: _animate,
-        whileInView: _whileInView,
-        exit: _exit,
-        viewport: _viewport,
-        transition: _transition,
-        ...domProps
-      } = props
+      // Extract animation props that we don't pass to DOM elements
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { variants, initial, animate, whileInView, exit, viewport, transition, ...domProps } =
+        props
       return <div {...domProps}>{children}</div>
     },
   },

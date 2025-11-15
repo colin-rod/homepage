@@ -8,17 +8,16 @@ type MotionDivProps = PropsWithChildren<HTMLAttributes<HTMLDivElement>>
 // Mock framer-motion
 jest.mock('framer-motion', () => ({
   motion: {
-    div: ({
-      children,
-      initial,
-      whileHover,
-      variants,
-      ...props
-    }: MotionDivProps & { initial?: unknown; whileHover?: unknown; variants?: unknown }) => (
-      <div data-motion="true" {...props}>
-        {children}
-      </div>
-    ),
+    div: ({ children, ...props }: MotionDivProps) => {
+      // Extract animation props that we don't pass to DOM
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { initial, whileHover, variants, ...domProps } = props
+      return (
+        <div data-motion="true" {...domProps}>
+          {children}
+        </div>
+      )
+    },
   },
   useReducedMotion: jest.fn(),
 }))

@@ -49,18 +49,18 @@ interface GitHubChartProps {
 }
 
 export default function GitHubChart({ username, title, className = '' }: GitHubChartProps) {
-  const isTestEnv = process.env.NODE_ENV === 'test'
-  const logError = (...args: Parameters<typeof console.error>) => {
-    if (!isTestEnv) {
-      console.error(...args)
-    }
-  }
-
   const [contributions, setContributions] = useState<GitHubContribution[] | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
 
   useEffect(() => {
+    const isTestEnv = process.env.NODE_ENV === 'test'
+    const logError = (...args: Parameters<typeof console.error>) => {
+      if (!isTestEnv) {
+        console.error(...args)
+      }
+    }
+
     async function fetchContributions() {
       try {
         const response = await fetch(`/api/github-contributions?username=${username}`)
