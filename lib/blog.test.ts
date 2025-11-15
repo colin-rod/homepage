@@ -1,12 +1,18 @@
 /**
  * Tests for blog utilities
- * Integration tests using actual file system operations
+ * Integration tests using actual file system operations with year/month/slug structure
  */
 
 import { describe, it, expect, beforeAll, afterAll } from '@jest/globals'
 import * as fs from 'fs'
 import * as path from 'path'
-import { getAllPosts, getPostBySlug, getPostSlugs } from './blog'
+import {
+  getAllPosts,
+  getPostBySlug,
+  getPostSlugs,
+  getPostsRelatedToProject,
+  getPostsByProject,
+} from './blog'
 
 const setNodeEnv = (value: string | undefined) => {
   if (value === undefined) {
@@ -26,7 +32,7 @@ const TEST_CONTENT_DIR = path.join(process.cwd(), 'content/writing')
 describe('Blog Utilities', () => {
   const testPosts = [
     {
-      filename: 'test-post-1.mdx',
+      path: '2025/01/test-post-1',
       content: `---
 title: First Test Post
 date: 2025-01-15
@@ -39,7 +45,7 @@ tags: [product, tech]
 This is the content of the first test post with about two hundred words repeated many times. ${'word '.repeat(200)}`,
     },
     {
-      filename: 'test-post-2.mdx',
+      path: '2025/01/test-post-2',
       content: `---
 title: Second Test Post
 date: 2025-01-20
@@ -52,7 +58,7 @@ tags: [strategy]
 This is a shorter post.`,
     },
     {
-      filename: 'test-post-3.mdx',
+      path: '2024/06/test-post-3',
       content: `---
 title: Old Test Post
 date: 2024-06-01
@@ -67,53 +73,77 @@ This is an older post for testing sorting.`,
   ]
 
   beforeAll(() => {
-    // Create test posts
-    if (!fs.existsSync(TEST_CONTENT_DIR)) {
-      fs.mkdirSync(TEST_CONTENT_DIR, { recursive: true })
-    }
-
+    // Create test posts in year/month/slug structure
     testPosts.forEach((post) => {
-      fs.writeFileSync(path.join(TEST_CONTENT_DIR, post.filename), post.content)
+      const postDir = path.join(TEST_CONTENT_DIR, post.path)
+      fs.mkdirSync(postDir, { recursive: true })
+      fs.writeFileSync(path.join(postDir, 'index.mdx'), post.content)
     })
   })
 
   afterAll(() => {
     // Clean up test posts
     testPosts.forEach((post) => {
-      const filePath = path.join(TEST_CONTENT_DIR, post.filename)
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath)
+      const postDir = path.join(TEST_CONTENT_DIR, post.path)
+      const indexPath = path.join(postDir, 'index.mdx')
+      if (fs.existsSync(indexPath)) {
+        fs.unlinkSync(indexPath)
+      }
+      // Remove directories in reverse order (slug, month, year)
+      const parts = post.path.split('/')
+      for (let i = parts.length; i > 0; i--) {
+        const dirPath = path.join(TEST_CONTENT_DIR, ...parts.slice(0, i))
+        try {
+          if (fs.existsSync(dirPath) && fs.readdirSync(dirPath).length === 0) {
+            fs.rmdirSync(dirPath)
+          }
+        } catch {
+          // Directory not empty or doesn't exist, skip
+        }
       }
     })
   })
 
   describe('getPostSlugs', () => {
-    it('returns array of slugs from MDX files', () => {
+    it('returns array of post metadata with year, month, slug, isDraft', () => {
       const slugs = getPostSlugs()
 
-      expect(slugs).toContain('test-post-1')
-      expect(slugs).toContain('test-post-2')
-      expect(slugs).toContain('test-post-3')
-      expect(slugs.length).toBeGreaterThanOrEqual(3)
+      const testPost1 = slugs.find((s) => s.slug === 'test-post-1')
+      const testPost2 = slugs.find((s) => s.slug === 'test-post-2')
+      const testPost3 = slugs.find((s) => s.slug === 'test-post-3')
+
+      expect(testPost1).toBeDefined()
+      expect(testPost1?.year).toBe('2025')
+      expect(testPost1?.month).toBe('01')
+      expect(testPost1?.isDraft).toBe(false)
+
+      expect(testPost2).toBeDefined()
+      expect(testPost3).toBeDefined()
     })
 
-    it('returns only MDX files, excluding other file types', () => {
+    it('handles both year/month and drafts structure', () => {
       const slugs = getPostSlugs()
 
-      // Should not include non-MDX files
       slugs.forEach((slug) => {
-        expect(slug).not.toContain('.txt')
-        expect(slug).not.toContain('.md')
-        expect(slug).not.toContain('.DS_Store')
+        if (slug.isDraft) {
+          expect(slug.year).toBeNull()
+          expect(slug.month).toBeNull()
+        } else {
+          expect(slug.year).toBeTruthy()
+          expect(slug.month).toBeTruthy()
+        }
       })
     })
   })
 
   describe('getPostBySlug', () => {
-    it('parses MDX file and extracts frontmatter', () => {
-      const post = getPostBySlug('test-post-1')
+    it('parses MDX file from year/month/slug structure and extracts frontmatter', () => {
+      const post = getPostBySlug('2025', '01', 'test-post-1')
 
       expect(post.slug).toBe('test-post-1')
+      expect(post.year).toBe('2025')
+      expect(post.month).toBe('01')
+      expect(post.isDraft).toBe(false)
       expect(post.title).toBe('First Test Post')
       expect(post.date).toBe('2025-01-15')
       expect(post.summary).toBe('This is the first test post')
@@ -123,7 +153,7 @@ This is an older post for testing sorting.`,
     })
 
     it('calculates reading time based on word count', () => {
-      const post = getPostBySlug('test-post-1')
+      const post = getPostBySlug('2025', '01', 'test-post-1')
 
       expect(post.readingTime).toBeGreaterThan(0)
       expect(post.readingTime).toBeDefined()
@@ -131,7 +161,7 @@ This is an older post for testing sorting.`,
     })
 
     it('throws error if file does not exist', () => {
-      expect(() => getPostBySlug('non-existent-post')).toThrow()
+      expect(() => getPostBySlug('2025', '01', 'non-existent-post')).toThrow()
     })
   })
 
@@ -173,11 +203,21 @@ This is an older post for testing sorting.`,
 
       expect(posts.length).toBeGreaterThanOrEqual(3)
     })
+
+    it('includes year and month in post metadata', () => {
+      const posts = getAllPosts()
+      const testPost = posts.find((p) => p.slug === 'test-post-1')
+
+      expect(testPost).toBeDefined()
+      expect(testPost!.year).toBe('2025')
+      expect(testPost!.month).toBe('01')
+      expect(testPost!.isDraft).toBe(false)
+    })
   })
 
   describe('Draft Post Functionality', () => {
     const draftPost = {
-      filename: 'test-draft-post.mdx',
+      path: 'drafts/test-draft-post',
       content: `---
 title: Draft Test Post
 date: 2025-01-25
@@ -192,7 +232,7 @@ This post should be hidden in production.`,
     }
 
     const publishedPost = {
-      filename: 'test-published-post.mdx',
+      path: '2025/01/test-published-post',
       content: `---
 title: Published Test Post
 date: 2025-01-24
@@ -208,40 +248,62 @@ This post should always be visible.`,
 
     beforeAll(() => {
       // Create draft and published test posts
-      fs.writeFileSync(path.join(TEST_CONTENT_DIR, draftPost.filename), draftPost.content)
-      fs.writeFileSync(path.join(TEST_CONTENT_DIR, publishedPost.filename), publishedPost.content)
+      const draftDir = path.join(TEST_CONTENT_DIR, draftPost.path)
+      const publishedDir = path.join(TEST_CONTENT_DIR, publishedPost.path)
+
+      fs.mkdirSync(draftDir, { recursive: true })
+      fs.mkdirSync(publishedDir, { recursive: true })
+
+      fs.writeFileSync(path.join(draftDir, 'index.mdx'), draftPost.content)
+      fs.writeFileSync(path.join(publishedDir, 'index.mdx'), publishedPost.content)
     })
 
     afterAll(() => {
       // Clean up draft test posts
-      const draftPath = path.join(TEST_CONTENT_DIR, draftPost.filename)
-      const publishedPath = path.join(TEST_CONTENT_DIR, publishedPost.filename)
+      const draftPath = path.join(TEST_CONTENT_DIR, draftPost.path, 'index.mdx')
+      const publishedPath = path.join(TEST_CONTENT_DIR, publishedPost.path, 'index.mdx')
 
       if (fs.existsSync(draftPath)) {
         fs.unlinkSync(draftPath)
+        fs.rmdirSync(path.join(TEST_CONTENT_DIR, draftPost.path))
       }
       if (fs.existsSync(publishedPath)) {
         fs.unlinkSync(publishedPath)
+        const publishedDir = path.join(TEST_CONTENT_DIR, publishedPost.path)
+        fs.rmdirSync(publishedDir)
+        // Try to clean up parent directories if empty
+        try {
+          fs.rmdirSync(path.join(TEST_CONTENT_DIR, '2025', '01'))
+          fs.rmdirSync(path.join(TEST_CONTENT_DIR, '2025'))
+        } catch {
+          // Not empty, skip
+        }
       }
     })
 
     describe('getPostBySlug', () => {
-      it('parses draft field from frontmatter', () => {
-        const post = getPostBySlug('test-draft-post')
+      it('parses draft field from frontmatter (from drafts folder)', () => {
+        const post = getPostBySlug(null, null, 'test-draft-post')
 
         expect(post.draft).toBe(true)
+        expect(post.isDraft).toBe(true)
+        expect(post.year).toBeUndefined()
+        expect(post.month).toBeUndefined()
         expect(post.title).toBe('Draft Test Post')
       })
 
-      it('parses draft=false from frontmatter', () => {
-        const post = getPostBySlug('test-published-post')
+      it('parses draft=false from frontmatter (from year/month folder)', () => {
+        const post = getPostBySlug('2025', '01', 'test-published-post')
 
         expect(post.draft).toBe(false)
+        expect(post.isDraft).toBe(false)
+        expect(post.year).toBe('2025')
+        expect(post.month).toBe('01')
         expect(post.title).toBe('Published Test Post')
       })
 
       it('treats posts without draft field as published (draft=undefined)', () => {
-        const post = getPostBySlug('test-post-1')
+        const post = getPostBySlug('2025', '01', 'test-post-1')
 
         expect(post.draft).toBeUndefined()
       })
@@ -310,7 +372,7 @@ This post should always be visible.`,
 
   describe('Publish Flag Functionality', () => {
     const unpublishedPost = {
-      filename: 'test-unpublished-post.mdx',
+      path: '2025/01/test-unpublished-post',
       content: `---
 title: Unpublished Test Post
 date: 2025-01-26
@@ -325,7 +387,7 @@ This post should be hidden in both dev and production.`,
     }
 
     const publishedFlagPost = {
-      filename: 'test-published-flag-post.mdx',
+      path: '2025/01/test-published-flag-post',
       content: `---
 title: Published Flag Test Post
 date: 2025-01-27
@@ -340,7 +402,7 @@ This post should always be visible.`,
     }
 
     const noPublishFlagPost = {
-      filename: 'test-no-publish-flag-post.mdx',
+      path: '2025/01/test-no-publish-flag-post',
       content: `---
 title: No Publish Flag Test Post
 date: 2025-01-28
@@ -355,54 +417,53 @@ This post should be visible by default (backward compatibility).`,
 
     beforeAll(() => {
       // Create test posts for publish flag testing
-      fs.writeFileSync(
-        path.join(TEST_CONTENT_DIR, unpublishedPost.filename),
-        unpublishedPost.content
-      )
-      fs.writeFileSync(
-        path.join(TEST_CONTENT_DIR, publishedFlagPost.filename),
-        publishedFlagPost.content
-      )
-      fs.writeFileSync(
-        path.join(TEST_CONTENT_DIR, noPublishFlagPost.filename),
-        noPublishFlagPost.content
-      )
+      ;[unpublishedPost, publishedFlagPost, noPublishFlagPost].forEach((post) => {
+        const postDir = path.join(TEST_CONTENT_DIR, post.path)
+        fs.mkdirSync(postDir, { recursive: true })
+        fs.writeFileSync(path.join(postDir, 'index.mdx'), post.content)
+      })
     })
 
     afterAll(() => {
       // Clean up publish flag test posts
-      const unpublishedPath = path.join(TEST_CONTENT_DIR, unpublishedPost.filename)
-      const publishedPath = path.join(TEST_CONTENT_DIR, publishedFlagPost.filename)
-      const noFlagPath = path.join(TEST_CONTENT_DIR, noPublishFlagPost.filename)
+      ;[unpublishedPost, publishedFlagPost, noPublishFlagPost].forEach((post) => {
+        const indexPath = path.join(TEST_CONTENT_DIR, post.path, 'index.mdx')
+        const postDir = path.join(TEST_CONTENT_DIR, post.path)
 
-      if (fs.existsSync(unpublishedPath)) {
-        fs.unlinkSync(unpublishedPath)
-      }
-      if (fs.existsSync(publishedPath)) {
-        fs.unlinkSync(publishedPath)
-      }
-      if (fs.existsSync(noFlagPath)) {
-        fs.unlinkSync(noFlagPath)
+        if (fs.existsSync(indexPath)) {
+          fs.unlinkSync(indexPath)
+        }
+        if (fs.existsSync(postDir)) {
+          fs.rmdirSync(postDir)
+        }
+      })
+
+      // Try to clean up parent directories if empty
+      try {
+        fs.rmdirSync(path.join(TEST_CONTENT_DIR, '2025', '01'))
+        fs.rmdirSync(path.join(TEST_CONTENT_DIR, '2025'))
+      } catch {
+        // Not empty, skip
       }
     })
 
     describe('getPostBySlug', () => {
       it('parses publish field from frontmatter', () => {
-        const post = getPostBySlug('test-unpublished-post')
+        const post = getPostBySlug('2025', '01', 'test-unpublished-post')
 
         expect(post.publish).toBe(false)
         expect(post.title).toBe('Unpublished Test Post')
       })
 
       it('parses publish=true from frontmatter', () => {
-        const post = getPostBySlug('test-published-flag-post')
+        const post = getPostBySlug('2025', '01', 'test-published-flag-post')
 
         expect(post.publish).toBe(true)
         expect(post.title).toBe('Published Flag Test Post')
       })
 
       it('treats posts without publish field as published (publish=undefined)', () => {
-        const post = getPostBySlug('test-no-publish-flag-post')
+        const post = getPostBySlug('2025', '01', 'test-no-publish-flag-post')
 
         expect(post.publish).toBeUndefined()
         expect(post.title).toBe('No Publish Flag Test Post')
@@ -494,6 +555,227 @@ This post should be visible by default (backward compatibility).`,
         expect(noFlagPost).toBeDefined()
 
         setNodeEnv(originalEnv)
+      })
+    })
+  })
+
+  describe('getPostsRelatedToProject', () => {
+    const projectTags = ['product', 'tech', 'ai']
+
+    it('returns posts that share at least one tag with the project', () => {
+      const relatedPosts = getPostsRelatedToProject(projectTags)
+
+      // All returned posts should have at least one matching tag
+      relatedPosts.forEach((post) => {
+        const hasMatchingTag = post.tags.some((tag) => projectTags.includes(tag))
+        expect(hasMatchingTag).toBe(true)
+      })
+    })
+
+    it('sorts posts by number of matching tags (descending), then by date', () => {
+      const relatedPosts = getPostsRelatedToProject(['product', 'tech'])
+
+      // Verify we have at least 2 posts to test sorting
+      if (relatedPosts.length >= 2) {
+        const firstPost = relatedPosts[0]
+        const secondPost = relatedPosts[1]
+
+        const firstPostMatches = firstPost.tags.filter((tag) =>
+          ['product', 'tech'].includes(tag)
+        ).length
+        const secondPostMatches = secondPost.tags.filter((tag) =>
+          ['product', 'tech'].includes(tag)
+        ).length
+
+        // Either first post has more matches, or they have same matches and first is newer
+        const isCorrectOrder =
+          firstPostMatches > secondPostMatches ||
+          (firstPostMatches === secondPostMatches &&
+            new Date(firstPost.date).getTime() >= new Date(secondPost.date).getTime())
+
+        expect(isCorrectOrder).toBe(true)
+      }
+    })
+
+    it('returns empty array when no tags provided', () => {
+      const relatedPosts = getPostsRelatedToProject([])
+      expect(relatedPosts).toEqual([])
+    })
+
+    it('returns empty array when project tags is null/undefined', () => {
+      // @ts-expect-error Testing null input
+      const relatedPostsNull = getPostsRelatedToProject(null)
+      expect(relatedPostsNull).toEqual([])
+
+      // @ts-expect-error Testing undefined input
+      const relatedPostsUndefined = getPostsRelatedToProject(undefined)
+      expect(relatedPostsUndefined).toEqual([])
+    })
+
+    it('respects the limit parameter', () => {
+      const limit = 2
+      const relatedPosts = getPostsRelatedToProject(projectTags, limit)
+
+      expect(relatedPosts.length).toBeLessThanOrEqual(limit)
+    })
+
+    it('does not include content by default (performance)', () => {
+      const relatedPosts = getPostsRelatedToProject(projectTags)
+
+      relatedPosts.forEach((post) => {
+        expect(post.content).toBeUndefined()
+      })
+    })
+
+    it('returns posts with metadata fields populated', () => {
+      const relatedPosts = getPostsRelatedToProject(projectTags)
+
+      if (relatedPosts.length > 0) {
+        const post = relatedPosts[0]
+        expect(post.title).toBeDefined()
+        expect(post.slug).toBeDefined()
+        expect(post.date).toBeDefined()
+        expect(post.summary).toBeDefined()
+        expect(post.tags).toBeDefined()
+        expect(Array.isArray(post.tags)).toBe(true)
+      }
+    })
+
+    it('excludes draft posts in production environment', () => {
+      const originalEnv = process.env.NODE_ENV
+      setNodeEnv('production')
+
+      const relatedPosts = getPostsRelatedToProject(['draft-test'])
+
+      // Should not include any draft posts
+      const hasDraftPosts = relatedPosts.some((post) => post.draft === true)
+      expect(hasDraftPosts).toBe(false)
+
+      setNodeEnv(originalEnv)
+    })
+
+    it('includes draft posts in development environment', () => {
+      const originalEnv = process.env.NODE_ENV
+      setNodeEnv('development')
+
+      const relatedPosts = getPostsRelatedToProject(['draft-test'])
+
+      // May include draft posts in development
+      // We're just verifying it doesn't crash, actual draft post may not exist
+      expect(Array.isArray(relatedPosts)).toBe(true)
+
+      setNodeEnv(originalEnv)
+    })
+  })
+
+  describe('getPostsByProject', () => {
+    it('returns posts that explicitly link to a project', () => {
+      const projectSlug = 'tripthreads-mvp'
+      const posts = getPostsByProject(projectSlug)
+
+      expect(posts.length).toBeGreaterThan(0)
+      posts.forEach((post) => {
+        expect(post.project).toBe(projectSlug)
+      })
+    })
+
+    it('returns empty array when no projectSlug provided', () => {
+      const posts = getPostsByProject('')
+      expect(posts).toEqual([])
+    })
+
+    it('returns empty array when no posts match the project', () => {
+      const posts = getPostsByProject('nonexistent-project')
+      expect(posts).toEqual([])
+    })
+
+    it('sorts posts by date (newest first)', () => {
+      const projectSlug = 'tripthreads-mvp'
+      const posts = getPostsByProject(projectSlug)
+
+      if (posts.length > 1) {
+        for (let i = 0; i < posts.length - 1; i++) {
+          const currentDate = new Date(posts[i].date).getTime()
+          const nextDate = new Date(posts[i + 1].date).getTime()
+          expect(currentDate).toBeGreaterThanOrEqual(nextDate)
+        }
+      }
+    })
+
+    it('does not include content by default (performance)', () => {
+      const projectSlug = 'tripthreads-mvp'
+      const posts = getPostsByProject(projectSlug)
+
+      posts.forEach((post) => {
+        expect(post.content).toBeUndefined()
+      })
+    })
+
+    it('includes content when includeContent is true', () => {
+      const projectSlug = 'tripthreads-mvp'
+      const posts = getPostsByProject(projectSlug, true)
+
+      if (posts.length > 0) {
+        posts.forEach((post) => {
+          expect(post.content).toBeDefined()
+          expect(typeof post.content).toBe('string')
+        })
+      }
+    })
+  })
+
+  describe('getPostsRelatedToProject with explicit linking', () => {
+    const projectTags = ['ai', 'product', 'travel']
+    const projectSlug = 'tripthreads-mvp'
+
+    it('prioritizes explicitly linked posts over tag matches', () => {
+      const posts = getPostsRelatedToProject(projectTags, 10, projectSlug)
+
+      if (posts.length > 0) {
+        // Check if first posts are explicitly linked
+        const explicitPosts = posts.filter((post) => post.project === projectSlug)
+        const tagOnlyPosts = posts.filter((post) => post.project !== projectSlug)
+
+        if (explicitPosts.length > 0 && tagOnlyPosts.length > 0) {
+          // Explicit posts should come before tag-only posts
+          const lastExplicitIndex = posts.findIndex((post) => post.project !== projectSlug)
+          expect(lastExplicitIndex).toBeGreaterThan(0)
+        }
+      }
+    })
+
+    it('includes both explicit and tag-matched posts', () => {
+      const posts = getPostsRelatedToProject(projectTags, 10, projectSlug)
+
+      if (posts.length > 1) {
+        const hasExplicit = posts.some((post) => post.project === projectSlug)
+        const hasTagMatch = posts.some(
+          (post) =>
+            post.project !== projectSlug && post.tags.some((tag) => projectTags.includes(tag))
+        )
+
+        // At least one type should exist
+        expect(hasExplicit || hasTagMatch).toBe(true)
+      }
+    })
+
+    it('works without projectSlug (backward compatibility)', () => {
+      const posts = getPostsRelatedToProject(projectTags, 10)
+
+      // Should still return tag-matched posts
+      posts.forEach((post) => {
+        const hasMatchingTag = post.tags.some((tag) => projectTags.includes(tag))
+        expect(hasMatchingTag).toBe(true)
+      })
+    })
+
+    it('handles case where no posts explicitly link to project', () => {
+      const posts = getPostsRelatedToProject(projectTags, 10, 'nonexistent-project')
+
+      // Should still return tag-matched posts
+      posts.forEach((post) => {
+        const hasMatchingTag = post.tags.some((tag) => projectTags.includes(tag))
+        expect(hasMatchingTag).toBe(true)
       })
     })
   })

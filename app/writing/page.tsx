@@ -12,6 +12,7 @@ import { generatePageMetadata } from '@/lib/seo'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
 import PageTransition from '@/components/animations/PageTransition'
+import PageHeader from '@/components/layouts/PageHeader'
 import TimelineScrollbar from '@/components/features/writing/TimelineScrollbar'
 
 export const metadata: Metadata = generatePageMetadata(
@@ -30,15 +31,14 @@ export default function WritingPage() {
       <Navigation />
       <PageTransition>
         <main className="py-24 sm:py-32">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            {/* Header */}
-            <header className="mb-12">
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">Reflections</h1>
-              <p className="text-lg text-secondary">
-                Thoughts on product development, strategy, and technology.
-              </p>
-            </header>
+          <PageHeader className="mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Reflections</h1>
+            <p className="text-lg text-secondary">
+              Thoughts on product development, strategy, and technology.
+            </p>
+          </PageHeader>
 
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
             {/* Content Grid: Timeline + Posts */}
             <div className="grid grid-cols-1 lg:grid-cols-[180px_1fr] gap-8 lg:gap-12">
               {/* Timeline Scrollbar - Hidden on mobile */}
@@ -66,7 +66,14 @@ export default function WritingPage() {
                           <div className="h-px flex-1 bg-gradient-to-r from-accent-warm to-transparent"></div>
                         </div>
                         <article className="card hover:shadow-glow transition-shadow">
-                          <Link href={`/writing/${latestPost.slug}`} className="group block">
+                          <Link
+                            href={
+                              latestPost.isDraft
+                                ? `/writing/drafts/${latestPost.slug}`
+                                : `/writing/${latestPost.year}/${latestPost.month}/${latestPost.slug}`
+                            }
+                            className="group block"
+                          >
                             <h3 className="text-3xl md:text-4xl font-bold mb-3 group-hover:text-accent-warm transition-colors">
                               {latestPost.title}
                             </h3>
@@ -118,7 +125,11 @@ export default function WritingPage() {
                               className="border-b border-divider pb-8 last:border-0"
                             >
                               <Link
-                                href={`/writing/${post.slug}`}
+                                href={
+                                  post.isDraft
+                                    ? `/writing/drafts/${post.slug}`
+                                    : `/writing/${post.year}/${post.month}/${post.slug}`
+                                }
                                 className="group block hover:opacity-80 transition-opacity"
                               >
                                 <h3 className="text-2xl md:text-3xl font-bold mb-2 group-hover:text-accent-warm transition-colors">

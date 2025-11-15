@@ -155,6 +155,9 @@ export interface BlogPost {
   id?: string
   title: string
   slug: string
+  year?: string // Year folder (e.g., '2025') - undefined for drafts
+  month?: string // Month folder (e.g., '11') - undefined for drafts
+  isDraft?: boolean // True if in drafts folder
   date: string // ISO 8601 - Publication date
   summary: string // Short description/excerpt
   excerpt?: string // Alias for summary (for compatibility)
@@ -163,6 +166,7 @@ export interface BlogPost {
   publishedAt?: string // ISO 8601 (alias for date)
   updatedAt?: string
   tags: string[]
+  project?: string // Project slug this post is about (e.g., 'tripthreads-mvp')
   featured?: boolean
   draft?: boolean // If true, post is hidden in production
   publish?: boolean // If false, post is hidden in all environments (dev and production)

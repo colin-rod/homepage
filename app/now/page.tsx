@@ -3,6 +3,7 @@ import { generatePageMetadata } from '@/lib/seo'
 import Navigation from '@/components/layouts/Navigation'
 import Footer from '@/components/layouts/Footer'
 import PageTransition from '@/components/animations/PageTransition'
+import PageHeader from '@/components/layouts/PageHeader'
 
 export const metadata: Metadata = generatePageMetadata(
   'Now',
@@ -25,17 +26,16 @@ export default function NowPage() {
       <Navigation />
       <PageTransition>
         <main className="py-24 sm:py-32">
-          <div className="mx-auto max-w-4xl px-6 lg:px-8">
-            {/* Page Header */}
-            <div className="mb-16">
-              <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl mb-6">
-                What I&apos;m Doing Now
-              </h1>
-              <p className="text-xl text-text-secondary leading-relaxed">
-                A snapshot of what I&apos;m building, learning, and exploring right now.
-              </p>
-            </div>
+          <PageHeader className="mb-16">
+            <h1 className="text-4xl font-bold tracking-tight text-primary sm:text-5xl mb-6">
+              What I&apos;m Doing Now
+            </h1>
+            <p className="text-xl text-text-secondary leading-relaxed">
+              A snapshot of what I&apos;m building, learning, and exploring right now.
+            </p>
+          </PageHeader>
 
+          <div className="mx-auto max-w-4xl px-6 lg:px-8">
             {/* Current Work/Projects Section */}
             <section className="mb-16">
               <h2 className="text-2xl font-bold text-text mb-6">Current Focus</h2>

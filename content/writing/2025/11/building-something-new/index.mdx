@@ -1,0 +1,101 @@
+---
+title: Building Something New for Travelers
+date: 2025-11-11
+summary: Notes from building Trip Threads — a personal experiment in making travel planning and coordination simpler, smarter, and a bit more human.
+tags: [travel, ai, building, product]
+project: tripthreads-mvp
+---
+
+
+**Working notes** From my ongoing experiment: combining travel, design, and AI to reduce friction while planning and organizing trips.
+
+## How I Got Here
+
+In every group, there's always that one person who ends up doing most of the work around planning the trips.
+
+In mine, that task usually falls to me **(not just because I love spreadsheets)**, but because I find it to be an interesting puzzle to solve.
+Finding the best flights, comparing hotels, weighing trade-offs to optimize the entire process has always been a kind of game I enjoy.
+
+Before kids, I always found myself travelling, either for work, for fun, sometimes just to scratch an itch or even just to cross a place off my list.
+
+At some point on my travels, I discovered [`TripIt`](https://www.tripit.com/) which was the first tool that felt like an upgrade from my email searches, multiple Whatsapp groups, and browser tab chaos. It pulled trip confirmations directly from my inbox and gave me a clean organized itinerary view which was very beneficiel.
+
+But while TripIt was useful in their core competency, I found that I was missing elements to helkp facilitate the discussion around whats' going into Tripit. How do users actaully make decisions, enter data, track expenses.
+
+In short as is the case with all of my projects I tried to answer the question "Why doesn't this exist?" and then "Can I build it"
+
+---
+
+## Defining the Problem
+
+Most travel tools are great at **organizing**, but not at **coordinating**.
+
+✅ TripIt keeps itineraries tidy
+✅ Spreadsheets handle budgets
+✅ To-do apps manage packing lists
+
+But real trips (especially group trips) are messy. They involve debates, decisions, preferences and tasks. It often feels like running a project with an uncoordinated team, each with different levels of experience, energy, and context.
+
+However most tools available expect rigid structure: forms, dropdowns, and workflows.
+
+> **Travel planning isn't a spreadsheet problem — it's a communication problem.**
+
+---
+
+## Enter Trip Threads
+
+A few weeks ago, I started building a small prototype to solve this problem and also work on building up my NLP and LLM skills.
+
+The idea grew to became **Trip Threads** — a conversational planner that works the way people actually talk.
+
+You can speak to it like you would to a travel partner:
+
+> "Add a flight to Lisbon next Thursday."
+> "Split dinner four ways."
+> "Add flip-flops to the packing list."
+
+Natural language is often the simplest way to express intent and with the current state of AI it is a natural extension to sue it to simplify user interactions.
+Trip Threads uses NLP to extract destinations, dates, expenses, and decisions and then organizes everything automatically in the background.
+
+That's the core experiment:
+
+> **Can an AI understand the intent behind travel conversations and help coordinate the details without interrupting the flow of conversation?**
+
+I'm not trying to solve discovery; there are plenty of great tools for that.
+I'm trying to reduce friction — to let AI work *alongside* people in a natural, human way.
+
+---
+
+## What I'm Exploring
+
+Trip Threads started as a prototype, but it's turned into a way to explore how I can integrate LLMs into a platform.
+Right now, I'm testing:
+
+- Intent parsing for "travel language"
+- A timeline that evolves as conversations evolve
+- Smarter, context-aware expense handling
+- Basic memory of group preferences
+
+Solo mode works well, but I think it'll really shine with **groups**, where natural language and dynamic logistics create the most opportunity for friction (and therefore, the most value).
+
+---
+
+## Things I'm Still Figuring Out
+
+Building at the intersection of AI and travel comes with a lot of open questions:
+
+- **Accuracy:**
+  How do we keep intent parsing reliable across wildly different travel phrases and styles?
+  The goal is to avoid forcing users into structured inputs.
+
+- **Adoption:**
+  How do you convince people to bring a new tool into a habit-driven space already dominated by messaging apps, spreadsheets, and old routines?
+  What's the real, compelling value?
+
+- **Boundaries:**
+  How smart should the tool be before it feels intrusive?
+  What should it automate vs. what should remain human?
+
+I don't have all the answers right now and the goal is to keep testing, learning, and sharing what works.
+
+If you've ever been *the* planner in your group or wished someone else handled it better I'd love your feedback.

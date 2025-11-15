@@ -41,7 +41,7 @@ export default function ProjectsPage() {
     <>
       <Navigation />
       <PageTransition>
-        <main id="main-content" className="pt-12 pb-24 sm:pt-16 sm:pb-32">
+        <main id="main-content" className="py-24 sm:py-32 pb-24 sm:pb-32">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             {/* Page Header */}
             <div className="mx-auto max-w-2xl text-center mb-10">
@@ -56,6 +56,14 @@ export default function ProjectsPage() {
             {/* PROJECTS SECTION */}
             <div className="mb-16">
               <h2 className="text-2xl font-bold tracking-tight text-primary mb-8">Projects</h2>
+            {/* In Progress Swimlane */}
+            <Swimlane
+              title="In Progress"
+              icon={<Code2 className="h-5 w-5 text-accent-warm" />}
+              projects={inProgressProjects}
+              description="Projects currently under active development"
+              index={0}
+            />
 
               {/* In Progress Swimlane */}
               <Swimlane
