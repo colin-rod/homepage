@@ -10,29 +10,51 @@ project: tripthreads-mvp
 
 ## Why This Matters
 
-For years, I've been the designated planner among friends and family. My TripIt history looks like a timeline of our lives — weddings, reunions, long weekends that went a bit sideways. I love it. Finding the best flights, comparing hotels, weighing trade-offs — it's always been a puzzle I enjoy solving.
-
-But every time I plan a trip, I feel the same friction: scattered WhatsApp messages, stale Google Docs, and zero context when someone joins late.
-
-**Travel planning isn't a spreadsheet problem — it's a communication problem.**
-
-That insight became the foundation for Trip Threads: a conversational travel planner that works the way people actually talk. The core bet was simple:
-
-> Can AI understand the intent behind travel conversations and help coordinate details without interrupting the flow?
-
-Natural language input became the defining feature. If users could type things like:
-
-- "Dinner €60 split 4 ways"
-- "Flight to Paris Monday 9am"
-- "Alice paid $120 for hotel, Bob owes 40%"
-
-…and the system just handled the rest, the experience would be dramatically faster and more enjoyable than filling in traditional forms.
+I've been [building Trip Threads](/writing/2025/11/building-something-new), a conversational travel planner designed to solve the coordination chaos of group trips. Natural language input became the defining feature — if users could type things like "Dinner €60 split 4 ways" or "Flight to Paris Monday 9am" and the system just handled the rest, the experience would be dramatically faster than traditional forms.
 
 But implementing a parser that works across messy real-world input turned out to be harder than I expected.
 
 Over several months, I explored **four different approaches** — from classic regex to deterministic NLP to on-device LLMs and finally a hosted LLM — testing **90 real cases** across all versions.
 
 This is the story of how each approach worked, where it broke, and what ultimately made it into production.
+
+---
+
+## Building the Test Suite
+
+Before evaluating different parsing approaches, I needed a consistent way to measure accuracy. I developed a test suite of **90 sample inputs** that represented the natural language I expected users to enter:
+
+- "Dinner at Mario's €45 split 3 ways"
+- "Flight tmr 9am"
+- "Hotel checkout Sunday, Alice paid $200"
+- "Museum tickets 15 each for 4 people"
+
+These covered the typical use cases: expenses, itinerary items, split logic, dates, and participant tracking. I intentionally included variations in:
+
+- **Formality**: "tomorrow" vs "tmr" vs "next Thursday"
+- **Currency formats**: "€60" vs "60 euros" vs "60EUR"
+- **Split expressions**: "split 4 ways" vs "15 each" vs "Bob owes 40%"
+- **Date references**: Absolute dates, relative dates, and implicit timing
+
+In the future, I plan to expand this with real user inputs to ensure broader coverage of input types (formal, casual, regional variations, etc.). But for the MVP, this test suite gave me a reliable benchmark to compare different parsing approaches.
+
+---
+
+## Architecture Decisions
+
+When evaluating parsing solutions, I optimized for several constraints:
+
+**Technical Complexity**: Keep it simple. As a solo developer learning as I go, I needed solutions I could understand, debug, and iterate on quickly.
+
+**Cost**: Minimize ongoing expenses, especially during development and early user testing.
+
+**Latency**: Users expect instant feedback. Any solution over ~2 seconds would break the conversational flow.
+
+**Development Speed**: I needed to move fast and validate the concept before over-investing in infrastructure.
+
+**Input Data Constraints**: With limited real-world user data, I couldn't train custom models effectively. This pushed me toward off-the-shelf solutions.
+
+These constraints shaped my evaluation criteria and ultimately led me to test four distinct approaches, each with different trade-offs.
 
 ---
 
@@ -61,7 +83,7 @@ Great for textbook cases. Terrible for real-world use.
 ---
 
 ## Version 2: Deterministic NLP Parser
-**A more sophisticated rules-based system with a full test suite.**
+**A more sophisticated rules-based system with reinforcement learning.**
 
 I leveled up to a proper parser using:
 
@@ -69,8 +91,27 @@ I leveled up to a proper parser using:
 - `chrono-node` for date extraction
 - Currency normalization rules
 - Split-type detection logic
+- **Reinforcement learning mechanism**
 
 This felt like real engineering. I built **100+ passing unit tests**. The parser was fully offline, deterministic, and blazing fast (\<10ms).
+
+### Reinforcement Learning Layer
+
+I incorporated a reinforcement learning mechanism where users could provide feedback when the parser got it wrong. The workflow:
+
+1. User enters natural language input
+2. Parser generates a result
+3. User confirms if correct, or corrects any errors
+4. Corrections are scored and used to rank different parsing rules
+5. Next time a similar phrase appears, the highest-ranked rule is applied
+
+The idea was to catch more edge cases over time without manually coding every variation. However, this grew complex quickly:
+
+- **Insufficient data**: Without enough user corrections, the scoring wasn't meaningful
+- **Rule explosion**: The number of competing rules grew faster than the learning could optimize
+- **Debugging difficulty**: It became hard to understand why certain rules won over others
+
+While theoretically promising, the reinforcement learning approach needed significantly more input data to become useful.
 
 ### What Still Broke
 
@@ -81,13 +122,13 @@ Real-world travel messages are just too varied:
 - "Museum tmr afternoon"
 - "Brunch yesterday 30 each"
 
-I kept adding rules, but complexity grew without improving overall reliability. Edge cases multiplied faster than I could patch them.
+Even with reinforcement learning, complexity grew without improving overall reliability. Edge cases multiplied faster than I could address them.
 
 ### Accuracy: 55/90 (~61%)
 
-Better — but still not good enough.
+Better than regex — but still not good enough to be a flagship feature.
 
-**Verdict:** Rule-based systems don't scale to real-world language. The long tail of expressions is endless.
+**Verdict:** Rule-based systems don't scale to real-world language. The long tail of expressions is endless, and reinforcement learning requires more data than I had available.
 
 ---
 
@@ -98,6 +139,7 @@ To improve accuracy without sending data to external services, I tried running s
 
 - **Phi-3-mini**
 - **Mistral 7B**
+- **Llama 3.2**
 
 These ran on a **MacBook Air (CPU-only)** using **Ollama**, occasionally packaged via Docker.
 
@@ -167,26 +209,33 @@ A **dramatic improvement** over all other approaches. The parser now handled:
 - Complex split logic
 - Ambiguous phrasing
 
-### Cost: Negligible
+### Cost & Privacy Tradeoffs
 
+**Cost**:
 - ~$0.00005 per parse
 - ~10,000 parses/month → ~$0.50
 - ~100,000 parses/month → ~$5.00
 
-For the UX benefits, this was an easy decision.
+For the UX benefits and accuracy gains, this was an easy decision. Even at scale, the cost remains negligible compared to the value delivered.
 
-**Verdict:** Accuracy was the defining feature. For Trip Threads, correctness is non-negotiable. A fast but wrong parser creates more frustration than value.
+**Privacy Considerations**:
+
+Moving to a hosted LLM meant sending user input to OpenAI's servers. To address privacy concerns:
+
+1. **Data Sanitization**: User input is sanitized before sending to the API — removing any PII (personally identifiable information) when possible
+2. **Structured Output**: The API returns only classification data and intent mapping as JSON, not conversational responses
+3. **No Training**: Data sent to OpenAI's API is not used to train their models (per their API terms)
+4. **Preview Flow**: Users see and approve the parsed result before it's saved to the database
+
+While not as private as on-device processing, this approach balances privacy with usability. For a travel coordination app where users are already sharing information with their group, the tradeoff was acceptable.
+
+**Verdict:** Accuracy was the defining feature. For Trip Threads, correctness is non-negotiable. A fast but wrong parser creates more frustration than value. The cost is negligible, and privacy concerns are mitigated through data handling practices.
 
 ---
 
 ## The Comparison
 
-| Parser | Accuracy | Latency | Cost/Parse | Notes |
-|--------|----------|---------|------------|-------|
-| **Regex** | 42/90 (46%) | \<10ms | Free | Only works on clean inputs |
-| **Deterministic NLP** | 55/90 (61%) | \<10ms | Free | Rules don't scale with complexity |
-| **On-Device LLM** | ~60–70/90 | \>30,000ms | Free | Too slow for interactive use |
-| **GPT-4o-mini** | 85/90 (94%) | 500–1500ms | $0.00005 | Best by a wide margin |
+![Parser comparison across four approaches showing accuracy, latency, and cost tradeoffs](/images/writing/drafts/trip-threads-nlp-journey/parser-comparison.png)
 
 ---
 
@@ -267,13 +316,37 @@ Building this parser touched every layer of the stack — model selection, UX, i
 
 ## What's Next
 
-I'm exploring a **hybrid approach**:
+I'm exploring a **hybrid approach** with a custom LLM as the primary parser and OpenAI as a fallback:
 
-1. **Client-side deterministic parsing** for simple cases (e.g., "€50")
-2. **LLM parsing** for everything else
-3. **Result caching** to improve speed and reduce cost
-4. **Offline fallback** using deterministic parsing when network unavailable
-5. **User feedback loops** to improve prompts over time
+```mermaid
+graph TD
+    A[User Input] --> B{Simple Pattern?}
+    B -->|Yes| C[Client-side Regex]
+    B -->|No| D[Custom Fine-tuned LLM]
+    C --> G[Structured Output]
+    D --> E{Confidence Score}
+    E -->|High| G
+    E -->|Low| F[OpenAI GPT-4o-mini Fallback]
+    F --> G
+    G --> H[UI Preview]
+    H --> I{User Confirms?}
+    I -->|Yes| J[Save to Database]
+    I -->|No| K[User Correction]
+    K --> L[Training Data]
+    L --> M[Fine-tune Custom LLM]
+    M --> D
+```
+
+**Future Architecture Goals**:
+
+1. **Custom fine-tuned LLM** trained on user corrections and Trip Threads-specific patterns
+2. **OpenAI fallback** for edge cases where custom model has low confidence
+3. **Client-side deterministic parsing** for simple, high-confidence patterns (e.g., "€50")
+4. **Result caching** to improve speed and reduce cost
+5. **Offline fallback** using deterministic parsing when network unavailable
+6. **Continuous learning** from user corrections to improve the custom model
+
+Over time, as we collect sufficient user inputs and corrections, we can train a custom model specifically for travel planning language. This would reduce dependency on external APIs, lower costs, and improve privacy — while maintaining the accuracy benefits of LLM-based parsing.
 
 I'm also building a **prompt debugger** directly into the Trip Threads console so I can replay failed parses and understand edge cases faster.
 
