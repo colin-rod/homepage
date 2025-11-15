@@ -56,15 +56,6 @@ export default function ProjectsPage() {
             {/* PROJECTS SECTION */}
             <div className="mb-16">
               <h2 className="text-2xl font-bold tracking-tight text-primary mb-8">Projects</h2>
-            {/* In Progress Swimlane */}
-            <Swimlane
-              title="In Progress"
-              icon={<Code2 className="h-5 w-5 text-accent-warm" />}
-              projects={inProgressProjects}
-              description="Projects currently under active development"
-              index={0}
-            />
-
               {/* In Progress Swimlane */}
               <Swimlane
                 title="In Progress"
