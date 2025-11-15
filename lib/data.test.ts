@@ -10,6 +10,8 @@ import {
   getProjectsByType,
   getProjectsOnly,
   getTools,
+  getCompletedTools,
+  getPlannedTools,
   getTimelineEvents,
   getTimelineEventsByType,
   getTimelineEventsByTag,
@@ -204,6 +206,85 @@ describe('Project Data Utilities', () => {
       const fromType = getProjectsByType('tool')
 
       expect(fromHelper).toEqual(fromType)
+    })
+  })
+
+  describe('getCompletedTools', () => {
+    it('returns only tools with completed statuses', () => {
+      const tools = getCompletedTools()
+      expect(Array.isArray(tools)).toBe(true)
+
+      tools.forEach((tool) => {
+        expect(tool.type).toBe('tool')
+        expect(['live', 'completed']).toContain(tool.status)
+      })
+    })
+
+    it('returns subset of all tools', () => {
+      const allTools = getTools()
+      const completedTools = getCompletedTools()
+
+      expect(completedTools.length).toBeLessThanOrEqual(allTools.length)
+    })
+
+    it('does not include planned tools', () => {
+      const completedTools = getCompletedTools()
+
+      completedTools.forEach((tool) => {
+        expect(tool.status).not.toBe('planned')
+        expect(tool.status).not.toBe('concept')
+      })
+    })
+  })
+
+  describe('getPlannedTools', () => {
+    it('returns only tools with planned statuses', () => {
+      const tools = getPlannedTools()
+      expect(Array.isArray(tools)).toBe(true)
+
+      tools.forEach((tool) => {
+        expect(tool.type).toBe('tool')
+        expect(['planned', 'concept']).toContain(tool.status)
+      })
+    })
+
+    it('returns subset of all tools', () => {
+      const allTools = getTools()
+      const plannedTools = getPlannedTools()
+
+      expect(plannedTools.length).toBeLessThanOrEqual(allTools.length)
+    })
+
+    it('does not include completed tools', () => {
+      const plannedTools = getPlannedTools()
+
+      plannedTools.forEach((tool) => {
+        expect(tool.status).not.toBe('live')
+        expect(tool.status).not.toBe('completed')
+      })
+    })
+  })
+
+  describe('completed and planned tools coverage', () => {
+    it('completed and planned tools should not overlap', () => {
+      const completedTools = getCompletedTools()
+      const plannedTools = getPlannedTools()
+
+      const completedIds = new Set(completedTools.map((t) => t.id))
+      const plannedIds = new Set(plannedTools.map((t) => t.id))
+
+      completedIds.forEach((id) => {
+        expect(plannedIds.has(id)).toBe(false)
+      })
+    })
+
+    it('completed and planned tools combined should be subset of all tools', () => {
+      const allTools = getTools()
+      const completedTools = getCompletedTools()
+      const plannedTools = getPlannedTools()
+
+      const combinedCount = completedTools.length + plannedTools.length
+      expect(combinedCount).toBeLessThanOrEqual(allTools.length)
     })
   })
 })
