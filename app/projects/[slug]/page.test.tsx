@@ -8,6 +8,18 @@ jest.mock('@/lib/data', () => ({
   getProjects: jest.fn(),
 }))
 
+// Mock blog functions
+jest.mock('@/lib/blog', () => ({
+  getPostsRelatedToProject: jest.fn(() => []),
+}))
+
+// Mock RelatedArticles component
+jest.mock('@/components/features/projects/RelatedArticles', () => {
+  return function MockRelatedArticles() {
+    return <div data-testid="related-articles" />
+  }
+})
+
 // Mock Next.js components
 jest.mock('next/navigation', () => ({
   notFound: jest.fn(() => {

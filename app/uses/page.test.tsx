@@ -247,7 +247,7 @@ describe('UsesPage', () => {
     render(<UsesPage />)
 
     const main = screen.getByRole('main')
-    expect(main).toHaveClass('pt-12', 'pb-24', 'sm:pt-16', 'sm:pb-32')
+    expect(main).toHaveClass('py-24', 'sm:py-32', 'pb-24', 'sm:pb-32')
   })
 
   it('renders items in grid layout', () => {
