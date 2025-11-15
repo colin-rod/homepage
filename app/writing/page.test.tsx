@@ -39,6 +39,8 @@ describe('Reflections Page', () => {
         slug: 'first-post',
         title: 'My First Post',
         date: '2025-01-15',
+        year: '2025',
+        month: '01',
         summary: 'This is my first post',
         tags: ['product', 'tech'],
         readingTime: 5,
@@ -47,6 +49,8 @@ describe('Reflections Page', () => {
         slug: 'second-post',
         title: 'My Second Post',
         date: '2025-01-10',
+        year: '2025',
+        month: '01',
         summary: 'This is my second post',
         tags: ['strategy'],
         readingTime: 3,
@@ -67,6 +71,8 @@ describe('Reflections Page', () => {
         slug: 'test-post',
         title: 'Test Post',
         date: '2025-01-15',
+        year: '2025',
+        month: '01',
         summary: 'A test post',
         tags: ['tech'],
         readingTime: 5,
@@ -85,6 +91,8 @@ describe('Reflections Page', () => {
         slug: 'test-post',
         title: 'Test Post',
         date: '2025-01-15',
+        year: '2025',
+        month: '01',
         summary: 'A test post',
         tags: ['product', 'strategy'],
         readingTime: 5,
@@ -103,6 +111,8 @@ describe('Reflections Page', () => {
         slug: 'test-post',
         title: 'Test Post',
         date: '2025-01-15',
+        year: '2025',
+        month: '01',
         summary: 'A test post',
         tags: ['tech'],
         readingTime: 5,
@@ -112,7 +122,7 @@ describe('Reflections Page', () => {
     render(<WritingPage />)
 
     const link = screen.getByRole('link', { name: /test post/i })
-    expect(link).toHaveAttribute('href', '/writing/test-post')
+    expect(link).toHaveAttribute('href', '/writing/2025/01/test-post')
   })
 
   it('shows empty state when no posts exist', () => {
@@ -129,6 +139,8 @@ describe('Reflections Page', () => {
         slug: 'new-post',
         title: 'New Post',
         date: '2025-01-20',
+        year: '2025',
+        month: '01',
         summary: 'Newest',
         tags: [],
         readingTime: 1,
@@ -137,6 +149,8 @@ describe('Reflections Page', () => {
         slug: 'old-post',
         title: 'Old Post',
         date: '2024-12-01',
+        year: '2024',
+        month: '12',
         summary: 'Oldest',
         tags: [],
         readingTime: 1,
