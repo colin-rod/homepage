@@ -89,6 +89,22 @@ export function getTools(): Project[] {
 }
 
 /**
+ * Get completed tools (status: 'live' or 'completed')
+ */
+export function getCompletedTools(): Project[] {
+  const tools = getTools()
+  return tools.filter((tool) => ['live', 'completed'].includes(tool.status))
+}
+
+/**
+ * Get planned tools (status: 'planned' or 'concept')
+ */
+export function getPlannedTools(): Project[] {
+  const tools = getTools()
+  return tools.filter((tool) => ['planned', 'concept'].includes(tool.status))
+}
+
+/**
  * Get all timeline events with runtime validation
  * @throws {Error} if validation fails
  */
